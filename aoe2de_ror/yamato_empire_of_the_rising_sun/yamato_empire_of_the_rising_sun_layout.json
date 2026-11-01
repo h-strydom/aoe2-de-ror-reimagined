@@ -4,6 +4,166 @@
          "Material": "CampaignBackgroundYamatoEmpireOfTheRisingSunMap",
          "FileName": "yamato_empire_of_the_rising_sun_map.dds",
          "Blend": "None"
+      },
+      {
+         "Material": "CampaignIconArtifactRedNormal",
+         "FileName": "CampaignIconArtifactRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconArtifactRedHover",
+         "FileName": "CampaignIconArtifactRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconArtifactRedPressed",
+         "FileName": "CampaignIconArtifactRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconArtifactRedDisabled",
+         "FileName": "CampaignIconArtifactRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconBowmanAttackRedNormal",
+         "FileName": "CampaignIconBowmanAttackRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconBowmanAttackRedHover",
+         "FileName": "CampaignIconBowmanAttackRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconBowmanAttackRedPressed",
+         "FileName": "CampaignIconBowmanAttackRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconBowmanAttackRedDisabled",
+         "FileName": "CampaignIconBowmanAttackRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdleRedNormal",
+         "FileName": "CampaignIconCavalryIdleRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdleRedHover",
+         "FileName": "CampaignIconCavalryIdleRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdleRedPressed",
+         "FileName": "CampaignIconCavalryIdleRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdleRedDisabled",
+         "FileName": "CampaignIconCavalryIdleRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCompositeBowmanIdleRedNormal",
+         "FileName": "CampaignIconCompositeBowmanIdleRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCompositeBowmanIdleRedHover",
+         "FileName": "CampaignIconCompositeBowmanIdleRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCompositeBowmanIdleRedPressed",
+         "FileName": "CampaignIconCompositeBowmanIdleRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCompositeBowmanIdleRedDisabled",
+         "FileName": "CampaignIconCompositeBowmanIdleRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconLightTransportIdleRedNormal",
+         "FileName": "CampaignIconLightTransportIdleRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconLightTransportIdleRedHover",
+         "FileName": "CampaignIconLightTransportIdleRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconLightTransportIdleRedPressed",
+         "FileName": "CampaignIconLightTransportIdleRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconLightTransportIdleRedDisabled",
+         "FileName": "CampaignIconLightTransportIdleRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPriestIdleRedNormal",
+         "FileName": "CampaignIconPriestIdleRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPriestIdleRedHover",
+         "FileName": "CampaignIconPriestIdleRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPriestIdleRedPressed",
+         "FileName": "CampaignIconPriestIdleRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPriestIdleRedDisabled",
+         "FileName": "CampaignIconPriestIdleRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinYamatoEmpireOfTheRisingSun5Normal",
+         "FileName": "CampaignPinYamatoEmpireOfTheRisingSun5Normal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinYamatoEmpireOfTheRisingSun5Hover",
+         "FileName": "CampaignPinYamatoEmpireOfTheRisingSun5Hover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinYamatoEmpireOfTheRisingSun5Pressed",
+         "FileName": "CampaignPinYamatoEmpireOfTheRisingSun5Pressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinYamatoEmpireOfTheRisingSun5Disabled",
+         "FileName": "CampaignPinYamatoEmpireOfTheRisingSun5Disabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinYamatoEmpireOfTheRisingSun8Normal",
+         "FileName": "CampaignPinYamatoEmpireOfTheRisingSun8Normal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinYamatoEmpireOfTheRisingSun8Hover",
+         "FileName": "CampaignPinYamatoEmpireOfTheRisingSun8Hover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinYamatoEmpireOfTheRisingSun8Pressed",
+         "FileName": "CampaignPinYamatoEmpireOfTheRisingSun8Pressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinYamatoEmpireOfTheRisingSun8Disabled",
+         "FileName": "CampaignPinYamatoEmpireOfTheRisingSun8Disabled.png",
+         "Blend": "InverseAlpha"
       }
    ],
    "BackgroundMaterial": "CampaignBackgroundYamatoEmpireOfTheRisingSunMap",
@@ -70,7 +230,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconAxemanAttackNormal"
+                  "Material": "CampaignIconCompositeBowmanIdleRedNormal"
                },
                "StateHover": {
                   "Font": {
@@ -84,7 +244,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconAxemanAttackHover"
+                  "Material": "CampaignIconCompositeBowmanIdleRedHover"
                },
                "StatePressed": {
                   "Font": {
@@ -98,7 +258,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconAxemanAttackPressed"
+                  "Material": "CampaignIconCompositeBowmanIdleRedPressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -112,7 +272,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconAxemanAttackDisabled"
+                  "Material": "CampaignIconCompositeBowmanIdleRedDisabled"
                }
             },
             "ChildWidgets": [
@@ -183,7 +343,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconLightTransportIdleNormal"
+                  "Material": "CampaignIconLightTransportIdleRedNormal"
                },
                "StateHover": {
                   "Font": {
@@ -197,7 +357,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconLightTransportIdleHover"
+                  "Material": "CampaignIconLightTransportIdleRedHover"
                },
                "StatePressed": {
                   "Font": {
@@ -211,7 +371,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconLightTransportIdlePressed"
+                  "Material": "CampaignIconLightTransportIdleRedPressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -225,7 +385,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconLightTransportIdleDisabled"
+                  "Material": "CampaignIconLightTransportIdleRedDisabled"
                }
             },
             "ChildWidgets": [
@@ -270,7 +430,7 @@
             "Type": "Button",
             "Name": "ScenarioButton3",
             "ViewPort": {
-               "xorigin": 2060,
+               "xorigin": 2066,
                "yorigin": 562,
                "width": 260,
                "height": 260,
@@ -296,7 +456,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconArtifactNormal"
+                  "Material": "CampaignIconArtifactRedNormal"
                },
                "StateHover": {
                   "Font": {
@@ -310,7 +470,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconArtifactHover"
+                  "Material": "CampaignIconArtifactRedHover"
                },
                "StatePressed": {
                   "Font": {
@@ -324,7 +484,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconArtifactPressed"
+                  "Material": "CampaignIconArtifactRedPressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -338,7 +498,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconArtifactDisabled"
+                  "Material": "CampaignIconArtifactRedDisabled"
                }
             },
             "ChildWidgets": [
@@ -383,17 +543,17 @@
             "Type": "Button",
             "Name": "ScenarioButton4",
             "ViewPort": {
-               "xorigin": 2446,
-               "yorigin": 611,
-               "width": 260,
-               "height": 260,
+               "xorigin": 2471,
+               "yorigin": 641,
+               "width": 200,
+               "height": 200,
                "alignment": "TopLeft"
             },
             "Image": {
                "xorigin": 0,
                "yorigin": 0,
-               "width": 260,
-               "height": 260,
+               "width": 200,
+               "height": 200,
                "alignment": "TopLeft"
             },
             "StateMaterials": {
@@ -409,7 +569,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconPriestIdleNormal"
+                  "Material": "CampaignIconPriestIdleRedNormal"
                },
                "StateHover": {
                   "Font": {
@@ -423,7 +583,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconPriestIdleHover"
+                  "Material": "CampaignIconPriestIdleRedHover"
                },
                "StatePressed": {
                   "Font": {
@@ -437,7 +597,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconPriestIdlePressed"
+                  "Material": "CampaignIconPriestIdleRedPressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -451,7 +611,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconPriestIdleDisabled"
+                  "Material": "CampaignIconPriestIdleRedDisabled"
                }
             },
             "ChildWidgets": [
@@ -460,7 +620,7 @@
                      "Type": "CampaignTitle",
                      "Name": "CampaignButton4Label",
                      "ViewPort": {
-                        "xorigin": -134,
+                        "xorigin": -164,
                         "yorigin": -50,
                         "width": 700,
                         "height": 100,
@@ -522,7 +682,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCavalryIdleNormal"
+                  "Material": "CampaignPinYamatoEmpireOfTheRisingSun5Normal"
                },
                "StateHover": {
                   "Font": {
@@ -536,7 +696,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCavalryIdleHover"
+                  "Material": "CampaignPinYamatoEmpireOfTheRisingSun5Hover"
                },
                "StatePressed": {
                   "Font": {
@@ -550,7 +710,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCavalryIdlePressed"
+                  "Material": "CampaignPinYamatoEmpireOfTheRisingSun5Pressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -564,7 +724,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconCavalryIdleDisabled"
+                  "Material": "CampaignPinYamatoEmpireOfTheRisingSun5Disabled"
                }
             },
             "ChildWidgets": [
@@ -635,7 +795,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconBowmanAttackNormal"
+                  "Material": "CampaignIconBowmanAttackRedNormal"
                },
                "StateHover": {
                   "Font": {
@@ -649,7 +809,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconBowmanAttackHover"
+                  "Material": "CampaignIconBowmanAttackRedHover"
                },
                "StatePressed": {
                   "Font": {
@@ -663,7 +823,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconBowmanAttackPressed"
+                  "Material": "CampaignIconBowmanAttackRedPressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -677,7 +837,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconBowmanAttackDisabled"
+                  "Material": "CampaignIconBowmanAttackRedDisabled"
                }
             },
             "ChildWidgets": [
@@ -748,7 +908,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCompositeBowmanIdleNormal"
+                  "Material": "CampaignIconCavalryIdleRedNormal"
                },
                "StateHover": {
                   "Font": {
@@ -762,7 +922,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCompositeBowmanIdleHover"
+                  "Material": "CampaignIconCavalryIdleRedHover"
                },
                "StatePressed": {
                   "Font": {
@@ -776,7 +936,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCompositeBowmanIdlePressed"
+                  "Material": "CampaignIconCavalryIdleRedPressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -790,7 +950,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconCompositeBowmanIdleDisabled"
+                  "Material": "CampaignIconCavalryIdleRedDisabled"
                }
             },
             "ChildWidgets": [
@@ -861,7 +1021,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconHeavyCatapultNormal"
+                  "Material": "CampaignPinYamatoEmpireOfTheRisingSun8Normal"
                },
                "StateHover": {
                   "Font": {
@@ -875,7 +1035,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconHeavyCatapultHover"
+                  "Material": "CampaignPinYamatoEmpireOfTheRisingSun8Hover"
                },
                "StatePressed": {
                   "Font": {
@@ -889,7 +1049,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconHeavyCatapultPressed"
+                  "Material": "CampaignPinYamatoEmpireOfTheRisingSun8Pressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -903,7 +1063,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconHeavyCatapultDisabled"
+                  "Material": "CampaignPinYamatoEmpireOfTheRisingSun8Disabled"
                }
             },
             "ChildWidgets": [

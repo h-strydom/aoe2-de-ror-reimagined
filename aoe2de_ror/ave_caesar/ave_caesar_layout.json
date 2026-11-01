@@ -4,6 +4,86 @@
          "Material": "CampaignBackgroundAveCaesarMap",
          "FileName": "ave_caesar_map.dds",
          "Blend": "None"
+      },
+      {
+         "Material": "CampaignIconCavalryIdlePurpleNormal",
+         "FileName": "CampaignIconCavalryIdlePurpleNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdlePurpleHover",
+         "FileName": "CampaignIconCavalryIdlePurpleHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdlePurplePressed",
+         "FileName": "CampaignIconCavalryIdlePurplePressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdlePurpleDisabled",
+         "FileName": "CampaignIconCavalryIdlePurpleDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackPurpleNormal",
+         "FileName": "CampaignIconCenturionAttackPurpleNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackPurpleHover",
+         "FileName": "CampaignIconCenturionAttackPurpleHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackPurplePressed",
+         "FileName": "CampaignIconCenturionAttackPurplePressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackPurpleDisabled",
+         "FileName": "CampaignIconCenturionAttackPurpleDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHeavyTransportIdlePurpleNormal",
+         "FileName": "CampaignIconHeavyTransportIdlePurpleNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHeavyTransportIdlePurpleHover",
+         "FileName": "CampaignIconHeavyTransportIdlePurpleHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHeavyTransportIdlePurplePressed",
+         "FileName": "CampaignIconHeavyTransportIdlePurplePressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHeavyTransportIdlePurpleDisabled",
+         "FileName": "CampaignIconHeavyTransportIdlePurpleDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinAveCaesar1Normal",
+         "FileName": "CampaignPinAveCaesar1Normal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinAveCaesar1Hover",
+         "FileName": "CampaignPinAveCaesar1Hover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinAveCaesar1Pressed",
+         "FileName": "CampaignPinAveCaesar1Pressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinAveCaesar1Disabled",
+         "FileName": "CampaignPinAveCaesar1Disabled.png",
+         "Blend": "InverseAlpha"
       }
    ],
    "BackgroundMaterial": "CampaignBackgroundAveCaesarMap",
@@ -70,7 +150,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarGalleyNormal"
+                  "Material": "CampaignPinAveCaesar1Normal"
                },
                "StateHover": {
                   "Font": {
@@ -84,7 +164,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarGalleyHover"
+                  "Material": "CampaignPinAveCaesar1Hover"
                },
                "StatePressed": {
                   "Font": {
@@ -98,7 +178,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarGalleyPressed"
+                  "Material": "CampaignPinAveCaesar1Pressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -112,7 +192,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconWarGalleyDisabled"
+                  "Material": "CampaignPinAveCaesar1Disabled"
                }
             },
             "ChildWidgets": [
@@ -183,7 +263,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconHeavyTransportIdleNormal"
+                  "Material": "CampaignIconHeavyTransportIdlePurpleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -197,7 +277,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconHeavyTransportIdleHover"
+                  "Material": "CampaignIconHeavyTransportIdlePurpleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -211,7 +291,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconHeavyTransportIdlePressed"
+                  "Material": "CampaignIconHeavyTransportIdlePurplePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -225,7 +305,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconHeavyTransportIdleDisabled"
+                  "Material": "CampaignIconHeavyTransportIdlePurpleDisabled"
                }
             },
             "ChildWidgets": [
@@ -296,7 +376,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCenturionAttackNormal"
+                  "Material": "CampaignIconCenturionAttackPurpleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -310,7 +390,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCenturionAttackHover"
+                  "Material": "CampaignIconCenturionAttackPurpleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -324,7 +404,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCenturionAttackPressed"
+                  "Material": "CampaignIconCenturionAttackPurplePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -338,7 +418,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconCenturionAttackDisabled"
+                  "Material": "CampaignIconCenturionAttackPurpleDisabled"
                }
             },
             "ChildWidgets": [
@@ -409,7 +489,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCavalryIdleNormal"
+                  "Material": "CampaignIconCavalryIdlePurpleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -423,7 +503,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCavalryIdleHover"
+                  "Material": "CampaignIconCavalryIdlePurpleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -437,7 +517,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCavalryIdlePressed"
+                  "Material": "CampaignIconCavalryIdlePurplePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -451,7 +531,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconCavalryIdleDisabled"
+                  "Material": "CampaignIconCavalryIdlePurpleDisabled"
                }
             },
             "ChildWidgets": [

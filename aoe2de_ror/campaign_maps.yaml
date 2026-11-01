@@ -1,72 +1,126 @@
-# Campaign screens for the campaigns RoR has no art for: our own map on RoR's blank campaign book.
+# Campaign screens: our own map on RoR's blank campaign book, for every campaign.
 #
 # `reimagined convert` builds each campaign's layout from this file; `convert --install` also draws the
-# map (from AoE DE's briefing maps, local only) onto the book.
+# map (from AoE DE's briefing maps, local only) onto the book and makes any custom pins.
 #   base:       which mission's AoE DE briefing map becomes the page (it shows every mission's location)
-#   pin_colour: colour of the unit pins. blue = RoR's own pins; any other (red, green, yellow, purple,
-#               orange, cyan, grey) recolours copies of them
+#   pin_colour: red, orange, yellow, green, cyan, blue, purple or grey. RoR's pins are blue; other colours
+#               recolour copies of them. AoE DE sprite pins are drawn in that player colour.
 #   missions:   one entry per mission, in order
-#     at:   [x, y] on the base briefing map (1511 x 850 pixels); pins too close together are spread apart
-#     icon: one of RoR's campaign pins (CampaignIcon...), e.g. CampaignIconChariot, CampaignIconWarGalley
-#     label: where the mission's name goes, below (default) or above the pin
+#     at:     [x, y] on the base briefing map (1511 x 850 pixels); pins too close together are spread apart
+#     icon:   one of RoR's 39 campaign pins (CampaignIcon...), e.g. CampaignIconChariot
+#     sprite: or an AoE DE unit/building sprite (Assets/SLP file name) drawn as a pin, with
+#             frame: which frame (the facing), scale: size of the unit in its pin (default 1)
+#     size:   pin size on the screen (default 260)
+#     label:  where the mission's name goes, below (default) or above the pin
+
+ascent_of_egypt:
+  base: 7
+  pin_colour: grey
+  missions:
+    - {at: [770, 300], icon: CampaignIconVillagerHunter}                  # Hunting
+    - {at: [850, 290], icon: CampaignIconVillagerForagerGather}           # Foraging
+    - {at: [690, 265], icon: CampaignIconScout}                           # Discoveries
+    - {at: [800, 360], icon: CampaignIconVillagerFisher}                  # Advancing to the next Age
+    - {at: [720, 400], icon: CampaignIconBowmanAttack}                    # Skirmish
+    - {at: [800, 460], icon: CampaignIconVillagerFarmerGather}            # Farming
+    - {at: [900, 215], icon: CampaignIconTradeBoat, label: above}         # Trade
+    - {at: [880, 340], icon: CampaignIconPriestConverting}                # Religion
+    - {at: [820, 700], icon: CampaignIconTransportShipSmall}              # The River Outpost
+    - {at: [560, 230], icon: CampaignIconScoutShip, label: above}         # Naval Battle
+    - {at: [860, 570], icon: CampaignIconVillagerBuilder}                 # A Wonder of the World
+    - {at: [990, 270], icon: CampaignIconChariot}                         # The Siege in Canaan
+
+glory_of_greece:
+  base: 1
+  pin_colour: red
+  missions:
+    - {at: [186, 435], icon: CampaignIconClubmanAttack}                   # Claiming Territory
+    - {at: [243, 352], icon: CampaignIconBowmanIdle}                      # Acropolis
+    - {at: [496, 663], icon: CampaignIconCavalryIdle}                     # The Conquest of Crete
+    - {at: [590, 155], icon: CampaignIconHopliteAttack, label: above}     # The Trojan War
+    - {at: [621, 310], icon: CampaignIconLightTransportIdle}              # Colonization of Ionia
+    - {at: [372, 300], icon: CampaignIconPhalanxWalk, label: above}       # The Siege of Athens
+    - {at: [1397, 342], icon: CampaignIconCenturionAttack}                # Xenophon's March
+    - {at: [849, 290], icon: CampaignIconAlexanderAttack}                 # Alexander the Great
+
+voices_of_babylon:
+  base: 4
+  pin_colour: yellow
+  missions:
+    - {at: [880, 530], icon: CampaignIconPriestConvertingBigger}          # The Holy Man
+    - {at: [870, 390], icon: CampaignIconWarGalleyIdle}                   # The Tigris Valley
+    - {at: [740, 440], icon: CampaignIconCompositeBowmanIdle}             # Vengeance
+    - {at: [930, 600], icon: CampaignIconHeavyTransportIdle}              # I Shall Return
+    - {at: [1060, 650], icon: CampaignIconArtifact}                       # The Great Hunt
+    - {at: [620, 470], icon: CampaignIconScytheChariotIdle}               # The Caravan
+    - {at: [1080, 520], icon: CampaignIconChariotArcherAttack}            # Lord of the Euphrates
+    - {at: [800, 270], icon: CampaignIconHeavyCatapult, label: above}     # The Conquest of Nineveh
 
 yamato_empire_of_the_rising_sun:
   base: 1
-  pin_colour: blue
+  pin_colour: red
   # Five missions are in Kansai, a few km apart: spread over the region so they can be told apart.
   missions:
-    - {at: [905, 450], icon: CampaignIconAxemanAttack}                    # The Assassins
+    - {at: [905, 450], icon: CampaignIconCompositeBowmanIdle}             # The Assassins
     - {at: [620, 405], icon: CampaignIconLightTransportIdle}              # Island Hopping
     - {at: [770, 250], icon: CampaignIconArtifact, label: above}          # Capture
-    - {at: [1010, 225], icon: CampaignIconPriestIdle, label: above}       # The Mountain Temple
-    - {at: [470, 335], icon: CampaignIconCavalryIdle}                     # The Canyon of Death
+    - {at: [1010, 225], icon: CampaignIconPriestIdle, size: 200, label: above}   # The Mountain Temple
+    - {at: [470, 335], sprite: u_all_horse_archer_idleA_x4.slp, frame: 90}       # The Canyon of Death
     - {at: [845, 345], icon: CampaignIconBowmanAttack}                    # Coup
-    - {at: [1110, 330], icon: CampaignIconCompositeBowmanIdle}            # Jinshin War
-    - {at: [374, 606], icon: CampaignIconHeavyCatapult}                   # Fujiwara Revolts
+    - {at: [1110, 330], icon: CampaignIconCavalryIdle}                    # Jinshin War
+    - {at: [374, 606], sprite: u_all_stone_thrower_idleA_x4.slp, frame: 4}       # Fujiwara Revolts
 
 reign_of_the_hittites:
   base: 2
-  pin_colour: blue
+  pin_colour: green
   missions:
-    - {at: [400, 140], icon: CampaignIconChariot}               # Opening Moves
-    - {at: [830, 470], icon: CampaignIconChariotArcherAttack}   # Raid on Babylon
-    - {at: [480, 330], icon: CampaignIconScytheChariotIdle}     # The Battle of Kadesh
+    - {at: [400, 140], icon: CampaignIconChariot}                         # Opening Moves
+    - {at: [830, 470], icon: CampaignIconChariotArcherAttack}             # Raid on Babylon
+    - {at: [480, 330], icon: CampaignIconScytheChariotIdle}               # The Battle of Kadesh
 
 the_rise_of_rome:
   base: 1
-  pin_colour: blue
+  pin_colour: purple
   missions:
-    - {at: [455, 320], icon: CampaignIconVillagerBuilder}       # The Birth of Rome
-    - {at: [790, 480], icon: CampaignIconWarElephantAttack}     # Pyrrhus of Epirus
-    - {at: [600, 690], icon: CampaignIconHeavyCatapult}         # The Siege of Syracuse
-    - {at: [520, 230], icon: CampaignIconCenturionAttack}       # The Battle of the Metaurus
-    - {at: [300, 770], icon: CampaignIconWarElephantBigger}     # The Battle of Zama
-    - {at: [1420, 420], icon: CampaignIconPhalanxWalk}          # Mithridates
+    - {at: [455, 320], icon: CampaignIconVillagerBuilder}                 # The Birth of Rome
+    - {at: [790, 480], icon: CampaignIconWarElephantAttack}               # Pyrrhus of Epirus
+    - {at: [600, 690], icon: CampaignIconHeavyCatapult}                   # The Siege of Syracuse
+    - {at: [520, 230], icon: CampaignIconCenturionAttack}                 # The Battle of the Metaurus
+    - {at: [300, 770], icon: CampaignIconWarElephantBigger}               # The Battle of Zama
+    - {at: [1420, 420], icon: CampaignIconPhalanxWalk}                    # Mithridates
 
 ave_caesar:
   base: 4
-  pin_colour: blue
+  pin_colour: purple
   missions:
-    - {at: [990, 480], icon: CampaignIconWarGalley}             # Caesar's Revenge
-    - {at: [335, 85], icon: CampaignIconHeavyTransportIdle}     # The Invasion of Britain
-    - {at: [500, 225], icon: CampaignIconCenturionAttack}       # The Siege of Alesia
-    - {at: [940, 420], icon: CampaignIconCavalryIdle}           # The Battle of Pharsalus
+    - {at: [990, 480], sprite: u_all_trireme_x4.slp, frame: 4}            # Caesar's Revenge
+    - {at: [335, 85], icon: CampaignIconHeavyTransportIdle}               # The Invasion of Britain
+    - {at: [500, 225], icon: CampaignIconCenturionAttack}                 # The Siege of Alesia
+    - {at: [940, 420], icon: CampaignIconCavalryIdle}                     # The Battle of Pharsalus
 
 imperium_romanum:
   base: 2
   pin_colour: blue
   missions:
-    - {at: [690, 480], icon: CampaignIconWarGalleyIdle}         # The Battle of Actium
-    - {at: [600, 430], icon: CampaignIconTrajan}                # The Year of the Four Emperors
-    - {at: [1130, 640], icon: CampaignIconArtifact}             # Ransom at Ctesiphon
-    - {at: [1040, 600], icon: CampaignIconCavalryIdle}          # Zenobia, Queen of Palmyra
-    - {at: [470, 250], icon: CampaignIconScout}                 # The Coming of the Huns
+    - {at: [690, 480], icon: CampaignIconWarGalleyIdle}                   # The Battle of Actium
+    - {at: [600, 430], sprite: b_rom_wonder_x4.slp, frame: 0, scale: 0.75}   # The Year of the Four Emperors
+    - {at: [1130, 640], icon: CampaignIconArtifact}                       # Ransom at Ctesiphon
+    - {at: [1040, 600], icon: CampaignIconScytheChariotIdle}              # Zenobia, Queen of Palmyra
+    - {at: [470, 250], icon: CampaignIconScout}                           # The Coming of the Huns
 
 enemies_of_rome:
   base: 4
-  pin_colour: blue
+  pin_colour: cyan
   missions:
-    - {at: [470, 330], icon: CampaignIconWarElephant}           # Crossing the Alps
-    - {at: [760, 430], icon: CampaignIconPhalanxWalk, label: above}   # Third Macedonian War
-    - {at: [650, 470], icon: CampaignIconAxemanAttack}          # The Revolt of Spartacus
-    - {at: [1060, 590], icon: CampaignIconCompositeBowmanIdle}  # Odaenathus, Lord of Palmyra
+    - {at: [470, 330], icon: CampaignIconWarElephant}                     # Crossing the Alps
+    - {at: [760, 430], icon: CampaignIconPhalanxWalk, label: above}       # Third Macedonian War
+    - {at: [650, 470], sprite: u_all_shortsword_idleA_x4.SLP, frame: 60}  # The Revolt of Spartacus
+    - {at: [1060, 590], icon: CampaignIconCompositeBowmanIdle}            # Odaenathus, Lord of Palmyra
+
+the_first_punic_war:
+  base: 1
+  pin_colour: orange
+  missions:
+    - {at: [505, 670], icon: CampaignIconHopliteAttack}                   # The Battle of Agrigentum
+    - {at: [585, 600], icon: CampaignIconWarGalley, label: above}         # The Battle of Mylae
+    - {at: [330, 760], icon: CampaignIconWarElephantAttack}               # The Battle of Tunis

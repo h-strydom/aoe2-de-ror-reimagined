@@ -93,18 +93,22 @@ Converts every campaign (or just the ones you name, e.g. `reimagined convert asc
   own briefing screen, with the mission's briefing map and its instructions (story, then objectives).
   The slide images are built from your local AoE DE copy at install time. They're silent: RoR only
   plays its own sounds, so AoE DE's narration can't be added.
-- each campaign's screen (`<campaign>_layout.json`): a map with a unit pin per mission. The four campaigns
-  RoR remade (Ascent of Egypt, Glory of Greece, Voices of Babylon, The First Punic War) use RoR's own art.
-  The other six get ours, in the same style: RoR's campaign book with AoE DE's map of the region inked on
-  the page and RoR's unit pins, placed per `aoe2de_ror/campaign_maps.yaml`.
+- each campaign's screen (`<campaign>_layout.json`), in the style of RoR's own: RoR's campaign book with
+  AoE DE's map of the region inked on the page and a unit pin per mission in the campaign's colour, placed
+  per `aoe2de_ror/campaign_maps.yaml`.
 
 ## Changing a campaign map
 
-`aoe2de_ror/campaign_maps.yaml` holds, for the six campaigns with our own maps, which AoE DE briefing map
-is drawn on the page, the pin colour, and per mission where its pin goes (a point on that briefing map),
-which of RoR's 39 unit pins it uses, and whether its name sits below or above it. Pins that would overlap
-are nudged apart and kept on the page. `pin_colour` other than blue recolours copies of RoR's pins (red,
-orange, yellow, green, cyan, purple, grey). Run `uv run reimagined convert --install` to see a change.
+`aoe2de_ror/campaign_maps.yaml` holds, per campaign, which AoE DE briefing map is drawn on the page, the
+pin colour, and per mission:
+- where its pin goes (a point on that briefing map) and whether its name sits below or above it
+- which pin: one of RoR's 39 unit pins (`icon`), or any AoE DE unit or building sprite (`sprite`, with
+  `frame` for the facing and `scale` for the unit's size in its pin), drawn like RoR's pins
+- the pin's size on the screen (`size`)
+
+`pin_colour` (red, orange, yellow, green, cyan, blue, purple, grey) recolours RoR's blue pins and draws
+sprite pins in that player colour. Pins that would overlap are nudged apart and kept on the page. Run
+`uv run reimagined convert --install` to see a change; `setup` copies any newly named sprite.
 
 `aoe2de_ror/` aims to be a 100% faithful rebuild. What carries over:
 - the map: terrain, elevation and every object, at the same position, rotation and owner
@@ -153,7 +157,7 @@ every terrain and object on every map is covered.
 | `aoe1de/<campaign>.yaml` | campaign: title, in-game name, description, source file, missions in play order | yes |
 | `aoe1de/<campaign>/NN_<mission>/mission.yaml` | the mission: source scenario, players, victory settings, objectives, text | yes |
 | `aoe1de/**/*.aoecpn`, `*.aoescn`, `aoe1de/data/` | original AoE DE files, copied in by `setup` | **no** |
-| `aoe2de_ror/campaign_maps.yaml` | the six own campaign maps: base map, pin colour, a pin and icon per mission | yes |
+| `aoe2de_ror/campaign_maps.yaml` | every campaign's map: base map, pin colour, a pin per mission | yes |
 | `aoe2de_ror/conversion.yaml` | what each AoE DE terrain and object becomes in RoR, plus mission overrides | yes |
 | `aoe2de_ror/<campaign>/` | converted Return of Rome campaigns and scenarios | faithful conversions; edited and reimagined versions come later | yes |
 

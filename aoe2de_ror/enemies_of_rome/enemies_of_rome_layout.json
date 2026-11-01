@@ -4,6 +4,86 @@
          "Material": "CampaignBackgroundEnemiesOfRomeMap",
          "FileName": "enemies_of_rome_map.dds",
          "Blend": "None"
+      },
+      {
+         "Material": "CampaignIconCompositeBowmanIdleCyanNormal",
+         "FileName": "CampaignIconCompositeBowmanIdleCyanNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCompositeBowmanIdleCyanHover",
+         "FileName": "CampaignIconCompositeBowmanIdleCyanHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCompositeBowmanIdleCyanPressed",
+         "FileName": "CampaignIconCompositeBowmanIdleCyanPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCompositeBowmanIdleCyanDisabled",
+         "FileName": "CampaignIconCompositeBowmanIdleCyanDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkCyanNormal",
+         "FileName": "CampaignIconPhalanxWalkCyanNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkCyanHover",
+         "FileName": "CampaignIconPhalanxWalkCyanHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkCyanPressed",
+         "FileName": "CampaignIconPhalanxWalkCyanPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkCyanDisabled",
+         "FileName": "CampaignIconPhalanxWalkCyanDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantCyanNormal",
+         "FileName": "CampaignIconWarElephantCyanNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantCyanHover",
+         "FileName": "CampaignIconWarElephantCyanHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantCyanPressed",
+         "FileName": "CampaignIconWarElephantCyanPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantCyanDisabled",
+         "FileName": "CampaignIconWarElephantCyanDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinEnemiesOfRome3Normal",
+         "FileName": "CampaignPinEnemiesOfRome3Normal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinEnemiesOfRome3Hover",
+         "FileName": "CampaignPinEnemiesOfRome3Hover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinEnemiesOfRome3Pressed",
+         "FileName": "CampaignPinEnemiesOfRome3Pressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinEnemiesOfRome3Disabled",
+         "FileName": "CampaignPinEnemiesOfRome3Disabled.png",
+         "Blend": "InverseAlpha"
       }
    ],
    "BackgroundMaterial": "CampaignBackgroundEnemiesOfRomeMap",
@@ -70,7 +150,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarElephantNormal"
+                  "Material": "CampaignIconWarElephantCyanNormal"
                },
                "StateHover": {
                   "Font": {
@@ -84,7 +164,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarElephantHover"
+                  "Material": "CampaignIconWarElephantCyanHover"
                },
                "StatePressed": {
                   "Font": {
@@ -98,7 +178,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarElephantPressed"
+                  "Material": "CampaignIconWarElephantCyanPressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -112,7 +192,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconWarElephantDisabled"
+                  "Material": "CampaignIconWarElephantCyanDisabled"
                }
             },
             "ChildWidgets": [
@@ -183,7 +263,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconPhalanxWalkNormal"
+                  "Material": "CampaignIconPhalanxWalkCyanNormal"
                },
                "StateHover": {
                   "Font": {
@@ -197,7 +277,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconPhalanxWalkHover"
+                  "Material": "CampaignIconPhalanxWalkCyanHover"
                },
                "StatePressed": {
                   "Font": {
@@ -211,7 +291,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconPhalanxWalkPressed"
+                  "Material": "CampaignIconPhalanxWalkCyanPressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -225,7 +305,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconPhalanxWalkDisabled"
+                  "Material": "CampaignIconPhalanxWalkCyanDisabled"
                }
             },
             "ChildWidgets": [
@@ -296,7 +376,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconAxemanAttackNormal"
+                  "Material": "CampaignPinEnemiesOfRome3Normal"
                },
                "StateHover": {
                   "Font": {
@@ -310,7 +390,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconAxemanAttackHover"
+                  "Material": "CampaignPinEnemiesOfRome3Hover"
                },
                "StatePressed": {
                   "Font": {
@@ -324,7 +404,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconAxemanAttackPressed"
+                  "Material": "CampaignPinEnemiesOfRome3Pressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -338,7 +418,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconAxemanAttackDisabled"
+                  "Material": "CampaignPinEnemiesOfRome3Disabled"
                }
             },
             "ChildWidgets": [
@@ -409,7 +489,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCompositeBowmanIdleNormal"
+                  "Material": "CampaignIconCompositeBowmanIdleCyanNormal"
                },
                "StateHover": {
                   "Font": {
@@ -423,7 +503,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCompositeBowmanIdleHover"
+                  "Material": "CampaignIconCompositeBowmanIdleCyanHover"
                },
                "StatePressed": {
                   "Font": {
@@ -437,7 +517,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCompositeBowmanIdlePressed"
+                  "Material": "CampaignIconCompositeBowmanIdleCyanPressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -451,7 +531,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconCompositeBowmanIdleDisabled"
+                  "Material": "CampaignIconCompositeBowmanIdleCyanDisabled"
                }
             },
             "ChildWidgets": [

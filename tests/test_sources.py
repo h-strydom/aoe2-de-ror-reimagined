@@ -7,7 +7,8 @@ import pytest
 
 from reimagined import layout
 from reimagined.aoede.campaign import CampaignEntry, build_campaign, read_campaign
-from reimagined.aoede.install import ASSETS, find_aoede
+from reimagined.aoede.install import ASSETS, SPRITE_DIR, find_aoede
+from reimagined.campaign_maps import sprites
 from reimagined.sources import setup
 
 
@@ -47,6 +48,9 @@ def _fake_install(tmp: Path, scenarios: dict[str, bytes]) -> Path:
     for folder, pattern in ASSETS:
         (inst / folder).mkdir(parents=True, exist_ok=True)
         (inst / folder / pattern.replace("*", "tiny")).write_bytes(b"asset")
+    (inst / SPRITE_DIR).mkdir(parents=True, exist_ok=True)
+    for name in sprites():
+        (inst / SPRITE_DIR / name).write_bytes(b"sprite")
     return inst
 
 
@@ -60,7 +64,7 @@ def test_setup_copies_campaigns_scenarios_and_data(tmp_path):
     assert (root / "tiny" / "02_two" / "Scn1-02-Two.aoescn").read_bytes() == b"two"
     data = root / "data"
     assert sorted(p.name for p in data.iterdir() if p.is_file()) == ["empires.dat", "strings.txt"]
-    assert report.assets == len(ASSETS)
+    assert report.assets == len(ASSETS) + len(sprites())
     assert (data / "Content" / "Voice Over" / "en" / "tiny.mp3").read_bytes() == b"asset"
     assert (data / "Assets" / "UI" / "images" / "maps" / "mapstiny.SLP").is_file()
     assert setup(inst, root).problems == []  # running it again is safe

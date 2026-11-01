@@ -61,9 +61,23 @@ class Slp:
     def load(cls, path: str | Path) -> Slp:
         return cls(Path(path).read_bytes())
 
-    def image(self, index: int) -> Image.Image:
-        """Frame `index` as an RGBA image (transparent where the sprite has no pixels)."""
+    def image(self, index: int, palette: list | None = None, player: list | None = None) -> Image.Image:
+        """Frame `index` as an RGBA image (transparent where the sprite has no pixels).
+
+        32-bit frames (UI art) carry their colours. 8-bit frames (units, buildings) are palette indices:
+        pass the frame's palette (read_palette of palettes.conf entry `frame.properties >> 16`) and, for
+        player-coloured parts, a player colour palette (playercolor_<colour>.pal)."""
         f = self.frames[index]
+        wide = (f.properties & 7) == 7
+        if not wide and palette is None:
+            raise ValueError(f"frame {index} is 8-bit: pass its palette (palette id {f.properties >> 16})")
+        bpp = BPP if wide else 1
+        lut = None if wide else b"".join(bytes((b, g, r, 255)) for r, g, b in palette)
+        plut = None if wide else b"".join(bytes((b, g, r, 255)) for r, g, b in (player or palette))
+
+        def colours(data: bytes, table) -> bytes:
+            return data if wide else b"".join(table[v * 4:v * 4 + 4] for v in data)
+
         raw = self.raw
         out = bytearray(f.width * f.height * BPP)
         for y in range(f.height):
@@ -82,8 +96,8 @@ class Slp:
                     break
                 if low2 == 0x00:                         # lesser block copy
                     n = b >> 2
-                    x = _put(out, row, x, raw[pos:pos + n * BPP], n)
-                    pos += n * BPP
+                    x = _put(out, row, x, colours(raw[pos:pos + n * bpp], lut), n)
+                    pos += n * bpp
                 elif low2 == 0x01:                       # lesser skip
                     n = b >> 2
                     if not n:
@@ -91,23 +105,23 @@ class Slp:
                     x += n
                 elif low4 == 0x02:                       # greater block copy
                     n, pos = ((b & 0xF0) << 4) + raw[pos], pos + 1
-                    x = _put(out, row, x, raw[pos:pos + n * BPP], n)
-                    pos += n * BPP
+                    x = _put(out, row, x, colours(raw[pos:pos + n * bpp], lut), n)
+                    pos += n * bpp
                 elif low4 == 0x03:                       # greater skip
                     n, pos = ((b & 0xF0) << 4) + raw[pos], pos + 1
                     x += n
-                elif low4 in (0x07, 0x0A):               # fill (0x0A: player colour fill, a plain fill in 32-bit)
+                elif low4 in (0x07, 0x0A):               # fill; 0x0A fills with a player colour
                     n = high
                     if not n:
                         n, pos = raw[pos], pos + 1
-                    x = _put(out, row, x, raw[pos:pos + BPP] * n, n)
-                    pos += BPP
+                    x = _put(out, row, x, colours(raw[pos:pos + bpp], plut if low4 == 0x0A else lut) * n, n)
+                    pos += bpp
                 elif low4 == 0x06:                       # player colour copy
                     n = high
                     if not n:
                         n, pos = raw[pos], pos + 1
-                    x = _put(out, row, x, raw[pos:pos + n * BPP], n)
-                    pos += n * BPP
+                    x = _put(out, row, x, colours(raw[pos:pos + n * bpp], plut), n)
+                    pos += n * bpp
                 elif low4 == 0x0B:                       # shadow: left transparent here
                     n = high
                     if not n:
@@ -128,3 +142,11 @@ class Slp:
         img = Image.frombytes("RGBA", (f.width, f.height), bytes(out))
         b_, g, r, a = img.split()
         return Image.merge("RGBA", (r, g, b_, a))
+
+
+def read_palette(path: str | Path) -> list[tuple[int, int, int]]:
+    """A JASC-PAL palette file (AoE DE's Assets/Palettes/*.pal): 256 RGB entries."""
+    lines = Path(path).read_text(encoding="utf-8").split()
+    count = int(lines[2])
+    vals = list(map(int, lines[3:3 + 3 * count]))
+    return [tuple(vals[i:i + 3]) for i in range(0, len(vals), 3)]

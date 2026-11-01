@@ -4,6 +4,26 @@
          "Material": "CampaignBackgroundImperiumRomanumMap",
          "FileName": "imperium_romanum_map.dds",
          "Blend": "None"
+      },
+      {
+         "Material": "CampaignPinImperiumRomanum2Normal",
+         "FileName": "CampaignPinImperiumRomanum2Normal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinImperiumRomanum2Hover",
+         "FileName": "CampaignPinImperiumRomanum2Hover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinImperiumRomanum2Pressed",
+         "FileName": "CampaignPinImperiumRomanum2Pressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignPinImperiumRomanum2Disabled",
+         "FileName": "CampaignPinImperiumRomanum2Disabled.png",
+         "Blend": "InverseAlpha"
       }
    ],
    "BackgroundMaterial": "CampaignBackgroundImperiumRomanumMap",
@@ -183,7 +203,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconTrajanNormal"
+                  "Material": "CampaignPinImperiumRomanum2Normal"
                },
                "StateHover": {
                   "Font": {
@@ -197,7 +217,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconTrajanHover"
+                  "Material": "CampaignPinImperiumRomanum2Hover"
                },
                "StatePressed": {
                   "Font": {
@@ -211,7 +231,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconTrajanPressed"
+                  "Material": "CampaignPinImperiumRomanum2Pressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -225,7 +245,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconTrajanDisabled"
+                  "Material": "CampaignPinImperiumRomanum2Disabled"
                }
             },
             "ChildWidgets": [
@@ -409,7 +429,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCavalryIdleNormal"
+                  "Material": "CampaignIconScytheChariotIdleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -423,7 +443,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCavalryIdleHover"
+                  "Material": "CampaignIconScytheChariotIdleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -437,7 +457,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCavalryIdlePressed"
+                  "Material": "CampaignIconScytheChariotIdlePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -451,7 +471,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconCavalryIdleDisabled"
+                  "Material": "CampaignIconScytheChariotIdleDisabled"
                }
             },
             "ChildWidgets": [

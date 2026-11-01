@@ -4,6 +4,126 @@
          "Material": "CampaignBackgroundTheRiseOfRomeMap",
          "FileName": "the_rise_of_rome_map.dds",
          "Blend": "None"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackPurpleNormal",
+         "FileName": "CampaignIconCenturionAttackPurpleNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackPurpleHover",
+         "FileName": "CampaignIconCenturionAttackPurpleHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackPurplePressed",
+         "FileName": "CampaignIconCenturionAttackPurplePressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackPurpleDisabled",
+         "FileName": "CampaignIconCenturionAttackPurpleDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHeavyCatapultPurpleNormal",
+         "FileName": "CampaignIconHeavyCatapultPurpleNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHeavyCatapultPurpleHover",
+         "FileName": "CampaignIconHeavyCatapultPurpleHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHeavyCatapultPurplePressed",
+         "FileName": "CampaignIconHeavyCatapultPurplePressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHeavyCatapultPurpleDisabled",
+         "FileName": "CampaignIconHeavyCatapultPurpleDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkPurpleNormal",
+         "FileName": "CampaignIconPhalanxWalkPurpleNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkPurpleHover",
+         "FileName": "CampaignIconPhalanxWalkPurpleHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkPurplePressed",
+         "FileName": "CampaignIconPhalanxWalkPurplePressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkPurpleDisabled",
+         "FileName": "CampaignIconPhalanxWalkPurpleDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconVillagerBuilderPurpleNormal",
+         "FileName": "CampaignIconVillagerBuilderPurpleNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconVillagerBuilderPurpleHover",
+         "FileName": "CampaignIconVillagerBuilderPurpleHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconVillagerBuilderPurplePressed",
+         "FileName": "CampaignIconVillagerBuilderPurplePressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconVillagerBuilderPurpleDisabled",
+         "FileName": "CampaignIconVillagerBuilderPurpleDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantAttackPurpleNormal",
+         "FileName": "CampaignIconWarElephantAttackPurpleNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantAttackPurpleHover",
+         "FileName": "CampaignIconWarElephantAttackPurpleHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantAttackPurplePressed",
+         "FileName": "CampaignIconWarElephantAttackPurplePressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantAttackPurpleDisabled",
+         "FileName": "CampaignIconWarElephantAttackPurpleDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantBiggerPurpleNormal",
+         "FileName": "CampaignIconWarElephantBiggerPurpleNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantBiggerPurpleHover",
+         "FileName": "CampaignIconWarElephantBiggerPurpleHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantBiggerPurplePressed",
+         "FileName": "CampaignIconWarElephantBiggerPurplePressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconWarElephantBiggerPurpleDisabled",
+         "FileName": "CampaignIconWarElephantBiggerPurpleDisabled.png",
+         "Blend": "InverseAlpha"
       }
    ],
    "BackgroundMaterial": "CampaignBackgroundTheRiseOfRomeMap",
@@ -70,7 +190,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconVillagerBuilderNormal"
+                  "Material": "CampaignIconVillagerBuilderPurpleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -84,7 +204,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconVillagerBuilderHover"
+                  "Material": "CampaignIconVillagerBuilderPurpleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -98,7 +218,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconVillagerBuilderPressed"
+                  "Material": "CampaignIconVillagerBuilderPurplePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -112,7 +232,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconVillagerBuilderDisabled"
+                  "Material": "CampaignIconVillagerBuilderPurpleDisabled"
                }
             },
             "ChildWidgets": [
@@ -183,7 +303,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarElephantAttackNormal"
+                  "Material": "CampaignIconWarElephantAttackPurpleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -197,7 +317,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarElephantAttackHover"
+                  "Material": "CampaignIconWarElephantAttackPurpleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -211,7 +331,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarElephantAttackPressed"
+                  "Material": "CampaignIconWarElephantAttackPurplePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -225,7 +345,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconWarElephantAttackDisabled"
+                  "Material": "CampaignIconWarElephantAttackPurpleDisabled"
                }
             },
             "ChildWidgets": [
@@ -296,7 +416,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconHeavyCatapultNormal"
+                  "Material": "CampaignIconHeavyCatapultPurpleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -310,7 +430,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconHeavyCatapultHover"
+                  "Material": "CampaignIconHeavyCatapultPurpleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -324,7 +444,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconHeavyCatapultPressed"
+                  "Material": "CampaignIconHeavyCatapultPurplePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -338,7 +458,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconHeavyCatapultDisabled"
+                  "Material": "CampaignIconHeavyCatapultPurpleDisabled"
                }
             },
             "ChildWidgets": [
@@ -409,7 +529,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCenturionAttackNormal"
+                  "Material": "CampaignIconCenturionAttackPurpleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -423,7 +543,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCenturionAttackHover"
+                  "Material": "CampaignIconCenturionAttackPurpleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -437,7 +557,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconCenturionAttackPressed"
+                  "Material": "CampaignIconCenturionAttackPurplePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -451,7 +571,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconCenturionAttackDisabled"
+                  "Material": "CampaignIconCenturionAttackPurpleDisabled"
                }
             },
             "ChildWidgets": [
@@ -522,7 +642,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarElephantBiggerNormal"
+                  "Material": "CampaignIconWarElephantBiggerPurpleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -536,7 +656,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarElephantBiggerHover"
+                  "Material": "CampaignIconWarElephantBiggerPurpleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -550,7 +670,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconWarElephantBiggerPressed"
+                  "Material": "CampaignIconWarElephantBiggerPurplePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -564,7 +684,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconWarElephantBiggerDisabled"
+                  "Material": "CampaignIconWarElephantBiggerPurpleDisabled"
                }
             },
             "ChildWidgets": [
@@ -635,7 +755,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconPhalanxWalkNormal"
+                  "Material": "CampaignIconPhalanxWalkPurpleNormal"
                },
                "StateHover": {
                   "Font": {
@@ -649,7 +769,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconPhalanxWalkHover"
+                  "Material": "CampaignIconPhalanxWalkPurpleHover"
                },
                "StatePressed": {
                   "Font": {
@@ -663,7 +783,7 @@
                         "a": 255
                      }
                   },
-                  "Material": "CampaignIconPhalanxWalkPressed"
+                  "Material": "CampaignIconPhalanxWalkPurplePressed"
                },
                "StateDisabled": {
                   "Font": {
@@ -677,7 +797,7 @@
                         "a": 128
                      }
                   },
-                  "Material": "CampaignIconPhalanxWalkDisabled"
+                  "Material": "CampaignIconPhalanxWalkPurpleDisabled"
                }
             },
             "ChildWidgets": [

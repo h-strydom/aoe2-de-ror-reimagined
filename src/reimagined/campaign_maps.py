@@ -1,14 +1,15 @@
-"""Our own campaign screens for the campaigns RoR has no art for, in RoR's style.
+"""Our own campaign screens, in RoR's style, for every campaign.
 
 RoR's campaign screens are a painting of an open book on a table with the region drawn in sepia ink on
 the right-hand page, and a unit pin per mission. The game ships that painting with blank pages
 (cam_overview_bg.dds, the default campaign screen). We ink AoE DE's own briefing map onto the page:
 land pale, sea shaded, coastlines drawn, fading out towards the page edges. Pins are RoR's own unit
-pins (or recoloured copies), placed per aoe2de_ror/campaign_maps.yaml.
+pins (recoloured copies for colours other than blue) or AoE DE unit sprites drawn in the campaign's
+player colour, placed per aoe2de_ror/campaign_maps.yaml.
 
-The layout JSON needs only the yaml (it's committed); the background image is drawn from the local AoE DE
-and AoE2 copies when installing. Layout coordinates are a 3840 x 2160 screen showing the middle of the
-5120 x 2160 background, so layout x = background x - 640.
+The layout JSON needs only the yaml (it's committed); the background and any custom pins are drawn from
+the local game copies when installing. Layout coordinates are a 3840 x 2160 screen showing the middle of
+the 5120 x 2160 background, so layout x = background x - 640.
 """
 from __future__ import annotations
 
@@ -27,27 +28,39 @@ from . import layout
 CONFIG = layout.AOE2DE_ROR / "campaign_maps.yaml"
 BOOK = Path("widgetui") / "textures" / "campaign" / "campaign_selection" / "cam_overview_bg.dds"
 ROR_ICONS = Path("modes") / "Pompeii" / "widgetui"
+SPRITES = layout.AOE1DE / "data" / "Assets" / "SLP"
+PALETTES = layout.AOE1DE / "data" / "Assets" / "Palettes"
 BG_SIZE = (5120, 2160)
 BG_OFFSET_X = 640
 # The right-hand page of the blank book: top-left, top-right, bottom-right, bottom-left (background pixels).
 PAGE = np.float32([[2032, 160], [4128, 602], [3616, 2096], [1120, 1296]])
 BRIEFING_SIZE = (1511, 850)
 PIN_SIZE = 260
-LABEL_OFFSET = (0, 165)
+LABEL_GAP = 165                            # a name's top below its pin's top, at PIN_SIZE
 PIN_MARGIN = 0.2                           # empty border around the unit inside a pin's square
 LABEL_CHAR, LABEL_HEIGHT = 24, 70          # a mission name's size under its pin, in layout units
 INK = (0.42, 0.30, 0.19)
-PIN_COLOURS = {"red": 0, "orange": 28, "yellow": 52, "green": 120, "cyan": 180, "blue": None, "purple": 280,
-               "grey": "grey"}
+MIN_SEA = 1500                             # smallest water body kept, in briefing-map pixels
+# colour -> (hue in degrees for recolouring RoR's blue pins, AoE DE player colour palette for sprites)
+PIN_COLOURS = {"red": (0, "red"), "orange": (28, "orange"), "yellow": (52, "yellow"), "green": (120, "green"),
+               "cyan": (180, "teal"), "blue": (None, "blue"), "purple": (280, "purple"), "grey": ("grey", "grey")}
 # RoR's 39 campaign pins (material prefix; Normal/Hover/Pressed/Disabled exist for each).
 ICONS = {f"CampaignIcon{n}" for n in ["AlexanderAttack", "Artifact", "AxemanAttack", "BowmanAttack", "BowmanIdle", "CavalryIdle", "CenturionAttack", "ChariotArcherAttack", "Chariot", "ClubmanAttack", "CompositeBowmanIdle", "HeavyCatapult", "HeavyTransportIdle", "HopliteAttack", "HopliteIdle", "LightTransportIdle", "PhalanxWalk", "PriestConvertingBigger", "PriestConverting", "PriestIdle", "Pyrrhus", "Sargon", "Scout", "ScoutShip", "ScytheChariotIdle", "TradeBoat", "Trajan", "TransportShipSmall", "VillagerBuilder", "VillagerFarmerGather", "VillagerFisher", "VillagerForagerGather", "VillagerHunterBigger", "VillagerHunter", "WarElephantAttack", "WarElephantBigger", "WarElephant", "WarGalleyIdle", "WarGalley"]}
 STATES = ("Normal", "Hover", "Pressed", "Disabled")
+# Sprite pins are drawn like RoR's: a 400 x 400 image, the unit fitting UNIT_BOX with its feet at UNIT_FOOT;
+# hover brighter, pressed darker and 2 px lower, disabled grey (measured on RoR's pins).
+PIN_IMAGE, UNIT_BOX, UNIT_FOOT = 400, (300, 220), (190, 262)
+STATE_LOOK = {"Normal": 1.0, "Hover": 1.45, "Pressed": 0.7, "Disabled": None}
 
 
 @dataclass(frozen=True)
 class Pin:
     at: tuple[float, float]       # on the base briefing map
-    icon: str
+    icon: str | None = None       # one of RoR's pins, or
+    sprite: str | None = None     # an AoE DE sprite file (Assets/SLP)
+    frame: int = 0
+    scale: float = 1.0
+    size: int = PIN_SIZE
     label: str = "below"          # where its name goes: below or above the pin
 
 
@@ -68,11 +81,17 @@ def load(path: Path = CONFIG) -> dict[str, CampaignMap]:
         if c is None:
             problems.append(f"{slug}: no such campaign")
             continue
-        pins = tuple(Pin(tuple(m["at"]), m["icon"], m.get("label", "below")) for m in s["missions"])
+        pins = tuple(Pin(tuple(m["at"]), m.get("icon"), m.get("sprite"), m.get("frame", 0), m.get("scale", 1.0),
+                         m.get("size", PIN_SIZE), m.get("label", "below")) for m in s["missions"])
         if len(pins) != len(c.missions):
             problems.append(f"{slug}: {len(pins)} pins for {len(c.missions)} missions")
-        problems += [f"{slug}: unknown icon {p.icon}" for p in pins if p.icon not in ICONS]
-        problems += [f"{slug}: label must be below or above" for p in pins if p.label not in ("below", "above")]
+        for p in pins:
+            if (p.icon is None) == (p.sprite is None):
+                problems.append(f"{slug}: each mission needs an icon or a sprite")
+            elif p.icon is not None and p.icon not in ICONS:
+                problems.append(f"{slug}: unknown icon {p.icon}")
+            if p.label not in ("below", "above"):
+                problems.append(f"{slug}: label must be below or above")
         if s.get("pin_colour", "blue") not in PIN_COLOURS:
             problems.append(f"{slug}: pin_colour must be one of {sorted(PIN_COLOURS)}")
         if not 1 <= s["base"] <= len(c.missions):
@@ -81,6 +100,11 @@ def load(path: Path = CONFIG) -> dict[str, CampaignMap]:
     if problems:
         raise ValueError("campaign_maps.yaml: " + "; ".join(problems))
     return out
+
+
+def sprites() -> set[str]:
+    """Every AoE DE sprite file the pins use (setup copies these)."""
+    return {p.sprite for cm in load().values() for p in cm.pins if p.sprite}
 
 
 def _page_transform():
@@ -100,6 +124,7 @@ def _project(points: list[tuple[float, float]]) -> np.ndarray:
 class Placed:
     x: int                        # pin button's top-left corner, layout units
     y: int
+    size: int
     label_x: int                  # the name's offset from that corner
     label_y: int
 
@@ -108,16 +133,17 @@ def _label_width(label: str) -> float:
     return len(label) * LABEL_CHAR
 
 
-def label_offset(label: str, where: str) -> tuple[float, float]:
+def label_offset(label: str, where: str, size: int = PIN_SIZE) -> tuple[float, float]:
     """The name's offset from its pin's top-left corner: centred, below or above the pin."""
-    return (PIN_SIZE - _label_width(label)) / 2, LABEL_OFFSET[1] if where == "below" else -LABEL_HEIGHT + 20
+    below = size - (PIN_SIZE - LABEL_GAP)
+    return (size - _label_width(label)) / 2, below if where == "below" else -LABEL_HEIGHT + 20
 
 
-def _boxes(centre, label: str, offset) -> list[tuple[float, float, float, float]]:
-    x, y = centre[0] - PIN_SIZE / 2, centre[1] - PIN_SIZE / 2
+def _boxes(centre, label: str, offset, size: int = PIN_SIZE) -> list[tuple[float, float, float, float]]:
+    x, y = centre[0] - size / 2, centre[1] - size / 2
     lx, ly = offset
-    m = PIN_SIZE * PIN_MARGIN                             # the unit drawing fills the middle of its square
-    return [(x + m, y + m, x + PIN_SIZE - m, y + PIN_SIZE - m),
+    m = size * PIN_MARGIN                                 # the unit drawing fills the middle of its square
+    return [(x + m, y + m, x + size - m, y + size - m),
             (x + lx, y + ly, x + lx + _label_width(label), y + ly + LABEL_HEIGHT)]
 
 
@@ -135,7 +161,7 @@ def _clash(boxes_a, boxes_b) -> float:
     return total
 
 
-def place(points: np.ndarray, labels: list[str], offsets: list[tuple[float, float]],
+def place(points: np.ndarray, labels: list[str], offsets: list[tuple[float, float]], sizes: list[int],
           rounds: int = 300) -> list[np.ndarray]:
     """Each pin's centre: nudged apart until no pins or names overlap, kept on the page."""
     pts = [p.astype(float) for p in points]
@@ -143,7 +169,8 @@ def place(points: np.ndarray, labels: list[str], offsets: list[tuple[float, floa
         moved = False
         for i in range(len(pts)):
             for j in range(i + 1, len(pts)):
-                bi, bj = _boxes(pts[i], labels[i], offsets[i]), _boxes(pts[j], labels[j], offsets[j])
+                bi = _boxes(pts[i], labels[i], offsets[i], sizes[i])
+                bj = _boxes(pts[j], labels[j], offsets[j], sizes[j])
                 overlaps = [(_overlap(a, b), a, b) for a in bi for b in bj]
                 overlaps = [o for o in overlaps if o[0][0] > 0 and o[0][1] > 0]
                 if not overlaps:
@@ -157,7 +184,7 @@ def place(points: np.ndarray, labels: list[str], offsets: list[tuple[float, floa
                 pts[j] += step
                 moved = True
         for i in range(len(pts)):                        # and keep every pin on the page
-            inside = _inside_page(pts[i])
+            inside = _inside_page(pts[i], sizes[i] * 0.7)
             if not np.allclose(inside, pts[i]):
                 pts[i] = inside
                 moved = True
@@ -166,7 +193,7 @@ def place(points: np.ndarray, labels: list[str], offsets: list[tuple[float, floa
     return pts
 
 
-def _inside_page(p: np.ndarray, margin: float = PIN_SIZE * 0.7) -> np.ndarray:
+def _inside_page(p: np.ndarray, margin: float) -> np.ndarray:
     """p (layout units) moved straight towards the page's middle until it is `margin` inside every edge."""
     import cv2
     page = PAGE - np.float32([BG_OFFSET_X, 0])
@@ -183,38 +210,55 @@ def pin_positions(cm: CampaignMap, labels: list[str]) -> list[Placed]:
     """Each pin button and its name, in layout units."""
     centres = _project([p.at for p in cm.pins])
     centres[:, 0] -= BG_OFFSET_X
-    offsets = [label_offset(label, p.label) for label, p in zip(labels, cm.pins, strict=True)]
-    return [Placed(round(c[0] - PIN_SIZE / 2), round(c[1] - PIN_SIZE / 2), round(o[0]), round(o[1]))
-            for c, o in zip(place(centres, labels, offsets), offsets, strict=True)]
+    sizes = [p.size for p in cm.pins]
+    offsets = [label_offset(label, p.label, p.size) for label, p in zip(labels, cm.pins, strict=True)]
+    return [Placed(round(c[0] - s / 2), round(c[1] - s / 2), s, round(o[0]), round(o[1]))
+            for c, o, s in zip(place(centres, labels, offsets, sizes), offsets, sizes, strict=True)]
 
 
 def background_file(slug: str) -> str:
     return f"{slug}_map.dds"
 
 
+def _camel(slug: str) -> str:
+    return "".join(w.title() for w in slug.split("_"))
+
+
 def _material(slug: str) -> str:
-    return "CampaignBackground" + "".join(w.title() for w in slug.split("_")) + "Map"
+    return f"CampaignBackground{_camel(slug)}Map"
 
 
-def icon_material(cm: CampaignMap, icon: str) -> str:
-    return icon if cm.pin_colour == "blue" else f"{icon}{cm.pin_colour.title()}"
+def pin_material(cm: CampaignMap, number: int) -> str:
+    """Material prefix of mission `number`'s pin (Normal/Hover/Pressed/Disabled appended)."""
+    p = cm.pins[number - 1]
+    if p.sprite:
+        return f"CampaignPin{_camel(cm.slug)}{number}"
+    return p.icon if cm.pin_colour == "blue" else f"{p.icon}{cm.pin_colour.title()}"
+
+
+def _pin_file(material: str, state: str) -> str:
+    return f"{material}{state}.png"
+
+
+def custom_pins(cm: CampaignMap) -> dict[str, Pin]:
+    """Material prefix -> pin, for the pins we draw ourselves (sprites, recoloured RoR pins)."""
+    out = {}
+    for n, p in enumerate(cm.pins, start=1):
+        if p.sprite or cm.pin_colour != "blue":
+            out.setdefault(pin_material(cm, n), p)
+    return out
 
 
 def build_layout(cm: CampaignMap, title: str, labels: list[str]) -> dict:
-    buttons = [{"x": at.x, "y": at.y, "size": PIN_SIZE, "icon": icon_material(cm, p.icon), "label": label,
+    buttons = [{"x": at.x, "y": at.y, "size": at.size, "icon": pin_material(cm, n), "label": label,
                 "label_x": at.label_x, "label_y": at.label_y}
-               for at, p, label in zip(pin_positions(cm, labels), cm.pins, labels, strict=True)]
+               for n, (at, label) in enumerate(zip(pin_positions(cm, labels), labels, strict=True), start=1)]
     materials = [{"Material": _material(cm.slug), "FileName": background_file(cm.slug), "Blend": "None"}]
-    if cm.pin_colour != "blue":
-        for icon in sorted({p.icon for p in cm.pins}):
-            materials += [{"Material": f"{icon_material(cm, icon)}{s}", "FileName": _icon_file(cm, icon, s),
-                           "Blend": "InverseAlpha"} for s in STATES]
+    for material in sorted(custom_pins(cm)):
+        materials += [{"Material": f"{material}{s}", "FileName": _pin_file(material, s), "Blend": "InverseAlpha"}
+                      for s in STATES]
     return ed_screens.build_layout(title=title, background=_material(cm.slug), buttons=buttons,
                                    user_materials=materials)
-
-
-def _icon_file(cm: CampaignMap, icon: str, state: str) -> str:
-    return f"{icon_material(cm, icon)}{state}.png"
 
 
 # ---------------------------------------------------------------- drawing (local game files only)
@@ -249,8 +293,12 @@ def base_map(c: layout.CampaignInfo, base: int) -> tuple[np.ndarray, np.ndarray]
 def ink(clean: np.ndarray, unfilled: np.ndarray) -> np.ndarray:
     """How dark the ink is at each base-map pixel (0 paper .. 1 ink)."""
     import cv2
-    f = clean.astype(np.float32)
-    land = f[..., 0] >= f[..., 1] - 6                     # sea is the only colour where green beats red
+    f = clean.astype(np.int32)
+    # Land is tan (red far above blue); sea is teal or olive grey (red near blue). Each map is split at
+    # its own threshold (Otsu), since AoE DE's maps are tinted differently.
+    red_blue = np.clip(f[..., 0] - f[..., 2] + 128, 0, 255).astype(np.uint8)
+    split, _ = cv2.threshold(red_blue[~unfilled].reshape(-1, 1), 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+    land = red_blue > split
     n, comp = cv2.connectedComponents(unfilled.astype(np.uint8))
     thin = np.zeros_like(unfilled)
     for k in range(1, n):
@@ -265,6 +313,10 @@ def ink(clean: np.ndarray, unfilled: np.ndarray) -> np.ndarray:
         land[thin] = guess[thin] > 127
     land = cv2.morphologyEx(land.astype(np.uint8), cv2.MORPH_OPEN, np.ones((3, 3), np.uint8))
     land = cv2.morphologyEx(land, cv2.MORPH_CLOSE, np.ones((5, 5), np.uint8)).astype(bool)
+    n, comp, stats, _ = cv2.connectedComponentsWithStats((~land).astype(np.uint8))
+    for k in range(1, n):                                 # dark mountain patches aren't seas
+        if stats[k, cv2.CC_STAT_AREA] < MIN_SEA:
+            land[comp == k] = True
     gray = cv2.cvtColor(clean, cv2.COLOR_RGB2GRAY).astype(np.float32) / 255
     detail = np.clip((cv2.GaussianBlur(gray, (0, 0), 6) - gray) * 6, 0, 1)
     detail[unfilled] = 0
@@ -272,7 +324,8 @@ def ink(clean: np.ndarray, unfilled: np.ndarray) -> np.ndarray:
     coast = cv2.morphologyEx(land.astype(np.uint8), cv2.MORPH_GRADIENT, np.ones((3, 3), np.uint8)).astype(np.float32)
     coast = cv2.GaussianBlur(coast, (0, 0), 0.8)
     sea = np.clip(0.55 + (gray - gray[~land].mean()) * 1.5, 0.35, 0.75) if (~land).any() else 0.5
-    dark = np.where(land, 0.10 + 0.55 * detail, sea)
+    texture = np.median(detail[land]) if land.any() else 0.0   # busy desert textures ink like plain grass
+    dark = np.where(land, 0.10 + 0.55 * np.clip(detail - texture, 0, 1), sea)
     return np.maximum(dark, np.clip(coast * 1.4, 0, 1)).astype(np.float32)
 
 
@@ -310,30 +363,82 @@ def recolour(img, colour: str):
     hsv = np.array(rgba.convert("RGB").convert("HSV")).astype(np.int32)
     hue, sat = hsv[..., 0], hsv[..., 1]
     blue = (hue > 138) & (hue < 181) & (sat > 76)         # PIL hue 0-255: blue is about 195-255 degrees
-    target = PIN_COLOURS[colour]
+    target = PIN_COLOURS[colour][0]
     if target == "grey":
         hsv[..., 1][blue] = 0
-    else:
+    elif target is not None:
         hsv[..., 0][blue] = round(target / 360 * 255)
     rgb = Image.fromarray(hsv.astype(np.uint8), "HSV").convert("RGB")
     rgb.putalpha(rgba.getchannel("A"))
     return rgb
 
 
+@cache
+def _palette(name: str) -> list:
+    from .aoede.slp import read_palette
+    return read_palette(PALETTES / name)
+
+
+@cache
+def _palette_ids() -> dict[int, str]:
+    """AoE DE palette id (a frame's properties >> 16) -> palette file, from palettes.conf."""
+    out = {}
+    for line in (PALETTES / "palettes.conf").read_text(encoding="utf-8").splitlines():
+        m = re.match(r"\s*(\d+),\s*(\S+\.pal)", line)
+        if m:
+            out[int(m.group(1))] = m.group(2)
+    return out
+
+
+def sprite_pin(p: Pin, colour: str):
+    """An AoE DE sprite frame as a RoR-style 400 x 400 pin image, in the player colour."""
+    from PIL import Image
+
+    from .aoede.slp import Slp
+    slp = Slp.load(SPRITES / p.sprite)
+    frame = slp.frames[p.frame]
+    unit = slp.image(p.frame, _palette(_palette_ids()[frame.properties >> 16]),
+                     _palette(f"playercolor_{PIN_COLOURS[colour][1]}.pal"))
+    unit = unit.crop(unit.getbbox())
+    fit = min(UNIT_BOX[0] / unit.width, UNIT_BOX[1] / unit.height) * p.scale
+    unit = unit.resize((max(1, round(unit.width * fit)), max(1, round(unit.height * fit))), Image.LANCZOS)
+    pin = Image.new("RGBA", (PIN_IMAGE, PIN_IMAGE), (0, 0, 0, 0))
+    pin.alpha_composite(unit, (UNIT_FOOT[0] - unit.width // 2, UNIT_FOOT[1] - unit.height))
+    return pin
+
+
+def pin_state(normal, state: str):
+    """RoR's look for a pin state, applied to its normal image."""
+    from PIL import Image, ImageEnhance
+    look = STATE_LOOK[state]
+    alpha = normal.getchannel("A")
+    if look is None:
+        img = normal.convert("L").point(lambda v: int(v * 0.75)).convert("RGB")
+    else:
+        img = ImageEnhance.Brightness(normal.convert("RGB")).enhance(look)
+    img.putalpha(alpha)
+    if state == "Pressed":
+        moved = Image.new("RGBA", img.size, (0, 0, 0, 0))
+        moved.alpha_composite(img, (0, 2))
+        return moved
+    return img
+
+
 def files(c: layout.CampaignInfo, cm: CampaignMap, out_dir: Path) -> list[Path]:
-    """Draw the background (and recoloured pins) into out_dir; returns the files for the mod's campaign folder."""
+    """Draw the background and our own pins into out_dir; returns the files for the mod's campaign folder."""
     from PIL import Image
     out_dir.mkdir(parents=True, exist_ok=True)
     bg = out_dir / background_file(cm.slug)
     render_background(c, cm).save(bg, pixel_format="DXT1")
     written = [bg]
-    if cm.pin_colour != "blue":
-        src = _ror_icon_files()
-        for icon in sorted({p.icon for p in cm.pins}):
-            for s in STATES:
-                dest = out_dir / _icon_file(cm, icon, s)
-                recolour(Image.open(src[f"{icon}{s}"]), cm.pin_colour).save(dest)
-                written.append(dest)
+    src = _ror_icon_files()
+    for material, p in sorted(custom_pins(cm).items()):
+        normal = sprite_pin(p, cm.pin_colour) if p.sprite else None
+        for s in STATES:
+            img = pin_state(normal, s) if p.sprite else recolour(Image.open(src[f"{p.icon}{s}"]), cm.pin_colour)
+            dest = out_dir / _pin_file(material, s)
+            img.save(dest)
+            written.append(dest)
     return written
 
 

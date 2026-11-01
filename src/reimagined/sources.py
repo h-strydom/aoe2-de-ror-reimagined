@@ -12,7 +12,7 @@ from pathlib import Path
 
 from . import layout
 from .aoede.campaign import load_campaign
-from .aoede.install import ASSETS, CAMPAIGN_DIR, DATA_FILES, find_aoede
+from .aoede.install import ASSETS, CAMPAIGN_DIR, DATA_FILES, SPRITE_DIR, find_aoede
 
 
 @dataclass
@@ -71,6 +71,17 @@ def setup(source: str | Path | None = None, root: Path = layout.AOE1DE) -> Setup
             if not dest.is_file() or dest.stat().st_size != src.stat().st_size:
                 shutil.copy2(src, dest)
             report.assets += 1
+    from .campaign_maps import sprites
+    for name in sorted(sprites()):
+        src = install / SPRITE_DIR / name
+        if not src.is_file():
+            report.problems.append(f"campaign map pin sprite {SPRITE_DIR / name} is missing")
+            continue
+        dest = data_dir / SPRITE_DIR / name
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        if not dest.is_file() or dest.stat().st_size != src.stat().st_size:
+            shutil.copy2(src, dest)
+        report.assets += 1
     return report
 
 

@@ -25,7 +25,11 @@ ASSETS = (
     (Path("Assets") / "UI" / "backdrops", "backgroundcampaign.SLP"),
     (Path("Assets") / "UI" / "backdrops", "scenariomapborder.slp"),
     (Path("Content") / "Voice Over" / "en", "*.mp3"),
+    (Path("Assets") / "Palettes", "*.pal"),
+    (Path("Assets") / "Palettes", "palettes.conf"),
 )
+# AoE DE sprites drawn as campaign map pins: the ones aoe2de_ror/campaign_maps.yaml names.
+SPRITE_DIR = Path("Assets") / "SLP"
 
 
 def has_campaigns(root: Path) -> bool:

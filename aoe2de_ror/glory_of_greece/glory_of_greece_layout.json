@@ -1,5 +1,172 @@
 {
-   "BackgroundMaterial": "CampaignBackgroundGlory",
+   "UserMaterials": [
+      {
+         "Material": "CampaignBackgroundGloryOfGreeceMap",
+         "FileName": "glory_of_greece_map.dds",
+         "Blend": "None"
+      },
+      {
+         "Material": "CampaignIconAlexanderAttackRedNormal",
+         "FileName": "CampaignIconAlexanderAttackRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconAlexanderAttackRedHover",
+         "FileName": "CampaignIconAlexanderAttackRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconAlexanderAttackRedPressed",
+         "FileName": "CampaignIconAlexanderAttackRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconAlexanderAttackRedDisabled",
+         "FileName": "CampaignIconAlexanderAttackRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconBowmanIdleRedNormal",
+         "FileName": "CampaignIconBowmanIdleRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconBowmanIdleRedHover",
+         "FileName": "CampaignIconBowmanIdleRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconBowmanIdleRedPressed",
+         "FileName": "CampaignIconBowmanIdleRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconBowmanIdleRedDisabled",
+         "FileName": "CampaignIconBowmanIdleRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdleRedNormal",
+         "FileName": "CampaignIconCavalryIdleRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdleRedHover",
+         "FileName": "CampaignIconCavalryIdleRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdleRedPressed",
+         "FileName": "CampaignIconCavalryIdleRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCavalryIdleRedDisabled",
+         "FileName": "CampaignIconCavalryIdleRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackRedNormal",
+         "FileName": "CampaignIconCenturionAttackRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackRedHover",
+         "FileName": "CampaignIconCenturionAttackRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackRedPressed",
+         "FileName": "CampaignIconCenturionAttackRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconCenturionAttackRedDisabled",
+         "FileName": "CampaignIconCenturionAttackRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconClubmanAttackRedNormal",
+         "FileName": "CampaignIconClubmanAttackRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconClubmanAttackRedHover",
+         "FileName": "CampaignIconClubmanAttackRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconClubmanAttackRedPressed",
+         "FileName": "CampaignIconClubmanAttackRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconClubmanAttackRedDisabled",
+         "FileName": "CampaignIconClubmanAttackRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHopliteAttackRedNormal",
+         "FileName": "CampaignIconHopliteAttackRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHopliteAttackRedHover",
+         "FileName": "CampaignIconHopliteAttackRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHopliteAttackRedPressed",
+         "FileName": "CampaignIconHopliteAttackRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconHopliteAttackRedDisabled",
+         "FileName": "CampaignIconHopliteAttackRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconLightTransportIdleRedNormal",
+         "FileName": "CampaignIconLightTransportIdleRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconLightTransportIdleRedHover",
+         "FileName": "CampaignIconLightTransportIdleRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconLightTransportIdleRedPressed",
+         "FileName": "CampaignIconLightTransportIdleRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconLightTransportIdleRedDisabled",
+         "FileName": "CampaignIconLightTransportIdleRedDisabled.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkRedNormal",
+         "FileName": "CampaignIconPhalanxWalkRedNormal.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkRedHover",
+         "FileName": "CampaignIconPhalanxWalkRedHover.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkRedPressed",
+         "FileName": "CampaignIconPhalanxWalkRedPressed.png",
+         "Blend": "InverseAlpha"
+      },
+      {
+         "Material": "CampaignIconPhalanxWalkRedDisabled",
+         "FileName": "CampaignIconPhalanxWalkRedDisabled.png",
+         "Blend": "InverseAlpha"
+      }
+   ],
+   "BackgroundMaterial": "CampaignBackgroundGloryOfGreeceMap",
    "Widgets": [
       {
          "Widget": {
@@ -37,22 +204,63 @@
             "Type": "Button",
             "Name": "ScenarioButton1",
             "ViewPort": {
-               "xorigin": 1350,
-               "yorigin": 570,
-               "width": 250,
-               "height": 250,
+               "xorigin": 1053,
+               "yorigin": 615,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "Image": {
                "xorigin": 0,
                "yorigin": 0,
-               "width": 250,
-               "height": 250,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "StateMaterials": {
+               "StateNormal": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconClubmanAttackRedNormal"
+               },
+               "StateHover": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconClubmanAttackRedHover"
+               },
+               "StatePressed": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconClubmanAttackRedPressed"
+               },
                "StateDisabled": {
-                  "Material": "CampaignIconClubmanAttackDisabled",
                   "Font": {
                      "FontIndex": 0,
                      "PointSize": 34,
@@ -63,49 +271,8 @@
                         "b": 82,
                         "a": 128
                      }
-                  }
-               },
-               "StateNormal": {
-                  "Material": "CampaignIconClubmanAttackNormal",
-                  "Font": {
-                     "FontIndex": -40,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StateHover": {
-                  "Material": "CampaignIconClubmanAttackHover",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StatePressed": {
-                  "Material": "CampaignIconClubmanAttackPressed",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
+                  },
+                  "Material": "CampaignIconClubmanAttackRedDisabled"
                }
             },
             "ChildWidgets": [
@@ -114,8 +281,8 @@
                      "Type": "CampaignTitle",
                      "Name": "CampaignButton1Label",
                      "ViewPort": {
-                        "xorigin": 0,
-                        "yorigin": 195,
+                        "xorigin": -122,
+                        "yorigin": 165,
                         "width": 700,
                         "height": 100,
                         "alignment": "TopLeft"
@@ -150,20 +317,62 @@
             "Type": "Button",
             "Name": "ScenarioButton2",
             "ViewPort": {
-               "xorigin": 1350,
-               "yorigin": 910,
-               "width": 250,
-               "height": 250,
+               "xorigin": 1277,
+               "yorigin": 532,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "Image": {
                "xorigin": 0,
                "yorigin": 0,
-               "width": 240,
-               "height": 240,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "StateMaterials": {
+               "StateNormal": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconBowmanIdleRedNormal"
+               },
+               "StateHover": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconBowmanIdleRedHover"
+               },
+               "StatePressed": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconBowmanIdleRedPressed"
+               },
                "StateDisabled": {
                   "Font": {
                      "FontIndex": 0,
@@ -175,59 +384,18 @@
                         "b": 82,
                         "a": 128
                      }
-                  }
-               },
-               "StateNormal": {
-                  "Material": "CampaignIconBowmanIdleNormal",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StateHover": {
-                  "Material": "CampaignIconBowmanIdleHover",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StatePressed": {
-                  "Material": "CampaignIconBowmanIdlePressed",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
+                  },
+                  "Material": "CampaignIconBowmanIdleRedDisabled"
                }
             },
             "ChildWidgets": [
                {
                   "Widget": {
                      "Type": "CampaignTitle",
-                     "Name": "CampaignButton1Label",
+                     "Name": "CampaignButton2Label",
                      "ViewPort": {
-                        "xorigin": 0,
-                        "yorigin": 190,
+                        "xorigin": -14,
+                        "yorigin": 165,
                         "width": 700,
                         "height": 100,
                         "alignment": "TopLeft"
@@ -262,13 +430,62 @@
             "Type": "Button",
             "Name": "ScenarioButton3",
             "ViewPort": {
-               "xorigin": 1550,
-               "yorigin": 1305,
-               "width": 240,
-               "height": 240,
+               "xorigin": 1281,
+               "yorigin": 1075,
+               "width": 260,
+               "height": 260,
+               "alignment": "TopLeft"
+            },
+            "Image": {
+               "xorigin": 0,
+               "yorigin": 0,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "StateMaterials": {
+               "StateNormal": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconCavalryIdleRedNormal"
+               },
+               "StateHover": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconCavalryIdleRedHover"
+               },
+               "StatePressed": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconCavalryIdleRedPressed"
+               },
                "StateDisabled": {
                   "Font": {
                      "FontIndex": 0,
@@ -280,59 +497,18 @@
                         "b": 82,
                         "a": 128
                      }
-                  }
-               },
-               "StateNormal": {
-                  "Material": "CampaignIconCavalryIdleNormal",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StateHover": {
-                  "Material": "CampaignIconCavalryIdleHover",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StatePressed": {
-                  "Material": "CampaignIconCavalryIdlePressed",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
+                  },
+                  "Material": "CampaignIconCavalryIdleRedDisabled"
                }
             },
             "ChildWidgets": [
                {
                   "Widget": {
                      "Type": "CampaignTitle",
-                     "Name": "CampaignButton1Label",
+                     "Name": "CampaignButton3Label",
                      "ViewPort": {
-                        "xorigin": 0,
-                        "yorigin": 200,
+                        "xorigin": -158,
+                        "yorigin": 165,
                         "width": 700,
                         "height": 100,
                         "alignment": "TopLeft"
@@ -367,13 +543,62 @@
             "Type": "Button",
             "Name": "ScenarioButton4",
             "ViewPort": {
-               "xorigin": 1950,
-               "yorigin": 840,
-               "width": 250,
-               "height": 250,
+               "xorigin": 1887,
+               "yorigin": 377,
+               "width": 260,
+               "height": 260,
+               "alignment": "TopLeft"
+            },
+            "Image": {
+               "xorigin": 0,
+               "yorigin": 0,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "StateMaterials": {
+               "StateNormal": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconHopliteAttackRedNormal"
+               },
+               "StateHover": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconHopliteAttackRedHover"
+               },
+               "StatePressed": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconHopliteAttackRedPressed"
+               },
                "StateDisabled": {
                   "Font": {
                      "FontIndex": 0,
@@ -385,59 +610,18 @@
                         "b": 82,
                         "a": 128
                      }
-                  }
-               },
-               "StateNormal": {
-                  "Material": "CampaignIconHopliteAttackNormal",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StateHover": {
-                  "Material": "CampaignIconHopliteAttackHover",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StatePressed": {
-                  "Material": "CampaignIconHopliteAttackPressed",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
+                  },
+                  "Material": "CampaignIconHopliteAttackRedDisabled"
                }
             },
             "ChildWidgets": [
                {
                   "Widget": {
                      "Type": "CampaignTitle",
-                     "Name": "CampaignButton1Label",
+                     "Name": "CampaignButton4Label",
                      "ViewPort": {
-                        "xorigin": 0,
-                        "yorigin": 190,
+                        "xorigin": -74,
+                        "yorigin": -50,
                         "width": 700,
                         "height": 100,
                         "alignment": "TopLeft"
@@ -472,20 +656,62 @@
             "Type": "Button",
             "Name": "ScenarioButton5",
             "ViewPort": {
-               "xorigin": 1730,
-               "yorigin": 1090,
-               "width": 250,
-               "height": 250,
+               "xorigin": 1792,
+               "yorigin": 584,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "Image": {
                "xorigin": 0,
                "yorigin": 0,
-               "width": 240,
-               "height": 240,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "StateMaterials": {
+               "StateNormal": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconLightTransportIdleRedNormal"
+               },
+               "StateHover": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconLightTransportIdleRedHover"
+               },
+               "StatePressed": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconLightTransportIdleRedPressed"
+               },
                "StateDisabled": {
                   "Font": {
                      "FontIndex": 0,
@@ -497,59 +723,18 @@
                         "b": 82,
                         "a": 128
                      }
-                  }
-               },
-               "StateNormal": {
-                  "Material": "CampaignIconLightTransportIdleNormal",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StateHover": {
-                  "Material": "CampaignIconLightTransportIdleHover",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StatePressed": {
-                  "Material": "CampaignIconLightTransportIdlePressed",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
+                  },
+                  "Material": "CampaignIconLightTransportIdleRedDisabled"
                }
             },
             "ChildWidgets": [
                {
                   "Widget": {
                      "Type": "CampaignTitle",
-                     "Name": "CampaignButton1Label",
+                     "Name": "CampaignButton5Label",
                      "ViewPort": {
-                        "xorigin": 70,
-                        "yorigin": 180,
+                        "xorigin": -158,
+                        "yorigin": 165,
                         "width": 700,
                         "height": 100,
                         "alignment": "TopLeft"
@@ -584,20 +769,62 @@
             "Type": "Button",
             "Name": "ScenarioButton6",
             "ViewPort": {
-               "xorigin": 1510,
-               "yorigin": 870,
-               "width": 250,
-               "height": 250,
+               "xorigin": 1466,
+               "yorigin": 487,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "Image": {
                "xorigin": 0,
                "yorigin": 0,
-               "width": 310,
-               "height": 310,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "StateMaterials": {
+               "StateNormal": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconPhalanxWalkRedNormal"
+               },
+               "StateHover": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconPhalanxWalkRedHover"
+               },
+               "StatePressed": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconPhalanxWalkRedPressed"
+               },
                "StateDisabled": {
                   "Font": {
                      "FontIndex": 0,
@@ -609,59 +836,18 @@
                         "b": 82,
                         "a": 128
                      }
-                  }
-               },
-               "StateNormal": {
-                  "Material": "CampaignIconPhalanxWalkNormal",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StateHover": {
-                  "Material": "CampaignIconPhalanxWalkHover",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StatePressed": {
-                  "Material": "CampaignIconPhalanxWalkPressed",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
+                  },
+                  "Material": "CampaignIconPhalanxWalkRedDisabled"
                }
             },
             "ChildWidgets": [
                {
                   "Widget": {
                      "Type": "CampaignTitle",
-                     "Name": "CampaignButton1Label",
+                     "Name": "CampaignButton6Label",
                      "ViewPort": {
-                        "xorigin": 40,
-                        "yorigin": -20,
+                        "xorigin": -134,
+                        "yorigin": -50,
                         "width": 700,
                         "height": 100,
                         "alignment": "TopLeft"
@@ -696,20 +882,62 @@
             "Type": "Button",
             "Name": "ScenarioButton7",
             "ViewPort": {
-               "xorigin": 2800,
-               "yorigin": 1205,
-               "width": 250,
-               "height": 250,
+               "xorigin": 2985,
+               "yorigin": 938,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "Image": {
                "xorigin": 0,
                "yorigin": 0,
-               "width": 300,
-               "height": 300,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "StateMaterials": {
+               "StateNormal": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconCenturionAttackRedNormal"
+               },
+               "StateHover": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconCenturionAttackRedHover"
+               },
+               "StatePressed": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconCenturionAttackRedPressed"
+               },
                "StateDisabled": {
                   "Font": {
                      "FontIndex": 0,
@@ -721,59 +949,18 @@
                         "b": 82,
                         "a": 128
                      }
-                  }
-               },
-               "StateNormal": {
-                  "Material": "CampaignIconCenturionAttackNormal",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StateHover": {
-                  "Material": "CampaignIconCenturionAttackHover",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StatePressed": {
-                  "Material": "CampaignIconCenturionAttackPressed",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
+                  },
+                  "Material": "CampaignIconCenturionAttackRedDisabled"
                }
             },
             "ChildWidgets": [
                {
                   "Widget": {
                      "Type": "CampaignTitle",
-                     "Name": "CampaignButton1Label",
+                     "Name": "CampaignButton7Label",
                      "ViewPort": {
-                        "xorigin": 10,
-                        "yorigin": 185,
+                        "xorigin": -98,
+                        "yorigin": 165,
                         "width": 700,
                         "height": 100,
                         "alignment": "TopLeft"
@@ -808,20 +995,62 @@
             "Type": "Button",
             "Name": "ScenarioButton8",
             "ViewPort": {
-               "xorigin": 2285,
-               "yorigin": 1065,
-               "width": 250,
-               "height": 250,
+               "xorigin": 2160,
+               "yorigin": 656,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "Image": {
                "xorigin": 0,
                "yorigin": 0,
-               "width": 300,
-               "height": 300,
+               "width": 260,
+               "height": 260,
                "alignment": "TopLeft"
             },
             "StateMaterials": {
+               "StateNormal": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconAlexanderAttackRedNormal"
+               },
+               "StateHover": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconAlexanderAttackRedHover"
+               },
+               "StatePressed": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  },
+                  "Material": "CampaignIconAlexanderAttackRedPressed"
+               },
                "StateDisabled": {
                   "Font": {
                      "FontIndex": 0,
@@ -833,59 +1062,18 @@
                         "b": 82,
                         "a": 128
                      }
-                  }
-               },
-               "StateNormal": {
-                  "Material": "CampaignIconAlexanderAttackNormal",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StateHover": {
-                  "Material": "CampaignIconAlexanderAttackHover",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
-               },
-               "StatePressed": {
-                  "Material": "CampaignIconAlexanderAttackPressed",
-                  "Font": {
-                     "FontIndex": 0,
-                     "PointSize": 34,
-                     "Style": "Normal",
-                     "TextColor": {
-                        "r": 42,
-                        "g": 10,
-                        "b": 82,
-                        "a": 255
-                     }
-                  }
+                  },
+                  "Material": "CampaignIconAlexanderAttackRedDisabled"
                }
             },
             "ChildWidgets": [
                {
                   "Widget": {
                      "Type": "CampaignTitle",
-                     "Name": "CampaignButton1Label",
+                     "Name": "CampaignButton8Label",
                      "ViewPort": {
-                        "xorigin": 20,
-                        "yorigin": 240,
+                        "xorigin": -134,
+                        "yorigin": 165,
                         "width": 700,
                         "height": 100,
                         "alignment": "TopLeft"
@@ -913,94 +1101,6 @@
                   }
                }
             ]
-         }
-      },
-      {
-         "Widget": {
-            "Type": "Base",
-            "Name": "NextIndicator1",
-            "ViewPort": {
-               "xorigin": 2412,
-               "yorigin": 626,
-               "width": 277,
-               "height": 182,
-               "alignment": "TopLeft"
-            },
-            "Wrap": {
-               "width": 0,
-               "height": 0
-            },
-            "StateMaterials": {
-               "StateNormal": {
-                  "Material": "GenghisKhanIndicator1"
-               }
-            }
-         }
-      },
-      {
-         "Widget": {
-            "Type": "Base",
-            "Name": "NextIndicator2",
-            "ViewPort": {
-               "xorigin": 2342,
-               "yorigin": 945,
-               "width": 245,
-               "height": 330,
-               "alignment": "TopLeft"
-            },
-            "Wrap": {
-               "width": 0,
-               "height": 0
-            },
-            "StateMaterials": {
-               "StateNormal": {
-                  "Material": "GenghisKhanIndicator2"
-               }
-            }
-         }
-      },
-      {
-         "Widget": {
-            "Type": "Base",
-            "Name": "NextIndicator3",
-            "ViewPort": {
-               "xorigin": 2010,
-               "yorigin": 1095,
-               "width": 416,
-               "height": 314,
-               "alignment": "TopLeft"
-            },
-            "Wrap": {
-               "width": 0,
-               "height": 0
-            },
-            "StateMaterials": {
-               "StateNormal": {
-                  "Material": "GenghisKhanIndicator3"
-               }
-            }
-         }
-      },
-      {
-         "Widget": {
-            "Type": "Base",
-            "Name": "NextIndicator4",
-            "ViewPort": {
-               "xorigin": 1752,
-               "yorigin": 606,
-               "width": 317,
-               "height": 362,
-               "alignment": "TopLeft"
-            },
-            "Wrap": {
-               "width": 0,
-               "height": 0
-            },
-            "StateMaterials": {
-               "StateNormal": {
-                  "Material": "GenghisKhanIndicator4"
-               }
-            }
          }
       }
    ]
