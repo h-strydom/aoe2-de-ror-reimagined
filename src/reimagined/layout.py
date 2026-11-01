@@ -8,6 +8,13 @@ aoe1de/
       mission.yaml                mission title and its source scenario
       <source>.aoescn             the original scenario, extracted (local only, git-ignored)
   data/                           AoE DE game data the converter reads (local only, git-ignored)
+
+aoe2de_ror/
+  conversion.yaml                 what each AoE DE terrain and object becomes in RoR, plus mission overrides
+  <campaign>/
+    <campaign>.aoe2campaign       the converted campaign (_part2... when RoR's map can't show every mission)
+    NN_<mission>/
+      <campaign>_NN_<mission>.aoe2scenario   the converted scenario
 """
 from __future__ import annotations
 
@@ -18,6 +25,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 AOE1DE = ROOT / "aoe1de"
+AOE2DE_ROR = ROOT / "aoe2de_ror"
 
 
 @dataclass
@@ -29,6 +37,11 @@ class Mission:
     @property
     def scenario_path(self) -> Path:
         return self.folder / self.source_scenario
+
+    @property
+    def key(self) -> str:
+        """`<campaign>/<NN_mission>`, the name conversion.yaml's mission overrides use."""
+        return f"{self.folder.parent.name}/{self.folder.name}"
 
 
 @dataclass

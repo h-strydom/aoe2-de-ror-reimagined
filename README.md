@@ -57,6 +57,27 @@ what the project needs into the repository:
 These copies are git-ignored, because the original game files aren't redistributed. After `setup`,
 nothing reads the install again: you can uninstall AoE DE, and every path stays inside the repo.
 
+## Converting
+
+```bash
+uv run reimagined convert
+```
+
+Converts every campaign (or just the ones you name, e.g. `reimagined convert ascent_of_egypt`) into
+`aoe2de_ror/`, following `conversion.yaml`:
+- each mission into `aoe2de_ror/<campaign>/NN_<mission>/<campaign>_NN_<mission>.aoe2scenario`
+- each campaign into `aoe2de_ror/<campaign>/<campaign>.aoe2campaign`, titled "AoE1 <title>". RoR's
+  campaign map shows at most 9 missions, so Ascent of Egypt comes in two files (`_part2`).
+
+The map, terrain, elevation, players (civ, starting age, resources, diplomacy), objects and the
+scenario instructions carry over. Triggers don't yet, so missions have no objectives or victory
+conditions. The output is deterministic, and `uv run pytest` fails if the committed maps don't
+match what `convert` builds today.
+
+To play them, add `--install`: it also copies the campaign files into your AoE2 DE profile's Return of
+Rome campaign folder (`<profile>/modes/Pompeii/resources/_common/campaign/`), where they show up
+under Return of Rome's campaigns.
+
 ## Changing the conversion
 
 `aoe2de_ror/conversion.yaml` lists every AoE DE terrain and object the campaigns use, each with what
@@ -87,10 +108,10 @@ every terrain and object on every map is covered.
 | `aoe1de/<campaign>/NN_<mission>/mission.yaml` | mission title and its source scenario | yes |
 | `aoe1de/**/*.aoecpn`, `*.aoescn`, `aoe1de/data/` | original AoE DE files, copied in by `setup` | **no** |
 | `aoe2de_ror/conversion.yaml` | what each AoE DE terrain and object becomes in RoR, plus mission overrides | yes |
-| converted Return of Rome maps (coming) | this project's work: faithful conversions, then edited and reimagined versions | yes |
+| `aoe2de_ror/<campaign>/` | converted Return of Rome campaigns and scenarios | faithful conversions; edited and reimagined versions come later | yes |
 
-Anyone who just wants faithful Return of Rome versions of the AoE DE campaigns will be able to take
-the converted maps straight from this repository.
+Anyone who just wants faithful Return of Rome versions of the AoE DE campaigns can take the
+converted maps straight from `aoe2de_ror/`.
 
 ## Related
 

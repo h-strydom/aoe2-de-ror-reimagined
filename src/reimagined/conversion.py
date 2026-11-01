@@ -7,15 +7,17 @@ and reports every problem at once, so a typo in the file fails loudly instead of
 from __future__ import annotations
 
 from dataclasses import dataclass, field, replace
+from functools import cache
 from pathlib import Path
 
 import yaml
 from aoe2ed import games
+from aoe2ed.mapgen.names import tree_for_forest
 from AoE2ScenarioParser.datasets.terrains import TerrainId
 
 from . import layout
 
-CONVERSION_FILE = layout.ROOT / "aoe2de_ror" / "conversion.yaml"
+CONVERSION_FILE = layout.AOE2DE_ROR / "conversion.yaml"
 DROP = "drop"
 TOP_KEYS = {"terrain", "objects", "rules", "missions"}
 RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs"}
@@ -50,10 +52,26 @@ class Conversion:
             return self
         return replace(self, terrain={**self.terrain, **ov["terrain"]}, objects={**self.objects, **ov["objects"]})
 
+    def place(self, aoede_id: int, ror_terrain: int) -> int | None:
+        """The RoR object for an AoE DE object standing on `ror_terrain`, or None if it's dropped.
+
+        RoR doesn't grow trees on forest terrain by itself (scenarios store every tree), so a forest
+        tree on a RoR forest terrain gets the tree aoe-agent-editor's map generator plants there."""
+        target = self.objects[aoede_id]
+        if target.forest and ror_terrain in self.forest_terrains:
+            return _forest_tree(ror_terrain)
+        return target.ror_id
+
     def uncovered(self, terrains: set[int], objects: set[int]) -> list[str]:
         """What a map uses that this conversion doesn't say how to convert."""
         out = [f"terrain {t}" for t in sorted(terrains - set(self.terrain))]
         return out + [f"object {o}" for o in sorted(objects - set(self.objects))]
+
+
+@cache
+def _forest_tree(ror_terrain: int) -> int:
+    with games.use("ror"):
+        return tree_for_forest(ror_terrain)
 
 
 def _terrain_id(value, where: str, problems: list[str]) -> int | None:
@@ -115,7 +133,7 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
     if rules.get("civs", "same_order") != "same_order":
         problems.append("rules.civs: only 'same_order' is supported")
 
-    known = {f"{c.slug}/{m.folder.name}" for c in layout.campaigns(aoe1de) for m in c.missions}
+    known = {m.key for c in layout.campaigns(aoe1de) for m in c.missions}
     missions = {}
     for key, ov in (spec.get("missions") or {}).items():
         if key not in known:
