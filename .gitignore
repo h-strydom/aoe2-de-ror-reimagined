@@ -8,18 +8,16 @@ __pycache__/
 dist/
 build/
 
-# Build output
+# Scratch output
 out/
 
-# Local copies of game files (never committed: we don't redistribute game data)
-source/
+# Original AoE DE game files, copied in by `reimagined setup` from your own install.
+# Never committed: the original game files aren't redistributed.
+# (Converted Return of Rome maps ARE version controlled; they're this project's work.)
 *.aoecpn
-*.aoe1scenario
-*.aoe2scenario
-*.aoe2campaign
-*.gpv
+*.aoescn
+aoe1de/data/
 *.dat
-!tests/fixtures/**/*.json
 
 # OS / editors
 .DS_Store

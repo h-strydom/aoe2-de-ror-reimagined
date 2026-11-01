@@ -1,6 +1,6 @@
 * text=auto eol=lf
 *.aoecpn binary
-*.aoe1scenario binary
+*.aoescn binary
 *.aoe2scenario binary
 *.aoe2campaign binary
 *.dat binary
