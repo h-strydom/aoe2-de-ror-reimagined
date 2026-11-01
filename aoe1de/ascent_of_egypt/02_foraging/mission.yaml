@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 2: Foraging
+title: "Foraging"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-02-Foraging.aoescn"
+  map_size: 48
+  players: 1

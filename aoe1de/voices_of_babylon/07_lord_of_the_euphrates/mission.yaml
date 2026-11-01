@@ -1,0 +1,7 @@
+# Voices of Babylon, mission 7: Lord of the Euphrates
+title: "Lord of the Euphrates"
+source:
+  campaign_file: "3 Voices of Babylon.aoecpn"
+  scenario: "Scn3-07-Lord of the Euphrates.aoescn"
+  map_size: 120
+  players: 3

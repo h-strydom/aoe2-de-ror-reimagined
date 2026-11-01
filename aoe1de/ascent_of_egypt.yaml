@@ -1,0 +1,17 @@
+# Ascent of Egypt: AoE DE campaign 1
+title: "Ascent of Egypt"
+source_file: "1 Ascent of Egypt.aoecpn"
+order: 1
+missions:
+  - 01_hunting
+  - 02_foraging
+  - 03_discoveries
+  - 04_the_dawn_of_a_new_age
+  - 05_skirmish
+  - 06_farming
+  - 07_trade
+  - 08_religion
+  - 09_the_river_outpost
+  - 10_naval_warfare
+  - 11_a_wonder_of_the_world
+  - 12_siege_in_canaan

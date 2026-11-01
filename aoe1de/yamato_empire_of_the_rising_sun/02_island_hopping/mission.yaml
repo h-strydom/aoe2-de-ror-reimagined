@@ -1,0 +1,7 @@
+# Yamato, Empire of the Rising Sun, mission 2: Island Hopping
+title: "Island Hopping"
+source:
+  campaign_file: "4 Yamato, Empire of the Rising Sun.aoecpn"
+  scenario: "Scn4-02-Island Hopping.aoescn"
+  map_size: 96
+  players: 2

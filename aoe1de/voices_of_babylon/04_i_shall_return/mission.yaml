@@ -1,0 +1,7 @@
+# Voices of Babylon, mission 4: I Shall Return
+title: "I Shall Return"
+source:
+  campaign_file: "3 Voices of Babylon.aoecpn"
+  scenario: "Scn3-04-I Shall Return.aoescn"
+  map_size: 96
+  players: 2

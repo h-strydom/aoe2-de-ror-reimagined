@@ -1,0 +1,7 @@
+# The First Punic War, mission 1: The Battle of Agrigentum
+title: "The Battle of Agrigentum"
+source:
+  campaign_file: "10 The First Punic War.aoecpn"
+  scenario: "Scxt1-01-The Battle of Agrigentum.aoescn"
+  map_size: 120
+  players: 3

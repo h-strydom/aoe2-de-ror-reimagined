@@ -1,0 +1,8 @@
+# The First Punic War: AoE DE campaign 10
+title: "The First Punic War"
+source_file: "10 The First Punic War.aoecpn"
+order: 10
+missions:
+  - 01_the_battle_of_agrigentum
+  - 02_the_battle_of_mylae
+  - 03_the_battle_of_tunis

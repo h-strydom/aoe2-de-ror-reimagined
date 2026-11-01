@@ -1,0 +1,7 @@
+# Yamato, Empire of the Rising Sun, mission 6: Coup
+title: "Coup"
+source:
+  campaign_file: "4 Yamato, Empire of the Rising Sun.aoecpn"
+  scenario: "Scn4-06-Coup.aoescn"
+  map_size: 96
+  players: 3

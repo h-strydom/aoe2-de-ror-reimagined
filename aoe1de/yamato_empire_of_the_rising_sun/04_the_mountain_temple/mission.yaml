@@ -1,0 +1,7 @@
+# Yamato, Empire of the Rising Sun, mission 4: The Mountain Temple
+title: "The Mountain Temple"
+source:
+  campaign_file: "4 Yamato, Empire of the Rising Sun.aoecpn"
+  scenario: "Scn4-04-The Mountain Temple.aoescn"
+  map_size: 120
+  players: 4

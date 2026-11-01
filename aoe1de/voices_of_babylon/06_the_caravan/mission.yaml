@@ -1,0 +1,7 @@
+# Voices of Babylon, mission 6: The Caravan
+title: "The Caravan"
+source:
+  campaign_file: "3 Voices of Babylon.aoecpn"
+  scenario: "Scn3-06-The Caravan.aoescn"
+  map_size: 120
+  players: 6

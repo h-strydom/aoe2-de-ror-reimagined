@@ -1,0 +1,7 @@
+# Enemies of Rome, mission 1: Crossing the Alps
+title: "Crossing the Alps"
+source:
+  campaign_file: "9 Enemies of Rome.aoecpn"
+  scenario: "Scx4-01-Crossing the Alps.aoescn"
+  map_size: 200
+  players: 5

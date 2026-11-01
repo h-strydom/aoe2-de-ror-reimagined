@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 4: The Dawn of a New Age
+title: "The Dawn of a New Age"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-04-The Dawn of a New Age.aoescn"
+  map_size: 48
+  players: 1

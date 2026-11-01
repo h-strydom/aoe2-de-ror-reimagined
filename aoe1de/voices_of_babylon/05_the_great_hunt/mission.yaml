@@ -1,0 +1,7 @@
+# Voices of Babylon, mission 5: The Great Hunt
+title: "The Great Hunt"
+source:
+  campaign_file: "3 Voices of Babylon.aoecpn"
+  scenario: "Scn3-05-The Great Hunt.aoescn"
+  map_size: 144
+  players: 4

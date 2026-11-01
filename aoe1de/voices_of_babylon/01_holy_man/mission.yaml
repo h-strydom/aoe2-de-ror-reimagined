@@ -1,0 +1,7 @@
+# Voices of Babylon, mission 1: Holy Man
+title: "Holy Man"
+source:
+  campaign_file: "3 Voices of Babylon.aoecpn"
+  scenario: "Scn3-01-Holy Man.aoescn"
+  map_size: 96
+  players: 3

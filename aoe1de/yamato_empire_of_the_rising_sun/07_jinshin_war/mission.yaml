@@ -1,0 +1,7 @@
+# Yamato, Empire of the Rising Sun, mission 7: Jinshin War
+title: "Jinshin War"
+source:
+  campaign_file: "4 Yamato, Empire of the Rising Sun.aoecpn"
+  scenario: "Scn4-07-Jinshin War.aoescn"
+  map_size: 144
+  players: 3

@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 5: Skirmish
+title: "Skirmish"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-05-Skirmish.aoescn"
+  map_size: 72
+  players: 2

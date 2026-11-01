@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 12: Siege in Canaan
+title: "Siege in Canaan"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-12-Siege in Canaan.aoescn"
+  map_size: 96
+  players: 2

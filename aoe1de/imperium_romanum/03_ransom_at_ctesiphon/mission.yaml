@@ -1,0 +1,7 @@
+# Imperium Romanum, mission 3: Ransom at Ctesiphon
+title: "Ransom at Ctesiphon"
+source:
+  campaign_file: "8 Imperium Romanum.aoecpn"
+  scenario: "Scx3-03-Ransom at Ctesiphon.aoescn"
+  map_size: 144
+  players: 5

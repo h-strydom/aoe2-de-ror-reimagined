@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 10: Naval Warfare
+title: "Naval Warfare"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-10-Naval Warfare.aoescn"
+  map_size: 72
+  players: 2

@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 7: Trade
+title: "Trade"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-07-Trade.aoescn"
+  map_size: 96
+  players: 4

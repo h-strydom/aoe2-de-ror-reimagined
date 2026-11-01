@@ -1,0 +1,7 @@
+# Ave Caesar, mission 3: The Siege of Alesia
+title: "The Siege of Alesia"
+source:
+  campaign_file: "7 Ave Caesar.aoecpn"
+  scenario: "Scx2-03-The Siege of Alesia.aoescn"
+  map_size: 144
+  players: 5

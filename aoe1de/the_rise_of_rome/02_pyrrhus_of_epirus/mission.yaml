@@ -1,0 +1,7 @@
+# The Rise of Rome, mission 2: Pyrrhus of Epirus
+title: "Pyrrhus of Epirus"
+source:
+  campaign_file: "6 The Rise of Rome.aoecpn"
+  scenario: "Scx1-02-Pyrrhus of Epirus.aoescn"
+  map_size: 144
+  players: 2

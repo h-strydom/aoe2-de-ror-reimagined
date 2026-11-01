@@ -1,0 +1,7 @@
+# Yamato, Empire of the Rising Sun, mission 8: Fujiwara Revolts
+title: "Fujiwara Revolts"
+source:
+  campaign_file: "4 Yamato, Empire of the Rising Sun.aoecpn"
+  scenario: "Scn4-08-Fujiwara Revolts.aoescn"
+  map_size: 120
+  players: 2

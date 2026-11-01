@@ -1,0 +1,7 @@
+# Ave Caesar, mission 2: The Invasion of Britain
+title: "The Invasion of Britain"
+source:
+  campaign_file: "7 Ave Caesar.aoecpn"
+  scenario: "Scx2-02-The Invasion of Britain.aoescn"
+  map_size: 144
+  players: 5

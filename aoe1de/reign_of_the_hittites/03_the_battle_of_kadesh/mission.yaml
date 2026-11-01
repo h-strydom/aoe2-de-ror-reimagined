@@ -1,0 +1,7 @@
+# Reign of the Hittites, mission 3: The Battle of Kadesh
+title: "The Battle of Kadesh"
+source:
+  campaign_file: "5 Reign of the Hittites.aoecpn"
+  scenario: "Scnt1-03-The Battle of Kadesh.aoescn"
+  map_size: 96
+  players: 3

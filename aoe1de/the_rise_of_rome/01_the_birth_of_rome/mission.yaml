@@ -1,0 +1,7 @@
+# The Rise of Rome, mission 1: The Birth of Rome
+title: "The Birth of Rome"
+source:
+  campaign_file: "6 The Rise of Rome.aoecpn"
+  scenario: "Scx1-01-The Birth of Rome.aoescn"
+  map_size: 250
+  players: 7

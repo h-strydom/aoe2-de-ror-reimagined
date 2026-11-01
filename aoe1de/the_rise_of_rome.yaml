@@ -1,0 +1,11 @@
+# The Rise of Rome: AoE DE campaign 6
+title: "The Rise of Rome"
+source_file: "6 The Rise of Rome.aoecpn"
+order: 6
+missions:
+  - 01_the_birth_of_rome
+  - 02_pyrrhus_of_epirus
+  - 03_the_siege_of_syracuse
+  - 04_the_battle_of_the_metaurus
+  - 05_the_battle_of_zama
+  - 06_mithridates

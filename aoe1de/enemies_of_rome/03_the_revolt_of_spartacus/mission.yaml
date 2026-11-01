@@ -1,0 +1,7 @@
+# Enemies of Rome, mission 3: The Revolt of Spartacus
+title: "The Revolt of Spartacus"
+source:
+  campaign_file: "9 Enemies of Rome.aoecpn"
+  scenario: "Scx4-03-The Revolt of Spartacus.aoescn"
+  map_size: 200
+  players: 3

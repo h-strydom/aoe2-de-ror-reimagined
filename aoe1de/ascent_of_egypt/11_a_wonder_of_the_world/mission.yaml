@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 11: A Wonder of the World
+title: "A Wonder of the World"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-11-A Wonder of the World.aoescn"
+  map_size: 120
+  players: 4

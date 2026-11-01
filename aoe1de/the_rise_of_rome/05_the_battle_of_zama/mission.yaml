@@ -1,0 +1,7 @@
+# The Rise of Rome, mission 5: The Battle of Zama
+title: "The Battle of Zama"
+source:
+  campaign_file: "6 The Rise of Rome.aoecpn"
+  scenario: "Scx1-05-The Battle of Zama.aoescn"
+  map_size: 144
+  players: 4

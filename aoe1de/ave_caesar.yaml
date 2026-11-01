@@ -1,0 +1,9 @@
+# Ave Caesar: AoE DE campaign 7
+title: "Ave Caesar"
+source_file: "7 Ave Caesar.aoecpn"
+order: 7
+missions:
+  - 01_caesars_revenge
+  - 02_the_invasion_of_britain
+  - 03_the_siege_of_alesia
+  - 04_the_battle_of_pharsalus

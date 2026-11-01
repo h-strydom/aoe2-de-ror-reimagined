@@ -1,0 +1,7 @@
+# Imperium Romanum, mission 4: Zenobia, Queen of Palmyra
+title: "Zenobia, Queen of Palmyra"
+source:
+  campaign_file: "8 Imperium Romanum.aoecpn"
+  scenario: "Scx3-04-Zenobia, Queen of Palmyra.aoescn"
+  map_size: 200
+  players: 4

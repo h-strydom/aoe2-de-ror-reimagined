@@ -1,0 +1,7 @@
+# Enemies of Rome, mission 2: The Third Macedonian War
+title: "The Third Macedonian War"
+source:
+  campaign_file: "9 Enemies of Rome.aoecpn"
+  scenario: "Scx4-02-The Third Macedonian War.aoescn"
+  map_size: 120
+  players: 6

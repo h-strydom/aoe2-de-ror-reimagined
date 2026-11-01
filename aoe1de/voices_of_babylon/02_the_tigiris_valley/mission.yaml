@@ -1,0 +1,7 @@
+# Voices of Babylon, mission 2: The Tigiris Valley
+title: "The Tigiris Valley"
+source:
+  campaign_file: "3 Voices of Babylon.aoecpn"
+  scenario: "Scn3-02-The Tigiris Valley.aoescn"
+  map_size: 120
+  players: 4

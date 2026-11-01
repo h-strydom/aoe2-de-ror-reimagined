@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 6: Farming
+title: "Farming"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-06-Farming.aoescn"
+  map_size: 72
+  players: 2

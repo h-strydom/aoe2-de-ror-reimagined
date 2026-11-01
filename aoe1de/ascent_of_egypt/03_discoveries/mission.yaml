@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 3: Discoveries
+title: "Discoveries"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-03-Discoveries.aoescn"
+  map_size: 48
+  players: 2

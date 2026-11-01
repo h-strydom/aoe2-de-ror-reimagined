@@ -1,0 +1,8 @@
+# Reign of the Hittites: AoE DE campaign 5
+title: "Reign of the Hittites"
+source_file: "5 Reign of the Hittites.aoecpn"
+order: 5
+missions:
+  - 01_opening_moves
+  - 02_raid_on_babylon
+  - 03_the_battle_of_kadesh

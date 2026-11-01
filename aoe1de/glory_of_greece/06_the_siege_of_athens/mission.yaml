@@ -1,0 +1,7 @@
+# Glory of Greece, mission 6: The Siege of Athens
+title: "The Siege of Athens"
+source:
+  campaign_file: "2 Glory of Greece.aoecpn"
+  scenario: "Scn2-06-The Siege of Athens.aoescn"
+  map_size: 144
+  players: 4

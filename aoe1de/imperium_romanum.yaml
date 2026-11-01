@@ -1,0 +1,10 @@
+# Imperium Romanum: AoE DE campaign 8
+title: "Imperium Romanum"
+source_file: "8 Imperium Romanum.aoecpn"
+order: 8
+missions:
+  - 01_the_battle_of_actium
+  - 02_the_year_of_the_four_emperors
+  - 03_ransom_at_ctesiphon
+  - 04_zenobia_queen_of_palmyra
+  - 05_the_coming_of_the_huns

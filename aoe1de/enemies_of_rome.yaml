@@ -1,0 +1,9 @@
+# Enemies of Rome: AoE DE campaign 9
+title: "Enemies of Rome"
+source_file: "9 Enemies of Rome.aoecpn"
+order: 9
+missions:
+  - 01_crossing_the_alps
+  - 02_the_third_macedonian_war
+  - 03_the_revolt_of_spartacus
+  - 04_odaenathus_lord_of_palmyra

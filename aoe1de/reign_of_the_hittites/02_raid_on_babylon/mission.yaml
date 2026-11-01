@@ -1,0 +1,7 @@
+# Reign of the Hittites, mission 2: Raid on Babylon
+title: "Raid on Babylon"
+source:
+  campaign_file: "5 Reign of the Hittites.aoecpn"
+  scenario: "Scnt1-02-Raid on Babylon.aoescn"
+  map_size: 144
+  players: 5

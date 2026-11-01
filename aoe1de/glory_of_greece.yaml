@@ -1,0 +1,13 @@
+# Glory of Greece: AoE DE campaign 2
+title: "Glory of Greece"
+source_file: "2 Glory of Greece.aoecpn"
+order: 2
+missions:
+  - 01_claiming_territory
+  - 02_acropolis
+  - 03_the_conquest_of_crete
+  - 04_the_trojan_war
+  - 05_colonization_of_ionia
+  - 06_the_siege_of_athens
+  - 07_xenophons_march
+  - 08_alexander_the_great

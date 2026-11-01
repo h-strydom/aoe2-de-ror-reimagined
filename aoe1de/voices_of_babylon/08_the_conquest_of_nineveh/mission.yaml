@@ -1,0 +1,7 @@
+# Voices of Babylon, mission 8: The Conquest of Nineveh
+title: "The Conquest of Nineveh"
+source:
+  campaign_file: "3 Voices of Babylon.aoecpn"
+  scenario: "Scn3-08-The Conquest of Nineveh.aoescn"
+  map_size: 120
+  players: 4

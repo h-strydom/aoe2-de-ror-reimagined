@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 8: Religion
+title: "Religion"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-08-Religion.aoescn"
+  map_size: 72
+  players: 2

@@ -1,0 +1,7 @@
+# Reign of the Hittites, mission 1: Opening Moves
+title: "Opening Moves"
+source:
+  campaign_file: "5 Reign of the Hittites.aoecpn"
+  scenario: "Scnt1-01-Opening Moves.aoescn"
+  map_size: 120
+  players: 3

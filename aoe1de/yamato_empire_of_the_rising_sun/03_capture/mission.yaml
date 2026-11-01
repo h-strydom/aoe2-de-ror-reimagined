@@ -1,0 +1,7 @@
+# Yamato, Empire of the Rising Sun, mission 3: Capture
+title: "Capture"
+source:
+  campaign_file: "4 Yamato, Empire of the Rising Sun.aoecpn"
+  scenario: "Scn4-03-Capture.aoescn"
+  map_size: 96
+  players: 4

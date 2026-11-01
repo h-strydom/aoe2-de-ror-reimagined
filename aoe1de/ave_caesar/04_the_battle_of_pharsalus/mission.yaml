@@ -1,0 +1,7 @@
+# Ave Caesar, mission 4: The Battle of Pharsalus
+title: "The Battle of Pharsalus"
+source:
+  campaign_file: "7 Ave Caesar.aoecpn"
+  scenario: "Scx2-04-The Battle of Pharsalus.aoescn"
+  map_size: 144
+  players: 3

@@ -1,0 +1,7 @@
+# The Rise of Rome, mission 6: Mithridates
+title: "Mithridates"
+source:
+  campaign_file: "6 The Rise of Rome.aoecpn"
+  scenario: "Scx1-06-Mithridates.aoescn"
+  map_size: 200
+  players: 5

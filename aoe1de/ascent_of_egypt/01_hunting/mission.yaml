@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 1: Hunting
+title: "Hunting"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-01-Hunting.aoescn"
+  map_size: 48
+  players: 1

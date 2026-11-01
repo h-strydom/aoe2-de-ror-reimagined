@@ -1,0 +1,7 @@
+# Imperium Romanum, mission 1: The Battle of Actium
+title: "The Battle of Actium"
+source:
+  campaign_file: "8 Imperium Romanum.aoecpn"
+  scenario: "Scx3-01-The Battle of Actium.aoescn"
+  map_size: 144
+  players: 4

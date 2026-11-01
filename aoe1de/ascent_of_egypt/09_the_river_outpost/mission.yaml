@@ -1,0 +1,7 @@
+# Ascent of Egypt, mission 9: The River Outpost
+title: "The River Outpost"
+source:
+  campaign_file: "1 Ascent of Egypt.aoecpn"
+  scenario: "Scn1-09-The River Outpost.aoescn"
+  map_size: 96
+  players: 2

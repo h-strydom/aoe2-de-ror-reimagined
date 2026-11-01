@@ -1,0 +1,7 @@
+# The First Punic War, mission 2: The Battle of Mylae
+title: "The Battle of Mylae"
+source:
+  campaign_file: "10 The First Punic War.aoecpn"
+  scenario: "Scxt1-02-The Battle of Mylae.aoescn"
+  map_size: 144
+  players: 3

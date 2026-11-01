@@ -1,0 +1,7 @@
+# Imperium Romanum, mission 2: The Year of the Four Emperors
+title: "The Year of the Four Emperors"
+source:
+  campaign_file: "8 Imperium Romanum.aoecpn"
+  scenario: "Scx3-02-The Year of the Four Emperors.aoescn"
+  map_size: 200
+  players: 5

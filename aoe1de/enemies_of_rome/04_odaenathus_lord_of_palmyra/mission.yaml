@@ -1,0 +1,7 @@
+# Enemies of Rome, mission 4: Odaenathus, Lord of Palmyra
+title: "Odaenathus, Lord of Palmyra"
+source:
+  campaign_file: "9 Enemies of Rome.aoecpn"
+  scenario: "Scx4-04-Odaenathus, Lord of Palmyra.aoescn"
+  map_size: 144
+  players: 2

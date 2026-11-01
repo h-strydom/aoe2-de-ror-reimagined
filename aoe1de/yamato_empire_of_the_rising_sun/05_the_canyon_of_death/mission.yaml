@@ -1,0 +1,7 @@
+# Yamato, Empire of the Rising Sun, mission 5: The Canyon of Death
+title: "The Canyon of Death"
+source:
+  campaign_file: "4 Yamato, Empire of the Rising Sun.aoecpn"
+  scenario: "Scn4-05-The Canyon of Death.aoescn"
+  map_size: 96
+  players: 2

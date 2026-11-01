@@ -1,0 +1,7 @@
+# The First Punic War, mission 3: The Battle of Tunis
+title: "The Battle of Tunis"
+source:
+  campaign_file: "10 The First Punic War.aoecpn"
+  scenario: "Scxt1-03-The Battle of Tunis.aoescn"
+  map_size: 200
+  players: 4

@@ -1,0 +1,13 @@
+# Yamato, Empire of the Rising Sun: AoE DE campaign 4
+title: "Yamato, Empire of the Rising Sun"
+source_file: "4 Yamato, Empire of the Rising Sun.aoecpn"
+order: 4
+missions:
+  - 01_the_assassins
+  - 02_island_hopping
+  - 03_capture
+  - 04_the_mountain_temple
+  - 05_the_canyon_of_death
+  - 06_coup
+  - 07_jinshin_war
+  - 08_fujiwara_revolts

@@ -1,0 +1,7 @@
+# Voices of Babylon, mission 3: Vengeance
+title: "Vengeance"
+source:
+  campaign_file: "3 Voices of Babylon.aoecpn"
+  scenario: "Scn3-03-Vengeance.aoescn"
+  map_size: 120
+  players: 4

@@ -1,0 +1,7 @@
+# The Rise of Rome, mission 3: The Siege of Syracuse
+title: "The Siege of Syracuse"
+source:
+  campaign_file: "6 The Rise of Rome.aoecpn"
+  scenario: "Scx1-03-The Siege of Syracuse.aoescn"
+  map_size: 144
+  players: 4

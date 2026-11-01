@@ -1,0 +1,7 @@
+# The Rise of Rome, mission 4: The Battle of the Metaurus
+title: "The Battle of the Metaurus"
+source:
+  campaign_file: "6 The Rise of Rome.aoecpn"
+  scenario: "Scx1-04-The Battle of the Metaurus.aoescn"
+  map_size: 144
+  players: 3

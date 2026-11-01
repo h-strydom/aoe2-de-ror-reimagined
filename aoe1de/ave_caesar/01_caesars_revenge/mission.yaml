@@ -1,0 +1,7 @@
+# Ave Caesar, mission 1: Caesar's Revenge
+title: "Caesar's Revenge"
+source:
+  campaign_file: "7 Ave Caesar.aoecpn"
+  scenario: "Scx2-01-Caesar's Revenge.aoescn"
+  map_size: 200
+  players: 4

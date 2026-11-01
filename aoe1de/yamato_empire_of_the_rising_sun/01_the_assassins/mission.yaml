@@ -1,0 +1,7 @@
+# Yamato, Empire of the Rising Sun, mission 1: The Assassins
+title: "The Assassins"
+source:
+  campaign_file: "4 Yamato, Empire of the Rising Sun.aoecpn"
+  scenario: "Scn4-01-The Assassins.aoescn"
+  map_size: 96
+  players: 3
