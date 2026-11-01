@@ -26,8 +26,8 @@ AoE DE campaign (.aoecpn)  →  reader  →  neutral map model  →  mapping (id
 ```
 
 - **Reader:** parses AoE DE campaign containers and the scenarios inside them.
-- **Mapping:** translates AoE DE object ids and terrains to RoR's, from both games' data, with
-  hand-checked overrides where names don't line up.
+- **Mapping:** one explicit file, `aoe2de_ror/conversion.yaml`, says what every AoE DE terrain and
+  object becomes in RoR, with per-mission overrides. The converter follows it and nothing else.
 - **Writer:** produces RoR scenarios and `.aoe2campaign` files using aoe-agent-editor, which
   handles the scenario format, RoR's name tables and installing into the game.
 
@@ -57,6 +57,28 @@ what the project needs into the repository:
 These copies are git-ignored, because the original game files aren't redistributed. After `setup`,
 nothing reads the install again: you can uninstall AoE DE, and every path stays inside the repo.
 
+## Changing the conversion
+
+`aoe2de_ror/conversion.yaml` lists every AoE DE terrain and object the campaigns use, each with what
+it becomes in RoR (or `drop`). Comments give the AoE DE name and how often it appears.
+
+- **Swap something everywhere:** change one line. To make every Sand Dunes tile snow: `34: SNOW`.
+- **Swap something in one mission:** add an entry under `missions:`, keyed `<campaign>/<NN_mission>`
+  as in `aoe1de/`. Only the terrains and objects listed there change; remove the entry to undo it.
+
+```yaml
+missions:
+  ascent_of_egypt/04_the_dawn_of_a_new_age:
+    terrain:
+      34: SNOW
+    objects:
+      59: drop
+```
+
+RoR names are checked against the game's own tables, and mission keys against `aoe1de/`. A typo
+fails with a list of every problem instead of converting wrongly. `uv run pytest` also checks that
+every terrain and object on every map is covered.
+
 ## What's in the repository
 
 | Path | What | In git? |
@@ -64,6 +86,7 @@ nothing reads the install again: you can uninstall AoE DE, and every path stays 
 | `aoe1de/<campaign>.yaml` | campaign: title, source file, missions in play order | yes |
 | `aoe1de/<campaign>/NN_<mission>/mission.yaml` | mission title and its source scenario | yes |
 | `aoe1de/**/*.aoecpn`, `*.aoescn`, `aoe1de/data/` | original AoE DE files, copied in by `setup` | **no** |
+| `aoe2de_ror/conversion.yaml` | what each AoE DE terrain and object becomes in RoR, plus mission overrides | yes |
 | converted Return of Rome maps (coming) | this project's work: faithful conversions, then edited and reimagined versions | yes |
 
 Anyone who just wants faithful Return of Rome versions of the AoE DE campaigns will be able to take
