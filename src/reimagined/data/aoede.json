@@ -1,0 +1,1834 @@
+{
+ "source": "AoE DE empires.dat and strings.txt (copied in by reimagined setup)",
+ "terrains": {
+  "0": "Grass",
+  "1": "Water",
+  "2": "Beach",
+  "4": "Shallows",
+  "5": "Jungle Edge",
+  "6": "Desert",
+  "10": "Forest Broadleaf",
+  "13": "Forest Palm Desert",
+  "18": "Forest Edge",
+  "19": "Forest Pine",
+  "20": "Forest Palm Jungle",
+  "22": "Water Dark",
+  "23": "Grass Dry",
+  "24": "Grass Sand 1",
+  "25": "Grass Sand 2",
+  "26": "Sand Rocky",
+  "27": "Sand Plain",
+  "28": "Grass Gravel",
+  "29": "Gravel",
+  "30": "Grass Dirt",
+  "31": "Dirt",
+  "32": "Road Stone",
+  "33": "Road Sand",
+  "34": "Sand Dunes",
+  "35": "Forest Mediterranean",
+  "36": "Forest Mesopotamian",
+  "37": "Forest Oasis"
+ },
+ "units": {
+  "0": {
+   "internal": "Academy",
+   "display": "Academy"
+  },
+  "1": {
+   "internal": "Crocodile",
+   "display": "Crocodile"
+  },
+  "4": {
+   "internal": "Bowman",
+   "display": "Bowman"
+  },
+  "5": {
+   "internal": "Improved Bowman",
+   "display": "Improved Bowman"
+  },
+  "6": {
+   "internal": "Composite Bowman",
+   "display": "Composite Bowman"
+  },
+  "9": {
+   "internal": "Missle-Arrow",
+   "display": "Missile - Arrow"
+  },
+  "10": {
+   "internal": "Artifact_Discovery1",
+   "display": "Discovery"
+  },
+  "11": {
+   "internal": "Ballista",
+   "display": "Ballista"
+  },
+  "12": {
+   "internal": "Barracks1",
+   "display": "Barracks"
+  },
+  "13": {
+   "internal": "Fishing Boat",
+   "display": "Fishing Boat"
+  },
+  "14": {
+   "internal": "Fishing Ship",
+   "display": "Fishing Ship"
+  },
+  "15": {
+   "internal": "Trade Boat",
+   "display": "Trade Boat"
+  },
+  "16": {
+   "internal": "Merchant Ship",
+   "display": "Merchant Ship"
+  },
+  "17": {
+   "internal": "Light Transport",
+   "display": "Light Transport"
+  },
+  "18": {
+   "internal": "Heavy Transport",
+   "display": "Heavy Transport"
+  },
+  "19": {
+   "internal": "Scout Ship",
+   "display": "Scout Ship"
+  },
+  "20": {
+   "internal": "War Galley",
+   "display": "War Galley"
+  },
+  "21": {
+   "internal": "Trireme",
+   "display": "Trireme"
+  },
+  "22": {
+   "internal": "Rubble_1x1",
+   "display": "Rubble 1"
+  },
+  "23": {
+   "internal": "Rubble_2x2",
+   "display": "Rubble 2"
+  },
+  "24": {
+   "internal": "Rubble_3x3",
+   "display": "Rubble 3"
+  },
+  "25": {
+   "internal": "Elephant Archer",
+   "display": "Elephant Archer"
+  },
+  "26": {
+   "internal": "Terrain_Path_StnG5",
+   "display": "Stone path 5"
+  },
+  "27": {
+   "internal": "Terrain_Path_StnG6",
+   "display": "Stone path 6"
+  },
+  "28": {
+   "internal": "Terrain_Path_StnG2",
+   "display": "Stone path 2"
+  },
+  "29": {
+   "internal": "Terrain_Path_Drt1",
+   "display": "Dirt path 1"
+  },
+  "30": {
+   "internal": "Terrain_Path_Drt2",
+   "display": "Dirt path 2"
+  },
+  "31": {
+   "internal": "Terrain_Path_Drt4",
+   "display": "Dirt path 4"
+  },
+  "32": {
+   "internal": "Terrain_Path_Drt5",
+   "display": "Dirt path 5"
+  },
+  "33": {
+   "internal": "Writing",
+   "display": ""
+  },
+  "34": {
+   "internal": "Missle-Catapult_Stone",
+   "display": "Missile - Catapult Stone"
+  },
+  "35": {
+   "internal": "Soldier-Catapult1",
+   "display": "Stone Thrower"
+  },
+  "36": {
+   "internal": "Soldier-Catapult2",
+   "display": "Catapult"
+  },
+  "37": {
+   "internal": "Cavalry",
+   "display": "Cavalry"
+  },
+  "38": {
+   "internal": "Heavy Cavalry",
+   "display": "Heavy Cavalry"
+  },
+  "39": {
+   "internal": "Horse Archer",
+   "display": "Horse Archer"
+  },
+  "40": {
+   "internal": "Chariot",
+   "display": "Chariot"
+  },
+  "41": {
+   "internal": "Chariot Archer",
+   "display": "Chariot Archer"
+  },
+  "43": {
+   "internal": "Villager Default Dead",
+   "display": ""
+  },
+  "45": {
+   "internal": "Dock_1",
+   "display": "Dock"
+  },
+  "46": {
+   "internal": "War Elephant",
+   "display": "War Elephant"
+  },
+  "47": {
+   "internal": "Terrain_Path_Drt6",
+   "display": "Dirt path 6"
+  },
+  "48": {
+   "internal": "Elephant",
+   "display": "Elephant"
+  },
+  "49": {
+   "internal": "Siege_Workshop",
+   "display": "Siege Workshop"
+  },
+  "50": {
+   "internal": "Farm",
+   "display": "Farm"
+  },
+  "51": {
+   "internal": "Fence-Wood",
+   "display": "Wood Fence"
+  },
+  "52": {
+   "internal": "Fish Tuna",
+   "display": "Fish - Tuna"
+  },
+  "53": {
+   "internal": "Fish Salmon",
+   "display": "Fish - Salmon"
+  },
+  "54": {
+   "internal": "Terrain_Path_StnG3",
+   "display": "Stone path 3"
+  },
+  "55": {
+   "internal": "Terrain_Path_StnG4",
+   "display": "Stone path 4"
+  },
+  "56": {
+   "internal": "Tree Oak Autumn (Straggler)",
+   "display": "Tree Oak Autumn"
+  },
+  "58": {
+   "internal": "Gaia",
+   "display": ""
+  },
+  "59": {
+   "internal": "Forage-Fruit",
+   "display": "Berry Bush"
+  },
+  "60": {
+   "internal": "Lion_Trained",
+   "display": "Lion - Tame"
+  },
+  "61": {
+   "internal": "Smoke",
+   "display": "Smoke"
+  },
+  "62": {
+   "internal": "Hero-Alexander",
+   "display": "Hero Alexander"
+  },
+  "63": {
+   "internal": "Hero-Xerxes",
+   "display": "Hero Xerxes"
+  },
+  "65": {
+   "internal": "Gazelle",
+   "display": "Gazelle"
+  },
+  "66": {
+   "internal": "Mine-Gold",
+   "display": "Gold Mine"
+  },
+  "68": {
+   "internal": "Granary",
+   "display": "Granary"
+  },
+  "69": {
+   "internal": "Guard_Tower",
+   "display": "Guard Tower"
+  },
+  "70": {
+   "internal": "House",
+   "display": "House"
+  },
+  "71": {
+   "internal": "Town_Center2",
+   "display": "Town Center"
+  },
+  "72": {
+   "internal": "Wall_Small",
+   "display": "Small Wall"
+  },
+  "73": {
+   "internal": "Clubman",
+   "display": "Clubman"
+  },
+  "74": {
+   "internal": "Axeman",
+   "display": "Axeman"
+  },
+  "75": {
+   "internal": "Soldier-Inf3",
+   "display": "Short Swordsman"
+  },
+  "76": {
+   "internal": "Broadsword",
+   "display": "Broad Swordsman"
+  },
+  "77": {
+   "internal": "Longsword",
+   "display": "Long Swordsman"
+  },
+  "78": {
+   "internal": "Hero-Tiberius",
+   "display": "Hero Tiberius"
+  },
+  "79": {
+   "internal": "Watch_Tower",
+   "display": "Watch Tower"
+  },
+  "80": {
+   "internal": "Shallows",
+   "display": "Shallows"
+  },
+  "81": {
+   "internal": "Hero-Amon_Ra",
+   "display": "Hero Amon Ra"
+  },
+  "82": {
+   "internal": "Government_Center",
+   "display": "Government Center"
+  },
+  "83": {
+   "internal": "Villager Default",
+   "display": "Villager"
+  },
+  "84": {
+   "internal": "Market1",
+   "display": "Market"
+  },
+  "85": {
+   "internal": "Crocodile Dead",
+   "display": "Dead Crocodile"
+  },
+  "86": {
+   "internal": "Stable1",
+   "display": "Stable"
+  },
+  "87": {
+   "internal": "Range1",
+   "display": "Archery Range"
+  },
+  "89": {
+   "internal": "Lion King",
+   "display": "Lion (Alpha)"
+  },
+  "90": {
+   "internal": "Elephant King",
+   "display": "Elephant (Alpha)"
+  },
+  "93": {
+   "internal": "Hoplite",
+   "display": "Hoplite"
+  },
+  "94": {
+   "internal": "Phalanx",
+   "display": "Phalanx"
+  },
+  "95": {
+   "internal": "Hawk",
+   "display": "Bird - Hawk"
+  },
+  "96": {
+   "internal": "Eagle",
+   "display": "Bird - Eagle"
+  },
+  "100": {
+   "internal": "Missle-Spear",
+   "display": "Missile - Spear"
+  },
+  "101": {
+   "internal": "Stable",
+   "display": "Stable"
+  },
+  "102": {
+   "internal": "Mine-Stone",
+   "display": "Stone Mine"
+  },
+  "103": {
+   "internal": "Storage_Pit1",
+   "display": "Storage Pit"
+  },
+  "104": {
+   "internal": "Temple1",
+   "display": "Temple"
+  },
+  "105": {
+   "internal": "Storage_Pit2",
+   "display": "Storage Pit"
+  },
+  "106": {
+   "internal": "Bones",
+   "display": "Bones"
+  },
+  "107": {
+   "internal": "Plow",
+   "display": ""
+  },
+  "108": {
+   "internal": "Artifact_War_Chest",
+   "display": "War Chest"
+  },
+  "109": {
+   "internal": "Town_Center1",
+   "display": "Town Center"
+  },
+  "110": {
+   "internal": "Trade Workshop",
+   "display": "Trade Workshop"
+  },
+  "112": {
+   "internal": "Flare",
+   "display": "Flare"
+  },
+  "113": {
+   "internal": "Tree Fan Palm Group",
+   "display": "Tree Fan Palm Group"
+  },
+  "114": {
+   "internal": "Tree Fan Palm (Forest)",
+   "display": "Tree Fan Palm (Forest)"
+  },
+  "115": {
+   "internal": "Stump1",
+   "display": "Tree Stump"
+  },
+  "116": {
+   "internal": "Market2",
+   "display": "Market"
+  },
+  "117": {
+   "internal": "Wall_Med",
+   "display": "Medium Wall"
+  },
+  "118": {
+   "internal": "Villager Builder",
+   "display": "Builder"
+  },
+  "119": {
+   "internal": "Villager Fisher",
+   "display": "Fisherman"
+  },
+  "120": {
+   "internal": "Villager Forager",
+   "display": "Forager"
+  },
+  "121": {
+   "internal": "Tree Date Palm (Forest)",
+   "display": "Tree Date Palm (Forest)"
+  },
+  "122": {
+   "internal": "Villager Hunter",
+   "display": "Hunter"
+  },
+  "123": {
+   "internal": "Villager Lumber",
+   "display": "Woodcutter"
+  },
+  "124": {
+   "internal": "Villager Miner Stone",
+   "display": "Stone Miner"
+  },
+  "125": {
+   "internal": "Priest",
+   "display": "Priest"
+  },
+  "126": {
+   "internal": "Lion",
+   "display": "Lion"
+  },
+  "127": {
+   "internal": "Villager Explorer",
+   "display": "Explorer"
+  },
+  "129": {
+   "internal": "Tree Palmetto (Forest)",
+   "display": "Tree Palmetto (Forest)"
+  },
+  "130": {
+   "internal": "Stump2",
+   "display": "Tree Stump"
+  },
+  "131": {
+   "internal": "Stump3",
+   "display": "Tree Stump"
+  },
+  "132": {
+   "internal": "Barracks2",
+   "display": "Barracks"
+  },
+  "133": {
+   "internal": "Dock_2",
+   "display": "Dock"
+  },
+  "134": {
+   "internal": "Tree Elm (Straggler)",
+   "display": "Tree Elm"
+  },
+  "135": {
+   "internal": "Tree Spruce Green (Straggler)",
+   "display": "Tree Spruce Green"
+  },
+  "136": {
+   "internal": "Tree Fir Green (Straggler)",
+   "display": "Tree Fir Green"
+  },
+  "137": {
+   "internal": "Tree Spruce Dark Blue (Straggler) HIDDEN",
+   "display": "Tree Spruce Dark Blue"
+  },
+  "138": {
+   "internal": "Tree Spruce Blue (Straggler)",
+   "display": "Tree Spruce Blue"
+  },
+  "139": {
+   "internal": "Tree Spruce Blue (Straggler)",
+   "display": "Tree Spruce Blue"
+  },
+  "140": {
+   "internal": "Tree Ash Autumn (Straggler)",
+   "display": "Tree Ash Autumn"
+  },
+  "141": {
+   "internal": "Tree Maple (Straggler)",
+   "display": "Tree Maple"
+  },
+  "142": {
+   "internal": "Tree Maple (Forest)",
+   "display": "Tree Maple (Forest)"
+  },
+  "143": {
+   "internal": "Tree Ash Autumn (Forest)",
+   "display": "Tree Ash Autumn (Forest)"
+  },
+  "144": {
+   "internal": "Tree Oak (Straggler)",
+   "display": "Tree Oak"
+  },
+  "145": {
+   "internal": "Tree Elm Autumn (Straggler)",
+   "display": "Tree Elm Autumn"
+  },
+  "146": {
+   "internal": "Tree Maple Autumn (Straggler)",
+   "display": "Tree Maple Autumn"
+  },
+  "147": {
+   "internal": "Tree Maple (Forest)",
+   "display": "Tree Maple (Forest)"
+  },
+  "148": {
+   "internal": "Tree Ash (Straggler)",
+   "display": "Tree Ash"
+  },
+  "149": {
+   "internal": "Tree Sago Palm (Straggler)",
+   "display": "Tree Sago Palm"
+  },
+  "150": {
+   "internal": "Tree Fan Palm (Straggler)",
+   "display": "Tree Fan Palm"
+  },
+  "151": {
+   "internal": "Tree Palmetto (Straggler)",
+   "display": "Tree Palmetto"
+  },
+  "152": {
+   "internal": "Tree Date Palm (Straggler)",
+   "display": "Tree Date Palm"
+  },
+  "153": {
+   "internal": "Tree Date Palm (Straggler)",
+   "display": "Tree Date Palm"
+  },
+  "154": {
+   "internal": "House1",
+   "display": "House"
+  },
+  "155": {
+   "internal": "Wall_Large",
+   "display": "Fortified Wall"
+  },
+  "156": {
+   "internal": "Villager Repairer",
+   "display": "Repairman"
+  },
+  "157": {
+   "internal": "Horse",
+   "display": "Horse"
+  },
+  "158": {
+   "internal": "Artifact_Ruins1_Gaia",
+   "display": "Ruins"
+  },
+  "159": {
+   "internal": "Artifact",
+   "display": "Artifact"
+  },
+  "161": {
+   "internal": "Tree Spruce Green (Forest)",
+   "display": "Tree Spruce Green (Forest)"
+  },
+  "162": {
+   "internal": "Flag",
+   "display": "Flag - Double Pole"
+  },
+  "163": {
+   "internal": "Artifact_Ruins2_Gaia",
+   "display": "Ruins"
+  },
+  "164": {
+   "internal": "Cactus1",
+   "display": "Cactus 1"
+  },
+  "165": {
+   "internal": "Cactus2",
+   "display": "Cactus 2"
+  },
+  "166": {
+   "internal": "Cactus3",
+   "display": "Cactus 3"
+  },
+  "167": {
+   "internal": "Grass_Clump2",
+   "display": "Grass Clump 03"
+  },
+  "168": {
+   "internal": "Grass_Clump1",
+   "display": "Grass Clump 01"
+  },
+  "169": {
+   "internal": "Cactus4",
+   "display": "Cactus 4"
+  },
+  "170": {
+   "internal": "Grass_Clump3",
+   "display": "Grass Clump 04"
+  },
+  "171": {
+   "internal": "Grass_Clump4",
+   "display": "Grass Clump 05"
+  },
+  "172": {
+   "internal": "Grass_Clump5",
+   "display": "Grass Clump 06"
+  },
+  "173": {
+   "internal": "Grass_Clump6",
+   "display": "Grass Clump 07"
+  },
+  "174": {
+   "internal": "Grass_Clump7",
+   "display": "Grass Clump 08"
+  },
+  "175": {
+   "internal": "Grass_Clump8",
+   "display": "Grass Clump 09"
+  },
+  "176": {
+   "internal": "Grass_Clump9",
+   "display": "Grass Clump 10"
+  },
+  "177": {
+   "internal": "Grass_Clump10",
+   "display": "Grass Clump 02"
+  },
+  "178": {
+   "internal": "Desert_Clump1",
+   "display": "Desert Patch 1"
+  },
+  "179": {
+   "internal": "Desert_Clump2",
+   "display": "Desert Patch 2"
+  },
+  "180": {
+   "internal": "Desert_Clump3",
+   "display": "Desert Patch 3"
+  },
+  "181": {
+   "internal": "Bones 1",
+   "display": "Bones 1"
+  },
+  "182": {
+   "internal": "Bones 2",
+   "display": "Bones 2"
+  },
+  "183": {
+   "internal": "Bones 3",
+   "display": "Bones 3"
+  },
+  "184": {
+   "internal": "Terrain_Rock_g2",
+   "display": "Rock 06"
+  },
+  "185": {
+   "internal": "Terrain_Rock_s2",
+   "display": "Rock 19 (Water)"
+  },
+  "186": {
+   "internal": "Terrain_Rock_d1",
+   "display": "Rock 01"
+  },
+  "187": {
+   "internal": "Terrain_Crack2",
+   "display": "Terrain crack 2"
+  },
+  "188": {
+   "internal": "Terrain_Crack3",
+   "display": "Terrain crack 3"
+  },
+  "189": {
+   "internal": "Terrain_Crack4",
+   "display": "Terrain crack 4"
+  },
+  "190": {
+   "internal": "Terrain_Crack5",
+   "display": "Terrain crack 5"
+  },
+  "191": {
+   "internal": "Terrain_Crack1",
+   "display": "Terrain crack 1"
+  },
+  "192": {
+   "internal": "Tree Fir Yellow (Straggler) HIDDEN",
+   "display": "Tree Fir Yellow"
+  },
+  "193": {
+   "internal": "Tree Fir Red (Straggler)",
+   "display": "Tree Fir Red"
+  },
+  "194": {
+   "internal": "Tree Fir Blue (Straggler)",
+   "display": "Tree Fir Blue"
+  },
+  "195": {
+   "internal": "Tree Elm Autumn (Forest)",
+   "display": "Tree Elm Autumn (Forest)"
+  },
+  "197": {
+   "internal": "Tree Fir Red (Forest)",
+   "display": "Tree Fir Red (Forest)"
+  },
+  "198": {
+   "internal": "Tree Fir Green (Forest)",
+   "display": "Tree Fir Green (Forest)"
+  },
+  "199": {
+   "internal": "Sentry_Tower",
+   "display": "Sentry Tower"
+  },
+  "203": {
+   "internal": "Tree Spruce Dark Blue (Forest) HIDDEN",
+   "display": "Tree Spruce Dark Blue (Forest)"
+  },
+  "204": {
+   "internal": "Missle-Bolt",
+   "display": "Missile - Bolt"
+  },
+  "205": {
+   "internal": "Missle-Bolt-Fire",
+   "display": "Missile - Bolt Fire"
+  },
+  "206": {
+   "internal": "Missle-Arrow-Fire",
+   "display": "Missile - Arrow Fire"
+  },
+  "207": {
+   "internal": "Bowman Dead",
+   "display": ""
+  },
+  "208": {
+   "internal": "Improved Bowman Dead",
+   "display": ""
+  },
+  "209": {
+   "internal": "Clubman Dead",
+   "display": ""
+  },
+  "210": {
+   "internal": "Shortsword Dead",
+   "display": ""
+  },
+  "211": {
+   "internal": "Ballista Dead",
+   "display": ""
+  },
+  "212": {
+   "internal": "Stone Thrower Dead",
+   "display": ""
+  },
+  "213": {
+   "internal": "Chariot Dead",
+   "display": ""
+  },
+  "214": {
+   "internal": "Heavy Cavalry Dead",
+   "display": ""
+  },
+  "215": {
+   "internal": "Longsword Dead",
+   "display": ""
+  },
+  "216": {
+   "internal": "Broadsword Dead",
+   "display": ""
+  },
+  "217": {
+   "internal": "Cavalry Dead",
+   "display": ""
+  },
+  "218": {
+   "internal": "Phalanx Dead",
+   "display": ""
+  },
+  "219": {
+   "internal": "Composite Bowman Dead",
+   "display": ""
+  },
+  "221": {
+   "internal": "Hoplite Dead",
+   "display": ""
+  },
+  "222": {
+   "internal": "Priest Dead",
+   "display": ""
+  },
+  "223": {
+   "internal": "Axeman Dead",
+   "display": ""
+  },
+  "224": {
+   "internal": "War Elephant Dead",
+   "display": ""
+  },
+  "226": {
+   "internal": "Tree Spruce Blue (Forest)",
+   "display": "Tree Spruce Blue (Forest)"
+  },
+  "227": {
+   "internal": "Hero_Jason",
+   "display": "Hero Jason"
+  },
+  "228": {
+   "internal": "Hero_Blind_Lame_Priest",
+   "display": "Blind Lame Priest"
+  },
+  "229": {
+   "internal": "Hero_Demon",
+   "display": "Invisible Demon"
+  },
+  "230": {
+   "internal": "Hero_Hersifon",
+   "display": "Hero Hersifon"
+  },
+  "231": {
+   "internal": "Hero_Corlis",
+   "display": "Hero Corlis"
+  },
+  "233": {
+   "internal": "Hero-Hector",
+   "display": "Hero Hector"
+  },
+  "234": {
+   "internal": "Hero_Spy",
+   "display": "Stealth Archer"
+  },
+  "235": {
+   "internal": "Hero_Catapult",
+   "display": "Big Bertha"
+  },
+  "236": {
+   "internal": "Hero_Tower",
+   "display": "Laser Tower"
+  },
+  "237": {
+   "internal": "Hero_Horse_Archer",
+   "display": "Black Rider"
+  },
+  "238": {
+   "internal": "Dock_Destruction",
+   "display": "Dock Destruction"
+  },
+  "239": {
+   "internal": "Hero12",
+   "display": "Hero"
+  },
+  "240": {
+   "internal": "Hero_Mercenary01",
+   "display": "Mercenary"
+  },
+  "241": {
+   "internal": "Hero_Traitor_01",
+   "display": "Traitor"
+  },
+  "242": {
+   "internal": "Wall_L_Rubble",
+   "display": "Rubble 1"
+  },
+  "243": {
+   "internal": "Doppleganger",
+   "display": "Smoke"
+  },
+  "244": {
+   "internal": "Dead_Farm",
+   "display": "Dead Farm"
+  },
+  "245": {
+   "internal": "Hero-Mor_Havoc",
+   "display": "Hero Mor Havoc"
+  },
+  "246": {
+   "internal": "Missile-Laser",
+   "display": "Missile - Bolt Fire"
+  },
+  "247": {
+   "internal": "Laser_Trail",
+   "display": "Smoke"
+  },
+  "248": {
+   "internal": "Soldier_Nuker",
+   "display": "Nuke Trooper"
+  },
+  "249": {
+   "internal": "Missile-Nuke",
+   "display": "Missile - Nuke"
+  },
+  "250": {
+   "internal": "Catapult Trireme",
+   "display": "Catapult Trireme"
+  },
+  "251": {
+   "internal": "Villager Miner Gold",
+   "display": "Gold Miner"
+  },
+  "252": {
+   "internal": "Villager Lumber Dead",
+   "display": ""
+  },
+  "253": {
+   "internal": "Villager Fisher Dead",
+   "display": ""
+  },
+  "254": {
+   "internal": "Villager Miner Dead",
+   "display": ""
+  },
+  "255": {
+   "internal": "Villager Hunter Dead",
+   "display": ""
+  },
+  "256": {
+   "internal": "Villager Builder Dead",
+   "display": ""
+  },
+  "257": {
+   "internal": "Villager Farmer Dead",
+   "display": ""
+  },
+  "258": {
+   "internal": "Villager Forager Dead",
+   "display": ""
+  },
+  "259": {
+   "internal": "Villager Farmer",
+   "display": "Farmer"
+  },
+  "260": {
+   "internal": "Fish Shore 1",
+   "display": "Fish - Shore"
+  },
+  "261": {
+   "internal": "Chariot Archer Dead",
+   "display": ""
+  },
+  "262": {
+   "internal": "Gazelle Dead",
+   "display": ""
+  },
+  "263": {
+   "internal": "Fish Shore 2",
+   "display": "Fish - Shore"
+  },
+  "264": {
+   "internal": "Cliffs_1",
+   "display": "Cliffs"
+  },
+  "265": {
+   "internal": "Cliffs_2",
+   "display": "Cliffs"
+  },
+  "266": {
+   "internal": "Cliffs_3",
+   "display": "Cliffs"
+  },
+  "267": {
+   "internal": "Cliffs_4",
+   "display": "Cliffs"
+  },
+  "268": {
+   "internal": "Cliffs_5",
+   "display": "Cliffs"
+  },
+  "269": {
+   "internal": "Cliffs_6",
+   "display": "Cliffs"
+  },
+  "270": {
+   "internal": "Cliffs_7",
+   "display": "Cliffs"
+  },
+  "271": {
+   "internal": "Cliffs_8",
+   "display": "Cliffs"
+  },
+  "272": {
+   "internal": "Cliffs_9",
+   "display": "Cliffs"
+  },
+  "273": {
+   "internal": "Cliffs_10",
+   "display": "Cliffs"
+  },
+  "274": {
+   "internal": "Soldier_Laser",
+   "display": "Laser Trooper"
+  },
+  "275": {
+   "internal": "Missle-Catapult_Man",
+   "display": "Missile - Catapult Stone"
+  },
+  "276": {
+   "internal": "Wonder",
+   "display": "Wonder"
+  },
+  "277": {
+   "internal": "Juggernaught",
+   "display": "Juggernaught"
+  },
+  "278": {
+   "internal": "Guard_Tower2",
+   "display": "Ballista Tower"
+  },
+  "279": {
+   "internal": "Helepolis",
+   "display": "Helepolis"
+  },
+  "280": {
+   "internal": "Soldier-Catapult3",
+   "display": "Heavy Catapult"
+  },
+  "281": {
+   "internal": "Heavy Horse Archer",
+   "display": "Heavy Horse Archer"
+  },
+  "282": {
+   "internal": "Legion",
+   "display": "Legion"
+  },
+  "283": {
+   "internal": "Cataphract",
+   "display": "Cataphract"
+  },
+  "291": {
+   "internal": "Centurion",
+   "display": "Centurion"
+  },
+  "292": {
+   "internal": "Raft",
+   "display": "Raft"
+  },
+  "293": {
+   "internal": "Villager Default Iron",
+   "display": "Villager"
+  },
+  "294": {
+   "internal": "Wall_M_Rubble",
+   "display": "Rubble 1"
+  },
+  "295": {
+   "internal": "Wall_S_Rubble",
+   "display": "Rubble 1"
+  },
+  "296": {
+   "internal": "Waterfall",
+   "display": "Cliff waterfall"
+  },
+  "297": {
+   "internal": "Hero_Juggernaut",
+   "display": "Flying Dutchman"
+  },
+  "298": {
+   "internal": "Hero_Medusa",
+   "display": "Medusa"
+  },
+  "299": {
+   "internal": "Scout",
+   "display": "Scout"
+  },
+  "300": {
+   "internal": "Missle-Aligator",
+   "display": ""
+  },
+  "301": {
+   "internal": "Fence-Stone",
+   "display": "Stone Fence"
+  },
+  "302": {
+   "internal": "Fire",
+   "display": "Fire"
+  },
+  "303": {
+   "internal": "Horse Archer Dead",
+   "display": ""
+  },
+  "304": {
+   "internal": "Terrain_Rock_d2",
+   "display": "Rock 02"
+  },
+  "305": {
+   "internal": "Terrain_Rock_d3",
+   "display": "Rock 03"
+  },
+  "306": {
+   "internal": "Terrain_Rock_d4",
+   "display": "Rock 04"
+  },
+  "307": {
+   "internal": "Terrain_Rock_g1",
+   "display": "Rock 05"
+  },
+  "308": {
+   "internal": "Terrain_Rock_g3",
+   "display": "Rock 07"
+  },
+  "309": {
+   "internal": "Terrain_Rock_g4",
+   "display": "Rock 08"
+  },
+  "310": {
+   "internal": "Terrain_Rock_g5",
+   "display": "Rock 27"
+  },
+  "311": {
+   "internal": "Terrain_Rock_g6",
+   "display": "Rock 09"
+  },
+  "312": {
+   "internal": "Terrain_Rock_g7",
+   "display": "Rock 10"
+  },
+  "313": {
+   "internal": "Terrain_Rock_g8",
+   "display": "Rock 11"
+  },
+  "314": {
+   "internal": "Terrain_Rock_s1",
+   "display": "Rock 15 (Water)"
+  },
+  "315": {
+   "internal": "Terrain_Rock_s10",
+   "display": "Rock 16 (Water)"
+  },
+  "316": {
+   "internal": "Terrain_Rock_s11",
+   "display": "Rock 17 (Water)"
+  },
+  "317": {
+   "internal": "Terrain_Rock_s12",
+   "display": "Rock 18 (Water)"
+  },
+  "318": {
+   "internal": "Terrain_Rock_s3",
+   "display": "Rock 20 (Water)"
+  },
+  "319": {
+   "internal": "Terrain_Rock_s4",
+   "display": "Rock 21 (Water)"
+  },
+  "320": {
+   "internal": "Terrain_Rock_s5",
+   "display": "Rock 22 (Water)"
+  },
+  "321": {
+   "internal": "Terrain_Rock_s6",
+   "display": "Rock 23 (Water)"
+  },
+  "322": {
+   "internal": "Terrain_Rock_s7",
+   "display": "Rock 24 (Water)"
+  },
+  "323": {
+   "internal": "Terrain_Rock_s8",
+   "display": "Rock 25 (Water)"
+  },
+  "324": {
+   "internal": "Terrain_Rock_s9",
+   "display": "Rock 26 (Water)"
+  },
+  "325": {
+   "internal": "Rubble Building 5x5",
+   "display": ""
+  },
+  "326": {
+   "internal": "Rubble Building 1x1",
+   "display": ""
+  },
+  "327": {
+   "internal": "Rubble Building 2x2",
+   "display": ""
+  },
+  "328": {
+   "internal": "Rubble Building 3x3",
+   "display": ""
+  },
+  "329": {
+   "internal": "Missle-Catapult_Stone_F",
+   "display": "Missile - Catapult Stone Fire"
+  },
+  "330": {
+   "internal": "Flag_B",
+   "display": "Flag - Single Pole"
+  },
+  "331": {
+   "internal": "RubbleSmokex3",
+   "display": "RubbleSmokex3"
+  },
+  "332": {
+   "internal": "Terrain_Rock_m1",
+   "display": "Rock 12"
+  },
+  "333": {
+   "internal": "Terrain_Rock_m2",
+   "display": "Rock 13"
+  },
+  "334": {
+   "internal": "Terrain_Rock_m3",
+   "display": "Rock 14"
+  },
+  "335": {
+   "internal": "Elephant Dead",
+   "display": ""
+  },
+  "336": {
+   "internal": "Elephant Archer Dead",
+   "display": ""
+  },
+  "337": {
+   "internal": "Space_Ship",
+   "display": ""
+  },
+  "338": {
+   "internal": "Soldier-Camel",
+   "display": "Camel Rider"
+  },
+  "339": {
+   "internal": "Scythed Chariot",
+   "display": "Scythe Chariot"
+  },
+  "340": {
+   "internal": "Terrain_Path_StnG1",
+   "display": "Stone path 1"
+  },
+  "341": {
+   "internal": "Scout Dead",
+   "display": ""
+  },
+  "342": {
+   "internal": "Catapult Dead",
+   "display": ""
+  },
+  "343": {
+   "internal": "Terrain_Dead_Tree",
+   "display": "Dead tree"
+  },
+  "344": {
+   "internal": "Terrain_Path_Drt3",
+   "display": "Dirt path 3"
+  },
+  "345": {
+   "internal": "Armored Elephant",
+   "display": "Armored Elephant"
+  },
+  "346": {
+   "internal": "Missle-Boat_Stone_Fire",
+   "display": "Missile - Boat Stone"
+  },
+  "347": {
+   "internal": "Slinger",
+   "display": "Slinger"
+  },
+  "348": {
+   "internal": "Terrain_Path_Grs1",
+   "display": "Grass path 1"
+  },
+  "349": {
+   "internal": "Terrain_Path_Grs2",
+   "display": "Grass path 2"
+  },
+  "350": {
+   "internal": "Terrain_Path_Grs3",
+   "display": "Grass path 3"
+  },
+  "351": {
+   "internal": "Terrain_Path_Grs4",
+   "display": "Grass path 4"
+  },
+  "352": {
+   "internal": "Terrain_Path_Grs5",
+   "display": "Grass path 5"
+  },
+  "353": {
+   "internal": "Terrain_Path_Grs6",
+   "display": "Grass path 6"
+  },
+  "354": {
+   "internal": "Terrain_Path_StnD1",
+   "display": "Stone 1"
+  },
+  "355": {
+   "internal": "Terrain_Path_StnD2",
+   "display": "Stone 2"
+  },
+  "356": {
+   "internal": "Terrain_Path_StnD3",
+   "display": "Stone 3"
+  },
+  "357": {
+   "internal": "Terrain_Path_StnD4",
+   "display": "Stone 4"
+  },
+  "358": {
+   "internal": "Terrain_Path_StnD5",
+   "display": "Stone 5"
+  },
+  "359": {
+   "internal": "Terrain_Path_StnD6",
+   "display": "Stone 6"
+  },
+  "360": {
+   "internal": "Fire Galley",
+   "display": "Fire Galley"
+  },
+  "361": {
+   "internal": "Missile Sling Bullet",
+   "display": ""
+  },
+  "362": {
+   "internal": "Crocodile King",
+   "display": "Crocodile (Alpha)"
+  },
+  "363": {
+   "internal": "Slinger Dead",
+   "display": ""
+  },
+  "365": {
+   "internal": "Tree Elm (Forest)",
+   "display": "Tree Elm (Forest)"
+  },
+  "366": {
+   "internal": "Tree Dead",
+   "display": "Tree Dead (Forest)"
+  },
+  "367": {
+   "internal": "Tree Maple Autumn (Forest)",
+   "display": "Tree Maple Autumn (Forest)"
+  },
+  "368": {
+   "internal": "Missle-Boat_Stone",
+   "display": "Missile - Boat Stone"
+  },
+  "369": {
+   "internal": "Lion Dead",
+   "display": ""
+  },
+  "370": {
+   "internal": "Fish Whale",
+   "display": "Fish - Whale"
+  },
+  "371": {
+   "internal": "Lord Martek",
+   "display": "Lord Martek"
+  },
+  "372": {
+   "internal": "Winsett's_Z",
+   "display": "Winsett's Z"
+  },
+  "373": {
+   "internal": "Z_Rocket",
+   "display": ""
+  },
+  "374": {
+   "internal": "Camel Rider Dead",
+   "display": ""
+  },
+  "375": {
+   "internal": "Hero_Hannibal",
+   "display": "Hero Hannibal"
+  },
+  "376": {
+   "internal": "Hero_Caesar",
+   "display": "Hero Caesar"
+  },
+  "377": {
+   "internal": "Hero_Cleopatra",
+   "display": "Cleopatra's Barge"
+  },
+  "378": {
+   "internal": "Hero_Mark_Antony",
+   "display": "Hero Mark Antony"
+  },
+  "379": {
+   "internal": "Hero_Scipio",
+   "display": "Hero Scipio"
+  },
+  "380": {
+   "internal": "Hero_Zenobia's_Tower",
+   "display": "Zenobia's Tower"
+  },
+  "381": {
+   "internal": "Hero_Vercingetorix",
+   "display": "Hero Vercingetorix"
+  },
+  "382": {
+   "internal": "Hero_Archimedes",
+   "display": "Hero Archimedes"
+  },
+  "383": {
+   "internal": "Mirror_Tower",
+   "display": "Mirror Tower"
+  },
+  "384": {
+   "internal": "Gazelle King",
+   "display": "Gazelle (Alpha)"
+  },
+  "385": {
+   "internal": "Terrain_Beach_Rock",
+   "display": "Beach articles"
+  },
+  "386": {
+   "internal": "Soldier_Mech",
+   "display": "Zug 209"
+  },
+  "387": {
+   "internal": "Dead_Mech",
+   "display": ""
+  },
+  "388": {
+   "internal": "Missile-mech_gun",
+   "display": "Missile - Bolt Fire"
+  },
+  "389": {
+   "internal": "Scythed Chariot Dead",
+   "display": ""
+  },
+  "390": {
+   "internal": "Armored Elephant Dead",
+   "display": ""
+  },
+  "391": {
+   "internal": "Tree Fir Yellow (Straggler) HIDDEN",
+   "display": "Tree Fir Yellow"
+  },
+  "392": {
+   "internal": "Tree Fir Dead (Straggler)",
+   "display": "Tree Fir Dead"
+  },
+  "393": {
+   "internal": "Tree_pine_imp",
+   "display": "Tree Forest"
+  },
+  "394": {
+   "internal": "Saint_Francis",
+   "display": "Saint Francis"
+  },
+  "395": {
+   "internal": "Lightning_Bolt",
+   "display": "Missile - Bolt Fire"
+  },
+  "396": {
+   "internal": "Dragon",
+   "display": "Dragon"
+  },
+  "397": {
+   "internal": "Winsett's_Mom's_Z",
+   "display": "Winsett's other Z"
+  },
+  "398": {
+   "internal": "Winsett's_baby",
+   "display": "BabyPrez"
+  },
+  "399": {
+   "internal": "Baby Prez Dead",
+   "display": ""
+  },
+  "400": {
+   "internal": "Nature_GrassDry_01",
+   "display": "Grass Dry"
+  },
+  "401": {
+   "internal": "Nature_GrassGreen_01",
+   "display": "Grass Green"
+  },
+  "402": {
+   "internal": "Nat_ShrubDry_01",
+   "display": "Shrub Dry 1"
+  },
+  "403": {
+   "internal": "Nat_ShrubDry_02",
+   "display": "Shrub Dry 2"
+  },
+  "404": {
+   "internal": "Nat_ShrubDry_03",
+   "display": "Shrub Dry 3"
+  },
+  "405": {
+   "internal": "Nat_ShrubDry_04",
+   "display": "Shrub Dry 4"
+  },
+  "406": {
+   "internal": "Nat_ShrubGreen_01",
+   "display": "Shrub Green 1"
+  },
+  "407": {
+   "internal": "Nat_ShrubGreen_02",
+   "display": "Shrub Green 2"
+  },
+  "408": {
+   "internal": "Nat_ShrubGreen_03",
+   "display": "Shrub Green 3"
+  },
+  "409": {
+   "internal": "Nat_ShrubGreen_04",
+   "display": "Shrub Green 4"
+  },
+  "410": {
+   "internal": "Nature_ShrubDead_01",
+   "display": "Shrub Dead"
+  },
+  "411": {
+   "internal": "Nature_ShrubJungle_01",
+   "display": "Shrub Jungle 1"
+  },
+  "412": {
+   "internal": "Nature_ShrubJungle_02",
+   "display": "Shrub Jungle 2"
+  },
+  "413": {
+   "internal": "Nature_ShrubJungle_03",
+   "display": "Shrub Jungle 3"
+  },
+  "414": {
+   "internal": "Nature_ShrubJungle_04",
+   "display": "Shrub Jungle 4"
+  },
+  "416": {
+   "internal": "Nature_PebblesGrey",
+   "display": "Pebbles Grey"
+  },
+  "417": {
+   "internal": "Nature_PebblesSand",
+   "display": "Pebbles Sand"
+  },
+  "418": {
+   "internal": "Tree Fir Blue (Forest)",
+   "display": "Tree Fir Blue (Forest)"
+  },
+  "419": {
+   "internal": "Tree Fir Dead (Forest)",
+   "display": "Tree Fir Dead (Forest)"
+  },
+  "420": {
+   "internal": "Tree Spruce Red (Forest)",
+   "display": "Tree Spruce Red (Forest)"
+  },
+  "421": {
+   "internal": "Tree Spruce Red (Straggler)",
+   "display": "Tree Spruce Red"
+  },
+  "422": {
+   "internal": "Tree Oak (Forest)",
+   "display": "Tree Oak (Forest)"
+  },
+  "423": {
+   "internal": "Tree Oak Autumn (Forest)",
+   "display": "Tree Oak Autumn (Forest)"
+  },
+  "424": {
+   "internal": "Tree Ash (Forest)",
+   "display": "Tree Ash (Forest)"
+  },
+  "425": {
+   "internal": "Tree Dead (Straggler)",
+   "display": "Tree Dead"
+  },
+  "426": {
+   "internal": "Tree Olive (Forest)",
+   "display": "Tree Olive (Forest)"
+  },
+  "427": {
+   "internal": "Tree Olive (Straggler)",
+   "display": "Tree Olive"
+  },
+  "428": {
+   "internal": "Tree Pine (Forest)",
+   "display": "Tree Pine (Forest)"
+  },
+  "429": {
+   "internal": "Tree Pine (Straggler)",
+   "display": "Tree Pine"
+  },
+  "430": {
+   "internal": "Tree Cypress (Forest)",
+   "display": "Tree Cypress (Forest)"
+  },
+  "431": {
+   "internal": "Tree Cypress (Straggler)",
+   "display": "Tree Cypress"
+  },
+  "432": {
+   "internal": "Blood",
+   "display": ""
+  },
+  "434": {
+   "internal": "Hero_General",
+   "display": "General"
+  },
+  "435": {
+   "internal": "Hero_High_Priest",
+   "display": "High Priest"
+  },
+  "436": {
+   "internal": "Hero_Pharaoh",
+   "display": "Pharaoh"
+  },
+  "437": {
+   "internal": "Hero_Achilles",
+   "display": "Hero Achilles"
+  },
+  "438": {
+   "internal": "Hero_Ajax",
+   "display": "Hero Ajax"
+  },
+  "439": {
+   "internal": "Hero_Odysseus",
+   "display": "Hero Odysseus"
+  },
+  "440": {
+   "internal": "Hero_Paris",
+   "display": "Hero Paris"
+  },
+  "441": {
+   "internal": "Hero_Xanthippus",
+   "display": "Hero Xanthippus"
+  },
+  "442": {
+   "internal": "Hero_Pericles",
+   "display": "Hero Pericles"
+  },
+  "443": {
+   "internal": "Hero_Chieftain",
+   "display": "Chieftain"
+  },
+  "444": {
+   "internal": "Hero_Xu_Fu",
+   "display": "Hero Xu Fu"
+  },
+  "445": {
+   "internal": "Hero_Shotoku",
+   "display": "Prince Shotoku"
+  },
+  "446": {
+   "internal": "Hero_Ramesses",
+   "display": "Hero Ramesses"
+  },
+  "447": {
+   "internal": "Hero_Muwatalli",
+   "display": "Hero Muwatalli"
+  },
+  "448": {
+   "internal": "Smoke Building 1x1",
+   "display": ""
+  },
+  "449": {
+   "internal": "Smoke Building 2x2",
+   "display": ""
+  },
+  "450": {
+   "internal": "Smoke Building 3x3",
+   "display": ""
+  },
+  "451": {
+   "internal": "Smoke Building 5x5",
+   "display": ""
+  },
+  "452": {
+   "internal": "Barracks Stone (Dead)",
+   "display": ""
+  },
+  "453": {
+   "internal": "Barracks (Dead)",
+   "display": ""
+  },
+  "454": {
+   "internal": "Academy (Dead)",
+   "display": ""
+  },
+  "455": {
+   "internal": "Dock Stone (Dead)",
+   "display": ""
+  },
+  "456": {
+   "internal": "Dock Dead",
+   "display": ""
+  },
+  "457": {
+   "internal": "Siege Workshop (Dead)",
+   "display": ""
+  },
+  "458": {
+   "internal": "Granary (Dead)",
+   "display": ""
+  },
+  "459": {
+   "internal": "House Stone (Dead)",
+   "display": ""
+  },
+  "460": {
+   "internal": "House (Dead)",
+   "display": ""
+  },
+  "461": {
+   "internal": "Town Center Stone (Dead)",
+   "display": ""
+  },
+  "462": {
+   "internal": "Town Center (Dead)",
+   "display": ""
+  },
+  "463": {
+   "internal": "Government Center (Dead)",
+   "display": ""
+  },
+  "464": {
+   "internal": "Market Stone (Dead)",
+   "display": ""
+  },
+  "465": {
+   "internal": "Market (Dead)",
+   "display": ""
+  },
+  "466": {
+   "internal": "Stable Stone (Dead)",
+   "display": ""
+  },
+  "467": {
+   "internal": "Stable (Dead)",
+   "display": ""
+  },
+  "468": {
+   "internal": "Archery Range (Dead)",
+   "display": ""
+  },
+  "469": {
+   "internal": "Storage Pit Stone (Dead)",
+   "display": ""
+  },
+  "470": {
+   "internal": "Storage Pit (Dead)",
+   "display": ""
+  },
+  "471": {
+   "internal": "Temple (Dead)",
+   "display": ""
+  },
+  "472": {
+   "internal": "Trade Workshop (Dead)",
+   "display": ""
+  },
+  "473": {
+   "internal": "Wonder (Dead)",
+   "display": ""
+  },
+  "474": {
+   "internal": "Small Wall (Dead)",
+   "display": ""
+  },
+  "475": {
+   "internal": "Medium Wall (Dead)",
+   "display": ""
+  },
+  "476": {
+   "internal": "Fortified Wall (Dead)",
+   "display": ""
+  },
+  "477": {
+   "internal": "Watch Tower (Dead)",
+   "display": ""
+  },
+  "478": {
+   "internal": "Sentry Tower (Dead)",
+   "display": ""
+  },
+  "479": {
+   "internal": "Guard Tower (Dead)",
+   "display": ""
+  },
+  "480": {
+   "internal": "Ballista Tower (Dead)",
+   "display": ""
+  },
+  "481": {
+   "internal": "Waterfall Large",
+   "display": "Cliff waterfall"
+  },
+  "482": {
+   "internal": "Blood (small)",
+   "display": ""
+  },
+  "483": {
+   "internal": "Blood (medium)",
+   "display": ""
+  },
+  "484": {
+   "internal": "Blood (large)",
+   "display": ""
+  }
+ }
+}
