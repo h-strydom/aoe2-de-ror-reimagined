@@ -39,6 +39,36 @@ AoE DE campaign (.aoecpn)  →  reader  →  neutral map model  →  mapping (id
 
 No game files are included or redistributed. The tools read your own installs at run time.
 
+## Getting started
+
+```bash
+uv sync
+```
+```bash
+uv run reimagined setup
+```
+
+`setup` finds your AoE DE install (every Steam library, or `--from <folder>` / `AOEDE_DIR`) and copies
+what the project needs into the repository:
+- each campaign file into `aoe1de/<campaign>/`
+- every scenario, extracted, into its mission folder `aoe1de/<campaign>/NN_<mission>/`
+- the game data the converter reads (`empires.dat`, English strings) into `aoe1de/data/`
+
+These copies are git-ignored, because the original game files aren't redistributed. After `setup`,
+nothing reads the install again: you can uninstall AoE DE, and every path stays inside the repo.
+
+## What's in the repository
+
+| Path | What | In git? |
+|---|---|---|
+| `aoe1de/<campaign>.yaml` | campaign: title, source file, missions in play order | yes |
+| `aoe1de/<campaign>/NN_<mission>/mission.yaml` | mission title and its source scenario | yes |
+| `aoe1de/**/*.aoecpn`, `*.aoescn`, `aoe1de/data/` | original AoE DE files, copied in by `setup` | **no** |
+| converted Return of Rome maps (coming) | this project's work: faithful conversions, then edited and reimagined versions | yes |
+
+Anyone who just wants faithful Return of Rome versions of the AoE DE campaigns will be able to take
+the converted maps straight from this repository.
+
 ## Related
 
 - [aoe-agent-editor](https://github.com/h-strydom/aoe-agent-editor): the scenario toolkit and Claude

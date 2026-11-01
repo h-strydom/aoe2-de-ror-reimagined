@@ -11,9 +11,12 @@
   fix goes into aoe-agent-editor, not into a workaround here.
 
 ## Game files
-Never commit game files or anything extracted from them in bulk: campaigns, scenarios, data files,
-string tables. Tests that need real game data read the local install and skip themselves when it's
-missing. Small hand-made fixtures are fine.
+- **Original AoE DE files are never committed:** campaign files, scenarios, data files, string tables.
+  `reimagined setup` copies them into `aoe1de/` from each person's own install, and `.gitignore`
+  keeps them out. Tests that need them skip themselves when `setup` hasn't been run.
+- **Converted Return of Rome maps are committed.** They're this project's work, from the faithful
+  conversions to the edited and reimagined versions, and they're what people come here for.
+- Small hand-made fixtures are fine.
 
 ## Style
 - Python 3.12+, managed with uv.
