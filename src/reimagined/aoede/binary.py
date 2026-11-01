@@ -20,6 +20,9 @@ class Cursor:
         self.pos += struct.calcsize("<" + fmt)
         return vals
 
+    def f32(self) -> float:
+        return self.unpack("f")[0]
+
     def u16(self) -> int:
         return self.unpack("H")[0]
 
