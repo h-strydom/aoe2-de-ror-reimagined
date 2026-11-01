@@ -7,6 +7,8 @@
 - AoE DE scenario reader and an id-to-name table for AoE DE objects and terrains.
 - `aoe2de_ror/conversion.yaml`: explicit AoE DE -> RoR terrain and object mapping with per-mission overrides, validated on load.
 - `reimagined convert`: converts the campaigns to Return of Rome scenarios and campaign files in `aoe2de_ror/` (map, players, objects; no triggers yet). All 10 campaigns are converted and committed.
+- `setup` also copies AoE DE's campaign art (briefing map per mission, campaign illustrations, victory
+  backdrops) and English narration; `aoede.slp` decodes AoE DE's SLP 4 sprites to images.
 - Faithful missions: the converted scenarios carry the mission text (instructions, hints, victory,
   loss, history), the string-table player names, allied victory, the victory mode, and every player's
   victory conditions as triggers, with the human player's shown as objectives.

@@ -13,6 +13,17 @@ STEAM_FOLDER = "AoEDE"
 CAMPAIGN_DIR = Path("Content") / "Campaigns"
 # Game data the later layers read (object names for the id mapping).
 DATA_FILES = (Path("Data") / "empires.dat", Path("Data") / "Localization" / "en" / "strings.txt")
+# Campaign presentation: which art belongs to which campaign, the briefing map per mission, the campaign
+# illustrations and victory backdrops (SLP sprites), and the English narration (MP3 per string id).
+# Copied keeping their path relative to the install.
+ASSETS = (
+    (Path("Data"), "campaigns.json"),
+    (Path("Data"), "scenarios.json"),
+    (Path("Assets") / "UI" / "images", "campaignillustrations.SLP"),
+    (Path("Assets") / "UI" / "images" / "maps", "maps*.SLP"),
+    (Path("Assets") / "UI" / "backdrops" / "campaigns", "victory*.SLP"),
+    (Path("Content") / "Voice Over" / "en", "*.mp3"),
+)
 
 
 def has_campaigns(root: Path) -> bool:

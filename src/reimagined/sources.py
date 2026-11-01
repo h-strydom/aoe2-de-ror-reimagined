@@ -12,7 +12,7 @@ from pathlib import Path
 
 from . import layout
 from .aoede.campaign import load_campaign
-from .aoede.install import CAMPAIGN_DIR, DATA_FILES, find_aoede
+from .aoede.install import ASSETS, CAMPAIGN_DIR, DATA_FILES, find_aoede
 
 
 @dataclass
@@ -21,6 +21,7 @@ class SetupReport:
     campaigns: int = 0
     scenarios: int = 0
     data_files: list[str] = field(default_factory=list)
+    assets: int = 0
     problems: list[str] = field(default_factory=list)
 
 
@@ -60,12 +61,23 @@ def setup(source: str | Path | None = None, root: Path = layout.AOE1DE) -> Setup
             report.data_files.append(src.name)
         else:
             report.problems.append(f"game data {rel} is missing")
+    for folder, pattern in ASSETS:
+        found = sorted((install / folder).glob(pattern))
+        if not found:
+            report.problems.append(f"no {folder / pattern} in the install")
+        for src in found:
+            dest = data_dir / folder / src.name
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            if not dest.is_file() or dest.stat().st_size != src.stat().st_size:
+                shutil.copy2(src, dest)
+            report.assets += 1
     return report
 
 
 def describe(report: SetupReport) -> str:
     lines = [f"Copied from {report.source}",
-             f"  {report.campaigns} campaign files, {report.scenarios} scenarios, data: {', '.join(report.data_files) or 'none'}"]
+             f"  {report.campaigns} campaign files, {report.scenarios} scenarios, data: {', '.join(report.data_files) or 'none'}, "
+             f"{report.assets} art and narration files"]
     if report.problems:
         lines.append("Problems:")
         lines += [f"  - {p}" for p in report.problems]

@@ -53,6 +53,8 @@ what the project needs into the repository:
 - each campaign file into `aoe1de/<campaign>/`
 - every scenario, extracted, into its mission folder `aoe1de/<campaign>/NN_<mission>/`
 - the game data the converter reads (`empires.dat`, English strings) into `aoe1de/data/`
+- the campaign art (a briefing map per mission, campaign illustrations, victory backdrops) and the
+  English narration, into `aoe1de/data/` under their install paths
 
 These copies are git-ignored, because the original game files aren't redistributed. After `setup`,
 nothing reads the install again: you can uninstall AoE DE, and every path stays inside the repo.

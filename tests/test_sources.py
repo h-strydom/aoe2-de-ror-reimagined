@@ -7,7 +7,7 @@ import pytest
 
 from reimagined import layout
 from reimagined.aoede.campaign import CampaignEntry, build_campaign, read_campaign
-from reimagined.aoede.install import find_aoede
+from reimagined.aoede.install import ASSETS, find_aoede
 from reimagined.sources import setup
 
 
@@ -44,6 +44,9 @@ def _fake_install(tmp: Path, scenarios: dict[str, bytes]) -> Path:
     (inst / "Content" / "Campaigns" / "1 Tiny.aoecpn").write_bytes(build_campaign("Tiny", entries))
     (inst / "Data" / "empires.dat").write_bytes(b"dat")
     (inst / "Data" / "Localization" / "en" / "strings.txt").write_text("1 \"x\"", encoding="utf-8")
+    for folder, pattern in ASSETS:
+        (inst / folder).mkdir(parents=True, exist_ok=True)
+        (inst / folder / pattern.replace("*", "tiny")).write_bytes(b"asset")
     return inst
 
 
@@ -55,7 +58,11 @@ def test_setup_copies_campaigns_scenarios_and_data(tmp_path):
     assert (root / "tiny" / "1 Tiny.aoecpn").is_file()
     assert (root / "tiny" / "01_one" / "Scn1-01-One.aoescn").read_bytes() == b"one"
     assert (root / "tiny" / "02_two" / "Scn1-02-Two.aoescn").read_bytes() == b"two"
-    assert sorted(p.name for p in (root / "data").iterdir()) == ["empires.dat", "strings.txt"]
+    data = root / "data"
+    assert sorted(p.name for p in data.iterdir() if p.is_file()) == ["empires.dat", "strings.txt"]
+    assert report.assets == len(ASSETS)
+    assert (data / "Content" / "Voice Over" / "en" / "tiny.mp3").read_bytes() == b"asset"
+    assert (data / "Assets" / "UI" / "images" / "maps" / "mapstiny.SLP").is_file()
     assert setup(inst, root).problems == []  # running it again is safe
 
 

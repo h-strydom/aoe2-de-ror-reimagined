@@ -7,7 +7,9 @@ aoe1de/
     NN_<mission>/
       mission.yaml                title, source scenario, players, victory, objectives, mission text
       <source>.aoescn             the original scenario, extracted (local only, git-ignored)
-  data/                           AoE DE game data the converter reads (local only, git-ignored)
+  data/                           AoE DE game data the converter reads: empires.dat, strings.txt, and under
+                                  Data/, Assets/UI/, Content/Voice Over/en/ the campaign art and narration
+                                  (local only, git-ignored)
 
 aoe2de_ror/
   conversion.yaml                 what each AoE DE terrain and object becomes in RoR, plus mission overrides
