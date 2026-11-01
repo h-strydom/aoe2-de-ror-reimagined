@@ -9,6 +9,7 @@ or owned by an inactive player) are counted in the result, so nothing disappears
 from __future__ import annotations
 
 import contextlib
+import re
 from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -16,12 +17,15 @@ from pathlib import Path
 from aoe2ed.campaign import Campaign as RorCampaign
 from aoe2ed.campaign import CampaignScenario
 from aoe2ed.session import SESSIONS
-from aoe2ed.tools.world import diplomacy_set, player_set
+from aoe2ed.tools.logic import triggers_add
+from aoe2ed.tools.world import diplomacy_set, options_set, player_set
 
-from . import layout
+from . import layout, victory
+from .aoede import strings
 from .aoede.names import object_name
 from .aoede.scenario import Scenario, load_scenario
 from .conversion import Conversion, load
+from .missions import mission_data
 from .screens import dumps, screens
 from .terrain import clean_terrain
 
@@ -46,6 +50,9 @@ class ConvertResult:
     placed: int = 0
     dropped: Counter = field(default_factory=Counter)   # reason -> count
     players: int = 0
+    victory: str = ""                                    # RoR victory mode
+    triggers: int = 0                                    # objective and victory triggers
+    skipped: list[str] = field(default_factory=list)     # victory conditions that couldn't be converted
 
 
 def scenario_path(m: layout.Mission, out_root: Path = layout.AOE2DE_ROR) -> Path:
@@ -83,8 +90,21 @@ def placements(src: Scenario, conv: Conversion, terrain: list[int], dropped: Cou
                 yield owner, ror_id, u
 
 
+def mission_text(src: Scenario, table: dict[int, str]) -> tuple[dict[str, str], dict[int, str], dict[int, list[str]]]:
+    """The messages (instructions, hints, victory, loss, history) and player names the game shows
+    (AoE DE's string table where the scenario names an id, else the scenario's own text), and each
+    player's objective lines."""
+    data = mission_data(src, table)
+    objectives: dict[int, list[str]] = {}
+    for o in data["objectives"]:
+        line = re.sub(r" \(#\d+\)", "", o["summary"])
+        line = re.sub(r"the area \(.*\)", "the marked area", line)   # AoE DE's wording (strings 62804, 62808)
+        objectives.setdefault(o["player"], []).append(line + ".")
+    return data["text"], {p["number"]: p["name"] for p in data["players"]}, objectives
+
+
 @contextlib.contextmanager
-def build_scenario(src: Scenario, conv: Conversion, mission: str = ""):
+def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: dict[int, str] | None = None):
     """Yield (AoE2ScenarioParser scenario flagged for RoR, ConvertResult). The scenario lives in an
     aoe-agent-editor session that closes on exit, so write or inspect it inside the block."""
     res = ConvertResult(mission or src.filename, Path())
@@ -93,6 +113,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = ""):
     active = src.active_players
     if len(active) > MAX_ROR_PLAYERS:
         raise ValueError(f"{src.filename}: {len(active)} active players, RoR scenarios hold {MAX_ROR_PLAYERS}")
+    text, names, objective_texts = mission_text(src, table or {})
     o = SESSIONS.new(src.width, game="ror")
     s = o.scenario
     try:
@@ -111,7 +132,8 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = ""):
                 "human": p.human,
                 "food": int(r["food"]), "wood": int(r["wood"]), "gold": int(r["gold"]),
                 "stone": int(r["stone"]), "population_cap": int(r["pop_cap"]),
-                "tribe_name": p.name,
+                "tribe_name": names.get(p.number, p.name),
+                "allied_victory": p.allied_victory,
             })
         for p in active:
             others = [q for q in active if q.number != p.number]
@@ -119,13 +141,21 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = ""):
                 state = DIPLOMACY.get(src.diplomacy[p.number - 1][q.number - 1], "ENEMY")
                 diplomacy_set(o.handle, p.number, [q.number], state, mutual=False)
 
-        if src.description:
-            s.message_manager.instructions = src.description
+        for k, v in text.items():
+            setattr(s.message_manager, k, v)
 
+        refs = {}
         for owner, ror_id, u in placements(src, conv, terrain, res.dropped):
-            s.unit_manager.add_unit(player=owner, unit_const=ror_id, x=u.x, y=u.y, z=u.z,
-                                    rotation=u.rotation, status=NORMAL_STATUS)
+            unit = s.unit_manager.add_unit(player=owner, unit_const=ror_id, x=u.x, y=u.y, z=u.z,
+                                           rotation=u.rotation, status=NORMAL_STATUS)
+            refs[u.id] = unit.reference_id
             res.placed += 1
+
+        vp = victory.plan(src, conv, refs, objective_texts)
+        options_set(o.handle, {"victory_condition": vp.mode})
+        if vp.triggers:
+            triggers_add(o.handle, vp.triggers)
+        res.victory, res.triggers, res.skipped = vp.mode, len(vp.triggers), vp.skipped
         yield s, res
     finally:
         SESSIONS.close(o.handle)
@@ -134,7 +164,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = ""):
 def convert_mission(m: layout.Mission, conv: Conversion, out_root: Path = layout.AOE2DE_ROR) -> ConvertResult:
     out = scenario_path(m, out_root)
     out.parent.mkdir(parents=True, exist_ok=True)
-    with build_scenario(load_scenario(m.scenario_path), conv.for_mission(m.key), m.key) as (s, res):
+    with build_scenario(load_scenario(m.scenario_path), conv.for_mission(m.key), m.key, strings.load()) as (s, res):
         s.write_to_file(str(out))
     res.out = out
     return res

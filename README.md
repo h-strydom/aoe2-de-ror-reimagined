@@ -92,10 +92,18 @@ Converts every campaign (or just the ones you name, e.g. `reimagined convert asc
   (`<campaign>_layout.json`, with our title and mission names) and its narrated intros (`<campaign>.json`).
   The other six use the game's default campaign book until they get art.
 
-The map, terrain, elevation, players (civ, starting age, resources, diplomacy), objects and the
-scenario instructions carry over. Triggers don't yet, so missions have no objectives or victory
-conditions. The output is deterministic, and `uv run pytest` fails if the committed maps don't
-match what `convert` builds today.
+`aoe2de_ror/` aims to be a 100% faithful rebuild. What carries over:
+- the map: terrain, elevation and every object, at the same position, rotation and owner
+- the players: name, civ, starting age, resources, diplomacy, allied victory
+- the mission text the game shows: instructions, hints, victory, loss and history
+- how a mission is won. AoE DE has no triggers: it has a victory mode and each player's victory
+  conditions. The mode maps one to one. Each player's conditions become a trigger that declares
+  them the winner when all are met (so an enemy's conditions, like "kill Caesar", are a loss), and
+  the human player's conditions show as objectives. In custom mode, conquest, artifacts, ruins,
+  discoveries, exploration and gold count too.
+
+The output is deterministic, and `uv run pytest` fails if the committed maps don't match what
+`convert` builds today.
 
 To play them, add `--install`: it installs the campaigns into your profile as a local mod,
 "AoE1 DE Campaigns (RoR Reimagined)", because the game only reads campaign screens from mods. Enable

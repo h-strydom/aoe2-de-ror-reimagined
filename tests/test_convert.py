@@ -120,7 +120,8 @@ def test_committed_maps_are_up_to_date(tmp_path):
     conv = load()
     stale = []
     for c in CAMPAIGNS:
-        paths, _ = convert_campaign(c, conv, tmp_path)
+        paths, results = convert_campaign(c, conv, tmp_path)
+        assert not [r.skipped for r in results if r.skipped], f"{c.slug}: victory conditions not converted"
         fresh = paths + [scenario_path(m, tmp_path) for m in c.missions]
         for f in fresh:
             committed = layout.AOE2DE_ROR / f.relative_to(tmp_path)
