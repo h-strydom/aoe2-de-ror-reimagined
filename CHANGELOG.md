@@ -16,7 +16,7 @@
   `aoe2de_ror/campaign_maps.yaml`. Every campaign now has a map screen.
 - Intros for every mission, in the style of AoE DE's briefing screen: the mission's briefing map and its
   instructions, story then objectives. They replace RoR's own intros for the four campaigns RoR remade.
-  Silent: custom narration doesn't play in RoR. Needs aoe-agent-editor 0.3.1 to install.
+  Silent: custom narration doesn't play in RoR. Uses aoe-agent-editor 0.3.1.
 - `setup` also copies AoE DE's campaign art (briefing map per mission, campaign illustrations, victory
   backdrops) and English narration; `aoede.slp` decodes AoE DE's SLP 4 sprites to images.
 - Faithful missions: the converted scenarios carry the mission text (instructions, hints, victory,
