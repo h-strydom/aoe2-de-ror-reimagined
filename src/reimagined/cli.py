@@ -10,6 +10,7 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="command")
     p_setup = sub.add_parser("setup", help="copy the AoE DE campaigns and game data from your install into aoe1de/")
     p_setup.add_argument("--from", dest="source", help="AoE DE folder (default: AOEDE_DIR, then Steam)")
+    sub.add_parser("extract", help="fill aoe1de/'s campaign and mission files with players, objectives and text")
     p_conv = sub.add_parser("convert", help="convert campaigns to Return of Rome into aoe2de_ror/ (needs setup)")
     p_conv.add_argument("campaigns", nargs="*", help="campaign folder names (default: all)")
     p_conv.add_argument("--install", action="store_true", help="also copy the campaign files into your AoE2 DE profile")
@@ -24,6 +25,18 @@ def main(argv: list[str] | None = None) -> int:
             return 1
         print(describe(report))
         return 1 if report.problems else 0
+    if args.command == "extract":
+        from . import layout
+        from .missions import extract
+        try:
+            changed = extract()
+        except FileNotFoundError as e:
+            print(f"error: {e} (run `reimagined setup` first)", file=sys.stderr)
+            return 1
+        print(f"{len(changed)} files updated")
+        for p in changed:
+            print(f"  {p.relative_to(layout.ROOT)}")
+        return 0
     if args.command == "convert":
         return _convert(args.campaigns, args.install)
     parser.print_help()

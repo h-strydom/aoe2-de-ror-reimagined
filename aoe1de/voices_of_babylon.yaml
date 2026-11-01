@@ -1,13 +1,10 @@
 # Voices of Babylon: AoE DE campaign 3
-title: "Voices of Babylon"
-source_file: "3 Voices of Babylon.aoecpn"
+title: Voices of Babylon
+display_name: Voices of Babylon
+source_file: 3 Voices of Babylon.aoecpn
 order: 3
-missions:
-  - 01_holy_man
-  - 02_the_tigiris_valley
-  - 03_vengeance
-  - 04_i_shall_return
-  - 05_the_great_hunt
-  - 06_the_caravan
-  - 07_lord_of_the_euphrates
-  - 08_the_conquest_of_nineveh
+missions: [01_holy_man, 02_the_tigiris_valley, 03_vengeance, 04_i_shall_return, 05_the_great_hunt, 06_the_caravan,
+  07_lord_of_the_euphrates, 08_the_conquest_of_nineveh]
+
+description: |-
+  For centuries, Babylon was the envy of the world. Her Hanging Gardens and eminent ziggurats inspired legends that echoed throughout the ages. Her greatest king, Hammurabi, gave the world its first law code. Lead this majestic city from its remarkable rise to its staggering fall, and restore it once again to greatness.

@@ -57,6 +57,26 @@ what the project needs into the repository:
 These copies are git-ignored, because the original game files aren't redistributed. After `setup`,
 nothing reads the install again: you can uninstall AoE DE, and every path stays inside the repo.
 
+## The original missions
+
+```bash
+uv run reimagined extract
+```
+
+Fills `aoe1de/`'s campaign and mission files with everything the original campaigns hold, so the
+missions can be read and reworked without the game:
+- **campaign files:** the in-game name and the campaign description
+- **mission files:** the in-game name, the players (name, civ, human or computer), the victory
+  settings, every player's objectives, and the mission text: instructions, hints, victory, loss and
+  history
+
+AoE DE scenarios have no triggers. A mission's objectives are its players' individual victory
+conditions (capture, create, destroy, bring an object somewhere, reach an amount, defeat a player),
+and each is listed with a readable summary and the units it points at. The text is what the game
+shows: AoE DE's string table where the scenario names a string id, which is often newer than the
+copy inside the scenario. The files are generated, and `uv run pytest` fails if they drift from
+what `extract` builds.
+
 ## Converting
 
 ```bash
@@ -104,8 +124,8 @@ every terrain and object on every map is covered.
 
 | Path | What | In git? |
 |---|---|---|
-| `aoe1de/<campaign>.yaml` | campaign: title, source file, missions in play order | yes |
-| `aoe1de/<campaign>/NN_<mission>/mission.yaml` | mission title and its source scenario | yes |
+| `aoe1de/<campaign>.yaml` | campaign: title, in-game name, description, source file, missions in play order | yes |
+| `aoe1de/<campaign>/NN_<mission>/mission.yaml` | the mission: source scenario, players, victory settings, objectives, text | yes |
 | `aoe1de/**/*.aoecpn`, `*.aoescn`, `aoe1de/data/` | original AoE DE files, copied in by `setup` | **no** |
 | `aoe2de_ror/conversion.yaml` | what each AoE DE terrain and object becomes in RoR, plus mission overrides | yes |
 | `aoe2de_ror/<campaign>/` | converted Return of Rome campaigns and scenarios | faithful conversions; edited and reimagined versions come later | yes |

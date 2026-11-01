@@ -1,10 +1,10 @@
 # Imperium Romanum: AoE DE campaign 8
-title: "Imperium Romanum"
-source_file: "8 Imperium Romanum.aoecpn"
+title: Imperium Romanum
+display_name: Imperium Romanum
+source_file: 8 Imperium Romanum.aoecpn
 order: 8
-missions:
-  - 01_the_battle_of_actium
-  - 02_the_year_of_the_four_emperors
-  - 03_ransom_at_ctesiphon
-  - 04_zenobia_queen_of_palmyra
-  - 05_the_coming_of_the_huns
+missions: [01_the_battle_of_actium, 02_the_year_of_the_four_emperors, 03_ransom_at_ctesiphon, 04_zenobia_queen_of_palmyra,
+  05_the_coming_of_the_huns]
+
+description: |-
+  Even as Rome ruled the world and attained the heights of civilization, the seeds of discord took root and cracks appeared in the imperial marble. In time, strife, rebellion, and disaster struck. Can you defeat pretenders, crush rebellions on the frontiers, and withstand the assault of the most barbarous horsemen to ever ride against civilization? Can you save Rome from falling into ruin?

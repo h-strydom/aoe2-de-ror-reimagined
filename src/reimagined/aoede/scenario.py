@@ -1,18 +1,27 @@
 """AoE DE scenarios (.aoescn, body version 3.13, as embedded in the official .aoecpn campaigns).
 
 Layout established in the proof of concept (aoe1-to-ror) by reading all 61 official campaign scenarios;
-every one of them parses with the invariants in tests/test_scenario.py. Only what the converter needs is
-decoded: players, diplomacy, starting ages and resources,
-the tile map and units. Triggers, messages, cinematics and AI files are skipped.
+every one of them parses with the invariants in tests/test_scenario.py, and every body is read to its
+last byte. Decoded: players, messages (instructions, hints, victory, loss, history) with their
+string-table ids, cinematics, global victory settings, diplomacy, starting ages and resources, the
+tile map, units, and each player's individual victory conditions (the mission objectives). AoE DE
+has no trigger system in these files: objectives are those victory conditions. AI files and
+disables are skipped.
 
 Layout (offsets into the inflated body):
   u32 next_unit_id, f32 version (3.13)
   16 x DE string            player names
   16 x u32                  player name string-table ids (-1 = none)
   16 x (u32 active, u32 human, u32 civ, u32 unknown)
-  ... messages, cinematics, AI files (skipped) ...
+  u32 (1), u8, f32 (-1)
+  DE string filename; 5 x DE string: instructions, hints, victory, loss, history
+  5 x (u32 string-table id, DE string label)   same order; the game shows strings.txt's text for the id
+  4 x DE string             pregame, victory and loss cinematics, background bitmap (" <None> " = none)
+  ... bitmap, AI names and files (skipped) ...
   -99, -99                  double separator: the fixed-size block below hangs off it
-  +8   10 x i32             global victory
+  +8   10 x i32             global victory: conquest, ruins, artifacts, discoveries, exploration,
+                            gold, all_custom, mode (0 standard, 1 conquest, 2 score, 3 time, 4 custom),
+                            score, time
   +48  16 x 16 x i32        diplomacy (0 ally, 1 neutral, 3 enemy)
   ...  individual victory, allied victory, disables
   map-76  3 x i32 + 16 x i32 starting ages (0 Stone .. 3 Iron, 4 post-Iron; unverified)
@@ -20,6 +29,10 @@ Layout (offsets into the inflated body):
   map  u32 w, u32 h, w*h x (u8 terrain, u8 elevation, u8 unused)     map = separator + 14028
   u32 sections (gaia + players), (sections-1) x 5 f32 resources (food, wood, gold, stone, pop cap)
   per section: u32 count, count x 23-byte unit (f32 x, f32 y, f32 z, u32 id, u16 type, u8 state, f32 rot)
+  u32 9, then players 1..8:
+    u16 len + name (NUL-terminated), f32 camera x, f32 camera y, i16, i16, u8 allied victory,
+    u16 n, n x u8 diplomacy, n x i32, f32 (1.0), u32 conditions, u8,
+    conditions x 44-byte victory condition (see VictoryCondition), 8 x u8
 """
 from __future__ import annotations
 
@@ -34,6 +47,16 @@ MAX_PLAYERS = 16
 SEPARATOR_PAIR = b"\x9d\xff\xff\xff" * 2
 MAP_FROM_SEPARATOR = 14028
 AGES = ("stone", "tool", "bronze", "iron", "post_iron")
+MESSAGES = ("instructions", "hints", "victory", "loss", "history")
+CINEMATICS = ("pregame", "victory", "loss", "bitmap")
+NO_CINEMATIC = " <None> "
+GLOBAL_VICTORY = ("conquest", "ruins", "artifacts", "discoveries", "exploration", "gold", "all_custom",
+                  "mode", "score", "time")
+VICTORY_MODES = ("standard", "conquest", "score", "time", "custom")
+# Individual victory condition types, named after the game's objective texts (strings.txt 62801-62813)
+# and checked against each mission's instructions.
+CONDITION_TYPES = ("capture", "create", "destroy", "destroy_multiple", "bring_to_area", "bring_to_object",
+                   "attribute", "explore", "create_in_area", "destroy_all", "destroy_player")
 
 
 @dataclass
@@ -48,9 +71,26 @@ class Unit:
 
 
 @dataclass
+class VictoryCondition:
+    """One individual victory condition (44 bytes). Fields a type doesn't use are 0 / -1."""
+    type: str                         # CONDITION_TYPES
+    object_type: int                  # object id (create, destroy_all, destroy_multiple ...)
+    player: int                       # target player (destroy_player, owner of the target ...)
+    area: tuple[float, float, float, float]   # x0, y0, x1, y1 (bring_to_area, create_in_area)
+    number: int                       # count, or the attribute id for `attribute`
+    amount: int                       # the attribute amount for `attribute`
+    source: int                       # unit instance id (the object to bring)
+    target: int                       # unit instance id (to destroy, capture, bring to)
+    group: int                        # three trailing bytes: 1 (8 in Discoveries), 1 on every capture, 0
+    ally: int
+    state: int
+
+
+@dataclass
 class Player:
     number: int                       # 1..16
     name: str
+    name_string_id: int               # strings.txt id for the name, -1 = none
     active: bool
     human: bool
     civ: int
@@ -58,6 +98,8 @@ class Player:
     starting_age: int
     resources: dict[str, float] = field(default_factory=dict)
     units: list[Unit] = field(default_factory=list)
+    allied_victory: bool = False      # players 1..8 only
+    victory: list[VictoryCondition] = field(default_factory=list)   # players 1..8 only
 
 
 @dataclass
@@ -73,6 +115,10 @@ class Scenario:
     players: list[Player]             # players 1..16
     gaia_units: list[Unit]
     diplomacy: list[list[int]]        # diplomacy[i][j]: stance of player i+1 toward player j+1
+    messages: dict[str, str] = field(default_factory=dict)            # MESSAGES -> embedded text
+    message_ids: dict[str, int] = field(default_factory=dict)         # MESSAGES -> strings.txt id
+    cinematics: dict[str, str] = field(default_factory=dict)          # CINEMATICS -> name, "" = none
+    global_victory: dict[str, int] = field(default_factory=dict)      # GLOBAL_VICTORY -> value
 
     def tile(self, x: int, y: int) -> tuple[int, int]:
         i = y * self.width + x
@@ -104,6 +150,35 @@ def _unit(c: Cursor) -> Unit:
     return Unit(x, y, z, uid, typ, state, rot)
 
 
+def _condition(c: Cursor) -> VictoryCondition:
+    typ, obj, player, x0, y0, x1, y1, number, amount, source, target, group, ally, state = c.unpack("BiiffffiiiiBBB")
+    if typ >= len(CONDITION_TYPES):
+        raise ValueError(f"unknown victory condition type {typ} at {c.pos - 44}")
+    return VictoryCondition(CONDITION_TYPES[typ], obj, player, (x0, y0, x1, y1), number, amount, source,
+                            target, group, ally, state)
+
+
+def _victory_players(c: Cursor, filename: str) -> list[tuple[bool, list[VictoryCondition]]]:
+    """Players 1..8 after the units: (allied victory, individual victory conditions)."""
+    count = c.u32()
+    if count != 9:
+        raise ValueError(f"{filename}: expected 9 player slots after the units, got {count}")
+    out = []
+    for _ in range(count - 1):
+        c.raw(c.u16())                       # name, NUL-terminated (the names at the top are the real ones)
+        c.unpack("ffhh")                     # camera
+        allied = c.unpack("B")[0]
+        n = c.u16()
+        c.raw(n)
+        c.unpack(f"{n}i")
+        c.f32()
+        conditions = c.u32()
+        c.raw(1)
+        out.append((allied == 1, [_condition(c) for _ in range(conditions)]))
+        c.raw(8)
+    return out
+
+
 def load_scenario(path) -> Scenario:
     from pathlib import Path
     p = Path(path)
@@ -119,12 +194,21 @@ def read_scenario(data: bytes, filename: str = "") -> Scenario:
         raise ValueError(f"{filename}: unsupported scenario body version {body_version}")
 
     names = [c.de_string() for _ in range(MAX_PLAYERS)]
-    c.unpack(f"{MAX_PLAYERS}i")  # name string-table ids
+    name_ids = c.unpack(f"{MAX_PLAYERS}i")
     records = [c.unpack("IIII") for _ in range(MAX_PLAYERS)]
+    c.raw(9)
+    c.de_string()  # filename
+    messages = {k: c.de_string() for k in MESSAGES}
+    message_ids = {}
+    for k in MESSAGES:
+        message_ids[k] = c.unpack("i")[0]
+        c.de_string()  # label (the id as text, or empty)
+    cinematics = {k: ("" if (v := c.de_string()) == NO_CINEMATIC else v) for k in CINEMATICS}
 
     sep = body.find(SEPARATOR_PAIR, c.pos)
     if sep < 0:
         raise ValueError(f"{filename}: section separator not found")
+    global_victory = dict(zip(GLOBAL_VICTORY, struct.unpack_from("<10i", body, sep + 8), strict=True))
     diplomacy_flat = struct.unpack_from(f"<{MAX_PLAYERS * MAX_PLAYERS}i", body, sep + 8 + 40)
     diplomacy = [list(diplomacy_flat[i * MAX_PLAYERS:(i + 1) * MAX_PLAYERS]) for i in range(MAX_PLAYERS)]
 
@@ -150,19 +234,26 @@ def read_scenario(data: bytes, filename: str = "") -> Scenario:
         if not (-1 <= u.x <= w + 1 and -1 <= u.y <= h + 1):
             raise ValueError(f"{filename}: unit {u.id} at ({u.x}, {u.y}) is off a {w}x{h} map")
 
+    victory = _victory_players(c, filename)
+    if c.pos != len(body):
+        raise ValueError(f"{filename}: {len(body) - c.pos} unread bytes after the victory conditions")
+
     players = []
     for i, (active, human, civ, unknown) in enumerate(records):
         n = i + 1
+        allied, conditions = victory[i] if i < len(victory) else (False, [])
         players.append(Player(
-            number=n, name=names[i], active=bool(active), human=bool(human), civ=civ, unknown=unknown,
-            starting_age=ages[i],
+            number=n, name=names[i], name_string_id=name_ids[i], active=bool(active), human=bool(human),
+            civ=civ, unknown=unknown, starting_age=ages[i],
             resources=resources[i] if i < len(resources) else {},
             units=unit_lists[n] if n < len(unit_lists) else [],
+            allied_victory=allied, victory=conditions,
         ))
 
     return Scenario(
         filename=filename, header_version=header_version, body_version=body_version,
         description=_header_description(header), width=w, height=h,
         terrain=terrain, elevation=elevation, players=players, gaia_units=unit_lists[0],
-        diplomacy=diplomacy,
+        diplomacy=diplomacy, messages=messages, message_ids=message_ids, cinematics=cinematics,
+        global_victory=global_victory,
     )

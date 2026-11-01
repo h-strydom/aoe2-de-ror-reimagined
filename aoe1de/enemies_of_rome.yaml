@@ -1,9 +1,9 @@
 # Enemies of Rome: AoE DE campaign 9
-title: "Enemies of Rome"
-source_file: "9 Enemies of Rome.aoecpn"
+title: Enemies of Rome
+display_name: Enemies of Rome
+source_file: 9 Enemies of Rome.aoecpn
 order: 9
-missions:
-  - 01_crossing_the_alps
-  - 02_the_third_macedonian_war
-  - 03_the_revolt_of_spartacus
-  - 04_odaenathus_lord_of_palmyra
+missions: [01_crossing_the_alps, 02_the_third_macedonian_war, 03_the_revolt_of_spartacus, 04_odaenathus_lord_of_palmyra]
+
+description: |-
+  Rome’s rapid expansion has stirred emotions of both awe and hatred among its neighbors. The Romans have become overconfident due to their success, which might well bring about their downfall. At every corner lie enemies who have sworn to topple the mighty Republic. Brilliant generals like Hannibal, inspirational leaders like Spartacus, and unexpected allies like Odaenathus will leave a profound mark on the history of Rome.

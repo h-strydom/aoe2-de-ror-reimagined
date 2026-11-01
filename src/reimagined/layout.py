@@ -1,11 +1,11 @@
 """Where things live in the repository.
 
 aoe1de/
-  <campaign>.yaml                 campaign file: title, source .aoecpn, missions in play order
+  <campaign>.yaml                 campaign file: title, display name, description, source .aoecpn, missions
   <campaign>/
     <source>.aoecpn               copy of the original campaign file (local only, git-ignored)
     NN_<mission>/
-      mission.yaml                mission title and its source scenario
+      mission.yaml                title, source scenario, players, victory, objectives, mission text
       <source>.aoescn             the original scenario, extracted (local only, git-ignored)
   data/                           AoE DE game data the converter reads (local only, git-ignored)
 

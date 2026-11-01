@@ -1,8 +1,9 @@
 # Reign of the Hittites: AoE DE campaign 5
-title: "Reign of the Hittites"
-source_file: "5 Reign of the Hittites.aoecpn"
+title: Reign of the Hittites
+display_name: Reign of the Hittites
+source_file: 5 Reign of the Hittites.aoecpn
 order: 5
-missions:
-  - 01_opening_moves
-  - 02_raid_on_babylon
-  - 03_the_battle_of_kadesh
+missions: [01_opening_moves, 02_raid_on_babylon, 03_the_battle_of_kadesh]
+
+description: |-
+  From humble origins as nomadic warriors, the Hittites settled in Anatolia and built an empire over the ruins of the Hattian and Mitanni kingdoms. They adopted the chariot with great success and not only destroyed Babylon, but also rivaled Egypt in wealth and power. Lead the Hittites in their most daring raids and battles from the dawning of their culture to their cataclysmic clash with the Egyptians at Kadesh—the first major battle between great powers in human history.

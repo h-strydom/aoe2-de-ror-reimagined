@@ -1,8 +1,9 @@
 # The First Punic War: AoE DE campaign 10
-title: "The First Punic War"
-source_file: "10 The First Punic War.aoecpn"
+title: The First Punic War
+display_name: The First Punic War
+source_file: 10 The First Punic War.aoecpn
 order: 10
-missions:
-  - 01_the_battle_of_agrigentum
-  - 02_the_battle_of_mylae
-  - 03_the_battle_of_tunis
+missions: [01_the_battle_of_agrigentum, 02_the_battle_of_mylae, 03_the_battle_of_tunis]
+
+description: |-
+  For centuries, Carthage ruled the waves and coasts of the Mediterranean. Her trade ships enriched her harbors while her colonies were defended by the fiercest mercenaries that gold could buy. The sudden appearance of Rome, however, threatens its mercantile dominance. Will you be able to defend your empire's outpost on Sicily from these marauding Romans? Surely, this enemy is nothing compared to the might of Carthage.

@@ -1,13 +1,10 @@
 # Glory of Greece: AoE DE campaign 2
-title: "Glory of Greece"
-source_file: "2 Glory of Greece.aoecpn"
+title: Glory of Greece
+display_name: Glory of Greece
+source_file: 2 Glory of Greece.aoecpn
 order: 2
-missions:
-  - 01_claiming_territory
-  - 02_acropolis
-  - 03_the_conquest_of_crete
-  - 04_the_trojan_war
-  - 05_colonization_of_ionia
-  - 06_the_siege_of_athens
-  - 07_xenophons_march
-  - 08_alexander_the_great
+missions: [01_claiming_territory, 02_acropolis, 03_the_conquest_of_crete, 04_the_trojan_war, 05_colonization_of_ionia,
+  06_the_siege_of_athens, 07_xenophons_march, 08_alexander_the_great]
+
+description: |-
+  Follow the Greeks from their Bronze Age beginnings to the height of the Hellenic era. Step into the sandals of famous Greek heroes like Achilles, Pericles, Xenophon, and Alexander the Great to build a civilization spanning the ancient world from the Mediterranean to India.
