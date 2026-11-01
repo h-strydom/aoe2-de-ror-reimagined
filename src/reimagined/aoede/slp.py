@@ -9,7 +9,10 @@ Layout (little endian), established from AoE DE's campaign art:
              i32 width, i32 height, i32 hotspot x, i32 hotspot y
   outline table: per row u16 left, u16 right transparent margins (0x8000 = empty row)
   command table: per row u32 offset of its commands. Commands are the classic SLP run-length set with
-             4-byte BGRA pixels, plus 0x9E (n pixels with their own alpha, for soft edges).
+             4-byte BGRA pixels (32-bit frames) or 1-byte palette indices (8-bit frames: units, buildings),
+             plus 0x9E (n pixels with their own alpha, for soft edges).
+  secondary frames (secondary offset, one per frame, same entry layout; the top byte of properties is
+             the type, 0x02 = shadow): 1-byte shadow values, opacity = 255 - 4 * value.
 """
 from __future__ import annotations
 
@@ -21,6 +24,7 @@ import lz4.block
 from PIL import Image
 
 BPP = 4
+SHADOW = 0x02                                 # secondary frame type
 
 
 @dataclass(frozen=True)
@@ -51,11 +55,60 @@ def _put(out: bytearray, row: int, x: int, src: bytes, n: int) -> int:
 class Slp:
     def __init__(self, data: bytes):
         self.raw = decompress(data)
-        count, _type, _dirs, _per_dir, _pal, table, _sec = struct.unpack_from("<HHHHIII", self.raw, 4)
-        self.frames = []
-        for i in range(count):
-            cmd, outline, _p, props, w, h, hx, hy = struct.unpack_from("<IIIIiiii", self.raw, table + 32 * i)
-            self.frames.append(Frame(cmd, outline, props, w, h, (hx, hy)))
+        count, _type, _dirs, _per_dir, _pal, table, sec = struct.unpack_from("<HHHHIII", self.raw, 4)
+        self.frames = [self._frame(table, i) for i in range(count)]
+        self.secondary = [self._frame(sec, i) for i in range(count)] if sec else []
+
+    def _frame(self, table: int, i: int) -> Frame:
+        cmd, outline, _p, props, w, h, hx, hy = struct.unpack_from("<IIIIiiii", self.raw, table + 32 * i)
+        return Frame(cmd, outline, props, w, h, (hx, hy))
+
+    def shadow(self, index: int) -> tuple[Image.Image, tuple[int, int]] | None:
+        """Frame `index`'s shadow as an opacity mask ("L") with its hotspot, or None if it has none."""
+        if not self.secondary or (self.secondary[index].properties >> 24) != SHADOW:
+            return None
+        f = self.secondary[index]
+        raw = self.raw
+        out = bytearray(f.width * f.height)
+        for y in range(f.height):
+            left, right = struct.unpack_from("<HH", raw, f.outline + 4 * y)
+            if left == 0x8000 or right == 0x8000:
+                continue
+            pos = struct.unpack_from("<I", raw, f.commands + 4 * y)[0]
+            x = left
+            while True:
+                b = raw[pos]
+                pos += 1
+                low2, low4, high = b & 0x03, b & 0x0F, b >> 4
+                if b == 0x0F:
+                    break
+                if low2 == 0x00 or low4 == 0x02:          # draw n shadow values
+                    if low2 == 0x00:
+                        n = b >> 2
+                    else:
+                        n, pos = ((b & 0xF0) << 4) + raw[pos], pos + 1
+                    values = raw[pos:pos + n]
+                    pos += n
+                elif low2 == 0x01 or low4 == 0x03:        # skip
+                    if low2 == 0x01:
+                        n = b >> 2
+                        if not n:
+                            n, pos = raw[pos], pos + 1
+                    else:
+                        n, pos = ((b & 0xF0) << 4) + raw[pos], pos + 1
+                    x += n
+                    continue
+                elif low4 == 0x07:                        # fill
+                    n = high
+                    if not n:
+                        n, pos = raw[pos], pos + 1
+                    values, pos = bytes([raw[pos]]) * n, pos + 1
+                else:
+                    raise ValueError(f"unknown SLP shadow command {b:#x} in frame {index}, row {y}")
+                start = y * f.width + x
+                out[start:start + n] = bytes(max(0, 255 - 4 * v) for v in values)
+                x += n
+        return Image.frombytes("L", (f.width, f.height), bytes(out)), f.hotspot
 
     @classmethod
     def load(cls, path: str | Path) -> Slp:

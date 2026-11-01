@@ -51,6 +51,7 @@ STATES = ("Normal", "Hover", "Pressed", "Disabled")
 # hover brighter, pressed darker and 2 px lower, disabled grey (measured on RoR's pins).
 PIN_IMAGE, UNIT_BOX, UNIT_FOOT = 400, (300, 220), (190, 262)
 STATE_LOOK = {"Normal": 1.0, "Hover": 1.45, "Pressed": 0.7, "Disabled": None}
+SHADOW_STRENGTH = 2.0                      # RoR's pins have opaque shadow cores; AoE DE's peak at half
 
 
 @dataclass(frozen=True)
@@ -399,6 +400,18 @@ def sprite_pin(p: Pin, colour: str):
     frame = slp.frames[p.frame]
     unit = slp.image(p.frame, _palette(_palette_ids()[frame.properties >> 16]),
                      _palette(f"playercolor_{PIN_COLOURS[colour][1]}.pal"))
+    shadow = slp.shadow(p.frame)
+    if shadow:                                            # the unit's own shadow under it, lined up by hotspot
+        mask, (sx, sy) = shadow
+        (ux, uy) = frame.hotspot
+        left, top = min(0, ux - sx), min(0, uy - sy)
+        canvas = Image.new("RGBA", (max(unit.width, ux - sx + mask.width) - left,
+                                    max(unit.height, uy - sy + mask.height) - top), (0, 0, 0, 0))
+        dark = Image.new("RGBA", mask.size, (0, 0, 0, 255))
+        dark.putalpha(mask.point(lambda v: min(255, int(v * SHADOW_STRENGTH))))
+        canvas.alpha_composite(dark, (ux - sx - left, uy - sy - top))
+        canvas.alpha_composite(unit, (-left, -top))
+        unit = canvas
     unit = unit.crop(unit.getbbox())
     fit = min(UNIT_BOX[0] / unit.width, UNIT_BOX[1] / unit.height) * p.scale
     unit = unit.resize((max(1, round(unit.width * fit)), max(1, round(unit.height * fit))), Image.LANCZOS)

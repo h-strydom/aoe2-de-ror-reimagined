@@ -89,3 +89,14 @@ def test_recolour_turns_blue_and_keeps_the_rest():
     r, g, b, a = out.getpixel((0, 0))
     assert r > b and a == 255
     assert out.getpixel((1, 0))[3] == 128 and abs(out.getpixel((1, 0))[0] - 200) < 4
+
+
+@pytest.mark.skipif(not (cmap.SPRITES / "u_all_horse_archer_idleA_x4.slp").is_file(), reason="run `reimagined setup` first")
+def test_sprite_pins_have_their_shadow():
+    from reimagined.aoede.slp import Slp
+    pin = MAPS["yamato_empire_of_the_rising_sun"].pins[4]          # horse archer
+    mask, _ = Slp.load(cmap.SPRITES / pin.sprite).shadow(pin.frame)
+    assert np.array(mask).max() > 0
+    img = np.array(cmap.sprite_pin(pin, "red"))
+    shadow = (img[..., 3] > 128) & (img[..., :3].max(-1) < 10)      # opaque near-black pixels
+    assert shadow.sum() > 500

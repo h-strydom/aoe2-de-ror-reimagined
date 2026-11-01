@@ -9,7 +9,7 @@
 - `reimagined convert`: converts the campaigns to Return of Rome scenarios and campaign files in `aoe2de_ror/` (map, players, objects; no triggers yet). All 10 campaigns are converted and committed.
 - Every campaign now uses our own map (the four RoR remade too), each with its own pin colour. Pins can be
   AoE DE unit or building sprites, drawn in the player colour like RoR's pins (trireme, short swordsman,
-  Roman Wonder, stone thrower, horse archer so far), and can be sized per mission. `aoede.slp` reads 8-bit
+  Roman Wonder, stone thrower, horse archer so far) with their own unit shadow, and can be sized per mission. `aoede.slp` reads 8-bit
   sprite frames with AoE DE's palettes; land and sea are split per map.
 - Campaign screens for the six campaigns RoR has no art for, in RoR's style: AoE DE's region map inked on
   RoR's blank campaign book, with RoR's unit pins (optionally recoloured), from
