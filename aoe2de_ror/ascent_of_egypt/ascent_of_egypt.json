@@ -1,0 +1,770 @@
+{
+   "Scenarios": [
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background1.dds",
+                     "Sound": "PLAY_AOECAM1_01_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244101,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 16.22,
+                           "TextFadeDuration": 16.02,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244102,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 12.9,
+                           "TextFadeDuration": 12.5,
+                           "FadeInTime": 0.2,
+                           "String": 244103,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background2.dds",
+                     "Sound": "PLAY_AOECAM1_02_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244106,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 16.63,
+                           "TextFadeDuration": 16.43,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244107,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 19.03,
+                           "TextFadeDuration": 18.63,
+                           "FadeInTime": 0.2,
+                           "String": 244108,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background3.dds",
+                     "Sound": "PLAY_AOECAM1_03_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244111,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 14.82,
+                           "TextFadeDuration": 14.62,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244112,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 12.51,
+                           "TextFadeDuration": 12.11,
+                           "FadeInTime": 0.2,
+                           "String": 244113,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background4.dds",
+                     "Sound": "PLAY_AOECAM1_04_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244116,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 11.45,
+                           "TextFadeDuration": 11.25,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244117,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 10.22,
+                           "TextFadeDuration": 9.82,
+                           "FadeInTime": 0.2,
+                           "String": 244118,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background5.dds",
+                     "Sound": "PLAY_AOECAM1_05_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244121,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 14.5,
+                           "TextFadeDuration": 14.3,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244122,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 14.62,
+                           "TextFadeDuration": 14.22,
+                           "FadeInTime": 0.2,
+                           "String": 244123,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background6.dds",
+                     "Sound": "PLAY_AOECAM1_06_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244126,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 16.89,
+                           "TextFadeDuration": 16.69,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244127,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 16.75,
+                           "TextFadeDuration": 16.55,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244128,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 19.11,
+                           "TextFadeDuration": 18.72,
+                           "FadeInTime": 0.2,
+                           "String": 244129,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background7.dds",
+                     "Sound": "PLAY_AOECAM1_07_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244131,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 18.16,
+                           "TextFadeDuration": 17.96,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244132,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 17.96,
+                           "TextFadeDuration": 17.76,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244133,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 17.76,
+                           "TextFadeDuration": 17.56,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244134,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 13.04,
+                           "TextFadeDuration": 12.64,
+                           "FadeInTime": 0.2,
+                           "String": 244135,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background8.dds",
+                     "Sound": "PLAY_AOECAM1_08_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244136,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 16.23,
+                           "TextFadeDuration": 16.03,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244137,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 17.66,
+                           "TextFadeDuration": 17.46,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244138,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 12.71,
+                           "TextFadeDuration": 12.51,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244139,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 22.88,
+                           "TextFadeDuration": 22.48,
+                           "FadeInTime": 0.2,
+                           "String": 244140,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background9.dds",
+                     "Sound": "PLAY_AOECAM1_09_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244141,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 10.15,
+                           "TextFadeDuration": 9.95,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244142,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 14.02,
+                           "TextFadeDuration": 13.82,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244143,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 11.06,
+                           "TextFadeDuration": 10.66,
+                           "FadeInTime": 0.2,
+                           "String": 244144,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background10.dds",
+                     "Sound": "PLAY_AOECAM1_10_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244146,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 12.7,
+                           "TextFadeDuration": 12.5,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244147,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 9.21,
+                           "TextFadeDuration": 9.01,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244148,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 14.94,
+                           "TextFadeDuration": 14.54,
+                           "FadeInTime": 0.2,
+                           "String": 244149,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background11.dds",
+                     "Sound": "PLAY_AOECAM1_11_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244151,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 17.8,
+                           "TextFadeDuration": 17.6,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244152,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 17.45,
+                           "TextFadeDuration": 17.25,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244153,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 11.52,
+                           "TextFadeDuration": 11.32,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244154,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 11.46,
+                           "TextFadeDuration": 11.06,
+                           "FadeInTime": 0.2,
+                           "String": 244155,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam1/ascent_background12.dds",
+                     "Sound": "PLAY_AOECAM1_12_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244156,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 12.64,
+                           "TextFadeDuration": 12.44,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244157,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 15.64,
+                           "TextFadeDuration": 15.44,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244158,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 16.9,
+                           "TextFadeDuration": 16.5,
+                           "FadeInTime": 0.2,
+                           "String": 244159,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ]
+}

@@ -1,0 +1,1007 @@
+{
+   "BackgroundMaterial": "CampaignBackgroundGlory",
+   "Widgets": [
+      {
+         "Widget": {
+            "Type": "Label",
+            "Name": "TitleLabel",
+            "ViewPort": {
+               "xorigin": 1920,
+               "yorigin": 110,
+               "width": 1000,
+               "height": 100,
+               "alignment": "CentreCentre"
+            },
+            "StateMaterials": {
+               "StateNormal": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 70,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 57,
+                        "g": 28,
+                        "b": 27,
+                        "a": 255
+                     }
+                  }
+               }
+            },
+            "Text": "AoE1 Glory of Greece",
+            "TextAnchor": "CentreCentre",
+            "ChildWidgets": []
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Button",
+            "Name": "ScenarioButton1",
+            "ViewPort": {
+               "xorigin": 1350,
+               "yorigin": 570,
+               "width": 250,
+               "height": 250,
+               "alignment": "TopLeft"
+            },
+            "Image": {
+               "xorigin": 0,
+               "yorigin": 0,
+               "width": 250,
+               "height": 250,
+               "alignment": "TopLeft"
+            },
+            "StateMaterials": {
+               "StateDisabled": {
+                  "Material": "CampaignIconClubmanAttackDisabled",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 128
+                     }
+                  }
+               },
+               "StateNormal": {
+                  "Material": "CampaignIconClubmanAttackNormal",
+                  "Font": {
+                     "FontIndex": -40,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StateHover": {
+                  "Material": "CampaignIconClubmanAttackHover",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StatePressed": {
+                  "Material": "CampaignIconClubmanAttackPressed",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               }
+            },
+            "ChildWidgets": [
+               {
+                  "Widget": {
+                     "Type": "CampaignTitle",
+                     "Name": "CampaignButton1Label",
+                     "ViewPort": {
+                        "xorigin": 0,
+                        "yorigin": 195,
+                        "width": 700,
+                        "height": 100,
+                        "alignment": "TopLeft"
+                     },
+                     "ClippingOverride": "Background",
+                     "Level": 0,
+                     "StateMaterials": {
+                        "StateNormal": {
+                           "Font": {
+                              "FontIndex": 0,
+                              "PointSize": 45,
+                              "Style": "Normal",
+                              "TextColor": {
+                                 "r": 255,
+                                 "g": 255,
+                                 "b": 255,
+                                 "a": 255
+                              }
+                           }
+                        }
+                     },
+                     "Text": "1. Claiming Territory",
+                     "TextAnchor": "TopLeft",
+                     "ChildWidgets": []
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Button",
+            "Name": "ScenarioButton2",
+            "ViewPort": {
+               "xorigin": 1350,
+               "yorigin": 910,
+               "width": 250,
+               "height": 250,
+               "alignment": "TopLeft"
+            },
+            "Image": {
+               "xorigin": 0,
+               "yorigin": 0,
+               "width": 240,
+               "height": 240,
+               "alignment": "TopLeft"
+            },
+            "StateMaterials": {
+               "StateDisabled": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 128
+                     }
+                  }
+               },
+               "StateNormal": {
+                  "Material": "CampaignIconBowmanIdleNormal",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StateHover": {
+                  "Material": "CampaignIconBowmanIdleHover",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StatePressed": {
+                  "Material": "CampaignIconBowmanIdlePressed",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               }
+            },
+            "ChildWidgets": [
+               {
+                  "Widget": {
+                     "Type": "CampaignTitle",
+                     "Name": "CampaignButton1Label",
+                     "ViewPort": {
+                        "xorigin": 0,
+                        "yorigin": 190,
+                        "width": 700,
+                        "height": 100,
+                        "alignment": "TopLeft"
+                     },
+                     "ClippingOverride": "Background",
+                     "Level": 0,
+                     "StateMaterials": {
+                        "StateNormal": {
+                           "Font": {
+                              "FontIndex": 0,
+                              "PointSize": 45,
+                              "Style": "Normal",
+                              "TextColor": {
+                                 "r": 255,
+                                 "g": 255,
+                                 "b": 255,
+                                 "a": 255
+                              }
+                           }
+                        }
+                     },
+                     "Text": "2. Acropolis",
+                     "TextAnchor": "TopLeft",
+                     "ChildWidgets": []
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Button",
+            "Name": "ScenarioButton3",
+            "ViewPort": {
+               "xorigin": 1550,
+               "yorigin": 1305,
+               "width": 240,
+               "height": 240,
+               "alignment": "TopLeft"
+            },
+            "StateMaterials": {
+               "StateDisabled": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 128
+                     }
+                  }
+               },
+               "StateNormal": {
+                  "Material": "CampaignIconCavalryIdleNormal",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StateHover": {
+                  "Material": "CampaignIconCavalryIdleHover",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StatePressed": {
+                  "Material": "CampaignIconCavalryIdlePressed",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               }
+            },
+            "ChildWidgets": [
+               {
+                  "Widget": {
+                     "Type": "CampaignTitle",
+                     "Name": "CampaignButton1Label",
+                     "ViewPort": {
+                        "xorigin": 0,
+                        "yorigin": 200,
+                        "width": 700,
+                        "height": 100,
+                        "alignment": "TopLeft"
+                     },
+                     "ClippingOverride": "Background",
+                     "Level": 0,
+                     "StateMaterials": {
+                        "StateNormal": {
+                           "Font": {
+                              "FontIndex": 0,
+                              "PointSize": 45,
+                              "Style": "Normal",
+                              "TextColor": {
+                                 "r": 255,
+                                 "g": 255,
+                                 "b": 255,
+                                 "a": 255
+                              }
+                           }
+                        }
+                     },
+                     "Text": "3. The Conquest of Crete",
+                     "TextAnchor": "TopLeft",
+                     "ChildWidgets": []
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Button",
+            "Name": "ScenarioButton4",
+            "ViewPort": {
+               "xorigin": 1950,
+               "yorigin": 840,
+               "width": 250,
+               "height": 250,
+               "alignment": "TopLeft"
+            },
+            "StateMaterials": {
+               "StateDisabled": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 128
+                     }
+                  }
+               },
+               "StateNormal": {
+                  "Material": "CampaignIconHopliteAttackNormal",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StateHover": {
+                  "Material": "CampaignIconHopliteAttackHover",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StatePressed": {
+                  "Material": "CampaignIconHopliteAttackPressed",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               }
+            },
+            "ChildWidgets": [
+               {
+                  "Widget": {
+                     "Type": "CampaignTitle",
+                     "Name": "CampaignButton1Label",
+                     "ViewPort": {
+                        "xorigin": 0,
+                        "yorigin": 190,
+                        "width": 700,
+                        "height": 100,
+                        "alignment": "TopLeft"
+                     },
+                     "ClippingOverride": "Background",
+                     "Level": 0,
+                     "StateMaterials": {
+                        "StateNormal": {
+                           "Font": {
+                              "FontIndex": 0,
+                              "PointSize": 45,
+                              "Style": "Normal",
+                              "TextColor": {
+                                 "r": 255,
+                                 "g": 255,
+                                 "b": 255,
+                                 "a": 255
+                              }
+                           }
+                        }
+                     },
+                     "Text": "4. The Trojan War",
+                     "TextAnchor": "TopLeft",
+                     "ChildWidgets": []
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Button",
+            "Name": "ScenarioButton5",
+            "ViewPort": {
+               "xorigin": 1730,
+               "yorigin": 1090,
+               "width": 250,
+               "height": 250,
+               "alignment": "TopLeft"
+            },
+            "Image": {
+               "xorigin": 0,
+               "yorigin": 0,
+               "width": 240,
+               "height": 240,
+               "alignment": "TopLeft"
+            },
+            "StateMaterials": {
+               "StateDisabled": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 128
+                     }
+                  }
+               },
+               "StateNormal": {
+                  "Material": "CampaignIconLightTransportIdleNormal",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StateHover": {
+                  "Material": "CampaignIconLightTransportIdleHover",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StatePressed": {
+                  "Material": "CampaignIconLightTransportIdlePressed",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               }
+            },
+            "ChildWidgets": [
+               {
+                  "Widget": {
+                     "Type": "CampaignTitle",
+                     "Name": "CampaignButton1Label",
+                     "ViewPort": {
+                        "xorigin": 70,
+                        "yorigin": 180,
+                        "width": 700,
+                        "height": 100,
+                        "alignment": "TopLeft"
+                     },
+                     "ClippingOverride": "Background",
+                     "Level": 0,
+                     "StateMaterials": {
+                        "StateNormal": {
+                           "Font": {
+                              "FontIndex": 0,
+                              "PointSize": 45,
+                              "Style": "Normal",
+                              "TextColor": {
+                                 "r": 255,
+                                 "g": 255,
+                                 "b": 255,
+                                 "a": 255
+                              }
+                           }
+                        }
+                     },
+                     "Text": "5. Colonization of Ionia",
+                     "TextAnchor": "TopLeft",
+                     "ChildWidgets": []
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Button",
+            "Name": "ScenarioButton6",
+            "ViewPort": {
+               "xorigin": 1510,
+               "yorigin": 870,
+               "width": 250,
+               "height": 250,
+               "alignment": "TopLeft"
+            },
+            "Image": {
+               "xorigin": 0,
+               "yorigin": 0,
+               "width": 310,
+               "height": 310,
+               "alignment": "TopLeft"
+            },
+            "StateMaterials": {
+               "StateDisabled": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 128
+                     }
+                  }
+               },
+               "StateNormal": {
+                  "Material": "CampaignIconPhalanxWalkNormal",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StateHover": {
+                  "Material": "CampaignIconPhalanxWalkHover",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StatePressed": {
+                  "Material": "CampaignIconPhalanxWalkPressed",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               }
+            },
+            "ChildWidgets": [
+               {
+                  "Widget": {
+                     "Type": "CampaignTitle",
+                     "Name": "CampaignButton1Label",
+                     "ViewPort": {
+                        "xorigin": 40,
+                        "yorigin": -20,
+                        "width": 700,
+                        "height": 100,
+                        "alignment": "TopLeft"
+                     },
+                     "ClippingOverride": "Background",
+                     "Level": 0,
+                     "StateMaterials": {
+                        "StateNormal": {
+                           "Font": {
+                              "FontIndex": 0,
+                              "PointSize": 45,
+                              "Style": "Normal",
+                              "TextColor": {
+                                 "r": 255,
+                                 "g": 255,
+                                 "b": 255,
+                                 "a": 255
+                              }
+                           }
+                        }
+                     },
+                     "Text": "6. The Siege of Athens",
+                     "TextAnchor": "TopLeft",
+                     "ChildWidgets": []
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Button",
+            "Name": "ScenarioButton7",
+            "ViewPort": {
+               "xorigin": 2800,
+               "yorigin": 1205,
+               "width": 250,
+               "height": 250,
+               "alignment": "TopLeft"
+            },
+            "Image": {
+               "xorigin": 0,
+               "yorigin": 0,
+               "width": 300,
+               "height": 300,
+               "alignment": "TopLeft"
+            },
+            "StateMaterials": {
+               "StateDisabled": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 128
+                     }
+                  }
+               },
+               "StateNormal": {
+                  "Material": "CampaignIconCenturionAttackNormal",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StateHover": {
+                  "Material": "CampaignIconCenturionAttackHover",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StatePressed": {
+                  "Material": "CampaignIconCenturionAttackPressed",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               }
+            },
+            "ChildWidgets": [
+               {
+                  "Widget": {
+                     "Type": "CampaignTitle",
+                     "Name": "CampaignButton1Label",
+                     "ViewPort": {
+                        "xorigin": 10,
+                        "yorigin": 185,
+                        "width": 700,
+                        "height": 100,
+                        "alignment": "TopLeft"
+                     },
+                     "ClippingOverride": "Background",
+                     "Level": 0,
+                     "StateMaterials": {
+                        "StateNormal": {
+                           "Font": {
+                              "FontIndex": 0,
+                              "PointSize": 45,
+                              "Style": "Normal",
+                              "TextColor": {
+                                 "r": 255,
+                                 "g": 255,
+                                 "b": 255,
+                                 "a": 255
+                              }
+                           }
+                        }
+                     },
+                     "Text": "7. Xenophon's March",
+                     "TextAnchor": "TopLeft",
+                     "ChildWidgets": []
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Button",
+            "Name": "ScenarioButton8",
+            "ViewPort": {
+               "xorigin": 2285,
+               "yorigin": 1065,
+               "width": 250,
+               "height": 250,
+               "alignment": "TopLeft"
+            },
+            "Image": {
+               "xorigin": 0,
+               "yorigin": 0,
+               "width": 300,
+               "height": 300,
+               "alignment": "TopLeft"
+            },
+            "StateMaterials": {
+               "StateDisabled": {
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 128
+                     }
+                  }
+               },
+               "StateNormal": {
+                  "Material": "CampaignIconAlexanderAttackNormal",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StateHover": {
+                  "Material": "CampaignIconAlexanderAttackHover",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               },
+               "StatePressed": {
+                  "Material": "CampaignIconAlexanderAttackPressed",
+                  "Font": {
+                     "FontIndex": 0,
+                     "PointSize": 34,
+                     "Style": "Normal",
+                     "TextColor": {
+                        "r": 42,
+                        "g": 10,
+                        "b": 82,
+                        "a": 255
+                     }
+                  }
+               }
+            },
+            "ChildWidgets": [
+               {
+                  "Widget": {
+                     "Type": "CampaignTitle",
+                     "Name": "CampaignButton1Label",
+                     "ViewPort": {
+                        "xorigin": 20,
+                        "yorigin": 240,
+                        "width": 700,
+                        "height": 100,
+                        "alignment": "TopLeft"
+                     },
+                     "ClippingOverride": "Background",
+                     "Level": 0,
+                     "StateMaterials": {
+                        "StateNormal": {
+                           "Font": {
+                              "FontIndex": 0,
+                              "PointSize": 45,
+                              "Style": "Normal",
+                              "TextColor": {
+                                 "r": 255,
+                                 "g": 255,
+                                 "b": 255,
+                                 "a": 255
+                              }
+                           }
+                        }
+                     },
+                     "Text": "8. Alexander the Great",
+                     "TextAnchor": "TopLeft",
+                     "ChildWidgets": []
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Base",
+            "Name": "NextIndicator1",
+            "ViewPort": {
+               "xorigin": 2412,
+               "yorigin": 626,
+               "width": 277,
+               "height": 182,
+               "alignment": "TopLeft"
+            },
+            "Wrap": {
+               "width": 0,
+               "height": 0
+            },
+            "StateMaterials": {
+               "StateNormal": {
+                  "Material": "GenghisKhanIndicator1"
+               }
+            }
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Base",
+            "Name": "NextIndicator2",
+            "ViewPort": {
+               "xorigin": 2342,
+               "yorigin": 945,
+               "width": 245,
+               "height": 330,
+               "alignment": "TopLeft"
+            },
+            "Wrap": {
+               "width": 0,
+               "height": 0
+            },
+            "StateMaterials": {
+               "StateNormal": {
+                  "Material": "GenghisKhanIndicator2"
+               }
+            }
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Base",
+            "Name": "NextIndicator3",
+            "ViewPort": {
+               "xorigin": 2010,
+               "yorigin": 1095,
+               "width": 416,
+               "height": 314,
+               "alignment": "TopLeft"
+            },
+            "Wrap": {
+               "width": 0,
+               "height": 0
+            },
+            "StateMaterials": {
+               "StateNormal": {
+                  "Material": "GenghisKhanIndicator3"
+               }
+            }
+         }
+      },
+      {
+         "Widget": {
+            "Type": "Base",
+            "Name": "NextIndicator4",
+            "ViewPort": {
+               "xorigin": 1752,
+               "yorigin": 606,
+               "width": 317,
+               "height": 362,
+               "alignment": "TopLeft"
+            },
+            "Wrap": {
+               "width": 0,
+               "height": 0
+            },
+            "StateMaterials": {
+               "StateNormal": {
+                  "Material": "GenghisKhanIndicator4"
+               }
+            }
+         }
+      }
+   ]
+}

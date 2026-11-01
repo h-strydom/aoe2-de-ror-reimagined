@@ -86,17 +86,21 @@ uv run reimagined convert
 Converts every campaign (or just the ones you name, e.g. `reimagined convert ascent_of_egypt`) into
 `aoe2de_ror/`, following `conversion.yaml`:
 - each mission into `aoe2de_ror/<campaign>/NN_<mission>/<campaign>_NN_<mission>.aoe2scenario`
-- each campaign into `aoe2de_ror/<campaign>/<campaign>.aoe2campaign`, titled "AoE1 <title>". RoR's
-  campaign map shows at most 9 missions, so Ascent of Egypt comes in two files (`_part2`).
+- each campaign into `aoe2de_ror/<campaign>/<campaign>.aoe2campaign`, titled "AoE1 <title>"
+- for the four campaigns RoR has its own art for (Ascent of Egypt, Glory of Greece, Voices of Babylon,
+  The First Punic War), the campaign screen: RoR's map background and mission icons
+  (`<campaign>_layout.json`, with our title and mission names) and its narrated intros (`<campaign>.json`).
+  The other six use the game's default campaign book until they get art.
 
 The map, terrain, elevation, players (civ, starting age, resources, diplomacy), objects and the
 scenario instructions carry over. Triggers don't yet, so missions have no objectives or victory
 conditions. The output is deterministic, and `uv run pytest` fails if the committed maps don't
 match what `convert` builds today.
 
-To play them, add `--install`: it also copies the campaign files into your AoE2 DE profile's Return of
-Rome campaign folder (`<profile>/modes/Pompeii/resources/_common/campaign/`), where they show up
-under Return of Rome's campaigns.
+To play them, add `--install`: it installs the campaigns into your profile as a local mod,
+"AoE1 DE Campaigns (RoR Reimagined)", because the game only reads campaign screens from mods. Enable
+it once in Mods > Installed Mods and restart the game; the campaigns then show up under Return of
+Rome's campaigns.
 
 ## Changing the conversion
 

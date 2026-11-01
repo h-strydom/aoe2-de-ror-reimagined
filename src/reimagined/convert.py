@@ -22,6 +22,7 @@ from . import layout
 from .aoede.names import object_name
 from .aoede.scenario import Scenario, load_scenario
 from .conversion import Conversion, load
+from .screens import dumps, screens
 from .terrain import clean_terrain
 
 # RoR civ data names by civ id. AoE DE's civs 0..16 (Gaia..Macedonian) are RoR's first 17, same order.
@@ -32,13 +33,10 @@ ROR_CIVS = (None, "EGYPTIAN", "GREEK", "BABYLONIAN", "ASSYRIAN", "MINOAN", "HITT
 # Unverified in game: RoR may not map its ages one to one onto these values.
 ROR_AGES = ("DARK", "FEUDAL", "CASTLE", "IMPERIAL", "POST_IMPERIAL")
 DIPLOMACY = {0: "ALLY", 1: "NEUTRAL", 3: "ENEMY"}
-# RoR's campaign map places at most 9 flags for a campaign without its own layout file
-# (proof-of-concept playtest: Ascent of Egypt's missions 10-12 had no flag), so longer campaigns
-# ship in parts.
-MAX_MISSIONS_PER_CAMPAIGN = 9
 MAX_ROR_PLAYERS = 8
 NORMAL_STATUS = 2
 CAMPAIGN_TITLE = "AoE1 {title}"   # keeps them apart from RoR's own campaigns of the same name
+MOD_NAME = "AoE1 DE Campaigns (RoR Reimagined)"   # local mod `convert --install` writes; screens need a mod
 
 
 @dataclass
@@ -55,20 +53,12 @@ def scenario_path(m: layout.Mission, out_root: Path = layout.AOE2DE_ROR) -> Path
     return out_root / camp / mission / f"{camp}_{mission}.aoe2scenario"
 
 
-def campaign_parts(n_missions: int) -> list[range]:
-    """0-based mission indexes per campaign file: 12 missions -> [0..8], [9..11]."""
-    step = MAX_MISSIONS_PER_CAMPAIGN
-    return [range(a, min(a + step, n_missions)) for a in range(0, n_missions, step)]
+def campaign_path(c: layout.CampaignInfo, out_root: Path = layout.AOE2DE_ROR) -> Path:
+    return out_root / c.slug / f"{c.slug}.aoe2campaign"
 
 
-def campaign_path(c: layout.CampaignInfo, part: int, out_root: Path = layout.AOE2DE_ROR) -> Path:
-    suffix = f"_part{part}" if part > 1 else ""
-    return out_root / c.slug / f"{c.slug}{suffix}.aoe2campaign"
-
-
-def campaign_title(c: layout.CampaignInfo, part: int, parts: int) -> str:
-    title = CAMPAIGN_TITLE.format(title=c.title)
-    return f"{title} ({part}/{parts})" if parts > 1 else title
+def campaign_title(c: layout.CampaignInfo) -> str:
+    return CAMPAIGN_TITLE.format(title=c.title)
 
 
 def ror_terrain(src: Scenario, conv: Conversion) -> list[int]:
@@ -152,15 +142,18 @@ def convert_mission(m: layout.Mission, conv: Conversion, out_root: Path = layout
 
 def convert_campaign(c: layout.CampaignInfo, conv: Conversion | None = None,
                      out_root: Path = layout.AOE2DE_ROR) -> tuple[list[Path], list[ConvertResult]]:
-    """Convert every mission of a campaign and bundle them into its .aoe2campaign file(s)."""
+    """Convert every mission of a campaign and bundle them into its .aoe2campaign, plus the campaign
+    screen (`<slug>_layout.json`, `<slug>.json`) when RoR has one for it. The campaign's internal name
+    is its slug, which the game needs to find the screen."""
     conv = conv or load()
     results = [convert_mission(m, conv, out_root) for m in c.missions]
-    parts = campaign_parts(len(c.missions))
-    paths = []
-    for part, indexes in enumerate(parts, start=1):
-        bundle = RorCampaign(campaign_title(c, part, len(parts)))
-        for i in indexes:
-            out = results[i].out
-            bundle.scenarios.append(CampaignScenario(c.missions[i].title, out.name, out.read_bytes()))
-        paths.append(bundle.write(campaign_path(c, part, out_root)))
+    bundle = RorCampaign(c.slug)
+    for m, r in zip(c.missions, results, strict=True):
+        bundle.scenarios.append(CampaignScenario(m.title, r.out.name, r.out.read_bytes()))
+    path = bundle.write(campaign_path(c, out_root))
+    paths = [path]
+    for suffix, data in screens(c, campaign_title(c)).items():
+        f = path.with_name(f"{c.slug}{suffix}")
+        f.write_text(dumps(data), encoding="utf-8", newline="\n")
+        paths.append(f)
     return paths, results

@@ -12,7 +12,7 @@ dependencies = [
     "pyyaml>=6",
     # The scenario toolkit: writes RoR scenarios/campaigns and knows RoR's names. Pinned to a release tag;
     # bump it when this project needs a new toolkit feature.
-    "aoe-agent-editor @ git+https://github.com/h-strydom/aoe-agent-editor@v0.2.0",
+    "aoe-agent-editor @ git+https://github.com/h-strydom/aoe-agent-editor@v0.3.0",
 ]
 
 [project.scripts]

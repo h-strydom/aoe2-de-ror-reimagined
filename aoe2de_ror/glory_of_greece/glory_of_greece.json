@@ -1,0 +1,431 @@
+{
+   "Scenarios": [
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background1.dds",
+                     "Sound": "PLAY_AOECAM3_1_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244216,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 19.05,
+                           "TextFadeDuration": 18.85,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244217,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 26.3,
+                           "TextFadeDuration": 26.1,
+                           "FadeInTime": 0.2,
+                           "String": 244218,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background2.dds",
+                     "Sound": "PLAY_AOECAM3_2_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244221,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 27.2,
+                           "TextFadeDuration": 27,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244222,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 22.94,
+                           "TextFadeDuration": 22.74,
+                           "FadeInTime": 0.2,
+                           "String": 244223,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background3.dds",
+                     "Sound": "PLAY_AOECAM3_3_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244226,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 20.88,
+                           "TextFadeDuration": 20.68,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244227,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 24.19,
+                           "TextFadeDuration": 23.99,
+                           "FadeInTime": 0.2,
+                           "String": 244228,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background4.dds",
+                     "Sound": "PLAY_AOECAM3_4_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244231,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 29.06,
+                           "TextFadeDuration": 28.86,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244232,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 28.12,
+                           "TextFadeDuration": 27.92,
+                           "FadeInTime": 0.2,
+                           "String": 244233,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background5.dds",
+                     "Sound": "PLAY_AOECAM3_5_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244236,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 25.84,
+                           "TextFadeDuration": 25.64,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244237,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 30.7,
+                           "TextFadeDuration": 30.5,
+                           "FadeInTime": 0.2,
+                           "String": 244238,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background6.dds",
+                     "Sound": "PLAY_AOECAM3_6_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244241,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 28.53,
+                           "TextFadeDuration": 28.33,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244242,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 25.98,
+                           "TextFadeDuration": 25.78,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244243,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background7.dds",
+                     "Sound": "PLAY_AOECAM3_7_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244246,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 26.04,
+                           "TextFadeDuration": 25.84,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244247,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 30.39,
+                           "TextFadeDuration": 30.19,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244248,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background8.dds",
+                     "Sound": "PLAY_AOECAM3_8_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244251,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 17.07,
+                           "TextFadeDuration": 16.87,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244252,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 24.71,
+                           "TextFadeDuration": 24.51,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244253,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ]
+}

@@ -1,0 +1,382 @@
+{
+   "Scenarios": [
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam4/voices_background1.dds",
+                     "Sound": "PLAY_AOECAM4_1_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244256,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 25.34,
+                           "TextFadeDuration": 25.14,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244257,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam4/voices_background2.dds",
+                     "Sound": "PLAY_AOECAM4_2_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244261,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 21.14,
+                           "TextFadeDuration": 20.94,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244262,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 21.25,
+                           "TextFadeDuration": 21.05,
+                           "FadeInTime": 0.2,
+                           "String": 244263,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam4/voices_background3.dds",
+                     "Sound": "PLAY_AOECAM4_3_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244266,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 29.5,
+                           "TextFadeDuration": 29.3,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244267,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam4/voices_background4.dds",
+                     "Sound": "PLAY_AOECAM4_4_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244271,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 18.73,
+                           "TextFadeDuration": 18.53,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244272,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 17.22,
+                           "TextFadeDuration": 17.02,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244273,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam4/voices_background5.dds",
+                     "Sound": "PLAY_AOECAM4_5_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244276,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 28.49,
+                           "TextFadeDuration": 28.29,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244277,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 24.32,
+                           "TextFadeDuration": 24.12,
+                           "FadeInTime": 0.2,
+                           "String": 244278,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam4/voices_background6.dds",
+                     "Sound": "PLAY_AOECAM4_6_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244281,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 26.58,
+                           "TextFadeDuration": 26.38,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244282,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam4/voices_background7.dds",
+                     "Sound": "PLAY_AOECAM4_7_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244286,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 13.24,
+                           "TextFadeDuration": 13.04,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244287,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 28.59,
+                           "TextFadeDuration": 28.39,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244288,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam4/voices_background8.dds",
+                     "Sound": "PLAY_AOECAM4_8_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
+                           "String": 244291,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        },
+                        {
+                           "Duration": 31.11,
+                           "TextFadeDuration": 30.91,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244292,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1080,
+                              "width": 935,
+                              "height": 395
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ]
+}

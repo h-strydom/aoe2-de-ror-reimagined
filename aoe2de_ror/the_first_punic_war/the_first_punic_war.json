@@ -1,0 +1,163 @@
+{
+   "Scenarios": [
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam2/punic_background1.dds",
+                     "Sound": "PLAY_AOECAM2_1_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244201,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 20.71,
+                           "TextFadeDuration": 20.51,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244202,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 16.16,
+                           "TextFadeDuration": 15.76,
+                           "FadeInTime": 0.2,
+                           "String": 244203,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam2/punic_background2.dds",
+                     "Sound": "PLAY_AOECAM2_2_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244206,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 19.02,
+                           "TextFadeDuration": 18.82,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244207,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 19.39,
+                           "TextFadeDuration": 19,
+                           "FadeInTime": 0.2,
+                           "String": 244208,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideBackgroundImage": "textures/campaign/aoecam2/punic_background3.dds",
+                     "Sound": "PLAY_AOECAM2_3_INTRO",
+                     "Slides": [
+                        {
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
+                           "String": 244211,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 14.21,
+                           "TextFadeDuration": 14.01,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244212,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        },
+                        {
+                           "Duration": 12.74,
+                           "TextFadeDuration": 12.34,
+                           "FadeInTime": 0.2,
+                           "String": 244213,
+                           "TextRect": {
+                              "x": 800,
+                              "y": 1100,
+                              "width": 910,
+                              "height": 600
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ]
+}

@@ -1,11 +1,13 @@
-"""The converter: terrain clean-up, campaign parts, converted files read back, committed maps up to date."""
+"""The converter: terrain clean-up, converted files read back, campaign files and screens, committed maps up to date."""
 from __future__ import annotations
 
+import json
 from collections import Counter
 
 import pytest
 from aoe2ed import games
 from aoe2ed.campaign import Campaign as RorCampaign
+from aoe2ed.screens import game_campaign_dir
 from AoE2ScenarioParser.scenarios.aoe2_de_scenario import AoE2DEScenario
 
 from reimagined import layout
@@ -13,7 +15,6 @@ from reimagined.aoede.scenario import load_scenario
 from reimagined.conversion import load
 from reimagined.convert import (
     ROR_CIVS,
-    campaign_parts,
     campaign_path,
     convert_campaign,
     convert_mission,
@@ -24,15 +25,20 @@ from reimagined.convert import (
 from reimagined.terrain import clean_terrain
 
 CAMPAIGNS = layout.campaigns()
+
+
+def _ror_installed() -> bool:
+    try:
+        return game_campaign_dir("ror").is_dir()
+    except RuntimeError:
+        return False
+
+
 SET_UP = all(m.scenario_path.is_file() for c in CAMPAIGNS for m in c.missions)
 needs_setup = pytest.mark.skipif(not SET_UP, reason="run `reimagined setup` first")
+# Campaign files come with RoR's campaign screens, read from the RoR install.
+needs_ror = pytest.mark.skipif(not (SET_UP and _ror_installed()), reason="needs `reimagined setup` and RoR installed")
 ROAD = 32
-
-
-def test_campaign_parts():
-    assert campaign_parts(3) == [range(0, 3)]
-    assert campaign_parts(9) == [range(0, 9)]
-    assert campaign_parts(12) == [range(0, 9), range(9, 12)]
 
 
 def test_stray_roads_take_the_terrain_around_them():
@@ -85,17 +91,30 @@ def test_mission_override_reaches_the_map(tmp_path):
     assert all(s.map_manager.terrain[i].terrain_id == 32 for i in sand)
 
 
-@needs_setup
-def test_campaign_file_bundles_its_missions(tmp_path):
-    c = CAMPAIGNS[0]
+@needs_ror
+def test_campaign_file_and_screen(tmp_path):
+    c = CAMPAIGNS[0]                                         # Ascent of Egypt: 12 missions, RoR has its screen
     paths, results = convert_campaign(c, load(), tmp_path)
-    assert paths == [campaign_path(c, 1, tmp_path), campaign_path(c, 2, tmp_path)]
-    bundled = [s for p in paths for s in RorCampaign.read(p).scenarios]
-    assert [s.name for s in bundled] == [m.title for m in c.missions]
-    assert [s.data for s in bundled] == [r.out.read_bytes() for r in results]
+    camp = RorCampaign.read(campaign_path(c, tmp_path))
+    assert camp.name == c.slug                               # the game finds the screen by the internal name
+    assert [s.name for s in camp.scenarios] == [m.title for m in c.missions]
+    assert [s.data for s in camp.scenarios] == [r.out.read_bytes() for r in results]
+    lay = json.loads((tmp_path / c.slug / f"{c.slug}_layout.json").read_text(encoding="utf-8"))
+    widgets = {w["Widget"]["Name"]: w["Widget"] for w in lay["Widgets"]}
+    assert widgets["TitleLabel"]["Text"] == "AoE1 Ascent of Egypt" and "ZPlane" not in json.dumps(lay)
+    assert widgets["ScenarioButton12"]["ChildWidgets"][0]["Widget"]["Text"] == "12. The Siege in Canaan"
+    intro = json.loads((tmp_path / c.slug / f"{c.slug}.json").read_text(encoding="utf-8"))
+    assert len(intro["Scenarios"]) == 12 and len(paths) == 3
 
 
-@needs_setup
+@needs_ror
+def test_campaigns_without_a_ror_screen_have_none(tmp_path):
+    c = next(c for c in CAMPAIGNS if c.slug == "reign_of_the_hittites")
+    paths, _ = convert_campaign(c, load(), tmp_path)
+    assert paths == [campaign_path(c, tmp_path)]
+
+
+@needs_ror
 def test_committed_maps_are_up_to_date(tmp_path):
     """aoe2de_ror/ must be what `reimagined convert` builds from conversion.yaml today."""
     conv = load()
