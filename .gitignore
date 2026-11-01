@@ -1,0 +1,28 @@
+# Python / tooling
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+
+# Build output
+out/
+
+# Local copies of game files (never committed: we don't redistribute game data)
+source/
+*.aoecpn
+*.aoe1scenario
+*.aoe2scenario
+*.aoe2campaign
+*.gpv
+*.dat
+!tests/fixtures/**/*.json
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
