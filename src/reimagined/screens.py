@@ -2,8 +2,8 @@
 
 RoR ships four of the AoE DE campaigns with their own screens (aoecam1-4, same missions in the same
 order). Those converted campaigns get RoR's layout (background, an icon per mission, positions) with
-our title and mission names, read from the local RoR install by aoe-agent-editor. The other campaigns
-have no art yet and use the game's default book, which fits them (8 missions at most). Intros are
+our title and mission names, read from the local RoR install by aoe-agent-editor. The other six get
+our own map in RoR's style (campaign_maps.py, aoe2de_ror/campaign_maps.yaml). Intros are
 AoE DE's own, for every campaign (intros.py), not RoR's rewritten ones.
 
 The game only reads screens from a mod, and only when the campaign's internal name equals its file
@@ -16,7 +16,7 @@ import json
 import yaml
 from aoe2ed import screens as ed_screens
 
-from . import intros, layout
+from . import campaign_maps, intros, layout
 
 OFFICIAL = {"ascent_of_egypt": "aoecam1", "the_first_punic_war": "aoecam2", "glory_of_greece": "aoecam3",
             "voices_of_babylon": "aoecam4"}
@@ -40,10 +40,13 @@ def screens(c: layout.CampaignInfo, title: str) -> dict[str, dict]:
     the intro file (".json", AoE DE's briefing text per mission) for every campaign."""
     specs = mission_specs(c)
     out = {".json": intros.intro(c, [intros.slide_texts(s["text"]["instructions"]) for s in specs])}
+    labels = [f"{i}. {n}" for i, n in enumerate(display_names(c), start=1)]
     name = OFFICIAL.get(c.slug)
+    own = campaign_maps.load()
     if name:
-        labels = [f"{i}. {n}" for i, n in enumerate(display_names(c), start=1)]
         out["_layout.json"] = ed_screens.layout_from_official(name, title=title, labels=labels, game="ror")
+    elif c.slug in own:
+        out["_layout.json"] = campaign_maps.build_layout(own[c.slug], title, labels)
     return out
 
 

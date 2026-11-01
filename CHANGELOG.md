@@ -7,6 +7,9 @@
 - AoE DE scenario reader and an id-to-name table for AoE DE objects and terrains.
 - `aoe2de_ror/conversion.yaml`: explicit AoE DE -> RoR terrain and object mapping with per-mission overrides, validated on load.
 - `reimagined convert`: converts the campaigns to Return of Rome scenarios and campaign files in `aoe2de_ror/` (map, players, objects; no triggers yet). All 10 campaigns are converted and committed.
+- Campaign screens for the six campaigns RoR has no art for, in RoR's style: AoE DE's region map inked on
+  RoR's blank campaign book, with RoR's unit pins (optionally recoloured), from
+  `aoe2de_ror/campaign_maps.yaml`. Every campaign now has a map screen.
 - Intros for every mission, in the style of AoE DE's briefing screen: the mission's briefing map and its
   instructions, story then objectives. They replace RoR's own intros for the four campaigns RoR remade.
   Silent: custom narration doesn't play in RoR. Needs aoe-agent-editor 0.3.1 to install.

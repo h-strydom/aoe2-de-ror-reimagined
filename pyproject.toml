@@ -15,6 +15,7 @@ dependencies = [
     "aoe-agent-editor @ git+https://github.com/h-strydom/aoe-agent-editor@v0.3.0",
     "lz4>=4.4.5",
     "pillow>=13.0.0",
+    "opencv-python-headless>=5.0.0.93",
 ]
 
 [project.scripts]

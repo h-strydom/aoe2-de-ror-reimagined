@@ -108,10 +108,13 @@ def test_campaign_file_and_screen(tmp_path):
 
 
 @needs_ror
-def test_campaigns_without_a_ror_screen_still_get_intros(tmp_path):
+def test_campaigns_without_ror_art_get_our_own_screen(tmp_path):
     c = next(c for c in CAMPAIGNS if c.slug == "reign_of_the_hittites")
     paths, _ = convert_campaign(c, load(), tmp_path)
-    assert paths == [campaign_path(c, tmp_path), tmp_path / c.slug / f"{c.slug}.json"]
+    assert paths == [campaign_path(c, tmp_path), tmp_path / c.slug / f"{c.slug}.json",
+                     tmp_path / c.slug / f"{c.slug}_layout.json"]
+    lay = json.loads(paths[2].read_text(encoding="utf-8"))
+    assert lay["UserMaterials"][0]["FileName"] == f"{c.slug}_map.dds"
 
 
 @needs_ror

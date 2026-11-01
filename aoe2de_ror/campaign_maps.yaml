@@ -1,0 +1,72 @@
+# Campaign screens for the campaigns RoR has no art for: our own map on RoR's blank campaign book.
+#
+# `reimagined convert` builds each campaign's layout from this file; `convert --install` also draws the
+# map (from AoE DE's briefing maps, local only) onto the book.
+#   base:       which mission's AoE DE briefing map becomes the page (it shows every mission's location)
+#   pin_colour: colour of the unit pins. blue = RoR's own pins; any other (red, green, yellow, purple,
+#               orange, cyan, grey) recolours copies of them
+#   missions:   one entry per mission, in order
+#     at:   [x, y] on the base briefing map (1511 x 850 pixels); pins too close together are spread apart
+#     icon: one of RoR's campaign pins (CampaignIcon...), e.g. CampaignIconChariot, CampaignIconWarGalley
+#     label: where the mission's name goes, below (default) or above the pin
+
+yamato_empire_of_the_rising_sun:
+  base: 1
+  pin_colour: blue
+  # Five missions are in Kansai, a few km apart: spread over the region so they can be told apart.
+  missions:
+    - {at: [905, 450], icon: CampaignIconAxemanAttack}                    # The Assassins
+    - {at: [620, 405], icon: CampaignIconLightTransportIdle}              # Island Hopping
+    - {at: [770, 250], icon: CampaignIconArtifact, label: above}          # Capture
+    - {at: [1010, 225], icon: CampaignIconPriestIdle, label: above}       # The Mountain Temple
+    - {at: [470, 335], icon: CampaignIconCavalryIdle}                     # The Canyon of Death
+    - {at: [845, 345], icon: CampaignIconBowmanAttack}                    # Coup
+    - {at: [1110, 330], icon: CampaignIconCompositeBowmanIdle}            # Jinshin War
+    - {at: [374, 606], icon: CampaignIconHeavyCatapult}                   # Fujiwara Revolts
+
+reign_of_the_hittites:
+  base: 2
+  pin_colour: blue
+  missions:
+    - {at: [400, 140], icon: CampaignIconChariot}               # Opening Moves
+    - {at: [830, 470], icon: CampaignIconChariotArcherAttack}   # Raid on Babylon
+    - {at: [480, 330], icon: CampaignIconScytheChariotIdle}     # The Battle of Kadesh
+
+the_rise_of_rome:
+  base: 1
+  pin_colour: blue
+  missions:
+    - {at: [455, 320], icon: CampaignIconVillagerBuilder}       # The Birth of Rome
+    - {at: [790, 480], icon: CampaignIconWarElephantAttack}     # Pyrrhus of Epirus
+    - {at: [600, 690], icon: CampaignIconHeavyCatapult}         # The Siege of Syracuse
+    - {at: [520, 230], icon: CampaignIconCenturionAttack}       # The Battle of the Metaurus
+    - {at: [300, 770], icon: CampaignIconWarElephantBigger}     # The Battle of Zama
+    - {at: [1420, 420], icon: CampaignIconPhalanxWalk}          # Mithridates
+
+ave_caesar:
+  base: 4
+  pin_colour: blue
+  missions:
+    - {at: [990, 480], icon: CampaignIconWarGalley}             # Caesar's Revenge
+    - {at: [335, 85], icon: CampaignIconHeavyTransportIdle}     # The Invasion of Britain
+    - {at: [500, 225], icon: CampaignIconCenturionAttack}       # The Siege of Alesia
+    - {at: [940, 420], icon: CampaignIconCavalryIdle}           # The Battle of Pharsalus
+
+imperium_romanum:
+  base: 2
+  pin_colour: blue
+  missions:
+    - {at: [690, 480], icon: CampaignIconWarGalleyIdle}         # The Battle of Actium
+    - {at: [600, 430], icon: CampaignIconTrajan}                # The Year of the Four Emperors
+    - {at: [1130, 640], icon: CampaignIconArtifact}             # Ransom at Ctesiphon
+    - {at: [1040, 600], icon: CampaignIconCavalryIdle}          # Zenobia, Queen of Palmyra
+    - {at: [470, 250], icon: CampaignIconScout}                 # The Coming of the Huns
+
+enemies_of_rome:
+  base: 4
+  pin_colour: blue
+  missions:
+    - {at: [470, 330], icon: CampaignIconWarElephant}           # Crossing the Alps
+    - {at: [760, 430], icon: CampaignIconPhalanxWalk, label: above}   # Third Macedonian War
+    - {at: [650, 470], icon: CampaignIconAxemanAttack}          # The Revolt of Spartacus
+    - {at: [1060, 590], icon: CampaignIconCompositeBowmanIdle}  # Odaenathus, Lord of Palmyra
