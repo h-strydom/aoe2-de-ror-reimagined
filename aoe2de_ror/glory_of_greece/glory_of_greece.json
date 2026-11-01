@@ -6,45 +6,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background1.dds",
-                     "Sound": "PLAY_AOECAM3_1_INTRO",
+                     "SlideImageSequence": "textures/campaign/glory_of_greece/1/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
-                           "String": 244216,
+                           "Duration": 38.3,
+                           "TextFadeDuration": 38.099999999999994,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Mycenae, 1600 BCE\n\nThe Mediterranean climate of the Peloponnese region is well suited to agriculture. To thrive and expand in an increasingly hostile world, however, your people must take possession of suitable forage lands. Three other groups already inhabit this area—of the three, the Pelasgians are the strongest. Establish five Farms to sustain the agricultural needs of your people, and destroy all Pelasgian Farms to deal a crippling blow to your most powerful neighbor. It may be necessary to eliminate the Achaeans or Danaans to obtain a foothold in this region before taking the fight to the Pelasgians.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 19.05,
-                           "TextFadeDuration": 18.85,
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244217,
+                           "String": "Objectives:\n• Destroy all Pelasgian Farms.\n• Build 5 Farms.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
-                           }
-                        },
-                        {
-                           "Duration": 26.3,
-                           "TextFadeDuration": 26.1,
-                           "FadeInTime": 0.2,
-                           "String": 244218,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]
@@ -59,45 +58,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background2.dds",
-                     "Sound": "PLAY_AOECAM3_2_INTRO",
+                     "SlideImageSequence": "textures/campaign/glory_of_greece/2/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
-                           "String": 244221,
+                           "Duration": 40.1,
+                           "TextFadeDuration": 39.9,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Mycenae, 1400 BCE\n\nYour people are now largely settled, and they have prospered for the past several generations. You are not alone, however—other city-states have risen and begun to expand as well. As border clashes begin, it becomes clear that growth is possible only at the expense of neighboring rivals. The Tirynians covet the lands that you now control, and have begun to aggressively press the issue. This outrage must not be allowed to continue. Secure your control over this region by capturing the ancient Ruins close to the nearby town of Tiryns. Build two Sentry Towers adjacent to the Ruins to deter any further enemy incursions.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 27.2,
-                           "TextFadeDuration": 27,
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244222,
+                           "String": "Objectives:\n• Capture the Ruins.\n• Construct 2 Sentry Towers beside the Ruins.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
-                           }
-                        },
-                        {
-                           "Duration": 22.94,
-                           "TextFadeDuration": 22.74,
-                           "FadeInTime": 0.2,
-                           "String": 244223,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]
@@ -112,45 +110,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background3.dds",
-                     "Sound": "PLAY_AOECAM3_3_INTRO",
+                     "SlideImageSequence": "textures/campaign/glory_of_greece/3/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
-                           "String": 244226,
+                           "Duration": 36.9,
+                           "TextFadeDuration": 36.699999999999996,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Crete, 1420 BCE\n\nAfter having acquired a valuable artifact for the Minoans, you have discovered that they plan to pay you not in coin but in blood. Led by a group of seven elderly Priests, the Minoans have surrounded your company and treacherously attacked! Hopelessly outnumbered, your only chance of survival is to flee. Escape the clutches of the Minoans and search for allied troops in the area. Once you have gathered your strength, return to Crete and exact your vengeance. Beware, for some of the locals support the Minoans. Destroy their Temple and reclaim the Artifact for Mycenae.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 20.88,
-                           "TextFadeDuration": 20.68,
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244227,
+                           "String": "Objectives:\n• Capture the Artifact.\n• Destroy the Minoan Temple.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
-                           }
-                        },
-                        {
-                           "Duration": 24.19,
-                           "TextFadeDuration": 23.99,
-                           "FadeInTime": 0.2,
-                           "String": 244228,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]
@@ -165,45 +162,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background4.dds",
-                     "Sound": "PLAY_AOECAM3_4_INTRO",
+                     "SlideImageSequence": "textures/campaign/glory_of_greece/4/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
-                           "String": 244231,
+                           "Duration": 45.0,
+                           "TextFadeDuration": 44.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Ilium, 1194 BCE\n\nThe overseas expansion of the Mycenaeans has brought them into contact with other cultures that simultaneously pose opportunities and dangers. In a defiant but inspired act, Paris, prince of Troy (also called Ilium), has kidnapped the beautiful Helen of Sparta and taken her back to his home. The fury of your brother Menelaus, Helen's husband and king of Sparta, knows no bounds, and he has appealed to you, Agamemnon, king of Mycenae, for help. Jumping at the opportunity for war and renown, you have assembled a vast army bent on the destruction of Troy. The city-state lies far across the Aegean Sea, however, and the campaign will require a strong navy to launch a seaborne invasion of the Trojan heartland. Go forth dauntlessly—eternal fame and glory await!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 29.06,
-                           "TextFadeDuration": 28.86,
+                           "Duration": 7.8,
+                           "TextFadeDuration": 7.6,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244232,
+                           "String": "Objectives:\n• Hector, prince of Troy, must be slain.\n• Paris, prince of Troy, must be slain.\n• Capture the Treasure of Priam.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
-                           }
-                        },
-                        {
-                           "Duration": 28.12,
-                           "TextFadeDuration": 27.92,
-                           "FadeInTime": 0.2,
-                           "String": 244233,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]
@@ -218,45 +214,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background5.dds",
-                     "Sound": "PLAY_AOECAM3_5_INTRO",
+                     "SlideImageSequence": "textures/campaign/glory_of_greece/5/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
-                           "String": 244236,
+                           "Duration": 45.0,
+                           "TextFadeDuration": 44.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Attica, 1000 BCE\n\nThe Mycenaean civilization has fallen into ruin, and the rule of the Aegean is up for grabs. In the midst of this chaos, your city-state of Athens has managed to survive and even prosper, expanding throughout much of Attica. The local agricultural supply is not enough to support your burgeoning population, however, and before long overpopulation is sure to lead to famine and anarchy. The ruling council has decided on a bold plan to send settlers to establish overseas settlements in Ionia. The local Luwians have inhabited this region for centuries, but they are far too weak to repel your people. Demonstrate your dominance of the region by destroying three Luwian Government Centers across the sea in Ionia. Seize the initiative quickly before famine strikes, or the Luwians decide to raid Attica and the rest of Greece!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 25.84,
-                           "TextFadeDuration": 25.64,
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244237,
+                           "String": "Objectives:\n• Destroy the three Luwian Government Centers.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
-                           }
-                        },
-                        {
-                           "Duration": 30.7,
-                           "TextFadeDuration": 30.5,
-                           "FadeInTime": 0.2,
-                           "String": 244238,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]
@@ -271,46 +266,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background6.dds",
-                     "Sound": "PLAY_AOECAM3_6_INTRO",
+                     "SlideImageSequence": "textures/campaign/glory_of_greece/6/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
-                           "String": 244241,
+                           "Duration": 45.0,
+                           "TextFadeDuration": 44.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Athens, 405 BCE\n\nOver the past several centuries, the Greek city-states have expanded their influence both in Hellas and overseas. Now, a powerful coalition led by the dual monarchy of Sparta is challenging your city-state of Athens for dominance in a conflict that has lasted three decades. In the wake of the disastrous Sicilian Expedition, Sparta has seized the initiative, claiming several key victories and drawing ever closer to Athens. You have no hope of defeating the battle-hardened Spartans in the field at present, but there is a chance that you may be able to defend the city long enough for reinforcements and supplies to arrive and turn the tide in your favor. The Spartan army is reliant on a large baggage train of supplies—if it is captured, their siege will be delayed considerably.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 28.53,
-                           "TextFadeDuration": 28.33,
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244242,
+                           "String": "Objectives:\n• Capture the Spartan baggage train (represented by four Artifacts).",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
-                           }
-                        },
-                        {
-                           "Duration": 25.98,
-                           "TextFadeDuration": 25.78,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244243,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]
@@ -325,46 +318,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background7.dds",
-                     "Sound": "PLAY_AOECAM3_7_INTRO",
+                     "SlideImageSequence": "textures/campaign/glory_of_greece/7/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
-                           "String": 244246,
+                           "Duration": 45.0,
+                           "TextFadeDuration": 44.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Mesopotamia, 401 BCE\n\nThe Peloponnesian War has concluded, bringing peace to Hellas for a short time. You are part of a company of 10,000 Greek mercenaries hired to support Cyrus the Younger in his struggle to claim the Persian throne from Artaxerxes II, his brother. The Battle of Cunaxa yielded an overwhelming victory for your company, but it is all for naught as Cyrus fell in combat. Your contingent of mercenaries is now isolated deep inside the Persian Empire, with no help in sight. The journey to the nearest port on the Black Sea will be long and perilous, but it yields the opportunity for ample spoils and an eventual return home. Capture the Artifact held in the city on the coast, build a transport ship there, and bring the Artifact to friendly territory in the far north.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 26.04,
-                           "TextFadeDuration": 25.84,
+                           "Duration": 6.8,
+                           "TextFadeDuration": 6.6,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244247,
+                           "String": "Objectives:\n• Capture the Artifact.\n• Escort the Artifact to your Government Center in the north of the map.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
-                           }
-                        },
-                        {
-                           "Duration": 30.39,
-                           "TextFadeDuration": 30.19,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244248,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]
@@ -379,46 +370,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam3/glory_background8.dds",
-                     "Sound": "PLAY_AOECAM3_8_INTRO",
+                     "SlideImageSequence": "textures/campaign/glory_of_greece/8/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
-                           "String": 244251,
+                           "Duration": 35.9,
+                           "TextFadeDuration": 35.699999999999996,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Asia Minor, 334 BCE\n\nWar! The rivalry between Hellas and Persia has reignited after the irruption of the Macedonians into the region, and the Greeks have been united under you, Alexander of Macedon. You have dauntlessly marched into Asia Minor and are now surrounded by your enemies. Although they are numerous, they are disorganized, uncoordinated, and cowardly—no match for your disciplined forces. Seize the initiative and defeat them individually before they can prepare their defenses. Victory in this campaign will etch your name into the pages of history for eternity!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 17.07,
-                           "TextFadeDuration": 16.87,
+                           "Duration": 8.7,
+                           "TextFadeDuration": 8.5,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244252,
+                           "String": "Objectives:\n• Defeat all your enemies or destroy the Wonders that they attempt to build.\n• Construct a Wonder in the flagged area in Egypt.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
-                           }
-                        },
-                        {
-                           "Duration": 24.71,
-                           "TextFadeDuration": 24.51,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244253,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1080,
-                              "width": 935,
-                              "height": 395
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]

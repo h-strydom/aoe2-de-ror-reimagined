@@ -6,45 +6,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam2/punic_background1.dds",
-                     "Sound": "PLAY_AOECAM2_1_INTRO",
+                     "SlideImageSequence": "textures/campaign/the_first_punic_war/1/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 4.9,
-                           "TextFadeDuration": 4.7,
-                           "String": 244201,
+                           "Duration": 31.7,
+                           "TextFadeDuration": 31.5,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Southern Sicily, 262 BCE\n\nYour command in Sicily has been uneventful, save for a roving band of rebellious mercenaries who pillaged much of the island and angered the tyrant of Syracuse. Carthage's ruling council sees this as an opportunity to expand Carthage's influence, but a strange Italian backwater town has intervened in these affairs. The soldiers from this town call themselves Romans and they march on your positions. By the grace of Ba'al Hammon, King of the Gods, deal with these Roman upstarts.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1100,
-                              "width": 910,
-                              "height": 600
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 20.71,
-                           "TextFadeDuration": 20.51,
+                           "Duration": 6.7,
+                           "TextFadeDuration": 6.5,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244202,
+                           "String": "Objectives:\n• Destroy both Roman Government Centers.\n• Do not allow your Government Center to be destroyed.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1100,
-                              "width": 910,
-                              "height": 600
-                           }
-                        },
-                        {
-                           "Duration": 16.16,
-                           "TextFadeDuration": 15.76,
-                           "FadeInTime": 0.2,
-                           "String": 244203,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1100,
-                              "width": 910,
-                              "height": 600
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]
@@ -59,45 +58,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam2/punic_background2.dds",
-                     "Sound": "PLAY_AOECAM2_2_INTRO",
+                     "SlideImageSequence": "textures/campaign/the_first_punic_war/2/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 4.9,
-                           "TextFadeDuration": 4.7,
-                           "String": 244206,
+                           "Duration": 34.4,
+                           "TextFadeDuration": 34.199999999999996,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Northeast Sicily, 260 BCE\n\nThe Romans have not ceased their meddling. More disturbingly, they have studied one of your wrecked warships and are using it as a model to build an entire fleet! These ships will allow them to protect their supply lines from Italy, keeping their armies in Sicily equipped and reinforced. The first of these new vessels are nearing your positions off the coast of Mylae. To demonstrate the futility of challenging Carthage at sea, capture the Roman supply carts and bring them back to your base. May Ba'al Hammon guide you!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1100,
-                              "width": 910,
-                              "height": 600
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 19.02,
-                           "TextFadeDuration": 18.82,
+                           "Duration": 8.7,
+                           "TextFadeDuration": 8.5,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244207,
+                           "String": "Objectives:\n• Bring two War Chests containing Roman supplies to the blue flagged area on your island.\n• Alternatively, kill your opponents.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1100,
-                              "width": 910,
-                              "height": 600
-                           }
-                        },
-                        {
-                           "Duration": 19.39,
-                           "TextFadeDuration": 19,
-                           "FadeInTime": 0.2,
-                           "String": 244208,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1100,
-                              "width": 910,
-                              "height": 600
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]
@@ -112,45 +110,44 @@
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideBackgroundImage": "textures/campaign/aoecam2/punic_background3.dds",
-                     "Sound": "PLAY_AOECAM2_3_INTRO",
+                     "SlideImageSequence": "textures/campaign/the_first_punic_war/3/intro/%d.png",
                      "Slides": [
                         {
-                           "Duration": 4.9,
-                           "TextFadeDuration": 4.7,
-                           "String": 244211,
+                           "Duration": 23.1,
+                           "TextFadeDuration": 22.900000000000002,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
+                           "String": "Carthaginian Coast, 255 BCE\n\nFrustrated by your victories in Sicily, the Romans have sent the general Regulus to attack our homeland in Africa. His army now threatens the city of Carthage while the Roman navy approaches to blockade our ports. You must defend Carthage from these attacks and turn the tides of the battle. May Ba'al Hammon protect us and grant us victory!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1100,
-                              "width": 910,
-                              "height": 600
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         },
                         {
-                           "Duration": 14.21,
-                           "TextFadeDuration": 14.01,
+                           "Duration": 7.1,
+                           "TextFadeDuration": 6.8999999999999995,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244212,
+                           "String": "Objectives:\n• Destroy the Roman Wonder.\n• Build your own Wonder in the center of Carthage, inside the blue flags.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
                            "TextRect": {
-                              "x": 800,
-                              "y": 1100,
-                              "width": 910,
-                              "height": 600
-                           }
-                        },
-                        {
-                           "Duration": 12.74,
-                           "TextFadeDuration": 12.34,
-                           "FadeInTime": 0.2,
-                           "String": 244213,
-                           "TextRect": {
-                              "x": 800,
-                              "y": 1100,
-                              "width": 910,
-                              "height": 600
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
                            }
                         }
                      ]

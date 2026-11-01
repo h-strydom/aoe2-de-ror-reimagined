@@ -1,0 +1,264 @@
+{
+   "Scenarios": [
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/1/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 31.0,
+                           "TextFadeDuration": 30.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Actium, 31 BCE\n\nMarc Antony has taken the offensive, crossing the Gulf of Ambracia in a maneuver designed to strike quickly at your camp. Cleopatra, meanwhile, has laid anchor within the gulf, her barge protected by the Egyptian navy. Should Antony's attack be repulsed, she will likely flee to Egypt where reinforcements await. Your destiny is in your hands, Octavian. Deal a crushing blow to your enemies here, and nobody will be able to challenge your claim to the title of Princeps Civitatis!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Destroy the Town Centers of the two enemy fortresses.\n• Sink Cleopatra's Barge.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/2/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 31.4,
+                           "TextFadeDuration": 31.2,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Italia, 69 CE\n\nThe brutal and likely insane Emperor Nero has died by his own hand, leaving no heir. Reveling in delusions of grandeur, a number of claimants to the throne have cast their lots forward. However, the soldiers under your command, Vespasian, are adamant in their belief that rule of the empire should be yours. Use your eastern legions to seize control of Rome while defending your flanks from the armies of the other usurpers. Place a monument in Rome to mark your ascension to the throne.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.8,
+                           "TextFadeDuration": 6.6,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Protect your Wonder.\n• Destroy Galba’s Wonder.\n• Build a new Wonder where Galba’s Wonder stood.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/3/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 45.0,
+                           "TextFadeDuration": 44.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Mesopotamia, 262 CE\n\nAfter a century of decline and relative dormancy, Persia has revived as a world power. The ineffectual Parthian state has been overthrown by the House of Sasan, which has formed a new dynasty and swiftly asserted its dominance over the old Parthian lands. In response to the threat that it posed to the eastern frontier of the Roman Empire, Emperor Valerian set out to conquer the lands of this Sasanian Empire. After a disastrous engagement against the Persian King Shapur I near Edessa, Valerian was captured and is held prisoner in the Persian capital of Ctesiphon.\n\nA caravan of gold and precious goods was dispatched towards Ctesiphon to ransom Valerian and ease the tension between the Romans and their Sasanian neighbors. The caravan, however, was waylaid and the ransom stolen. Parthian and Palmyran bandits still operate out of hidden enclaves in the Zagros Mountains. You are to restore order in this region, recover the ransom, and deliver it to Ctesiphon.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 10.7,
+                           "TextFadeDuration": 10.5,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Recapture the three tribute wagons (Artifacts) and deliver them to the palace (foot of the Wonder) in Ctesiphon.\n• Destroy all Palmyran and Parthian Stables.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/4/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 32.4,
+                           "TextFadeDuration": 32.199999999999996,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Thrace, 271 CE\n\nAs the Third Century Crisis drags on, the weaknesses in the overextended Roman Empire become more and more evident. The Alemanni confederation threatens the northern portion of Italia, and the Getae have invaded the Balkans. The Palmyrans, once loyal allies, have rebelled under the leadership of Septimia Zenobia and seized most of our eastern provinces. Defend the northern frontiers of the empire, Emperor Aurelian, while destroying the Palmyrans and restoring the eastern provinces to Roman control.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Defeat the Palmyrans.\n• None of your Town Centers may be destroyed.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/5/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 29.1,
+                           "TextFadeDuration": 28.900000000000002,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Pannonia, 373 CE\n\nA new and more fearsome group of barbarians, the Huns, have been moving west from Central Asia for the past several decades. They are skilled horsemen and are rumored to be nigh invincible! Germanic and Alanic tribes alike flee before them, flooding towards the frontiers of the Empire. The upcoming invasion will be the ultimate test of the strength of the Empire. If you cannot parry their incursions, Rome will be sacked, and the empire overrun!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 7.1,
+                           "TextFadeDuration": 6.8999999999999995,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Build up and destroy the Huns (red).\n• Defend the Empire from Vandal, Gothic, and Alanic incursions.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ]
+}

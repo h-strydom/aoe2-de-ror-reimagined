@@ -108,10 +108,10 @@ def test_campaign_file_and_screen(tmp_path):
 
 
 @needs_ror
-def test_campaigns_without_a_ror_screen_have_none(tmp_path):
+def test_campaigns_without_a_ror_screen_still_get_intros(tmp_path):
     c = next(c for c in CAMPAIGNS if c.slug == "reign_of_the_hittites")
     paths, _ = convert_campaign(c, load(), tmp_path)
-    assert paths == [campaign_path(c, tmp_path)]
+    assert paths == [campaign_path(c, tmp_path), tmp_path / c.slug / f"{c.slug}.json"]
 
 
 @needs_ror

@@ -22,6 +22,8 @@ ASSETS = (
     (Path("Assets") / "UI" / "images", "campaignillustrations.SLP"),
     (Path("Assets") / "UI" / "images" / "maps", "maps*.SLP"),
     (Path("Assets") / "UI" / "backdrops" / "campaigns", "victory*.SLP"),
+    (Path("Assets") / "UI" / "backdrops", "backgroundcampaign.SLP"),
+    (Path("Assets") / "UI" / "backdrops", "scenariomapborder.slp"),
     (Path("Content") / "Voice Over" / "en", "*.mp3"),
 )
 

@@ -1,0 +1,420 @@
+{
+   "Scenarios": [
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/1/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 35.2,
+                           "TextFadeDuration": 35.0,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Kii Peninsula, 210 BCE\n\nThe Divine Emperor Qin Shi Huang dispatched you across the eastern seas to locate the elixir of life on Penglai Mountain and return it to him so that he may rule China for eternity. You are a rational person and know that you may find no elixir in the eastern lands; but you did not become court sorcerer by digging wells after you are thirsty. Before departing Shandong, you requested soldiers for your journey. These will allow you to defeat whoever might oppose you at your destination and, if necessary, allow you to settle in the east.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Eliminate the Jomon chieftain.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/2/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 38.4,
+                           "TextFadeDuration": 38.199999999999996,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Awaji and Shodo Islands, 178 CE\n\nYour chiefdom has grown since the ancient days when a Chinese boat first came to your shores. Your people have benefited from the goods brought by the seasonal Chinese trade ships and your craftsmen have learned to use bronze to fashion prized dotaku bells. These bells are buried into the earth to charge them with spiritual power and then rung as part of rituals to ensure the success of the rice harvests. Your settlements are growing, however, and new bells will be needed to protect your people's livelihood. Invade the neighboring islands and capture these valuable treasures.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Capture six Artifacts, each containing a dotaku bell.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/3/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 28.2,
+                           "TextFadeDuration": 28.0,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Nara, 180 CE\n\nWar has raged over the islands for many years, and the spirits are angry. Their disharmony is felt in the trembles of the earth and the waves which fall over and sweep away the coastal villages. Though you are young, Himiko, as a shaman queen, you know how to assuage the gods and restore the harmony of Japan and her people. Many proud kings remain untouched by the spirits, however. Use your magic and show them the folly of their ways.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.1,
+                           "TextFadeDuration": 5.8999999999999995,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Destroy the four Izumo Barracks\n• Capture the War Chest and bring it to your Temple",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/4/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 40.9,
+                           "TextFadeDuration": 40.699999999999996,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Izumo-taisha, 300 CE\n\nIt has been many years since the reign of Queen Himiko and war once again grips Japan. Your clan, the Yamato, controls the Kansai region, where you, Homutawake, rule as king. Rival lords, however, threaten your rule in this life and the next. They compete with one another over farming lands and the construction of giant burial mounds to house their remains. But you know that the great Shinto shrines are more prized than any rice paddy or mound. Your rivals, the Izumo clan, control one such shrine. Destroy it and build a greater shrine where it once stood to weaken your rivals' influence, and receive the blessings of the gods.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Destroy Izumo Temple.\n• Build a Temple where Izumo Temple once stood.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/5/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 41.6,
+                           "TextFadeDuration": 41.4,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Mount Shigi, 587 CE\n\nMuch has changed in the many generations since the Yamato clan rose to rule Japan. Now, the clan has been splintered into many and the old Shinto ways have been challenged by Buddhist missionaries from China. The Mononobe clan are opponents of the new faith and have held the ears of the Emperors for generations, but the Soga are gaining influence. The sudden death of your father, the Emperor, has opened the rifts in the Imperial court and the Mononobe now threaten civil war. In an affront to your Buddhist beliefs, they have seized relics of the Buddha. Prince Shōtoku, travel to Mount Shigi, defeat the Mononobe, and recover these relics.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Recover the Artifact.\n• Bring the Artifact to the flagged area.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/6/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 35.9,
+                           "TextFadeDuration": 35.699999999999996,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Asuka, 645 CE\n\nThe Soga must be stopped! Since the days of Prince Shōtoku, the clan has had its thumb on the Imperial family, but now, they have gone too far. They plan to depose your mother, the Empress, and put a more compliant puppet on the Imperial throne. Prince Naka no Ōe, you must defeat the Soga and finally drive them from power, but exercise caution. They control the Imperial capital, and you are not yet in a strong position to confront them. You may need to hide your intentions by offering the Soga gifts of peace until you are powerful enough to defeat them.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Destroy Soga Government Center.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/7/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 30.9,
+                           "TextFadeDuration": 30.7,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Ōtsu, 672 CE\n\nPrince Ōama, your elder brother, Emperor Tenji, has passed from this world. Though he was a great man, his final act was a grave mistake: he named a son of a lowborn wife as Emperor. This will ruin the authority and legitimacy of the Emperor as a descendant of gods on both family lines. What will the Chinese Emperor think of Japan now that it is ruled by a man of low birth? You have no choice, Prince Ōama. You must depose your nephew and take the Chrysanthemum Throne of Japan.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Destroy Emperor Kōbun's Government Center.\n• Protect Asuka Government Center.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/8/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 28.9,
+                           "TextFadeDuration": 28.7,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Kyushu, 740 CE\n\nEmperor Shōmu, your great-grandfather, the Emperor Tenji, ended the power of the Soga clan by aligning with a minor courtier. In recognition of his aid, your ancestor bestowed the clan name Fujiwara to the courtier. Now, like the Soga they helped defeat, the Fujiwara have grown powerful and seek to dominate the Imperial throne. One of their clan leaders leads a rebellion in Kyushu. Defeat him and restore the people's faith in your divine rule.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Destroy the Fujiwara revolt.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ]
+}

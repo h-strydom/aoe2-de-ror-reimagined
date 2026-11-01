@@ -89,10 +89,14 @@ Converts every campaign (or just the ones you name, e.g. `reimagined convert asc
 `aoe2de_ror/`, following `conversion.yaml`:
 - each mission into `aoe2de_ror/<campaign>/NN_<mission>/<campaign>_NN_<mission>.aoe2scenario`
 - each campaign into `aoe2de_ror/<campaign>/<campaign>.aoe2campaign`, titled "AoE1 <title>"
+- each campaign's intros (`<campaign>.json`): before every mission, a slideshow in the style of AoE DE's
+  own briefing screen, with the mission's briefing map and its instructions (story, then objectives).
+  The slide images are built from your local AoE DE copy at install time. They're silent: RoR only
+  plays its own sounds, so AoE DE's narration can't be added.
 - for the four campaigns RoR has its own art for (Ascent of Egypt, Glory of Greece, Voices of Babylon,
   The First Punic War), the campaign screen: RoR's map background and mission icons
-  (`<campaign>_layout.json`, with our title and mission names) and its narrated intros (`<campaign>.json`).
-  The other six use the game's default campaign book until they get art.
+  (`<campaign>_layout.json`, with our title and mission names). The other six use the game's default
+  campaign book until they get their own map art.
 
 `aoe2de_ror/` aims to be a 100% faithful rebuild. What carries over:
 - the map: terrain, elevation and every object, at the same position, rotation and owner

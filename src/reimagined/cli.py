@@ -72,10 +72,23 @@ def _convert(names: list[str], install: bool = False) -> int:
         if install:
             from aoe2ed import screens as ed_screens
 
+            from . import intros
             from .convert import MOD_NAME
+            from .screens import slide_images
+
             data = {p.name[len(c.slug):]: ed_screens.read_json(p) for p in paths[1:]}
+            widget_files = {}
+            if intros.has_art():
+                build = layout.ROOT / "out" / "intros"
+                for rel, img in slide_images(c, data[".json"]).items():
+                    dest = build / rel
+                    dest.parent.mkdir(parents=True, exist_ok=True)
+                    img.save(dest)
+                    widget_files[rel] = dest
+            else:
+                print("  (no AoE DE art copied: intros install without images; run `reimagined setup`)")
             res = ed_screens.install_campaign_mod(paths[0], MOD_NAME, layout=data.get("_layout.json"),
-                                                  intro=data.get(".json"), game="ror",
+                                                  intro=data.get(".json"), widget_files=widget_files, game="ror",
                                                   description="AoE DE campaigns converted to Return of Rome",
                                                   author="aoe2-de-ror-reimagined")
             print(f"  installed into the {MOD_NAME!r} mod" + (f" ({res['next']})" if res["next"] else ""))

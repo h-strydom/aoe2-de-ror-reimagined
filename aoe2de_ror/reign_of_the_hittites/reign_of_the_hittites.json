@@ -1,0 +1,160 @@
+{
+   "Scenarios": [
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/reign_of_the_hittites/1/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 41.0,
+                           "TextFadeDuration": 40.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Central Anatolia, 1700 BCE\n\nFrom the northern plains, your people came to the land of Hatti, where the Sky Gods of your ancestors are unknown, and the Hattians worship the earth mother who birthed a bull. These strange people do not live by the hoof, but by the black dirt of the earth. They do not live under the sky, but in caves they build with their hands out of hardened mud and wood. They do not honor their chiefs with great earthen mounds, but wrap their bodies in reeds and lay them beneath the hearth, removing the skulls to paint upon. The Elders say that the Sky Gods desire the land of Hatti. Your people will be their instrument in this land.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 9.1,
+                           "TextFadeDuration": 8.9,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Convert enemy villagers to build a settlement.\n• Build an army and send it forward to eliminate all remaining Hattians and Hurrians.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/reign_of_the_hittites/2/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 45.0,
+                           "TextFadeDuration": 44.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Babylon, 1595 BCE\n\nThe stelae erected in Hattusa, and along the goat paths in the far reaches of your domains, tell of the exploits of your grandfather Hattusili. It was he who united the clans of your people. It was he who first among kings reached the seas. It was he who subdued the lands of Alalakh and dethroned the many kings of Arzawa. Who are you to Hattusili?\n\nTarhunna, storm god, is displeased with your reign. Dark clouds come from the west and the sun's warmth no longer falls upon the land. Your people grow hungry and the warriors are restless. You must lead them south to raid where no Hittite king has ever stood. Be worthy of your grandfather so that stelae may one day tell of the conquests of Mursili, King of Hattusa.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Capture the Babylonian War Chest and return it to your camp.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/reign_of_the_hittites/3/intro/%d.png",
+                     "Slides": [
+                        {
+                           "Duration": 44.4,
+                           "TextFadeDuration": 44.199999999999996,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Kadesh, 1274 BCE\n\nMuwatalli, your empire stretches from the coasts of Arzawa in the west to the land of Canaan in the southeast, but such an empire breeds jealousy in foreign kings. In a betrayal of the agreement between you and his father, the Egyptian Pharaoh Ramesses II has captured your vassal, the Amorite kingdom of Amurru in the land of Syria. In retaliation, you have raised the call to war among your allies. The kings and princes of nineteen lands, among them Lukka, Ugarit, and Carchemish, join you in battle. The plain at Kadesh by the Arantu River will soon hear the thundering of your war chariots as if the storm god Tarhunna himself were beating the earth with his thunderbolts and battle axe!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 6.0,
+                           "TextFadeDuration": 5.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Objectives:\n• Bring the two War Chests to your city.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      }
+   ]
+}
