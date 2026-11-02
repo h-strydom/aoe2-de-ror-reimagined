@@ -5,16 +5,201 @@ display_name: The Birth of Rome
 source: {campaign_file: 6 The Rise of Rome.aoecpn, scenario: Scx1-01-The Birth of Rome.aoescn, map_size: 250, players: 7}
 
 players:
-- {number: 1, name: Rome, civ: Roman, human: true}
-- {number: 2, name: Umbrians, civ: Roman, human: false}
-- {number: 3, name: Samnites, civ: Roman, human: false}
-- {number: 4, name: Campanians, civ: Roman, human: false}
-- {number: 5, name: Etruscans, civ: Roman, human: false}
-- {number: 6, name: Veiians, civ: Roman, human: false}
-- {number: 7, name: Gauls, civ: Roman, human: false}
+- number: 1
+  name: Rome
+  civ: Roman
+  human: true
+  view: [39, 154]
+- number: 2
+  name: Umbrians
+  civ: Roman
+  human: false
+  view: [125, 125]
+  ai:
+    strategy: birth2
+    personality: birth2
+    personality_changes:
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 4
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNPercentEnemySightedResponse: 90
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 1
+    build_list: [U83 Man 5 109, C101 Tool_Age 1 109, U347 Soldier-Slinger 50 12]
+- number: 3
+  name: Samnites
+  civ: Roman
+  human: false
+  view: [125, 125]
+  ai:
+    strategy: birth3
+    personality: Birth3
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 1
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 420
+    build_list: [U83 Man 5 109, C101 Tool_Age 1 109, U73 Soldier-Inf1 50 12]
+- number: 4
+  name: Campanians
+  civ: Roman
+  human: false
+  view: [39, 154]
+  ai:
+    strategy: birth4
+    personality: birth4
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 1
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 600
+    build_list: [U83 Man 5 109, U37 Soldier-Cavalry1 50 101]
+- number: 5
+  name: Etruscans
+  civ: Roman
+  human: false
+  view: [125, 125]
+  ai:
+    strategy: birth5
+    personality: Birth5
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 1
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 900
+    build_list: [U83 Man 5 109, U5 Soldier-Archer2 50 87]
+- number: 6
+  name: Veiians
+  civ: Roman
+  human: false
+  view: [125, 125]
+  ai:
+    strategy: birth6
+    personality: Birth6
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 1
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 1200
+    build_list: [U83 Man 5 109, C101 Tool_Age 1 109, U299 Soldier-Scout 50 101]
+- number: 7
+  name: Gauls
+  civ: Roman
+  human: false
+  view: [125, 125]
+  ai:
+    strategy: Random
+    personality: Birth7
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 1
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 1800
 
-victory: {mode: conquest, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: conquest
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

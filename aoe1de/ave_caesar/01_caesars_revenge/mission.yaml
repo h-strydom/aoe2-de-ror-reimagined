@@ -5,13 +5,148 @@ display_name: Caesar's Revenge
 source: {campaign_file: 7 Ave Caesar.aoecpn, scenario: Scx2-01-Caesar's Revenge.aoescn, map_size: 200, players: 4}
 
 players:
-- {number: 1, name: Julius Caesar, civ: Roman, human: true}
-- {number: 2, name: Rhodian Pirates, civ: Minoan, human: false, allied_victory: true}
-- {number: 3, name: Cretan Pirates, civ: Greek, human: false, allied_victory: true}
-- {number: 4, name: Cilician Pirates, civ: Roman, human: false, allied_victory: true}
+- number: 1
+  name: Julius Caesar
+  civ: Roman
+  human: true
+  view: [100, 100]
+- number: 2
+  name: Rhodian Pirates
+  civ: Minoan
+  human: false
+  allied_victory: true
+  view: [100, 100]
+  disabled: [granary, storage_pit, dock, town_center]
+  ai:
+    strategy: Pirates 2
+    personality: Scx2-1-P2
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNDisableResign: 1
+      SNCapCivilianExplorers: 0
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNPercentEnemySightedResponse: 12
+      SNEnemySightedResponseDistance: 24
+      SNAttackResponseSeparationTime: 30
+      SNInitialAttackDelay: 360
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
+    build_list:
+    - U83 Man 6 109
+    - U347 Soldier-Slinger 4 12
+    - U4 Soldier-Archer1 3 87
+    - U19 Boat-War1 2 45
+    - T83 Man 2 109 2
+    - U19 Boat-War1 4 45
+    - U4 Soldier-Archer1 3 87
+- number: 3
+  name: Cretan Pirates
+  civ: Greek
+  human: false
+  allied_victory: true
+  view: [100, 100]
+  disabled: [granary, storage_pit, dock, town_center]
+  ai:
+    strategy: Pirates 3
+    personality: Scx2-1-P3
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNDisableResign: 1
+      SNCapCivilianExplorers: 0
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNPercentEnemySightedResponse: 12
+      SNEnemySightedResponseDistance: 24
+      SNAttackResponseSeparationTime: 30
+      SNInitialAttackDelay: 420
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
+    build_list:
+    - U83 Man 6 109
+    - 19 Boat-War1 4 45
+    - U37 Soldier-Cavalry1 2 101
+    - U17 Boat-Transport1 1 45
+    - R9 Trireme_with_Catapult 1 45
+    - U83 Man 2 109
+    - U17 Boat-Transport1 1 45
+    - U35 Soldier-Catapult1 3 49
+    - R8 Heavy_Transport 1 45
+    - U17 Boat-Transport1 1 45
+    - U250 Boat-War4 1 45
+    - U19 Boat-War1 4 45
+    - U17 Boat-Transport1 1 45
+    - U35 Soldier-Catapult1 3 49
+- number: 4
+  name: Cilician Pirates
+  civ: Roman
+  human: false
+  allied_victory: true
+  view: [100, 100]
+  disabled: [granary, storage_pit, dock, town_center]
+  ai:
+    strategy: Random
+    personality: Scx2-1-P4
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNDisableResign: 1
+      SNCapCivilianExplorers: 0
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNPercentEnemySightedResponse: 12
+      SNEnemySightedResponseDistance: 24
+      SNAttackResponseSeparationTime: 30
+      SNInitialAttackDelay: 480
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
 
-victory: {mode: custom, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

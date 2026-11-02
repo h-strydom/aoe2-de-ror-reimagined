@@ -3,8 +3,19 @@ title: Ascent of Egypt
 display_name: 'Tutorial Campaign: Ascent of Egypt'
 source_file: 1 Ascent of Egypt.aoecpn
 order: 1
-missions: [01_hunting, 02_foraging, 03_discoveries, 04_the_dawn_of_a_new_age, 05_skirmish, 06_farming, 07_trade,
-  08_religion, 09_the_river_outpost, 10_naval_warfare, 11_a_wonder_of_the_world, 12_siege_in_canaan]
+missions:
+- 01_hunting
+- 02_foraging
+- 03_discoveries
+- 04_the_dawn_of_a_new_age
+- 05_skirmish
+- 06_farming
+- 07_trade
+- 08_religion
+- 09_the_river_outpost
+- 10_naval_warfare
+- 11_a_wonder_of_the_world
+- 12_siege_in_canaan
 
 description: |-
   Take your first steps in Age of Empires by experiencing the story of the world's longest continuous civilization. As the guiding spirit of Egypt, settle along the fertile Nile River, wage war and unite the kingdoms of Upper and Lower Egypt with Narmer, build the great monuments of Hatshepsut, and venture into foreign lands to conquer the Nubians and Canaanites.

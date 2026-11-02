@@ -6,13 +6,356 @@ source: {campaign_file: 8 Imperium Romanum.aoecpn, scenario: 'Scx3-04-Zenobia, Q
   players: 4}
 
 players:
-- {number: 1, name: Emperor Aurelian, civ: Roman, human: true}
-- {number: 2, name: Queen Zenobia, civ: Palmyran, human: false}
-- {number: 3, name: Gatae, civ: Palmyran, human: false}
-- {number: 4, name: Alemanni, civ: Palmyran, human: false}
+- number: 1
+  name: Emperor Aurelian
+  civ: Roman
+  human: true
+  view: [100, 100]
+  disabled: [town_center]
+- number: 2
+  name: Queen Zenobia
+  civ: Palmyran
+  human: false
+  view: [100, 100]
+  ai:
+    strategy: Queen2
+    personality: Scx3-4-P2
+    personality_changes:
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 0
+      SNMaximumAttackGroupSize: 0
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNDisableResign: 0
+      SNCapCivilianExplorers: 0
+      SNNumberDefendGroups: 3
+      SNMinimumDefendGroupSize: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 2
+      SNStoneDefendPriority: 3
+      SNArtifactDefendPriority: 0
+      SNTownDefendPriority: 1
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNNumberExploreGroups: 0
+      SNAttackSeparationTime: 32
+      SNAttackCoordination: 1
+      SNPercentEnemySightedResponse: 16
+      SNEnemySightedResponseDistance: 32
+      SNAttackResponseSeparationTime: 16
+      SNInitialAttackDelay: 2220
+    build_list:
+    - C102 Bronze_Age 1 109
+    - U83 Man 5 109
+    - R12 Sentry_Tower 1 68
+    - R5 Medium_War_Ship 1 45
+    - U19 Boat-War1 2 45
+    - U83 Man 3 109
+    - R4 Fishing_Ship 1 45
+    - U13 Boat-Fishing1 1 45
+    - R12 Sentry_Tower 1 68
+    - R32 Artisanship 1 84
+    - R28 Wheel 1 84
+    - B104 Temple1 1 -1
+    - U83 Man 3 109
+    - U125 Priest 1 104
+    - B79 Watch_Tower 3 -1
+    - R22 Astrology 1 104
+    - U125 Priest 3 104
+    - R43 Scale_Armor_-_Soldiers 1 103
+    - R44 Scale_Armor_-_Archers 1 103
+    - R45 Scale_Armor_-_Cavalry 1 103
+    - R51 Metal_Working 1 103
+    - U13 Boat-Fishing1 1 45
+    - R12 Sentry_Tower 1 68
+    - B49 Siege_Workshop 1 -1
+    - B79 Watch_Tower 3 -1
+    - U35 Soldier-Catapult1 3 49
+    - U17 Boat-Transport1 2 45
+    - U37 Soldier-Cavalry1 3 101
+    - B0 Academy 1 -1
+    - U93 Soldier-Phal1 1 0
+    - R64 Short_Sword 1 12
+    - U75 Soldier-Inf3 2 12
+    - U93 Soldier-Phal1 4 0
+    - R65 Broad_Sword 1 12
+    - U125 Priest 1 104
+    - R56 Improved_bow 1 87
+    - U93 Soldier-Phal1 3 0
+    - U5 Soldier-Archer2 5 87
+    - R57 Composit_bow 1 87
+    - U5 Soldier-Archer2 5 87
+    - B82 Government_Center 1 -1
+    - R34 Nobility 1 82
+    - R112 Architecture 1 82
+    - R106 Balistics 1 82
+    - R200 Drill 1 82
+    - C103 Iron_Age 1 109
+    - U360 Boat-War6 3 45
+    - R8 Heavy_Transport 1 45
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - U13 Boat-Fishing1 1 45
+    - R80 Irrigation 1 84
+    - R7 Trireme 1 45
+    - U250 Boat-War4 1 45
+    - R20 Fanaticism 1 104
+    - R18 Afterlife 1 104
+    - U17 Boat-Transport1 2 45
+    - R110 Craftmanship 1 84
+    - R111 Siege_Craft 1 84
+    - R37 Alchemy 1 82
+    - R35 Engineering 1 82
+    - R113 Aristocracy 1 82
+    - R15 Guard_Tower 1 68
+    - B79 Watch_Tower 3 -1
+    - U17 Boat-Transport1 1 45
+    - R49 Chain_Mail_-_Archers 1 103
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - R52 Metalurgy 1 103
+    - U11 Soldier-Balista 4 49
+    - U75 Soldier-Inf3 1 12
+    - R126 Heavy Chariots 1 101
+    - U339 Soldier-Hvy Chariot 5 101
+    - R71 Heavy_Cavalry 1 101
+    - U37 Soldier-Cavalry1 5 101
+    - U46 Soldier-Elephant 1 101
+    - R73 Phalanx 1 0
+    - U93 Soldier-Phal1 3 0
+    - R2 Catapult_Tower 1 68
+    - B79 Watch_Tower 3 -1
+    - U11 Soldier-Balista 1 49
+    - U35 Soldier-Catapult1 2 49
+    - R79 Centurion 1 0
+    - U93 Soldier-Phal1 2 0
+    - R38 Heavy_Horse_Archer 1 87
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - R78 Cataphracts 1 101
+    - U37 Soldier-Cavalry1 1 101
+    - U75 Soldier-Inf3 1 12
+    - B276 Wonder 1 -1
+- number: 3
+  name: Gatae
+  civ: Palmyran
+  human: false
+  view: [100, 100]
+  ai:
+    strategy: Queen3
+    personality: Cannae P3
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 1
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNRuinsDefendPriority: 1
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 90
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 600
+    build_list:
+    - C102 Bronze_Age 1 109
+    - R28 Wheel 1 84
+    - R43 Scale_Armor_-_Soldiers 1 103
+    - R44 Scale_Armor_-_Archers 1 103
+    - R45 Scale_Armor_-_Cavalry 1 103
+    - R51 Metal_Working 1 103
+    - R12 Sentry_Tower 1 68
+    - R47 Bronze_Shield 1 103
+    - U37 Soldier-Cavalry1 1 101
+    - R64 Short_Sword 1 12
+    - U75 Soldier-Inf3 5 12
+    - R56 Improved_bow 1 87
+    - U5 Soldier-Archer2 5 87
+    - U83 Man 3 109
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U83 Man 3 109
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U37 Soldier-Cavalry1 3 101
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U83 Man 3 109
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U37 Soldier-Cavalry1 3 101
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+    - U5 Soldier-Archer2 5 87
+    - U75 Soldier-Inf3 5 12
+- number: 4
+  name: Alemanni
+  civ: Palmyran
+  human: false
+  view: [100, 100]
+  ai:
+    strategy: Choson Axemen
+    personality: Cannae P4
+    personality_changes:
+      SNNumberAttackGroups: 3
+      SNMinimumAttackGroupSize: 5
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNNumberDefendGroups: 3
+      SNMaximumDefendGroupSize: 4
+      SNGoldDefendPriority: 1
+      SNStoneDefendPriority: 2
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNNumberExploreGroups: 0
+      SNMinimumExploreGroupSize: 2
+      SNMaximumExploreGroupSize: 3
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNPercentEnemySightedResponse: 80
+      SNEnemySightedResponseDistance: 144
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 1200
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 10 109
+    - B12 Barracks1 1 -1
+    - T83 Man 2 109 2
+    - C101 Tool_Age 1 109
+    - B84 Market1 1 -1
+    - T73 Soldier-Inf1 2 12 2
+    - B50 Farm 1 -1
+    - U75 Soldier-Inf3 2 12
+    - U83 Man 2 109
+    - T73 Soldier-Inf1 2 12 2
+    - R63 Axe 1 12
+    - T73 Soldier-Inf1 2 12 2
+    - B50 Farm 2 -1
+    - T83 Man 2 109 2
+    - R46 Tool_Working 1 103
+    - U83 Man 2 109
+    - B12 Barracks1 1 -1
+    - T73 Soldier-Inf1 2 12 2
+    - R81 Domestication 1 84
+    - T73 Soldier-Inf1 2 12 2
+    - B50 Farm 2 -1
+    - R40 Leather_Armor_-_Soldie 1 103
+    - U83 Man 2 109
+    - T73 Soldier-Inf1 2 12 2
+    - B87 Range1 1 -1
+    - R107 Wood_Working 1 84
+    - U83 Man 2 109
+    - B50 Farm 2 -1
+    - R16 Watch_Tower 1 68
+    - B79 Watch_Tower 2 -1
+    - B50 Farm 2 -1
+    - C102 Bronze_Age 1 109
+    - T83 Man 2 109 2
+    - B82 Government_Center 1 -1
+    - R28 Wheel 1 84
+    - U83 Man 2 109
+    - B12 Barracks1 1 -1
+    - U75 Soldier-Inf3 2 12
+    - B104 Temple1 1 -1
+    - U75 Soldier-Inf3 2 12
+    - U125 Priest 1 104
+    - U75 Soldier-Inf3 2 12
+    - R65 Broad_Sword 1 12
+    - U75 Soldier-Inf3 2 12
+    - B50 Farm 1 -1
+    - B49 Siege_Workshop 1 -1
+    - T83 Man 2 109 1
+    - T35 Soldier-Catapult1 1 49 2
+    - R121 Logistics 1 82
+    - U75 Soldier-Inf3 3 12
+    - R12 Sentry_Tower 1 68
+    - T35 Soldier-Catapult1 1 49 2
+    - U75 Soldier-Inf3 3 12
+    - R108 Gold_Mining 1 84
+    - R109 Stone_Mining 1 84
+    - C103 Iron_Age 1 109
+    - U75 Soldier-Inf3 3 12
+    - R32 Artisanship 1 84
+    - R21 Mysticism 1 104
+    - R66 Long_Sword 1 12
+    - U125 Priest 1 104
+    - U75 Soldier-Inf3 3 12
+    - B79 Watch_Tower 2 -1
+    - R110 Craftmanship 1 84
+    - R22 Astrology 1 104
+    - U11 Soldier-Ballista 2 49
+    - U75 Soldier-Inf3 3 12
+    - R51 Metal_Working 1 103
+    - U125 Priest 1 104
+    - R52 Metallurgy 1 103
+    - U75 Soldier-Inf3 3 12
+    - R43 Scale_Armor_-_Soldiers 1 103
+    - U125 Priest 1 104
+    - R24 Polytheism 1 104
+    - U125 Priest 1 104
+    - U75 Soldier-Inf3 3 12
+    - B79 Watch_Tower 2 -1
+    - R20 Fanaticism 1 104
+    - U11 Soldier-Ballista 2 49
+    - R47 Bronze_Shield 1 103
+    - U125 Priest 1 104
+    - R18 Afterlife 1 104
+    - R15 Guard_Tower 1 68
+    - B109 Town_Center1 1 -1
+    - B12 Barracks1 1 -1
+    - U75 Soldier-Inf3 12 12
+    - U125 Priest 1 104
+    - B49 Siege_Workshop 1 -1
+    - U11 Soldier-Ballista 4 49
+    - U125 Priest 1 104
+    - U11 Soldier-Ballista 8 49
+    - B12 Barracks1 1 -1
+    - U75 Soldier-Inf3 175 12
+    - B109 Town_Center1 1 -1
 
-victory: {mode: custom, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

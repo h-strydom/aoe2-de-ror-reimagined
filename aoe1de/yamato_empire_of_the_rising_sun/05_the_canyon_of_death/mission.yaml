@@ -6,11 +6,74 @@ source: {campaign_file: '4 Yamato, Empire of the Rising Sun.aoecpn', scenario: S
   map_size: 96, players: 2}
 
 players:
-- {number: 1, name: Prince Shotoku, civ: Yamato, human: true}
-- {number: 2, name: Mononobe, civ: Yamato, human: false}
+- number: 1
+  name: Prince Shotoku
+  civ: Yamato
+  human: true
+  view: [3, 37]
+- number: 2
+  name: Mononobe
+  civ: Yamato
+  human: false
+  view: [3, 37]
+  ai:
+    strategy: Default
+    city_plan: Default
+    personality: t_back
+    personality_changes:
+      SNPercentCivilianExplorers: 34
+      SNPercentCivilianBuilders: 34
+      SNCapCivilianExplorers: 2
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 4
+      SNMinimumCivilianExplorers: 0
+      SNArtifactReturnDistance: 10
+      SNZeroPriorityDistance: 50
+      SNConsecutiveIdleUnitLimit: 15
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNMaximumDefendGroupSize: 4
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 0
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNNumberExploreGroups: 0
+      SNMinimumExploreGroupSize: 2
+      SNMaximumExploreGroupSize: 3
+      SNAttackSeparationTime: 30
+      SNPercentEnemySightedResponse: 50
+      SNEnemySightedResponseDistance: 60
+      SNAttackResponseSeparationTime: 5
+      SNRetreatAfterTargetDestroyed: 0
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 2
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNMinimumTownSize: 15
+      SNMaximumTownSize: 20
+      SNStoragePitMaxDistance: 50
+      SNGranaryMaxDistance: 50
+      SNNumberWallGates: 1
+      SNTaskUngroupedSoldiers: 0
+      SNEasiestReactionPercentage: 1
+      SNEasierReactionPercentage: 30
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 0, time: 0}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 0
+  time: 0
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

@@ -6,13 +6,283 @@ source: {campaign_file: 2 Glory of Greece.aoecpn, scenario: Scn2-03-The Conquest
   players: 4}
 
 players:
-- {number: 1, name: Mycenaeans, civ: Greek, human: true}
-- {number: 2, name: Pelasgians, civ: Greek, human: false}
-- {number: 3, name: Minoans, civ: Minoan, human: false}
-- {number: 4, name: Minoan Scouts, civ: Minoan, human: false}
+- number: 1
+  name: Mycenaeans
+  civ: Greek
+  human: true
+  view: [72, 72]
+  disabled: [iron_age]
+- number: 2
+  name: Pelasgians
+  civ: Greek
+  human: false
+  view: [72, 72]
+  disabled: [iron_age]
+  ai:
+    strategy: Scn2-3-P2
+    city_plan: Default
+    personality: Scn2-3-P2
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 4
+      SNCapCivilianGatherers: -1
+      SNMinimumCivilianExplorers: 0
+      SNInitialAttackDelay: 2100
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 25
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 1
+      SNDisableResign: 0
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 10
+      SNAttackGroupGatherSpacing: 10
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNDefenseDistance: 4
+      SNSentryDistance: 4
+      SNDefendOverlapDistance: 5
+      SNMaxStoragePits: 6
+      SNMaxGranaries: 1
+      SNAutoBuildTowers: 0
+      SNFoodGathererPercentage: 50
+      SNWoodGathererPercentage: 40
+      SNGoldGathererPercentage: 10
+      SNStoneDropsiteDistance: 0
+      SNNumberExploreGroups: 1
+      SNAttackSeparationTime: 150
+      SNPercentEnemySightedResponse: 50
+      SNEnemySightedResponseDistance: 12
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 1
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNStoragePitMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 8 109
+    - B84 Market1 1 -1
+    - U83 Man 2 109
+    - B50 Farm 1 -1
+    - U83 Man 2 109
+    - B12 Barracks1 1 -1
+    - B50 Farm 1 -1
+    - U83 Man 1 109
+    - B104 Temple1 1 -1
+    - U75 Soldier-Inf3 1 12
+    - U83 Man 1 109
+    - B50 Farm 1 -1
+    - U75 Soldier-Inf3 1 12
+    - T83 Man 1 109 2
+    - B49 Siege_Workshop 1 -1
+    - B50 Farm 1 -1
+    - B0 Academy 1 -1
+    - R28 Wheel 1 84
+    - U93 Soldier-Phal1 2 0
+    - U35 Soldier-Catapult1 1 49
+    - B50 Farm 1 -1
+    - U93 Soldier-Phal1 2 12
+    - U35 Soldier-Catapult1 1 49
+    - U93 Soldier-Phal1 2 12
+    - B103 Storage_Pit1 1 -1
+    - U93 Soldier-Phal1 2 12
+    - R43 Scale_Armor_-_Soldiers 1 103
+    - U93 Soldier-Phal1 2 12
+    - U93 Soldier-Phal1 2 12 4
+- number: 3
+  name: Minoans
+  civ: Minoan
+  human: false
+  view: [72, 72]
+  disabled: [iron_age]
+  ai:
+    strategy: Scn2-3-P3
+    city_plan: Default
+    personality: Scn2-3-P3
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNMinimumCivilianExplorers: 0
+      SNInitialAttackDelay: 7200
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 25
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 1
+      SNDisableResign: 0
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 10
+      SNAttackGroupGatherSpacing: 10
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNTownDefendPriority: 1
+      SNDefenseDistance: 6
+      SNSentryDistance: 6
+      SNDefendOverlapDistance: 4
+      SNMaxStoragePits: 6
+      SNMaxGranaries: 1
+      SNAutoBuildTowers: 0
+      SNFoodGathererPercentage: 60
+      SNWoodGathererPercentage: 35
+      SNGoldGathererPercentage: 5
+      SNStoneDropsiteDistance: 0
+      SNNumberExploreGroups: 1
+      SNAttackSeparationTime: 300
+      SNPercentEnemySightedResponse: 50
+      SNEnemySightedResponseDistance: 10
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNNumberBoatExploreGroups: 0
+      SNMaximumTownSize: 30
+      SNStoragePitMaxDistance: 45
+      SNGranaryMaxDistance: 30
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 8 109
+    - B84 Market1 1 -1
+    - U83 Man 2 109
+    - B50 Farm 1 -1
+    - U83 Man 1 109
+    - B50 Farm 1 -1
+    - U83 Man 1 109
+    - B50 Farm 1 -1
+    - B12 Barracks1 1 -1
+    - U83 Man 1 109
+    - R64 Short_Sword 1 12
+    - B87 Range1 1 -1
+    - U75 Soldier-Inf3 1 12
+    - T83 Man 1 109 2
+    - R56 Improved_bow 1 87
+    - B50 Farm 1 -1
+    - U75 Soldier-Inf3 1 12
+    - U5 Soldier-Archer2 1 87
+    - U75 Soldier-Inf3 2 12
+    - U5 Soldier-Archer2 2 87
+    - B103 Storage_Pit1 1 -1
+    - U75 Soldier-Inf3 2 12
+    - U5 Soldier-Archer2 2 87
+    - U75 Soldier-Inf3 1 12
+    - U5 Soldier-Archer2 1 87
+    - R28 Wheel 1 84
+    - R44 Scale_Armor_-_Archers 1 103
+    - U5 Soldier-Archer2 2 87
+    - R43 Scale_Armor_-_Soldiers 1 103
+    - R32 Artisanship 1 84
+    - T75 Soldier-Inf3 2 12 2
+    - U5 Soldier-Archer2 1 87 2
+- number: 4
+  name: Minoan Scouts
+  civ: Minoan
+  human: false
+  view: [72, 72]
+  disabled: [iron_age]
+  ai:
+    strategy: Scn2-3-P4
+    city_plan: Default
+    personality: Scn2-3-P4
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 4
+      SNCapCivilianGatherers: -1
+      SNMinimumCivilianExplorers: 0
+      SNInitialAttackDelay: 1680
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 25
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 1
+      SNDisableResign: 0
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 5
+      SNAttackGroupGatherSpacing: 10
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNDefenseDistance: 4
+      SNSentryDistance: 4
+      SNDefendOverlapDistance: 5
+      SNMaxStoragePits: 6
+      SNMaxGranaries: 1
+      SNAutoBuildTowers: 0
+      SNFoodGathererPercentage: 55
+      SNWoodGathererPercentage: 35
+      SNGoldGathererPercentage: 10
+      SNStoneDropsiteDistance: 0
+      SNNumberExploreGroups: 1
+      SNAttackSeparationTime: 150
+      SNPercentEnemySightedResponse: 50
+      SNEnemySightedResponseDistance: 12
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNNumberBoatExploreGroups: 0
+      SNStoragePitMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 8 109
+    - B84 Market1 1 -1
+    - U83 Man 2 109
+    - B50 Farm 1 -1
+    - U83 Man 2 109
+    - B104 Temple1 1 -1
+    - U83 Man 1 109
+    - U125 Priest 1 104
+    - B50 Farm 1 -1
+    - T83 Man 1 109 2
+    - U125 Priest 1 104
+    - R28 Wheel 1 84
+    - U125 Priest 4 104
+    - T125 Priest 2 104 2
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

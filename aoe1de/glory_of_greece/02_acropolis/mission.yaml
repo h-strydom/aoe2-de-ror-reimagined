@@ -5,11 +5,116 @@ display_name: Acropolis
 source: {campaign_file: 2 Glory of Greece.aoecpn, scenario: Scn2-02-Acropolis.aoescn, map_size: 120, players: 2}
 
 players:
-- {number: 1, name: Mycenaeans, civ: Greek, human: true}
-- {number: 2, name: Tiryns, civ: Greek, human: false}
+- number: 1
+  name: Mycenaeans
+  civ: Greek
+  human: true
+  view: [52, 6]
+  disabled: [iron_age]
+- number: 2
+  name: Tiryns
+  civ: Greek
+  human: false
+  view: [52, 6]
+  disabled: [iron_age]
+  ai:
+    strategy: Inf Arch Scout Tool
+    city_plan: Default
+    personality: Scn2-2-P2
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNInitialExplorationRequired: 1
+      SNInitialAttackDelay: 840
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 45
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 5
+      SNDisableResign: 0
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 6
+      SNAttackGroupGatherSpacing: 10
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 3
+      SNRuinsDefendPriority: 1
+      SNArtifactDefendPriority: 0
+      SNTownDefendPriority: 1
+      SNDefenseDistance: 4
+      SNSentryDistance: 4
+      SNDefendOverlapDistance: 4
+      SNMaxStoragePits: 6
+      SNMaxGranaries: 2
+      SNAutoBuildTowers: 0
+      SNNumberExploreGroups: 1
+      SNAttackSeparationTime: 180
+      SNAttackCoordination: 0
+      SNPercentEnemySightedResponse: 80
+      SNEnemySightedResponseDistance: 12
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 0
+      SNNumberBoatAttackGroups: 1
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNNumberBoatExploreGroups: 0
+      SNMaximumTownSize: 24
+      SNStoragePitMaxDistance: 50
+      SNTacticalUpdateFrequency: 4
+      SNAttackGroupSizeRandomness: 0
+      SNScalingFrequency: 10
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 1 109
+    - U83 Man 5 109
+    - B103 Storage_Pit1 1 -1
+    - B12 Barracks1 1 -1
+    - U73 Soldier-Inf1 4 12
+    - U83 Man 3 109
+    - B68 Granary 1 -1
+    - R101 Tool_Age 1 109
+    - R63 Axe 1 12
+    - B87 Range1 1 -1
+    - U17 Boat-Transport1 2 45
+    - U4 Soldier-Archer1 3 87
+    - B45 Dock_1 1 -1
+    - B101 Stable1 1 -1
+    - U299 Soldier-Scout 3 101
+    - R46 Tool_Working 1 103
+    - R42 Leather_Armor_Mounted 1 103
+    - U83 Man 4 109
+    - U4 Soldier-Archer1 4 87
+    - R16 Watch_Tower 3 68
+    - B79 Watch_Tower 2 -1
+    - U299 Soldier-Scout 3 101
+    - U19 Boat-War1 1 45
+    - B84 Market1 1 -1
+    - U83 Man 2 109
+    - B50 Farm 2 -1
+    - U73 Soldier-Inf1 12 12
 
-victory: {mode: custom, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

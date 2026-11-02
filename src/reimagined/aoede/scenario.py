@@ -17,20 +17,26 @@ Layout (offsets into the inflated body):
   DE string filename; 5 x DE string: instructions, hints, victory, loss, history
   5 x (u32 string-table id, DE string label)   same order; the game shows strings.txt's text for the id
   4 x DE string             pregame, victory and loss cinematics, background bitmap (" <None> " = none)
-  ... bitmap, AI names and files (skipped) ...
+  u32 bitmap included, i32 w, i32 h, i16 (no campaign scenario has a bitmap)
+  3 x 16 x (u16 len + text) AI names per player: strategy (build list), city plan, personality
+  16 x (3 x u32 lengths, then the three files' text)       the AI files themselves
   -99, -99                  double separator: the fixed-size block below hangs off it
   +8   10 x i32             global victory: conquest, ruins, artifacts, discoveries, exploration,
                             gold, all_custom, mode (0 standard, 1 conquest, 2 score, 3 time, 4 custom),
                             score, time
   +48  16 x 16 x i32        diplomacy (0 ally, 1 neutral, 3 enemy)
-  ...  individual victory, allied victory, disables
-  map-76  3 x i32 + 16 x i32 starting ages (0 Stone .. 3 Iron, 4 post-Iron; unverified)
-  map-12  -99, f32, f32
+  +1072 11520 bytes          legacy individual victory (16 x 12 x 60; the conditions after the units are used)
+  +12592 -99, 16 x i32       allied victory
+  +12660 16 x 20 x i32       the editor's "Disable Technology" panel per player, 1 = allowed: DISABLES
+                             (0xCDCDCDCD = never written, all allowed), then 3 x i32 (always 0)
+  +13952 16 x i32            starting ages (0 Stone .. 3 Iron, 4 post-Iron; unverified)
+  +14016 -99, f32, f32
   map  u32 w, u32 h, w*h x (u8 terrain, u8 elevation, u8 unused)     map = separator + 14028
   u32 sections (gaia + players), (sections-1) x 5 f32 resources (food, wood, gold, stone, pop cap)
   per section: u32 count, count x 23-byte unit (f32 x, f32 y, f32 z, u32 id, u16 type, u8 state, f32 rot)
   u32 9, then players 1..8:
-    u16 len + name (NUL-terminated), f32 camera x, f32 camera y, i16, i16, u8 allied victory,
+    u16 len + name (NUL-terminated), f32 editor camera x, y, i16 view x, y (the editor's Set View: where
+    the player's camera starts), u8 allied victory,
     u16 n, n x u8 diplomacy, n x i32, f32 (1.0), u32 conditions, u8,
     conditions x 44-byte victory condition (see VictoryCondition), 8 x u8
 """
@@ -55,6 +61,14 @@ GLOBAL_VICTORY = ("conquest", "ruins", "artifacts", "discoveries", "exploration"
 VICTORY_MODES = ("standard", "conquest", "score", "time", "custom")
 # Individual victory condition types, named after the game's objective texts (strings.txt 62801-62813)
 # and checked against each mission's instructions.
+# The editor's "Disable Technology" panel (strings.txt 13001-13017), in its order: buildings, ages.
+DISABLES = ("granary", "storage_pit", "dock", "barracks", "market", "archery_range", "stable", "temple",
+            "government_center", "siege_workshop", "academy", "tool_age", "bronze_age", "iron_age",
+            "town_center", "wonder")
+DISABLES_OFFSET, DISABLE_SLOTS = 12660, 20
+UNSET = -842150451                            # 0xCDCDCDCD: memory the editor never wrote
+AI_FILES = ("strategy", "city_plan", "personality")
+NO_AI = ("", "NONE", " <None> ")
 CONDITION_TYPES = ("capture", "create", "destroy", "destroy_multiple", "bring_to_area", "bring_to_object",
                    "attribute", "explore", "create_in_area", "destroy_all", "destroy_player")
 
@@ -87,6 +101,17 @@ class VictoryCondition:
 
 
 @dataclass
+class Ai:
+    """A player's AoE1 AI: three named files embedded in the scenario."""
+    strategy: str                 # build list name ("" = none)
+    city_plan: str
+    personality: str
+    strategy_text: str = ""
+    city_plan_text: str = ""
+    personality_text: str = ""
+
+
+@dataclass
 class Player:
     number: int                       # 1..16
     name: str
@@ -100,6 +125,9 @@ class Player:
     units: list[Unit] = field(default_factory=list)
     allied_victory: bool = False      # players 1..8 only
     victory: list[VictoryCondition] = field(default_factory=list)   # players 1..8 only
+    view: tuple[int, int] | None = None                              # players 1..8 only
+    disabled: list[str] = field(default_factory=list)                # DISABLES entries turned off
+    ai: Ai | None = None
 
 
 @dataclass
@@ -158,15 +186,15 @@ def _condition(c: Cursor) -> VictoryCondition:
                             target, group, ally, state)
 
 
-def _victory_players(c: Cursor, filename: str) -> list[tuple[bool, list[VictoryCondition]]]:
-    """Players 1..8 after the units: (allied victory, individual victory conditions)."""
+def _victory_players(c: Cursor, filename: str) -> list[tuple[bool, list[VictoryCondition], tuple[int, int]]]:
+    """Players 1..8 after the units: (allied victory, individual victory conditions, start view)."""
     count = c.u32()
     if count != 9:
         raise ValueError(f"{filename}: expected 9 player slots after the units, got {count}")
     out = []
     for _ in range(count - 1):
         c.raw(c.u16())                       # name, NUL-terminated (the names at the top are the real ones)
-        c.unpack("ffhh")                     # camera
+        view = c.unpack("ffhh")[2:]          # editor camera (floats), then the start view
         allied = c.unpack("B")[0]
         n = c.u16()
         c.raw(n)
@@ -174,7 +202,7 @@ def _victory_players(c: Cursor, filename: str) -> list[tuple[bool, list[VictoryC
         c.f32()
         conditions = c.u32()
         c.raw(1)
-        out.append((allied == 1, [_condition(c) for _ in range(conditions)]))
+        out.append((allied == 1, [_condition(c) for _ in range(conditions)], view))
         c.raw(8)
     return out
 
@@ -204,11 +232,25 @@ def read_scenario(data: bytes, filename: str = "") -> Scenario:
         message_ids[k] = c.unpack("i")[0]
         c.de_string()  # label (the id as text, or empty)
     cinematics = {k: ("" if (v := c.de_string()) == NO_CINEMATIC else v) for k in CINEMATICS}
+    if c.unpack("IiiH")[0]:
+        raise ValueError(f"{filename}: scenario bitmaps aren't supported")
+    ai_names = [[c.raw(c.u16()).decode("latin-1") for _ in range(MAX_PLAYERS)] for _ in AI_FILES]
+    ais = []
+    for i in range(MAX_PLAYERS):
+        lengths = c.unpack("III")
+        texts = [c.raw(n).decode("latin-1").replace("\r\n", "\n") for n in lengths]
+        files = ["" if ai_names[k][i] in NO_AI else ai_names[k][i] for k in range(3)]
+        ais.append(Ai(*files, *texts))
 
     sep = body.find(SEPARATOR_PAIR, c.pos)
     if sep < 0:
         raise ValueError(f"{filename}: section separator not found")
+    if c.pos != sep:
+        raise ValueError(f"{filename}: {sep - c.pos} unread bytes before the separator")
     global_victory = dict(zip(GLOBAL_VICTORY, struct.unpack_from("<10i", body, sep + 8), strict=True))
+    grid = struct.unpack_from(f"<{MAX_PLAYERS * DISABLE_SLOTS}i", body, sep + DISABLES_OFFSET)
+    disabled = [[name for k, name in enumerate(DISABLES) if grid[i * DISABLE_SLOTS + k] == 0]
+                for i in range(MAX_PLAYERS)]
     diplomacy_flat = struct.unpack_from(f"<{MAX_PLAYERS * MAX_PLAYERS}i", body, sep + 8 + 40)
     diplomacy = [list(diplomacy_flat[i * MAX_PLAYERS:(i + 1) * MAX_PLAYERS]) for i in range(MAX_PLAYERS)]
 
@@ -241,13 +283,13 @@ def read_scenario(data: bytes, filename: str = "") -> Scenario:
     players = []
     for i, (active, human, civ, unknown) in enumerate(records):
         n = i + 1
-        allied, conditions = victory[i] if i < len(victory) else (False, [])
+        allied, conditions, view = victory[i] if i < len(victory) else (False, [], None)
         players.append(Player(
             number=n, name=names[i], name_string_id=name_ids[i], active=bool(active), human=bool(human),
             civ=civ, unknown=unknown, starting_age=ages[i],
             resources=resources[i] if i < len(resources) else {},
             units=unit_lists[n] if n < len(unit_lists) else [],
-            allied_victory=allied, victory=conditions,
+            allied_victory=allied, victory=conditions, view=view, disabled=disabled[i], ai=ais[i],
         ))
 
     return Scenario(

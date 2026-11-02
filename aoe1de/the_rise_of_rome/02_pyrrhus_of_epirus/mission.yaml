@@ -5,11 +5,171 @@ display_name: Pyrrhus of Epirus
 source: {campaign_file: 6 The Rise of Rome.aoecpn, scenario: Scx1-02-Pyrrhus of Epirus.aoescn, map_size: 144, players: 2}
 
 players:
-- {number: 1, name: Romans, civ: Roman, human: true}
-- {number: 2, name: Army of Pyrrhus, civ: Macedonian, human: false}
+- number: 1
+  name: Romans
+  civ: Roman
+  human: true
+  view: [72, 72]
+- number: 2
+  name: Army of Pyrrhus
+  civ: Macedonian
+  human: false
+  view: [72, 72]
+  disabled: [wonder]
+  ai:
+    strategy: Pyrrhus
+    personality: Scx1-2-P2
+    personality_changes:
+      SNNumberAttackGroups: 4
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 80
+      SNDisableResign: 0
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNArtifactDefendPriority: 0
+      SNTownDefendPriority: 1
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNNumberBoatExploreGroups: 0
+      SNMinimumBoatExploreGroupSize: 0
+      SNMaximumBoatExploreGroupSize: 0
+      SNNumberBoatAttackGroups: 2
+      SNMaximumBoatAttackGroupSize: 5
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNInitialAttackDelay: 600
+      SNCapCivilianExplorers: 0
+    build_list:
+    - U250 Boat-War4 4 45
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U250 Boat-War4 2 45
+    - U11 Soldier-Balista 3 49
+    - U40 Soldier-Chariot1 3 101
+    - U37 Soldier-Cavalry1 3 101
+    - U250 Boat-War4 2 45
+    - U46 Soldier-Elephant 1 101
+    - U250 Boat-War4 2 45
+    - U93 Soldier-Phal1 3 0
+    - U17 Boat-Transport1 1 45
+    - U250 Boat-War4 4 45
+    - U11 Soldier-Ballista 1 49
+    - U93 Soldier-Phal1 1 0
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - U37 Soldier-Cavalry1 1 101
+    - U75 Soldier-Inf3 1 12
+    - U46 Soldier-Elephant 2 101
+    - U17 Boat-Transport1 1 45
+    - U250 Boat-War4 4 45
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U11 Soldier-Balista 3 49
+    - U40 Soldier-Chariot1 3 101
+    - U37 Soldier-Cavalry1 3 101
+    - U46 Soldier-Elephant 1 101
+    - U17 Boat-Transport1 1 45
+    - U93 Soldier-Phal1 3 0
+    - U250 Boat-War4 4 45
+    - U11 Soldier-Ballista 1 49
+    - U93 Soldier-Phal1 1 0
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - U37 Soldier-Cavalry1 1 101
+    - U75 Soldier-Inf3 1 12
+    - U46 Soldier-Elephant 2 101
+    - U250 Boat-War4 4 45
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U11 Soldier-Balista 3 49
+    - U40 Soldier-Chariot1 3 101
+    - U37 Soldier-Cavalry1 3 101
+    - U46 Soldier-Elephant 1 101
+    - U17 Boat-Transport1 3 45
+    - U93 Soldier-Phal1 3 0
+    - U250 Boat-War4 4 45
+    - U11 Soldier-Ballista 1 49
+    - U93 Soldier-Phal1 1 0
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - U37 Soldier-Cavalry1 1 101
+    - U75 Soldier-Inf3 1 12
+    - U46 Soldier-Elephant 2 101
+    - U250 Boat-War4 4 45
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U11 Soldier-Balista 3 49
+    - U40 Soldier-Chariot1 3 101
+    - U17 Boat-Transport1 1 45
+    - U37 Soldier-Cavalry1 3 101
+    - U46 Soldier-Elephant 1 101
+    - U93 Soldier-Phal1 3 0
+    - U17 Boat-Transport1 1 45
+    - U250 Boat-War4 4 45
+    - U11 Soldier-Ballista 1 49
+    - U93 Soldier-Phal1 1 0
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - U37 Soldier-Cavalry1 1 101
+    - U75 Soldier-Inf3 1 12
+    - U46 Soldier-Elephant 2 101
+    - U250 Boat-War4 4 45
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U11 Soldier-Balista 3 49
+    - U40 Soldier-Chariot1 3 101
+    - U37 Soldier-Cavalry1 3 101
+    - U17 Boat-Transport1 2 45
+    - U46 Soldier-Elephant 1 101
+    - U93 Soldier-Phal1 3 0
+    - U250 Boat-War4 4 45
+    - U11 Soldier-Ballista 1 49
+    - U93 Soldier-Phal1 1 0
+    - U17 Boat-Transport1 1 45
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - U37 Soldier-Cavalry1 1 101
+    - U75 Soldier-Inf3 1 12
+    - U46 Soldier-Elephant 2 101
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U11 Soldier-Balista 3 49
+    - U40 Soldier-Chariot1 3 101
+    - U37 Soldier-Cavalry1 3 101
+    - U46 Soldier-Elephant 1 101
+    - U93 Soldier-Phal1 3 0
+    - U17 Boat-Transport1 1 45
+    - U250 Boat-War4 4 45
+    - U11 Soldier-Ballista 1 49
+    - U93 Soldier-Phal1 1 0
+    - U17 Boat-Transport1 2 45
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - U37 Soldier-Cavalry1 1 101
+    - U75 Soldier-Inf3 1 12
+    - U46 Soldier-Elephant 2 101
+    - U17 Boat-Transport1 2 45
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U11 Soldier-Balista 3 49
+    - U40 Soldier-Chariot1 3 101
+    - U37 Soldier-Cavalry1 3 101
+    - U46 Soldier-Elephant 1 101
+    - U93 Soldier-Phal1 3 0
+    - U250 Boat-War4 4 45
+    - U17 Boat-Transport1 1 45
+    - U11 Soldier-Ballista 1 49
+    - U93 Soldier-Phal1 1 0
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - U37 Soldier-Cavalry1 1 101
+    - U75 Soldier-Inf3 1 12
+    - U46 Soldier-Elephant 2 101
 
-victory: {mode: conquest, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: conquest
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

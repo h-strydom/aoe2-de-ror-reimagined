@@ -6,12 +6,250 @@ source: {campaign_file: 6 The Rise of Rome.aoecpn, scenario: Scx1-04-The Battle 
   players: 3}
 
 players:
-- {number: 1, name: Romans, civ: Roman, human: true}
-- {number: 2, name: Hannibal, civ: Carthaginian, human: false}
-- {number: 3, name: Hasdrubal, civ: Carthaginian, human: false}
+- number: 1
+  name: Romans
+  civ: Roman
+  human: true
+  view: [72, 72]
+- number: 2
+  name: Hannibal
+  civ: Carthaginian
+  human: false
+  view: [72, 72]
+  ai:
+    strategy: CARTHAGE IRON WATER
+    personality: Scx1-4-P2
+    personality_changes:
+      SNNumberAttackGroups: 3
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNPercentEnemySightedResponse: 12
+      SNEnemySightedResponseDistance: 50
+      SNDisableResign: 0
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 1
+      SNRuinsDefendPriority: 1
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 90
+      SNAttackCoordination: 1
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 570
+      SNCapCivilianExplorers: 0
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 10 109
+    - B12 Barracks1 1 -1
+    - B45 Dock_1 1 -1
+    - T83 Man 4 109 2
+    - C101 Tool_Age 1 109
+    - B84 Market1 1 -1
+    - U83 Man 2 109
+    - B50 Farm 2 -1
+    - U19 Boat-War1 2 45
+    - R46 Tool_Working 1 103
+    - U83 Man 2 109
+    - R16 Watch_Tower 1 68
+    - B79 Watch_Tower 2 -1
+    - B50 Farm 2 -1
+    - U19 Boat-War1 2 45
+    - U83 Man 2 109
+    - B79 Watch_Tower 2 -1
+    - R107 Wood_Working 1 84
+    - B101 Stable1 1 -1
+    - B45 Dock_1 1 -1
+    - B87 Range1 1 -1
+    - C102 Bronze_Age 1 109
+    - R28 Wheel 1 84
+    - U83 Man 2 109
+    - B0 Academy 1 -1
+    - R5 Medium_War_Ship 1 45
+    - U93 Soldier-Phal1 2 0
+    - R40 Leather_Armor_-_Soldie 1 103
+    - R4 Fishing_Ship 1 45
+    - B79 Watch_Tower 2 -1
+    - R12 Sentry_Tower 1 68
+    - U93 Soldier-Phal1 2 0
+    - B50 Farm 2 -1
+    - B49 Siege_Workshop 1 -1
+    - U19 Boat-War1 2 45
+    - U83 Man 2 109
+    - U93 Soldier-Phal1 2 0
+    - R81 Domestication 1 84
+    - B82 Government_Center 1 -1
+    - B79 Watch_Tower 2 -1
+    - B45 Dock_1 1 -1
+    - C103 Iron_Age 1 109
+    - R37 Alchemy 1 82
+    - U360 Fire-Galley 2 45
+    - U11 Soldier-Balista 2 49
+    - R35 Engineering 1 82
+    - R51 Metal_Working 1 103
+    - U11 Soldier-Balista 2 49
+    - R8 Heavy_Transport 1 45
+    - U93 Soldier-Phal1 2 0
+    - R113 Aristocracy 1 82
+    - B79 Watch_Tower 2 -1
+    - R106 Ballistics 1 82
+    - U360 Fire-Galley 2 45
+    - R32 Artisanship 1 84
+    - R15 Guard_Tower 1 68
+    - U93 Soldier-Phal1 2 0
+    - R43 Scale_Armor_-_Soldiers 1 103
+    - U11 Soldier-Balista 2 49
+    - R7 Trireme 1 45
+    - R73 Phalanx 1 0
+    - U93 Soldier-Phal1 2 0
+    - U360 Fire-Galley 2 45
+    - U11 Soldier-Balista 2 49
+    - R110 Craftmanship 1 84
+    - R2 Catapult_Tower 1 68
+    - B79 Watch_Tower 8 -1
+    - B109 Town_Center1 1 -1
+    - B276 Wonder 1 -1
+    - B45 Dock_1 1 -1
+    - U360 Fire-Galley 6 45
+    - B49 Siege_Workshop 1 -1
+    - U11 Soldier-Balista 4 49
+    - B0 Academy 1 -1
+    - U93 Soldier-Phal1 24 0
+    - U19 Boat-War1 24 45
+    - U360 Fire-Galley 12 45
+    - U11 Soldier-Balista 2 49
+    - B45 Dock_1 1 -1
+    - U19 Boat-War1 175 45
+    - U11 Soldier-Balista 8 49
+    - B0 Academy 1 -1
+    - U93 Soldier-Phal1 175 0
+    - B109 Town_Center1 1 -1
+- number: 3
+  name: Hasdrubal
+  civ: Carthaginian
+  human: false
+  view: [72, 72]
+  ai:
+    strategy: CARTHAGE WAR ELEPHANT
+    personality: Scx1-4-P3
+    personality_changes:
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 12
+      SNDisableResign: 0
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNRuinsDefendPriority: 1
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackSeparationTime: 90
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNInitialAttackDelay: 510
+      SNCapCivilianExplorers: 0
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 12 109
+    - B12 Barracks1 1 -1
+    - T83 Man 4 109 2
+    - C101 Tool_Age 1 109
+    - B84 Market1 1 -1
+    - U83 Man 2 109
+    - T347 Slinger 2 12 2
+    - B50 Farm 2 -1
+    - U83 Man 2 109
+    - B101 Stable1 1 -1
+    - R16 Watch_Tower 1 68
+    - B50 Farm 2 -1
+    - T299 Soldier-Scout 1 101 3
+    - U83 Man 2 109
+    - B79 Watch_Tower 2 -1
+    - T83 Man 2 109 2
+    - T347 Slinger 2 12 2
+    - R81 Domestication 1 84
+    - B50 Farm 2 -1
+    - C102 Bronze_Age 1 109
+    - R107 Wood_Working 1 84
+    - T37 Soldier-Cavalry1 2 101 2
+    - B50 Farm 2 -1
+    - U83 Man 2 109
+    - R108 Gold_Mining 1 84
+    - B104 Temple1 1 -1
+    - T83 Man 1 109 1
+    - U125 Priest 1 104
+    - R28 Wheel 1 84
+    - B87 Range1 1 -1
+    - R42 Leather_Armor_Mounted 1 103
+    - B82 Government_Center 1 -1
+    - R45 Scale_Armor_-_Cavalry 1 103
+    - T338 Soldier-Camel 2 101 2
+    - R12 Sentry_Tower 1 68
+    - B101 Stable1 1 -1
+    - R31 Plow 1 84
+    - B50 Farm 2 -1
+    - T338 Soldier-Camel 2 101 2
+    - C103 Iron_Age 1 109
+    - B101 Stable1 1 -1
+    - U46 Soldier-Elephant 2 101
+    - U25 Soldier-El_Archer 2 87
+    - R30 Coinage 1 84
+    - U46 Soldier-Elephant 2 101
+    - U25 Soldier-El_Archer 2 87
+    - B87 Range1 1 -1
+    - R41 Leather_Armor_-_Archer 1 103
+    - R80 Irrigation 1 84
+    - U46 Soldier-Elephant 2 101
+    - U25 Soldier-El_Archer 2 87
+    - R32 Artisanship 1 84
+    - U46 Soldier-Elephant 2 101
+    - U25 Soldier-El_Archer 2 87
+    - R106 Ballistics 1 82
+    - R37 Alchemy 1 82
+    - U46 Soldier-Elephant 2 101
+    - R110 Craftmanship 1 84
+    - R47 Bronze_Shield 1 103
+    - R117 Iron_Shield 1 103
+    - R125 Armored-Elephant 1 101
+    - U46 Soldier-Elephant 2 101
+    - B109 Town_Center1 1 -1
+    - B276 Wonder 1 -1
+    - B49 Siege_Workshop 1 -1
+    - U11 Soldier-Balista 2 49
+    - B101 Stable1 1 -1
+    - U46 Soldier-Elephant 12 101
+    - U125 Priest 1 104
+    - U11 Soldier-Balista 4 49
+    - U46 Soldier-Elephant 24 101
+    - U11 Soldier-Balista 8 49
+    - B101 Stable1 1 -1
+    - U46 Soldier-Elephant 175 101
+    - B109 Town_Center1 1 -1
 
-victory: {mode: standard, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: standard
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

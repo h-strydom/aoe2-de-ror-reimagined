@@ -5,13 +5,226 @@ display_name: The Battle of Zama
 source: {campaign_file: 6 The Rise of Rome.aoecpn, scenario: Scx1-05-The Battle of Zama.aoescn, map_size: 144, players: 4}
 
 players:
-- {number: 1, name: Scipio, civ: Roman, human: true}
-- {number: 2, name: Carthage, civ: Carthaginian, human: false}
-- {number: 3, name: Carthage, civ: Carthaginian, human: false}
-- {number: 4, name: Numidians, civ: Assyrian, human: false}
+- number: 1
+  name: Scipio
+  civ: Roman
+  human: true
+  view: [122, 56]
+- number: 2
+  name: Carthage
+  civ: Carthaginian
+  human: false
+  view: [122, 56]
+  ai:
+    personality: ImmobileUnitsAII
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 0
+      SNPercentCivilianGatherers: 0
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 0
+      SNCapCivilianGatherers: 0
+      SNTotalNumberExplorers: 0
+      SNMinimumCivilianExplorers: 0
+      SNInitialAttackDelay: 32768
+      SNTaskUngroupedSoldiers: 0
+      SNArtifactReturnDistance: 72
+      SNPercentExplorationRequired: 0
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 15
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 6
+      SNAttackGroupGatherSpacing: 10
+      SNPercentHealthRetreat: 0
+      SNPercentDeathRetreat: 0
+      SNPercentUnitHealthRetreat: 0
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNDefenseDistance: 0
+      SNSentryDistance: 0
+      SNSentryDistanceVariation: 0
+      SNDefendOverlapDistance: 5
+      SNAutoBuildTowers: 0
+      SNFoodGathererPercentage: 0
+      SNWoodGathererPercentage: 0
+      SNGoldGathererPercentage: 0
+      SNStoneGathererDistance: 0
+      SNFoodDropsiteDistance: 0
+      SNWoodDropsiteDistance: 0
+      SNStoneDropsiteDistance: 0
+      SNGoldDropsiteDistance: 0
+      SNNumberExploreGroups: 0
+      SNAttackSeparationTime: 270
+      SNEnemySightedResponseDistance: 8
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNNumberBoatExploreGroups: 0
+      SNStoragePitMaxDistance: 50
+      SNGranaryMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+    build_list:
+    - U46 Soldier-Elephant 5 101
+    - U125 Priest 5 104
+    - U11 Soldier-Balista 5 49
+    - U37 Soldier-Cavalry1 5 101
+    - U35 Soldier-Catapult1 5 49
+    - U39 Soldier-Cavalry3_Arc 5 87
+    - U93 Soldier-Phal1 5 0
+    - U46 Soldier-Elephant 5 101
+    - U125 Priest 5 104
+    - U11 Soldier-Balista 5 49
+    - U37 Soldier-Cavalry1 5 101
+    - U35 Soldier-Catapult1 5 49
+    - U39 Soldier-Cavalry3_Arc 5 87
+    - U93 Soldier-Phal1 5 0
+    - B276 Wonder 1 -1
+    - U46 Soldier-Elephant 5 101
+    - U125 Priest 5 104
+    - U11 Soldier-Balista 5 49
+    - U37 Soldier-Cavalry1 5 101
+    - U35 Soldier-Catapult1 5 49
+    - U39 Soldier-Cavalry3_Arc 5 87
+    - U93 Soldier-Phal1 5 0
+    - U46 Soldier-Elephant 5 101
+    - U125 Priest 5 104
+    - U11 Soldier-Balista 5 49
+    - U37 Soldier-Cavalry1 5 101
+    - U35 Soldier-Catapult1 5 49
+    - U39 Soldier-Cavalry3_Arc 5 87
+    - U93 Soldier-Phal1 5 0
+    - U46 Soldier-Elephant 5 101
+    - U125 Priest 5 104
+    - U11 Soldier-Balista 5 49
+    - U37 Soldier-Cavalry1 5 101
+    - U35 Soldier-Catapult1 5 49
+    - U39 Soldier-Cavalry3_Arc 5 87
+    - U93 Soldier-Phal1 5 0
+- number: 3
+  name: Carthage
+  civ: Carthaginian
+  human: false
+  view: [122, 56]
+  ai:
+    strategy: Scx1-5-P3
+    personality: SUPER AGGRESSIVE
+    personality_changes:
+      SNInitialAttackDelay: 10
+      SNMinimumAttackGroupSize: 6
+      SNMaximumAttackGroupSize: 12
+      SNAttackSeparationTime: 2
+      SNEnemySightedResponseDistance: 48
+      SNAttackResponseSeparationTime: 2
+      SNRetreatAfterTargetDestroyed: 1
+      SNNumberBoatAttackGroups: 10
+      SNMinimumBoatAttackGroupSize: 2
+      SNAttackGroupSizeRandomness: 1
+    build_list:
+    - U83 Man 2 109
+    - B50 Farm 5 -1
+    - U46 Soldier-Elephant 2 101
+    - U73 Phalanx 2 0
+    - U83 Man 2 109
+    - U46 Soldier-Elephant 2 101
+    - U73 Phalanx 2 0
+    - R50 Chain_Mail-Cavalry 1 103
+    - U83 Man 2 109
+    - R30 Coinage 1 84
+    - U25 Soldier-El_Archer 2 87
+    - U73 Phalanx 2 0
+    - R80 Irrigation 1 84
+    - U83 Man 1 109
+    - U39 Soldier-Cav3-Arc 2 87
+    - R117 Iron_Shield 1 103
+    - U39 Soldier-Cav3-Arc 2 87
+    - R106 Ballistics 1 82
+    - R37 Alchemy 1 82
+    - R125 Armored-Elephant 1 101
+    - R110 Craftmanship 1 84
+    - R113 Aristocracy 1 82
+    - R79 Centurion 1 0
+    - R49 Chain_Mail-Archer 1 103
+- number: 4
+  name: Numidians
+  civ: Assyrian
+  human: false
+  view: [72, 72]
+  ai:
+    personality: ImmobileUnitsAII
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 0
+      SNPercentCivilianGatherers: 0
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 0
+      SNCapCivilianGatherers: 0
+      SNTotalNumberExplorers: 0
+      SNMinimumCivilianExplorers: 0
+      SNInitialAttackDelay: 32768
+      SNTaskUngroupedSoldiers: 0
+      SNArtifactReturnDistance: 72
+      SNPercentExplorationRequired: 0
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 15
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 6
+      SNAttackGroupGatherSpacing: 10
+      SNPercentHealthRetreat: 0
+      SNPercentDeathRetreat: 0
+      SNPercentUnitHealthRetreat: 0
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNDefenseDistance: 0
+      SNSentryDistance: 0
+      SNSentryDistanceVariation: 0
+      SNDefendOverlapDistance: 5
+      SNAutoBuildTowers: 0
+      SNFoodGathererPercentage: 0
+      SNWoodGathererPercentage: 0
+      SNGoldGathererPercentage: 0
+      SNStoneGathererDistance: 0
+      SNFoodDropsiteDistance: 0
+      SNWoodDropsiteDistance: 0
+      SNStoneDropsiteDistance: 0
+      SNGoldDropsiteDistance: 0
+      SNNumberExploreGroups: 0
+      SNAttackSeparationTime: 270
+      SNEnemySightedResponseDistance: 8
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNNumberBoatExploreGroups: 0
+      SNStoragePitMaxDistance: 50
+      SNGranaryMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

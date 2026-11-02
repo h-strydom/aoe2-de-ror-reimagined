@@ -5,11 +5,80 @@ display_name: Discoveries
 source: {campaign_file: 1 Ascent of Egypt.aoecpn, scenario: Scn1-03-Discoveries.aoescn, map_size: 48, players: 2}
 
 players:
-- {number: 1, name: Your Tribe, civ: Egyptian, human: true}
-- {number: 2, name: Libyans, civ: Egyptian, human: false}
+- number: 1
+  name: Your Tribe
+  civ: Egyptian
+  human: true
+  view: [24, 24]
+  disabled:
+  - dock
+  - barracks
+  - tool_age
+  - bronze_age
+  - iron_age
+- number: 2
+  name: Libyans
+  civ: Egyptian
+  human: false
+  view: [24, 24]
+  ai:
+    personality: Scn1-3-P2
+    personality_changes:
+      SNPercentCivilianExplorers: 34
+      SNPercentCivilianBuilders: 34
+      SNCapCivilianExplorers: 2
+      SNCapCivilianBuilders: 4
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 3
+      SNMinimumCivilianExplorers: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 0
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 0
+      SNDisableResign: 1
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 5
+      SNMaximumAttackGroupSize: 8
+      SNAttackGroupGatherSpacing: 10
+      SNPercentDeathRetreat: 100
+      SNPercentUnitHealthRetreat: 99
+      SNMinimumDefendGroupSize: 5
+      SNMaximumDefendGroupSize: 7
+      SNDefenseDistance: 3
+      SNSentryDistance: 4
+      SNDefendOverlapDistance: 5
+      SNNumberExploreGroups: 0
+      SNMaximumExploreGroupSize: 3
+      SNInitialAttackDelay: 1800
+      SNAttackSeparationTime: 360
+      SNPercentEnemySightedResponse: 17
+      SNEnemySightedResponseDistance: 2
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNMaximumTownSize: 20
+      SNStoragePitMaxDistance: 50
+      SNGranaryMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNAttackSeparationTimeRandomness: 15
+      SNAttackIntelligence: 0
+      SNTaskUngroupedSoldiers: 0
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 5, exploration: 0, gold: 0, all_custom: true,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 5
+  exploration: 0
+  gold: 0
+  all_custom: true
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

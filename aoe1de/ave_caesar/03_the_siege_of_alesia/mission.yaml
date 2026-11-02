@@ -5,14 +5,292 @@ display_name: The Siege of Alesia
 source: {campaign_file: 7 Ave Caesar.aoecpn, scenario: Scx2-03-The Siege of Alesia.aoescn, map_size: 144, players: 5}
 
 players:
-- {number: 1, name: Julius Caesar, civ: Roman, human: true}
-- {number: 2, name: Gallic Army, civ: Assyrian, human: false, allied_victory: true}
-- {number: 3, name: Gallic Army, civ: Assyrian, human: false, allied_victory: true}
-- {number: 4, name: Vercingetorix, civ: Greek, human: false, allied_victory: true}
-- {number: 5, name: Gallic Army, civ: Assyrian, human: false, allied_victory: true}
+- number: 1
+  name: Julius Caesar
+  civ: Roman
+  human: true
+  view: [72, 72]
+  disabled: [temple]
+- number: 2
+  name: Gallic Army
+  civ: Assyrian
+  human: false
+  allied_victory: true
+  view: [72, 72]
+  ai:
+    strategy: Gaul Cavalry
+    personality: Gaul aggressive
+    personality_changes:
+      SNPercentCivilianExplorers: 10
+      SNPercentCivilianBuilders: 45
+      SNPercentCivilianGatherers: 45
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNMinimumCivilianExplorers: 0
+      SNGroupFillMethod: 1
+      SNConsecutiveIdleUnitLimit: 15
+      SNNumberAttackGroups: 3
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNMaximumDefendGroupSize: 3
+      SNNumberExploreGroups: 3
+      SNMinimumExploreGroupSize: 4
+      SNMaximumExploreGroupSize: 8
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 0
+      SNPercentEnemySightedResponse: 75
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNLockAttackAndAttackResponse: 1
+    build_list:
+    - T83 Man 8 109
+    - B12 Barracks1 1 -1
+    - B84 Market1 1 -1
+    - T83 Man 2 109
+    - R28 Wheel 1 84
+    - T83 Man 2 109
+    - B101 Stable1 1 -1
+    - T37 Soldier-Cavalry1 2 101
+    - B87 Range1 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - R64 Short_Sword 1 12
+    - T75 Soldier-Inf3 2 12
+    - B101 Stable1 1 -1
+    - T37 Soldier-Cavalry1 4 101
+    - B49 Siege_Workshop 1 -1
+    - B79 Watch_Tower 1 -1
+    - T37 Soldier-Cavalry1 1 101
+    - R12 Sentry_Tower 1 68
+    - T37 Soldier-Cavalry1 1 101
+    - T75 Soldier-Inf3 4 12
+    - B79 Watch_Tower 1 -1
+    - R46 Tool_Working 1 103
+    - T37 Soldier-Cavalry1 2 101
+    - R51 Metal_Working 1 103
+    - T37 Soldier-Cavalry1 2 101
+    - B79 Watch_Tower 1 -1
+    - U75 Soldier-Inf3 2 12
+    - B104 Temple1 1 -1
+    - T83 Man 2 109
+    - U37 Soldier-Cavalry1 2 101
+    - U35 Soldier-Catapult1 1 49
+    - R42 Leather_Armor_Mounted 1 103
+    - U125 Priest 1 104
+    - R45 Scale_Armor_-_Cavalry 1 103
+    - B101 Stable1 1 -1
+    - B79 Watch_Tower 1 -1
+    - U35 Soldier-Catapult1 1 49
+    - B82 Government_Center 1 -1
+    - T83 Man 2 109
+    - C103 Iron_Age 1 109
+    - B49 Siege_Workshop 1 -1
+    - U35 Soldier-Catapult1 1 49
+    - R24 Polytheism 1 104
+    - R71 Heavy_Cavalry 1 101
+    - U35 Soldier-Catapult1 1 49
+    - R18 Afterlife 1 104
+    - U125 Priest 1 104
+    - R52 Metalurgy 1 103
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - T83 Man 2 109
+    - U75 Soldier-Inf3 2 12
+    - U125 Priest 2 104
+    - R78 Cataphracts 1 101
+    - U125 Priest 1 104
+    - U37 Soldier-Cavalry1 12 101
+- number: 3
+  name: Gallic Army
+  civ: Assyrian
+  human: false
+  allied_victory: true
+  view: [72, 72]
+  ai:
+    strategy: Gaul Cavalry
+    personality: Gaul aggressive
+    personality_changes:
+      SNPercentCivilianExplorers: 10
+      SNPercentCivilianBuilders: 45
+      SNPercentCivilianGatherers: 45
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNMinimumCivilianExplorers: 0
+      SNGroupFillMethod: 1
+      SNConsecutiveIdleUnitLimit: 15
+      SNNumberAttackGroups: 3
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNMaximumDefendGroupSize: 3
+      SNNumberExploreGroups: 3
+      SNMinimumExploreGroupSize: 4
+      SNMaximumExploreGroupSize: 8
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 0
+      SNPercentEnemySightedResponse: 75
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNLockAttackAndAttackResponse: 1
+    build_list:
+    - T83 Man 8 109
+    - B12 Barracks1 1 -1
+    - B84 Market1 1 -1
+    - T83 Man 2 109
+    - R28 Wheel 1 84
+    - T83 Man 2 109
+    - B101 Stable1 1 -1
+    - T37 Soldier-Cavalry1 2 101
+    - B87 Range1 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - R64 Short_Sword 1 12
+    - T75 Soldier-Inf3 2 12
+    - B101 Stable1 1 -1
+    - T37 Soldier-Cavalry1 4 101
+    - B49 Siege_Workshop 1 -1
+    - B79 Watch_Tower 1 -1
+    - T37 Soldier-Cavalry1 1 101
+    - R12 Sentry_Tower 1 68
+    - T37 Soldier-Cavalry1 1 101
+    - T75 Soldier-Inf3 4 12
+    - B79 Watch_Tower 1 -1
+    - R46 Tool_Working 1 103
+    - T37 Soldier-Cavalry1 2 101
+    - R51 Metal_Working 1 103
+    - T37 Soldier-Cavalry1 2 101
+    - B79 Watch_Tower 1 -1
+    - U75 Soldier-Inf3 2 12
+    - B104 Temple1 1 -1
+    - T83 Man 2 109
+    - U37 Soldier-Cavalry1 2 101
+    - U35 Soldier-Catapult1 1 49
+    - R42 Leather_Armor_Mounted 1 103
+    - U125 Priest 1 104
+    - R45 Scale_Armor_-_Cavalry 1 103
+    - B101 Stable1 1 -1
+    - B79 Watch_Tower 1 -1
+    - U35 Soldier-Catapult1 1 49
+    - B82 Government_Center 1 -1
+    - T83 Man 2 109
+    - C103 Iron_Age 1 109
+    - B49 Siege_Workshop 1 -1
+    - U35 Soldier-Catapult1 1 49
+    - R24 Polytheism 1 104
+    - R71 Heavy_Cavalry 1 101
+    - U35 Soldier-Catapult1 1 49
+    - R18 Afterlife 1 104
+    - U125 Priest 1 104
+    - R52 Metalurgy 1 103
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - T83 Man 2 109
+    - U75 Soldier-Inf3 2 12
+    - U125 Priest 2 104
+    - R78 Cataphracts 1 101
+    - U125 Priest 1 104
+    - U37 Soldier-Cavalry1 12 101
+- number: 4
+  name: Vercingetorix
+  civ: Greek
+  human: false
+  allied_victory: true
+  view: [72, 72]
+  ai:
+    strategy: Random
+    personality: Defensive
+    personality_changes: {SNInitialAttackDelay: 1800, SNAttackSeparationTime: 180, SNEnemySightedResponseDistance: 12,
+      SNMinimumBoatAttackGroupSize: 6, SNMaximumBoatAttackGroupSize: 10}
+- number: 5
+  name: Gallic Army
+  civ: Assyrian
+  human: false
+  allied_victory: true
+  view: [72, 72]
+  ai:
+    strategy: Gaul Catapults
+    personality: Gaul aggressive
+    personality_changes:
+      SNPercentCivilianExplorers: 10
+      SNPercentCivilianBuilders: 45
+      SNPercentCivilianGatherers: 45
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNMinimumCivilianExplorers: 0
+      SNGroupFillMethod: 1
+      SNConsecutiveIdleUnitLimit: 15
+      SNNumberAttackGroups: 3
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNMaximumDefendGroupSize: 3
+      SNNumberExploreGroups: 3
+      SNMinimumExploreGroupSize: 4
+      SNMaximumExploreGroupSize: 8
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 0
+      SNPercentEnemySightedResponse: 75
+      SNEnemySightedResponseDistance: 50
+      SNAttackResponseSeparationTime: 30
+      SNLockAttackAndAttackResponse: 1
+    build_list:
+    - T83 Man 8 109
+    - B12 Barracks1 1 -1
+    - T83 Man 3 109
+    - B87 Range1 1 -1
+    - B84 Market1 1 -1
+    - T4 Soldier-Archer1 2 87 2
+    - R28 Wheel 1 84
+    - B49 Siege_Workshop 1 -1
+    - B79 Watch_Tower 2 -1
+    - U35 Soldier-Catapult1 1 49
+    - R41 Leather_Armor_-_Archer 1 103
+    - T35 Soldier-Catapult1 1 49
+    - R44 Scale_Armor_-_Archers 1 103
+    - T35 Soldier-Catapult1 1 49
+    - T4 Soldier-Archer1 2 87 2
+    - B49 Siege_Workshop 1 -1
+    - B79 Watch_Tower 2 -1
+    - T83 Man 3 109
+    - T35 Soldier-Catapult1 2 49
+    - U4 Soldier-Archer1 2 87 1
+    - R107 Wood_Working 1 84
+    - B82 Government_Center 1 -1
+    - R32 Artisanship 1 84
+    - B104 Temple1 1 -1
+    - T125 Priest 1 104
+    - B87 Range1 1 -1
+    - T83 Man 2 109
+    - C103 Iron_Age 1 109
+    - T39 Soldier-Cavalry3_Arc 2 87
+    - R49 Chain_Mail_-_Archers 1 103
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U11 Soldier-Balista 2 49
+    - R24 Polytheism 1 104
+    - B79 Watch_Tower 1 -1
+    - R35 Engineering 1 82
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U35 Soldier-Catapult1 2 49
+    - R21 Mysticism 1 104
+    - T39 Soldier-Cavalry3_Arc 2 87
+    - R54 Heavy_Catapult 1 49
+    - T83 Man 2 109
+    - U125 Priest 2 104
+    - B79 Watch_Tower 1 -1
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - R37 Alchemy 1 82
+    - U35 Soldier-Catapult1 2 49
+    - R106 Balistics 1 82
+    - U39 Soldier-Cavalry3_Arc 5 87
+    - U35 Soldier-Catapult1 3 49
+    - R36 Massive_Catapult 1 49
+    - U35 Soldier-Catapult1 8 49
 
-victory: {mode: custom, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

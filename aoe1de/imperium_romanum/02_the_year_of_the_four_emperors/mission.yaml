@@ -6,14 +6,394 @@ source: {campaign_file: 8 Imperium Romanum.aoecpn, scenario: Scx3-02-The Year of
   players: 5}
 
 players:
-- {number: 1, name: Vespasian, civ: Palmyran, human: true}
-- {number: 2, name: Rome, civ: Roman, human: false}
-- {number: 3, name: Vitellius, civ: Roman, human: false, allied_victory: true}
-- {number: 4, name: Otho, civ: Roman, human: false, allied_victory: true}
-- {number: 5, name: Galba, civ: Roman, human: false, allied_victory: true}
+- number: 1
+  name: Vespasian
+  civ: Palmyran
+  human: true
+  view: [87, 78]
+- number: 2
+  name: Rome
+  civ: Roman
+  human: false
+  view: [87, 78]
+  ai:
+    strategy: 4 Emps 2
+    personality: Scx3-2-P2
+    personality_changes:
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 4
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 45
+      SNZeroPriorityDistance: 50
+      SNHitsBeforeAllianceChange: 250
+      SNDiplomacyChangeAgainstTraitorsOnly: 1
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 1
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNAttackGroupGatherSpacing: 10
+      SNDisableResign: 1
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNDefenseDistance: 4
+      SNDefendOverlapDistance: 5
+      SNMaxStoragePits: 6
+      SNMaxGranaries: 2
+      SNAutoBuildTowers: 0
+      SNFoodGathererPercentage: 42
+      SNWoodGathererPercentage: 33
+      SNGoldGathererPercentage: 25
+      SNStoneGathererDistance: 0
+      SNNumberExploreGroups: 1
+      SNAttackSeparationTime: 180
+      SNPercentEnemySightedResponse: 67
+      SNEnemySightedResponseDistance: 16
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNMaximumTownSize: 30
+      SNStoragePitMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+      SNTaskUngroupedSoldiers: 0
+    build_list:
+    - \\ Begin Iron Age
+    - R66 Long_Sword 1 12
+    - R73 Phalanx 1 0
+    - R111 Siegecraft 1 84
+    - R106 Ballistics 1 82
+    - U75 Soldier-Inf3 4 12
+    - U83 Man 4 109
+    - U35 Soldier-Catapult1 3 49
+    - R35 Engineering 1 82
+    - U93 Soldier-Phal1 4 0
+    - R113 Aristocracy 1 82
+    - B79 Watch_Tower 1 -1
+    - U83 Man 2 109
+    - U125 Priest 2 104
+    - R117 Iron_Shield 1 103
+    - U35 Soldier-Catapult1 3 49
+    - U75 Soldier-Inf3 5 12
+    - R126 Heavy Chariots 1 101
+    - R122 Tower_Shield 1 103
+    - U83 Man 2 109
+    - U35 Soldier-Catapult1 3 49
+    - U35 Soldier-Catapult1 1 49
+    - U83 Man 4 109
+    - U11 Soldier-Balista 3 49
+    - U75 Soldier-Inf3 1 12
+    - U83 Man 2 109
+    - U37 Soldier-Cavalry1 1 101
+    - U93 Soldier-Phal1 3 0
+    - U93 Soldier-Phal1 1 0
+    - B79 Watch_Tower 1 -1
+    - U11 Soldier-Balista 3 49
+    - U11 Soldier-Ballista 1 49
+    - U35 Soldier-Catapult1 4 49
+    - U93 Soldier-Phal1 1 0
+    - U11 Soldier-Balista 3 49
+    - R77 Legion 1 12
+    - U75 Soldier-Inf3 5 12
+    - U93 Soldier-Phal1 4 0
+    - U83 Man 2 109
+    - U35 Soldier-Catapult1 3 49
+    - U75 Soldier-Inf3 5 12
+    - U40 Soldier-Chariot1 4 101
+    - U83 Man 2 109
+    - U35 Soldier-Catapult1 3 49
+    - U35 Soldier-Catapult1 1 49
+    - U83 Man 4 109
+    - U11 Soldier-Balista 3 49
+    - U75 Soldier-Inf3 1 12
+    - U83 Man 2 109
+    - U40 Soldier-Chariot1 3 101
+    - U37 Soldier-Cavalry1 1 101
+    - U93 Soldier-Phal1 3 0
+    - U11 Soldier-Balista 3 49
+    - U93 Soldier-Phal1 1 0
+    - U11 Soldier-Balista 3 49
+    - U11 Soldier-Ballista 1 49
+    - U35 Soldier-Catapult1 4 49
+    - U93 Soldier-Phal1 1 0
+    - U11 Soldier-Balista 3 49
+    - U75 Soldier-Inf3 5 12
+- number: 3
+  name: Vitellius
+  civ: Roman
+  human: false
+  allied_victory: true
+  view: [87, 78]
+  ai:
+    strategy: Palmyra Composite Bow
+    personality: Scx3-2-P3
+    personality_changes:
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 4
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 45
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 1
+      SNDisableResign: 0
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNAttackGroupGatherSpacing: 10
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNDefenseDistance: 4
+      SNDefendOverlapDistance: 5
+      SNMaxStoragePits: 6
+      SNMaxGranaries: 2
+      SNFoodGathererPercentage: 42
+      SNWoodGathererPercentage: 33
+      SNGoldGathererPercentage: 20
+      SNStoneGathererDistance: 5
+      SNNumberExploreGroups: 1
+      SNInitialAttackDelay: 510
+      SNInitialAttackDelayType: 2
+      SNAttackSeparationTime: 150
+      SNPercentEnemySightedResponse: 80
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 2
+      SNMinimumBoatDefendGroupSize: 1
+      SNMaximumBoatDefendGroupSize: 2
+      SNMaximumTownSize: 30
+      SNStoragePitMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+      SNTaskUngroupedSoldiers: 0
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 10 109
+    - B12 Barracks1 1 -1
+    - U83 Man 4 109
+    - C101 Tool_Age 1 109
+    - B84 Market1 1 -1
+    - B87 Range1 1 -1
+    - T83 Man 2 109 2
+    - T4 Soldier-Archer1 2 87 3
+    - B50 Farm 2 -1
+    - B101 Stable1 1 -1
+    - T299 Soldier-Scout 1 101 2
+    - U83 Man 2 109
+    - R16 Watch_Tower 1 68
+    - B79 Watch_Tower 1 -1
+    - U83 Man 2 109
+    - R107 Wood_Working 1 84
+    - T83 Man 2 109 1
+    - R81 Domestication 1 84
+    - B50 Farm 2 -1
+    - R108 Gold_Mining 1 84
+    - C102 Bronze_Age 1 109
+    - R41 Leather_Armor_-_Archer 1 103
+    - R32 Artisanship 1 84
+    - U83 Man 2 109
+    - R28 Wheel 1 84
+    - B87 Range1 1 -1
+    - R44 Scale_Armor_-_Archers 1 103
+    - U338 Soldier-Camel 2 101
+    - R56 Improved_Bow 1 87
+    - U5 Soldier-Archer2 2 87
+    - B49 Siege_Workshop 1 -1
+    - B87 Range1 1 -1
+    - R12 Sentry_Tower 1 68
+    - R57 Composite_Bow 1 87
+    - B82 Government_Center 1 -1
+    - U35 Soldier-Catapult1 1 49
+    - U338 Soldier-Camel 2 101
+    - R34 Nobility 1 82
+    - U35 Soldier-Catapult1 1 49
+    - B50 Farm 2 -1
+    - U5 Soldier-Archer2 2 87
+    - C103 Iron_Age 1 109
+    - T5 Soldier-Archer2 2 87 2
+    - B87 Range1 1 -1
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - R37 Alchemy 1 82
+    - T5 Soldier-Archer2 2 87 2
+    - R106 Ballistics 1 82
+    - T5 Soldier-Archer2 2 87 2
+    - R54 Heavy_Catapult 1 49
+    - R49 Chain_Mail_-_Archers 1 103
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - R15 Guard_Tower 1 68
+    - U39 Soldier-Cavalry3_Arc 8 87
+    - B109 Town_Center1 1 -1
+    - B276 Wonder 1 -1
+    - B87 Range1 1 -1
+    - U5 Soldier-Archer2 12 87
+    - B49 Siege_Workshop 1 -1
+    - U35 Soldier-Catapult1 2 49
+    - U39 Soldier-Cavalry3_Arc 6 87
+    - U35 Soldier-Catapult1 2 49
+    - R30 Coinage 1 84
+    - U5 Soldier-Archer2 24 87
+    - U39 Soldier-Cavalry3_Arc 12 87
+    - U35 Soldier-Catapult1 2 49
+    - B87 Range1 1 -1
+    - U5 Soldier-Archer2 175 87
+    - B109 Town_Center1 1 -1
+- number: 4
+  name: Otho
+  civ: Roman
+  human: false
+  allied_victory: true
+  view: [87, 78]
+  ai:
+    strategy: Macedon Cavalry
+    personality: Scx3-2-P4
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 4
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 25
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 1
+      SNDisableResign: 0
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 8
+      SNAttackGroupGatherSpacing: 10
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNDefenseDistance: 4
+      SNDefendOverlapDistance: 5
+      SNMaxStoragePits: 6
+      SNMaxGranaries: 2
+      SNAutoBuildTowers: 0
+      SNNumberExploreGroups: 0
+      SNInitialAttackDelay: 300
+      SNInitialAttackDelayType: 2
+      SNAttackSeparationTime: 120
+      SNEnemySightedResponseDistance: 24
+      SNAttackResponseSeparationTime: 15
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 2
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 3
+      SNMinimumBoatDefendGroupSize: 1
+      SNMaximumBoatDefendGroupSize: 1
+      SNMaximumTownSize: 30
+      SNStoragePitMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+      SNTaskUngroupedSoldiers: 0
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 10 109
+    - B12 Barracks1 1 -1
+    - T83 Man 4 109 2
+    - C101 Tool_Age 1 109
+    - T73 Soldier-Inf1 2 12 1
+    - B84 Market1 1 -1
+    - U83 Man 2 109
+    - B87 Range1 1 -1
+    - T4 Soldier-Archer1 2 87 3
+    - U83 Man 2 109
+    - B50 Farm 2 -1
+    - R107 Wood_Working 1 84
+    - T4 Soldier-Archer1 2 87 3
+    - R46 Tool_Working 1 103
+    - U83 Man 2 109
+    - R16 Watch_Tower 1 68
+    - T83 Man 2 109 2
+    - B79 Watch_Tower 2 -1
+    - R81 Domestication 1 84
+    - B50 Farm 2 -1
+    - B101 Stable1 1 -1
+    - C102 Bronze_Age 1 109
+    - B101 Stable1 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - R42 Leather_Armor_Mounted 1 103
+    - U83 Man 2 109
+    - B82 Government_Center 1 -1
+    - B50 Farm 2 -1
+    - B49 Siege_Workshop 1 -1
+    - U83 Man 2 109
+    - U37 Soldier-Cavalry1 2 101
+    - R31 Plow 1 84
+    - B50 Farm 2 -1
+    - U37 Soldier-Cavalry1 2 101
+    - R51 Metal_Working 1 103
+    - U37 Soldier-Cavalry1 2 101
+    - B101 Stable1 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - R45 Scale_Armor_-_Cavalry 1 103
+    - R28 Wheel 1 84
+    - C103 Iron_Age 1 109
+    - U37 Soldier-Cavalry1 2 101
+    - B49 Siege_Workshop 1 -1
+    - R12 Sentry_Tower 1 68
+    - U35 Soldier-Catapult1 4 49
+    - R71 Heavy_Cavalry 1 101
+    - R106 Ballistics 1 82
+    - U35 Soldier-Catapult1 4 49
+    - U37 Soldier-Cavalry1 2 101
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - R52 Metallurgy 1 103
+    - R78 Cataphracts 1 101
+    - R15 Guard_Tower 1 68
+    - B109 Town_Center1 1 -1
+    - B276 Wonder 1 -1
+    - U125 Priest 1 104
+    - U35 Soldier-Catapult1 2 49
+    - B101 Stable1 1 -1
+    - U37 Soldier-Cavalry1 24 101
+    - B49 Siege_Workshop 1 -1
+    - R54 Heavy_Catapult 1 49
+    - U35 Soldier-Catapult1 8 49
+    - U125 Priest 1 104
+    - B101 Stable1 1 -1
+    - U37 Soldier-Cavalry1 175 87
+    - B109 Town_Center1 1 -1
+- number: 5
+  name: Galba
+  civ: Roman
+  human: false
+  allied_victory: true
+  view: [87, 78]
+  ai: {strategy: 4 Emps 2, personality: 4Emp2, personality_note: 'no file: the game picks a personality'}
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

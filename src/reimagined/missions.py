@@ -10,6 +10,10 @@ otherwise from the scenario itself.
 """
 from __future__ import annotations
 
+import re
+from collections import Counter
+from functools import cache
+
 import yaml
 
 from . import layout
@@ -110,6 +114,50 @@ def objective(c: VictoryCondition, s: Scenario, units: dict, names: dict[int, st
     return d
 
 
+_SN = re.compile(r"^\s*(\d+)\s+(-?\d+)\s*//\s*(\w+)", re.M)
+STOCK_STRATEGIES = {"default"}           # AoE DE's stock build list: named, not listed
+
+
+def personality(text: str) -> dict[str, int]:
+    """An AoE1 personality file's strategic numbers: name -> value."""
+    return {m.group(3): int(m.group(2)) for m in _SN.finditer(text)}
+
+
+@cache
+def default_personality() -> dict[str, int]:
+    """AoE DE's stock personality: the one most computer players in the campaigns use."""
+    texts = Counter(p.ai.personality_text for c in layout.campaigns() for m in c.missions
+                    for p in load_scenario(m.scenario_path).active_players if p.ai and p.ai.personality_text)
+    return personality(texts.most_common(1)[0][0])
+
+
+def build_list(text: str) -> list[str]:
+    """An AoE1 strategy file's build list, one entry per line (comments dropped, spacing collapsed):
+    `<B|U|R|C|T><id> <name> <count> <made at>`, B building, U unit, R research, C age, T trained."""
+    out = []
+    for line in text.splitlines():
+        line = line.split("//", 1)[0].strip()
+        if line:
+            out.append(" ".join(line.split()))
+    return out
+
+
+def ai_summary(ai) -> dict:
+    """A computer player's AoE1 AI for its mission file: the three file names, the personality's strategic
+    numbers that differ from AoE DE's stock personality, and the build list unless it's the stock one."""
+    out = {k: getattr(ai, k) for k in ("strategy", "city_plan", "personality") if getattr(ai, k)}
+    if ai.personality_text:
+        stock = default_personality()
+        changed = {k: v for k, v in personality(ai.personality_text).items() if stock.get(k) != v}
+        if changed:
+            out["personality_changes"] = changed
+    elif ai.personality:
+        out["personality_note"] = "no file: the game picks a personality"
+    if ai.strategy_text and ai.strategy.lower() not in STOCK_STRATEGIES:
+        out["build_list"] = build_list(ai.strategy_text)
+    return out
+
+
 def mission_data(s: Scenario, table: dict[int, str]) -> dict:
     names = {p.number: table.get(p.name_string_id, p.name) or p.name for p in s.active_players}
     units = _units(s)
@@ -118,6 +166,12 @@ def mission_data(s: Scenario, table: dict[int, str]) -> dict:
         e = {"number": p.number, "name": names[p.number], "civ": CIVS[p.civ], "human": p.human}
         if p.allied_victory:
             e["allied_victory"] = True
+        if p.view:
+            e["view"] = list(p.view)
+        if p.disabled:
+            e["disabled"] = list(p.disabled)
+        if not p.human and p.ai:
+            e["ai"] = ai_summary(p.ai)
         players.append(e)
     gv = dict(s.global_victory)
     victory = {"mode": VICTORY_MODES[gv.pop("mode")], **{k: bool(v) if k in ("conquest", "all_custom") else v
@@ -132,8 +186,31 @@ def mission_data(s: Scenario, table: dict[int, str]) -> dict:
             "text": text, "text_ids": ids}
 
 
+class _Dumper(yaml.SafeDumper):
+    """Short all-scalar lists and maps on one line ({number: 1, ...}, [23, 6]); everything else one entry
+    per line (build lists, personality changes)."""
+
+
+def _scalar(v) -> bool:
+    return not isinstance(v, (dict, list, tuple))
+
+
+def _represent_list(dumper, data):
+    flow = len(data) <= 4 and all(_scalar(v) for v in data)
+    return dumper.represent_sequence("tag:yaml.org,2002:seq", data, flow_style=flow)
+
+
+def _represent_dict(dumper, data):
+    flow = len(data) <= 6 and all(_scalar(v) for v in data.values())
+    return dumper.represent_mapping("tag:yaml.org,2002:map", data.items(), flow_style=flow)
+
+
+_Dumper.add_representer(list, _represent_list)
+_Dumper.add_representer(dict, _represent_dict)
+
+
 def _dump(data) -> str:
-    return yaml.safe_dump(data, sort_keys=False, allow_unicode=True, width=110, default_flow_style=None)
+    return yaml.dump(data, Dumper=_Dumper, sort_keys=False, allow_unicode=True, width=110)
 
 
 def _block(key: str, value: str, indent: int) -> str:

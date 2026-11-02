@@ -6,12 +6,276 @@ source: {campaign_file: 10 The First Punic War.aoecpn, scenario: Scxt1-01-The Ba
   players: 3}
 
 players:
-- {number: 1, name: Carthaginians, civ: Carthaginian, human: true}
-- {number: 2, name: Romans, civ: Roman, human: false}
-- {number: 3, name: Romans, civ: Roman, human: false}
+- number: 1
+  name: Carthaginians
+  civ: Carthaginian
+  human: true
+  view: [60, 60]
+  disabled: [wonder]
+- number: 2
+  name: Romans
+  civ: Roman
+  human: false
+  view: [60, 60]
+  disabled: [wonder]
+  ai:
+    strategy: ROME IRON WATER
+    personality: Scxt1-01-P2
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 4
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNNumberExploreGroups: 1
+      SNTaskUngroupedSoldiers: 0
+      SNPercentExplorationRequired: 25
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 10
+      SNArtifactDefendPriority: 0
+      SNTownDefendPriority: 1
+      SNMaximumFood: 2000
+      SNMaximumWood: 2000
+      SNMaximumStone: 750
+      SNMaximumGold: 2000
+      SNAttackSeparationTime: 48
+      SNEnemySightedResponseDistance: 24
+      SNAttackResponseSeparationTime: 8
+      SNNumberBoatAttackGroups: 2
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 6
+      SNMaximumTownSize: 22
+      SNStoragePitMaxDistance: 36
+      SNGranaryMaxDistance: 24
+      SNMaximumGAIAAttackResponse: 5
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 12 109
+    - B12 Barracks1 1 -1
+    - T83 Man 2 109 2
+    - B45 Dock_1 1 -1
+    - C101 Tool_Age 1 109
+    - B45 Dock_1 1 -1
+    - B84 Market1 1 -1
+    - B50 Farm 2 -1
+    - U19 Boat-War1 2 45
+    - B87 Range1 1 -1
+    - R46 Tool_Working 1 103
+    - U83 Man 2 109
+    - R16 Watch_Tower 1 68
+    - B79 Watch_Tower 2 -1
+    - U19 Boat-War1 2 45
+    - U83 Man 2 109
+    - B50 Farm 2 -1
+    - B79 Watch_Tower 1 -1
+    - R107 Wood_Working 1 84
+    - C102 Bronze_Age 1 109
+    - U83 Man 2 109
+    - B82 Government_Center 1 -1
+    - R28 Wheel 1 84
+    - B101 Stable1 1 -1
+    - R5 Medium_War_Ship 1 45
+    - U40 Soldier-Chariot1 2 101
+    - U83 Man 2 109
+    - R42 Leather_Armor_Mounted 1 103
+    - R4 Fishing_Ship 1 45
+    - R12 Sentry_Tower 1 68
+    - U40 Soldier-Chariot1 2 101
+    - B101 Stable1 1 -1
+    - B50 Farm 2 -1
+    - B49 Siege_Workshop 1 -1
+    - U19 Boat-War1 2 45
+    - B45 Dock_1 1 -1
+    - U40 Soldier-Chariot1 2 101
+    - T83 Man 2 109 1
+    - B101 Stable1 1 -1
+    - B79 Watch_Tower 2 -1
+    - U17 Boat-Transport1 2 45
+    - C103 Iron_Age 1 109
+    - R7 Trireme 1 45
+    - U19 Boat-War1 2 45
+    - U11 Soldier-Balista 2 49
+    - R35 Engineering 1 82
+    - R51 Metal_Working 1 103
+    - R8 Heavy_Transport 1 45
+    - U40 Soldier-Chariot1 2 101
+    - R34 Nobility 1 82
+    - R106 Ballistics 1 82
+    - R32 Artisanship 1 84
+    - U40 Soldier-Chariot1 2 101
+    - R45 Scale_Armor_Cavalry 1 103
+    - U11 Soldier-Balista 2 49
+    - R9 Trireme_with_Catapult 1 45
+    - U40 Soldier-Chariot1 2 101
+    - U250 Boat-War4 4 45
+    - U11 Soldier-Balista 2 49
+    - R110 Craftmanship 1 84
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - R52 Metallurgy 1 103
+    - R126 Scythe_Chariot 1 101
+    - B109 Town_Center1 1 -1
+    - B276 Wonder 1 -1
+    - B45 Dock_1 1 -1
+    - B49 Siege_Workshop 1 -1
+    - U11 Soldier-Balista 2 49
+    - U250 Boat-War4 4 45
+    - B101 Stable1 1 -1
+    - U40 Soldier-Chariot1 24 101
+    - U19 Boat-War1 24 45
+    - U11 Soldier-Balista 4 49
+    - B45 Dock_1 1 -1
+    - U19 Boat-War1 175 45
+    - U11 Soldier-Balista 8 49
+    - B101 Stable1 1 -1
+    - U40 Soldier-Chariot1 175 101
+    - B109 Town_Center1 1 -1
+- number: 3
+  name: Romans
+  civ: Roman
+  human: false
+  view: [60, 60]
+  disabled: [wonder]
+  ai:
+    strategy: ROME LEGION
+    personality: Scxt1-01-P3
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 4
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNNumberExploreGroups: 1
+      SNInitialAttackDelay: 180
+      SNTaskUngroupedSoldiers: 0
+      SNPercentExplorationRequired: 25
+      SNNumberAttackGroups: 2
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 10
+      SNArtifactDefendPriority: 0
+      SNTownDefendPriority: 1
+      SNMaximumFood: 2000
+      SNMaximumWood: 2000
+      SNMaximumStone: 750
+      SNMaximumGold: 2000
+      SNAttackSeparationTime: 48
+      SNEnemySightedResponseDistance: 24
+      SNAttackResponseSeparationTime: 8
+      SNNumberBoatAttackGroups: 2
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 6
+      SNMaximumTownSize: 22
+      SNStoragePitMaxDistance: 36
+      SNGranaryMaxDistance: 24
+      SNMaximumGAIAAttackResponse: 5
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 10 109
+    - B12 Barracks1 1 -1
+    - T83 Man 3 109 2
+    - C101 Tool_Age 1 109
+    - U83 Man 2 109
+    - T347 Soldier-Slinger 2 12 2
+    - B84 Market1 1 -1
+    - T83 Man 2 109 2
+    - B50 Farm 2 -1
+    - B87 Range1 1 -1
+    - T83 Man 3 109 2
+    - R63 Axe 1 12
+    - U83 Man 2 109
+    - B50 Farm 2 -1
+    - R46 Tool_Working 1 103
+    - U83 Man 2 109
+    - R16 Watch_Tower 1 68
+    - T73 Soldier-Inf1 2 12 1
+    - U83 Man 2 109
+    - R107 Wood_Working 1 84
+    - B79 Watch_Tower 1 -1
+    - R81 Domestication 1 84
+    - B50 Farm 1 -1
+    - R40 Leather_Armor_-_Soldie 1 103
+    - B79 Watch_Tower 2 -1
+    - C102 Bronze_Age 1 109
+    - B12 Barracks1 1 -1
+    - B49 Siege_Workshop 1 -1
+    - U75 Soldier-Inf3 2 12
+    - B82 Government_Center 1 -1
+    - R28 Wheel 1 84
+    - R121 Logistics 1 82
+    - B50 Farm 2 -1
+    - U83 Man 2 109
+    - B12 Barracks1 1 -1
+    - U75 Soldier-Inf3 3 12
+    - B104 Temple1 1 -1
+    - U75 Soldier-Inf3 3 12
+    - B79 Watch_Tower 2 -1
+    - B49 Siege_Workshop 1 -1
+    - U125 Priest 1 104
+    - R31 Plow 1 84
+    - B50 Farm 2 -1
+    - U75 Soldier-Inf3 3 12
+    - R65 Broad_Sword 1 12
+    - U75 Soldier-Inf3 3 12
+    - U35 Soldier-Catapult1 1 49
+    - U75 Soldier-Inf3 3 12
+    - R12 Sentry_Tower 1 68
+    - U35 Soldier-Catapult1 1 49
+    - B50 Farm 2 -1
+    - U75 Soldier-Inf3 3 12
+    - C103 Iron_Age 1 109
+    - U75 Soldier-Inf3 3 12
+    - R32 Artisanship 1 84
+    - R21 Mysticism 1 104
+    - R66 Long_Sword 1 12
+    - U125 Priest 1 104
+    - B79 Watch_Tower 2 -1
+    - R110 Craftmanship 1 84
+    - R19 Monotheism 1 104
+    - U35 Soldier-Catapult1 1 49
+    - R51 Metal_Working 1 103
+    - U125 Priest 1 104
+    - B79 Watch_Tower 2 -1
+    - R52 Metallurgy 1 103
+    - U75 Soldier-Inf3 3 12
+    - R43 Scale_Armor_-_Soldiers 1 103
+    - U125 Priest 1 104
+    - R24 Polytheism 1 104
+    - U125 Priest 1 104
+    - B79 Watch_Tower 2 -1
+    - R20 Fanaticism 1 104
+    - R47 Bronze_Shield 1 103
+    - U75 Soldier-Inf3 3 12
+    - U125 Priest 1 104
+    - R117 Iron_Shield 1 103
+    - B79 Watch_Tower 2 -1
+    - U75 Soldier-Inf3 3 12
+    - R77 Legion 1 12
+    - B12 Barracks1 1 -1
+    - U75 Soldier-Inf3 12 12
+    - B49 Siege_Workshop 1 -1
+    - U35 Soldier-Catapult1 4 49
+    - U125 Priest 1 104
+    - U125 Priest 1 104
+    - U35 Soldier-Catapult1 4 49
+    - B12 Barracks1 1 -1
+    - U75 Soldier-Inf3 175 12
+    - B109 Town_Center1 1 -1
 
-victory: {mode: conquest, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: conquest
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

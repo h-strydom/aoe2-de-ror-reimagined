@@ -6,13 +6,183 @@ source: {campaign_file: 3 Voices of Babylon.aoecpn, scenario: Scn3-08-The Conque
   players: 4}
 
 players:
-- {number: 1, name: Babylonians, civ: Babylonian, human: true}
-- {number: 2, name: Nineveh, civ: Assyrian, human: false}
-- {number: 3, name: Nimrud, civ: Assyrian, human: false}
-- {number: 4, name: Assyrian Defenders, civ: Assyrian, human: false}
+- number: 1
+  name: Babylonians
+  civ: Babylonian
+  human: true
+  view: [60, 60]
+  disabled: [wonder]
+- number: 2
+  name: Nineveh
+  civ: Assyrian
+  human: false
+  view: [60, 60]
+  ai:
+    strategy: Default
+    city_plan: Default
+    personality: Scn3-8-P2
+    personality_changes:
+      SNRequiredFirstBuilding: 0
+      SNNumberMaxSkipCycles: 5
+      SNSpecificBuildItemToBuild: 276
+      SNSpecificBuildItemTime: 0
+      SNEnemySightedResponseDistance: 15
+      SNTaskUngroupedSoldiers: 0
+      SNUnskippableItemType: 276
+      SNEasiestReactionPercentage: 50
+      SNEasierReactionPercentage: 75
+      SNCapCivilianExplorers: 0
+      SNAutoBuildHouses: 0
+      SNAutoBuildDropsites: 0
+      SNDisableResign: 0
+- number: 3
+  name: Nimrud
+  civ: Assyrian
+  human: false
+  view: [60, 60]
+  ai:
+    strategy: t_yninev
+    city_plan: Default
+    personality: Scn3-8-P3
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNAutoBuilding: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 75
+      SNZeroPriorityDistance: 50
+      SNConsecutiveIdleUnitLimit: 15
+      SNDisableResign: 0
+      SNNumberAttackGroups: 5
+      SNMinimumAttackGroupSize: 5
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 10
+      SNPercentDeathRetreat: 100
+      SNPercentUnitHealthRetreat: 99
+      SNNumberDefendGroups: 5
+      SNMinimumDefendGroupSize: 5
+      SNMaximumDefendGroupSize: 7
+      SNDefenseDistance: 3
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNNumberExploreGroups: 0
+      SNMaximumExploreGroupSize: 3
+      SNAttackSeparationTime: 30
+      SNPercentEnemySightedResponse: 85
+      SNEnemySightedResponseDistance: 15
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 2
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNMaximumTownSize: 20
+      SNStoragePitMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 50
+      SNAttackSeparationTimeRandomness: 15
+      SNAttackIntelligence: 0
+      SNTaskUngroupedSoldiers: 0
+      SNEasiestReactionPercentage: 50
+      SNEasierReactionPercentage: 75
+    build_list:
+    - U83 Man 5 109
+    - B45 Dock_1 1 -1
+    - U17 Boat-Transport1 2 45
+    - R16 Watch_Tower 1 68
+    - B79 Watch_Tower 4 -1
+    - U19 Boat-War1 1 45
+    - R102 Bronze_Age 1 109
+    - R12 Sentry_Tower 1 68
+    - U83 Man 2 109
+    - R5 Medium_War_Ship 1 45
+    - U19 Boat-War1 2 45
+    - R4 Fishing_Ship 1 45
+    - U13 Boat-Fishing1 1 45
+    - R28 Wheel 1 84
+    - U83 Man 1 109
+    - B101 Stable1 1 -1
+    - U40 Soldier-Chariot1 6 101
+    - R56 Composite_Bow 1 87
+    - U17 Boat-Transport1 2 45
+    - R57 Longbow 1 87
+    - U37 Soldier-Cavalry1 8 101
+    - U5 Soldier-Archer2 8 87
+    - U41 Soldier-Chariot2 6 87
+    - U93 Soldier-Phal1 1 0
+    - U5 Soldier-Archer2 2 87
+    - U35 Soldier-Catapult1 1 49
+- number: 4
+  name: Assyrian Defenders
+  civ: Assyrian
+  human: false
+  view: [60, 60]
+  ai:
+    strategy: Default
+    city_plan: Default
+    personality: Scn3-8-P4
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 0
+      SNMinimumCivilianExplorers: 0
+      SNArtifactReturnDistance: 10
+      SNPercentExplorationRequired: 75
+      SNZeroPriorityDistance: 50
+      SNConsecutiveIdleUnitLimit: 15
+      SNDisableResign: 1
+      SNNumberAttackGroups: 5
+      SNMinimumAttackGroupSize: 5
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 10
+      SNPercentDeathRetreat: 100
+      SNPercentUnitHealthRetreat: 99
+      SNNumberDefendGroups: 5
+      SNMinimumDefendGroupSize: 5
+      SNMaximumDefendGroupSize: 7
+      SNDefenseDistance: 3
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNNumberExploreGroups: 0
+      SNMaximumExploreGroupSize: 3
+      SNAttackSeparationTime: 30
+      SNPercentEnemySightedResponse: 85
+      SNEnemySightedResponseDistance: 144
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 2
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNMaximumTownSize: 20
+      SNStoragePitMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 50
+      SNAttackSeparationTimeRandomness: 15
+      SNAttackIntelligence: 0
+      SNTaskUngroupedSoldiers: 0
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

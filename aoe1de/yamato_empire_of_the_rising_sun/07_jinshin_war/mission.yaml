@@ -6,12 +6,213 @@ source: {campaign_file: '4 Yamato, Empire of the Rising Sun.aoecpn', scenario: S
   players: 3}
 
 players:
-- {number: 1, name: Prince Ōama, civ: Yamato, human: true}
-- {number: 2, name: Emperor Kobun, civ: Choson, human: false}
-- {number: 3, name: Asuka, civ: Choson, human: false}
+- number: 1
+  name: Prince Ōama
+  civ: Yamato
+  human: true
+  view: [72, 72]
+  disabled: [wonder]
+- number: 2
+  name: Emperor Kobun
+  civ: Choson
+  human: false
+  view: [72, 72]
+  disabled: [wonder]
+  ai:
+    strategy: Scn4-7-P2
+    city_plan: Default
+    personality: Scn4-7-P2
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 4
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNBlotSize: 12
+      SNNumberExploreGroups: 1
+      SNInitialAttackDelay: 0
+      SNTaskUngroupedSoldiers: 0
+      SNDisableResign: 1
+      SNArtifactReturnDistance: 12
+      SNPercentExplorationRequired: 25
+      SNPercentHalfExploration: 4
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNScaleMinimumAttackGroupSize: 1
+      SNPercentHealthRetreat: 100
+      SNPercentDeathRetreat: 100
+      SNPercentUnitHealthRetreat: 100
+      SNNumberDefendGroups: 1
+      SNMinimumDefendGroupSize: 1
+      SNMaximumDefendGroupSize: 2
+      SNArtifactDefendPriority: 0
+      SNTownDefendPriority: 7
+      SNDefenseDistance: 4
+      SNDefendOverlapDistance: 4
+      SNUpgradeToToolAgeASAP: 0
+      SNUpgradeToBronzeAgeASAP: 0
+      SNUpgradeToIronAgeASAP: 0
+      SNFoodDropsiteDistance: 5
+      SNWoodDropsiteDistance: 5
+      SNStoneDropsiteDistance: 5
+      SNGoldDropsiteDistance: 5
+      SNMinimumFood: 150
+      SNMinimumWood: 150
+      SNMinimumStone: 0
+      SNMinimumGold: 150
+      SNMinimumAmountForTrading: 300
+      SNMaximumFood: 300
+      SNMaximumWood: 300
+      SNMaximumStone: 150
+      SNMaximumGold: 300
+      SNIntelligentGathering: 1
+      SNAttackSeparationTime: 120
+      SNEnemySightedResponseDistance: 32
+      SNAttackResponseSeparationTime: 10
+      SNNumberBoatAttackGroups: 0
+      SNMaximumTownSize: 36
+      SNMinimumWaterBodySizeForDock: 1600
+      SNMostNeededResourceLookAhead: 4
+      SNStoragePitMaxDistance: 40
+      SNAutoBuildHouses: 0
+      SNAutoBuildDropsites: 0
+      SNMaxStoragePits: 1
+      SNMaxGranaries: 1
+      SNRequiredFirstBuilding: 0
+      SNMaximumHousesBeforeDropsites: 2
+      SNMaxFarms: 2
+      SNMaxTowers: 6
+      SNTacticalUpdateFrequency: 3
+      SNAttackGroupSizeRandomness: 1
+      SNScalingFrequency: 10
+      SNMaximumGAIAAttackResponse: 3
+      SNCoopShareAttacking: 1
+      SNAttackSeparationTimeRandomness: 15
+      SNHitsBeforeAllianceChange: 32
+    build_list:
+    - U83 Villager 6 109
+    - B101 Stable1 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - U83 Villager 1 109
+    - B87 Range1 1 -1
+    - U39 Soldier-Cavalry3 2 87
+    - T83 Villager 1 109 1
+    - R37 Alchemy 1 82
+    - T83 Villager 1 109 1
+    - B50 Farm 1 -1
+    - R110 Craftmanship 1 84
+    - U39 Soldier-Cavalry3 2 87
+    - B103 Storage_Pit1 1 -1
+    - U39 Soldier-Cavalry3 2 87
+    - B49 Siege_Workshop 1 -1
+    - R54 Heavy_Catapult 1 49
+    - B50 Farm 1 -1
+    - U35 Soldier-Catapult1 2 49
+    - R49 Chain_Mail_-_Archers 1 103
+    - R35 Engineering 1 82
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - R71 Heavy_Cavalry 1 101
+    - U39 Soldier-Cavalry3 2 87
+- number: 3
+  name: Asuka
+  civ: Choson
+  human: false
+  view: [72, 72]
+  disabled: [stable, siege_workshop, academy, wonder]
+  ai:
+    strategy: Scn4-7-P3
+    city_plan: Default
+    personality: Scn4-7-P3
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 50
+      SNPercentCivilianGatherers: 50
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNBlotSize: 12
+      SNNumberExploreGroups: 1
+      SNInitialAttackDelay: 0
+      SNDisableResign: 1
+      SNArtifactReturnDistance: 12
+      SNPercentExplorationRequired: 25
+      SNPercentHalfExploration: 4
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 7
+      SNScaleMinimumAttackGroupSize: 1
+      SNPercentHealthRetreat: 100
+      SNPercentDeathRetreat: 100
+      SNPercentUnitHealthRetreat: 100
+      SNArtifactDefendPriority: 0
+      SNTownDefendPriority: 1
+      SNDefenseDistance: 10
+      SNDefendOverlapDistance: 6
+      SNSentryDistance: 10
+      SNUpgradeToBronzeAgeASAP: 0
+      SNUpgradeToIronAgeASAP: 0
+      SNFoodDropsiteDistance: 8
+      SNWoodDropsiteDistance: 8
+      SNStoneDropsiteDistance: 8
+      SNGoldDropsiteDistance: 8
+      SNMinimumStone: 200
+      SNMinimumAmountForTrading: 400
+      SNMaximumFood: 400
+      SNMaximumWood: 400
+      SNMaximumStone: 400
+      SNMaximumGold: 400
+      SNIntelligentGathering: 1
+      SNAttackSeparationTime: 64
+      SNEnemySightedResponseDistance: 24
+      SNAttackResponseSeparationTime: 16
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 0
+      SNMaximumBoatAttackGroupSize: 0
+      SNNumberBoatExploreGroups: 0
+      SNMinimumBoatExploreGroupSize: 0
+      SNMaximumBoatExploreGroupSize: 0
+      SNMinimumTownSize: 12
+      SNMaximumTownSize: 24
+      SNMinimumWaterBodySizeForDock: 1600
+      SNMostNeededResourceLookAhead: 4
+      SNStoragePitMaxDistance: 36
+      SNGranaryMaxDistance: 24
+      SNAutoBuildHouses: 0
+      SNAutoBuildDropsites: 0
+      SNMaxStoragePits: 1
+      SNMaxGranaries: 1
+      SNRequiredFirstBuilding: 4
+      SNMaximumHousesBeforeDropsites: 2
+      SNAutoBuildFarms: 0
+      SNMaxFarms: 2
+      SNAutoBuildTowers: 0
+      SNMaxTowers: 8
+      SNTacticalUpdateFrequency: 3
+      SNAttackGroupSizeRandomness: 1
+      SNScalingFrequency: 8
+      SNMaximumGAIAAttackResponse: 2
+      SNCoopShareAttacking: 1
+      SNAttackSeparationTimeRandomness: 15
+      SNHitsBeforeAllianceChange: 32
+    build_list: [U83 Villager 2 109, U75 Soldier-Inf3 3 12]
 
-victory: {mode: conquest, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: conquest
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

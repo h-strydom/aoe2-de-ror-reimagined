@@ -5,15 +5,100 @@ display_name: The Caravan
 source: {campaign_file: 3 Voices of Babylon.aoecpn, scenario: Scn3-06-The Caravan.aoescn, map_size: 120, players: 6}
 
 players:
-- {number: 1, name: Babylonians, civ: Babylonian, human: true}
-- {number: 2, name: Elamites, civ: Assyrian, human: false, allied_victory: true}
-- {number: 3, name: Elamites, civ: Assyrian, human: true, allied_victory: true}
-- {number: 4, name: Elamites, civ: Persian, human: true, allied_victory: true}
-- {number: 5, name: Elamites, civ: Persian, human: true, allied_victory: true}
-- {number: 6, name: Babylonians, civ: Babylonian, human: false}
+- number: 1
+  name: Babylonians
+  civ: Babylonian
+  human: true
+  view: [60, 60]
+- number: 2
+  name: Elamites
+  civ: Assyrian
+  human: false
+  allied_victory: true
+  view: [60, 60]
+  ai:
+    strategy: Default
+    city_plan: Default
+    personality: Scn3-6-P2
+    personality_changes:
+      SNTotalNumberExplorers: 0
+      SNMinimumCivilianExplorers: 0
+      SNNumberExploreGroups: 0
+      SNInitialAttackDelay: 32768
+      SNInitialAttackDelayType: 32768
+      SNTaskUngroupedSoldiers: 0
+      SNArtifactReturnDistance: 12
+      SNDisableResign: 1
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 9000
+      SNMaximumAttackGroupSize: 9000
+      SNPercentEnemySightedResponse: 67
+      SNEnemySightedResponseDistance: 5
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 9000
+      SNMaximumBoatAttackGroupSize: 9000
+      SNAutoBuildTransports: 1
+      SNAutoBuildWarships: 1
+      SNMaxStoragePits: 15
+- number: 3
+  name: Elamites
+  civ: Assyrian
+  human: true
+  allied_victory: true
+  view: [60, 60]
+- number: 4
+  name: Elamites
+  civ: Persian
+  human: true
+  allied_victory: true
+  view: [60, 60]
+- number: 5
+  name: Elamites
+  civ: Persian
+  human: true
+  allied_victory: true
+  view: [60, 60]
+- number: 6
+  name: Babylonians
+  civ: Babylonian
+  human: false
+  view: [60, 60]
+  ai:
+    strategy: Default
+    city_plan: Default
+    personality: Scn3-6-P6
+    personality_changes:
+      SNTotalNumberExplorers: 0
+      SNMinimumCivilianExplorers: 0
+      SNNumberExploreGroups: 0
+      SNInitialAttackDelay: 32768
+      SNInitialAttackDelayType: 32768
+      SNTaskUngroupedSoldiers: 0
+      SNArtifactReturnDistance: 12
+      SNDisableResign: 1
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 9000
+      SNMaximumAttackGroupSize: 9000
+      SNPercentEnemySightedResponse: 67
+      SNEnemySightedResponseDistance: 5
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 9000
+      SNMaximumBoatAttackGroupSize: 9000
+      SNAutoBuildTransports: 1
+      SNAutoBuildWarships: 1
+      SNMaxStoragePits: 15
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

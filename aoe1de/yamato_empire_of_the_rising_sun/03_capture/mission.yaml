@@ -6,13 +6,358 @@ source: {campaign_file: '4 Yamato, Empire of the Rising Sun.aoecpn', scenario: S
   players: 4}
 
 players:
-- {number: 1, name: Queen Himiko, civ: Yamato, human: true}
-- {number: 2, name: Villages, civ: Shang, human: false}
-- {number: 3, name: Izumo, civ: Shang, human: false}
-- {number: 4, name: Izumo, civ: Shang, human: false}
+- number: 1
+  name: Queen Himiko
+  civ: Yamato
+  human: true
+  view: [48, 48]
+- number: 2
+  name: Villages
+  civ: Shang
+  human: false
+  view: [48, 48]
+  ai:
+    personality: PASSIVE
+    personality_changes:
+      SNInitialAttackDelay: 1200
+      SNArtifactReturnDistance: 12
+      SNNumberAttackGroups: 12
+      SNAttackSeparationTime: 60
+      SNPercentEnemySightedResponse: 80
+      SNEnemySightedResponseDistance: 12
+      SNMinimumBoatAttackGroupSize: 6
+      SNMaximumBoatAttackGroupSize: 10
+      SNAutoBuildTransports: 1
+      SNAutoBuildWarships: 1
+      SNMaxStoragePits: 15
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 1 109
+    - B70 House 4 -1
+    - U83 Man 5 109
+    - B12 Barracks1 1 -1
+    - B68 Granary 1 -1
+    - B103 Storage_Pit1 1 -1
+    - U73 Soldier-Inf1 2 12
+    - U83 Man 5 109
+    - C101 Tool_Age 1 109
+    - B87 Range1 1 -1
+    - U83 Man 3 109
+    - U4 Soldier-Archer1 2 87
+    - B101 Stable1 1 -1
+    - U299 Soldier-Scout 1 101
+    - R40 Leather_Armor_-_Soldie 1 103
+    - R41 Leather_Armor_-_Archer 1 103
+    - R42 Leather_Armor_Mounted 1 103
+    - R46 Tool_Working 1 103
+    - U83 Man 4 109
+    - B70 House 3 -1
+    - R11 Stone_Wall 1 68
+    - R16 Watch_Tower 1 68
+    - B79 Watch_Tower 1 -1
+    - B72 Wall_Small 1 -1
+    - B45 Dock_1 1 -1
+    - U13 Boat-Fishing1 1 45
+    - U15 Boat-Trade1 1 45
+    - U19 Boat-War1 1 45
+    - U17 Boat-Transport1 1 45
+    - B72 Wall_Small 2 -1
+    - B84 Market1 1 -1
+    - B103 Storage_Pit1 1 -1
+    - R107 Wood_Working 1 84
+    - R108 Gold_Mining 1 84
+    - R109 Stone_Mining 1 84
+    - U83 Man 2 109
+    - B50 Farm 2 -1
+    - R81 Domestication 1 84
+    - R63 Axe 1 12
+    - U73 Soldier-Inf1 1 12
+    - C102 Bronze_Age 1 109
+    - U83 Man 2 109
+    - U41 Soldier-Chariot2 1 87
+    - R5 Medium_War_Ship 1 45
+    - U19 Boat-War1 1 45
+    - R6 Merchant_Ship 1 45
+    - U15 Boat-Trade1 1 45
+    - R4 Fishing_Ship 1 45
+    - U13 Boat-Fishing1 1 45
+    - R32 Artisanship 1 84
+    - R28 Wheel 1 84
+    - B104 Temple1 1 -1
+    - U83 Man 1 109
+    - U125 Priest 1 104
+    - B70 House 3 -1
+    - R21 Mysticism 1 104
+    - R22 Astrology 1 104
+    - R24 Polytheism 1 104
+    - R43 Scale_Armor_-_Soldiers 1 103
+    - R44 Scale_Armor_-_Archers 1 103
+    - R45 Scale_Armor_-_Cavalry 1 103
+    - R51 Metal_Working 1 103
+    - R47 Bronze_Shield 1 103
+    - R13 Medium_Wall 1 68
+    - R12 Sentry_Tower 1 68
+    - B101 Stable1 1 -1
+    - U37 Soldier-Cavalry1 1 101
+    - U40 Soldier-Chariot1 1 101
+    - B0 Academy 1 -1
+    - U93 Soldier-Phal1 1 0
+    - R64 Short_Sword 1 12
+    - U75 Soldier-Inf3 1 12
+    - R65 Broad_Sword 1 12
+    - U75 Soldier-Inf3 1 12
+    - U41 Soldier-Chariot2 1 87
+    - R56 Improved_bow 1 87
+    - B70 House 3 -1
+    - U5 Soldier-Archer2 1 87
+    - R57 Composit_bow 1 87
+    - U5 Soldier-Archer2 1 87
+    - B82 Government_Center 1 -1
+    - B49 Siege_Workshop 1 -1
+    - U35 Soldier-Catapult1 1 49
+    - R34 Nobility 1 82
+    - R112 Architecture 1 82
+    - R106 Balistics 1 82
+    - R31 Plow 1 84
+    - B103 Storage_Pit1 1 -1
+    - C103 Iron_Age 1 109
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - R80 Irrigation 1 84
+    - R7 Trireme 1 45
+    - R8 Heavy_Transport 1 45
+    - R9 Trireme_with_Catapult 1 45
+    - U250 Boat-War4 1 45
+    - R19 Monotheism 1 104
+    - R20 Fanaticism 1 104
+    - R18 Afterlife 1 104
+    - R23 Jihad 1 104
+    - R30 Coinage 1 84
+    - R110 Craftmanship 1 84
+    - R111 Siege_Craft 1 84
+    - R37 Alchemy 1 82
+    - R114 Writing 1 82
+    - R35 Engineering 1 82
+    - R113 Aristocracy 1 82
+    - R15 Guard_Tower 1 68
+    - B79 Watch_Tower 1 -1
+    - R14 Fortifications 1 68
+    - B72 Wall_Small 1 -1
+    - R48 Chain_Mail_-_Soldiers 1 103
+    - R49 Chain_Mail_-_Archers 1 103
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - R52 Metalurgy 1 103
+    - R117 Iron_Shield 1 103
+    - R54 Heavy_Catapult 1 49
+    - U11 Soldier-Balista 1 49
+    - U25 Soldier-El_Archer 1 87
+    - R66 Long_Sword 1 12
+    - U75 Soldier-Inf3 1 12
+    - R71 Heavy_Cavalry 1 101
+    - U37 Soldier-Cavalry1 1 101
+    - U46 Soldier-Elephant 1 101
+    - R73 Phalanx 1 0
+    - U93 Soldier-Phal1 1 0
+    - R25 Juggernaught 1 45
+    - U250 Boat-War4 1 45
+    - R2 Catapult_Tower 1 68
+    - B79 Watch_Tower 1 -1
+    - R27 Helepolis 1 49
+    - U11 Soldier-Balista 1 49
+    - R36 Massive_Catapult 1 49
+    - U35 Soldier-Catapult1 1 49
+    - R79 Centurion 1 0
+    - U93 Soldier-Phal1 1 0
+    - R38 Heavy_Horse_Archer 1 87
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - R78 Cataphracts 1 101
+    - U37 Soldier-Cavalry1 1 101
+    - R77 Legion 1 12
+    - U75 Soldier-Inf3 1 12
+    - B276 Wonder 1 -1
+- number: 3
+  name: Izumo
+  civ: Shang
+  human: false
+  view: [48, 48]
+  ai:
+    personality: PASSIVE
+    personality_changes:
+      SNInitialAttackDelay: 1200
+      SNArtifactReturnDistance: 12
+      SNNumberAttackGroups: 12
+      SNAttackSeparationTime: 60
+      SNPercentEnemySightedResponse: 80
+      SNEnemySightedResponseDistance: 12
+      SNMinimumBoatAttackGroupSize: 6
+      SNMaximumBoatAttackGroupSize: 10
+      SNAutoBuildTransports: 1
+      SNAutoBuildWarships: 1
+      SNMaxStoragePits: 15
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 1 109
+    - U83 Man 5 109
+    - B12 Barracks1 1 -1
+    - U73 Soldier-Inf1 2 12
+    - U83 Man 3 109
+    - B68 Granary 1 -1
+    - C101 Tool_Age 1 109
+    - B84 Market1 1 -1
+    - B87 Range1 1 -1
+    - U4 Soldier-Archer1 1 87
+    - B45 Dock_1 1 -1
+    - U17 Boat-Transport1 2 45
+    - B101 Stable1 1 -1
+    - R46 Tool_Working 1 103
+    - R42 Leather_Armor_Mounted 1 103
+    - U83 Man 4 109
+    - R16 Watch_Tower 1 68
+    - B79 Watch_Tower 4 -1
+    - U19 Boat-War1 1 45
+    - U83 Man 2 109
+    - B50 Farm 2 -1
+    - R63 Axe 1 12
+    - U73 Soldier-Inf1 2 12
+    - R81 Domestication 1 84
+    - C102 Bronze_Age 1 109
+    - U83 Man 2 109
+    - R12 Sentry_Tower 1 68
+    - R5 Medium_War_Ship 1 45
+    - U19 Boat-War1 2 45
+    - R4 Fishing_Ship 1 45
+    - U13 Boat-Fishing1 1 45
+    - R28 Wheel 1 84
+    - U83 Man 1 109
+    - B101 Stable1 1 -1
+    - U40 Soldier-Chariot1 6 101
+    - R56 Composite_Bow 1 87
+    - R57 Longbow 1 87
+    - U37 Soldier-Cavalry1 8 101
+    - U5 Soldier-Archer2 8 87
+    - U41 Soldier-Chariot2 6 87
+    - B0 Academy 1 -1
+    - U93 Soldier-Phal1 1 0
+    - U5 Soldier-Archer2 2 87
+    - B82 Government_Center 1 -1
+    - B49 Siege_Workshop 1 -1
+    - U35 Soldier-Catapult1 1 49
+    - C103 Iron_Age 1 109
+    - R15 Guard_Tower 1 68
+    - R7 Trireme 1 45
+    - R8 Heavy_Transport 1 45
+    - R9 Trireme_with_Catapult 1 45
+    - U250 Boat-War4 1 45
+    - R54 Heavy_Catapult 1 49
+    - U11 Soldier-Balista 2 49
+    - U35 Soldier-Catapult1 99 49
+- number: 4
+  name: Izumo
+  civ: Shang
+  human: false
+  view: [48, 48]
+  ai:
+    strategy: SHANG CLUBMEN
+    personality: AGGRESSIVE
+    personality_changes:
+      SNInitialAttackDelay: 100
+      SNArtifactReturnDistance: 12
+      SNMinimumAttackGroupSize: 6
+      SNEnemySightedResponseDistance: 25
+      SNNumberBoatAttackGroups: 6
+      SNAutoBuildTransports: 1
+      SNAutoBuildWarships: 1
+      SNMaxStoragePits: 15
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 12 109
+    - B12 Barracks1 1 -1
+    - C101 Tool_Age 1 109
+    - T73 Soldier-Inf1 7 12 1
+    - R40 Leather_Infantry 1 103
+    - T347 Soldier-Slinger 2 12 2
+    - B84 Market1 1 -1
+    - R63 Axe 1 12
+    - B50 Farm 2 -1
+    - U83 Man 2 109
+    - B12 Barracks1 1 -1
+    - T73 Soldier-Inf1 2 12 2
+    - R46 Tool_Working 1 103
+    - T347 Soldier-Slinger 2 12 2
+    - U83 Man 2 109
+    - B101 Stable1 1 -1
+    - U83 Man 2 109
+    - B87 Range1 1 -1
+    - R81 Domestication 1 84
+    - B50 Farm 2 -1
+    - C102 Bronze_Age 1 109
+    - B101 Stable1 1 -1
+    - R28 Wheel 1 84
+    - U37 Soldier-Cavalry1 2 101
+    - R16 Watch_Tower 1 68
+    - B79 Watch_Tower 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - T83 Man 2 109 2
+    - U37 Soldier-Cavalry1 2 101
+    - B50 Farm 2 -1
+    - B79 Watch_Tower 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - T83 Man 2 109 2
+    - B49 Siege_Workshop 1 -1
+    - U37 Soldier-Cavalry1 1 101
+    - R12 Sentry_Tower 1 68
+    - R31 Plow 1 84
+    - T83 Man 2 109 1
+    - U37 Soldier-Cavalry1 1 101
+    - B79 Watch_Tower 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - R51 Metal_Working 1 103
+    - U37 Soldier-Cavalry1 2 101
+    - B104 Temple1 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - R42 Leather_Armor_Mounted 1 103
+    - U125 Priest 1 104
+    - R45 Scale_Armor_-_Cavalry 1 103
+    - B101 Stable1 1 -1
+    - B82 Government_Center 1 -1
+    - C103 Iron_Age 1 109
+    - B49 Siege_Workshop 1 -1
+    - U11 Soldier-Ballista 2 49
+    - R24 Polytheism 1 104
+    - R71 Heavy_Cavalry 1 101
+    - U11 Soldier-Ballista 2 49
+    - R18 Afterlife 1 104
+    - U125 Priest 1 104
+    - R34 Nobility 1 82
+    - R52 Metallurgy 1 103
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - U125 Priest 1 104
+    - R78 Cataphracts 1 101
+    - U125 Priest 1 104
+    - R15 Guard_Tower 1 68
+    - B276 Wonder 1 -1
+    - B49 Siege_Workshop 1 -1
+    - U11 Soldier-Balista 2 49
+    - B101 Stable1 1 -1
+    - U37 Soldier-Cavalry1 12 101
+    - U125 Priest 1 104
+    - U11 Soldier-Balista 4 49
+    - U37 Soldier-Cavalry1 24 101
+    - U11 Soldier-Balista 8 49
+    - B101 Stable1 1 -1
+    - U37 Soldier-Cavalry1 175 101
+    - B109 Town_Center1 1 -1
 
-victory: {mode: custom, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

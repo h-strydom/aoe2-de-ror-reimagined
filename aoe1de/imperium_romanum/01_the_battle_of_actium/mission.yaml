@@ -6,13 +6,256 @@ source: {campaign_file: 8 Imperium Romanum.aoecpn, scenario: Scx3-01-The Battle 
   players: 4}
 
 players:
-- {number: 1, name: Octavius, civ: Roman, human: true}
-- {number: 2, name: Marc Antony, civ: Roman, human: false}
-- {number: 3, name: Cleopatra, civ: Egyptian, human: false}
-- {number: 4, name: Egyptian Forces, civ: Egyptian, human: false}
+- number: 1
+  name: Octavius
+  civ: Roman
+  human: true
+  view: [72, 72]
+  disabled: [wonder]
+- number: 2
+  name: Marc Antony
+  civ: Roman
+  human: false
+  view: [72, 72]
+  ai:
+    strategy: Tony
+    personality: Tony
+    personality_changes:
+      SNPercentCivilianExplorers: 20
+      SNPercentCivilianBuilders: 40
+      SNPercentCivilianGatherers: 40
+      SNCapCivilianExplorers: 2
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNMinimumCivilianExplorers: 0
+      SNNumberAttackGroups: 3
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNGroupFillMethod: 1
+      SNConsecutiveIdleUnitLimit: 20
+      SNNumberExploreGroups: 1
+      SNMinimumExploreGroupSize: 2
+      SNMaximumExploreGroupSize: 3
+      SNPercentageExploreExterminators: 80
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 50
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackSeparationTime: 20
+      SNAttackResponseSeparationTime: 30
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 2
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNMaximumBoatExploreGroupSize: 2
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 4 109
+    - T83 Man 4 109 1
+    - B12 Barracks1 1 -1
+    - T75 Infantry3 4 12
+    - B79 Watch_Tower 2 -1
+    - B84 Market1 1 -1
+    - R7 Trireme 1 45
+    - B79 Watch_Tower 1 -1
+    - U75 Infantry3 4 12
+    - R66 Longsword 1 12
+    - R9 Trireme_with_Catapult 1 45
+    - T83 Man 2 109
+    - T75 Infantry3 4 12
+    - U17 Boat-Trans1 2 45
+    - B79 Watch_Tower 1 -1
+    - T75 Infantry3 2 12
+    - B49 Siege_Workshop 1 -1
+    - U250 Boat-War4 2 45
+    - B82 Government_Center 1 -1
+    - R54 Heavy_Catapult 1 49
+    - T83 Man 2 109
+    - R110 Craftmanship 1 84
+    - U35 Soldier-Catapult1 2 49
+    - R35 Engineering 1 82
+    - B104 Temple1 1 -1
+    - R106 Ballistics 1 82
+    - B12 Barracks1 1 -1
+    - R20 Fanaticism 1 104
+    - R52 Metallurgy 1 103
+    - U250 Boat-War4 2 45
+    - B79 Watch_Tower 2 -1
+    - R77 Legion 1 12
+    - R36 Massive_Catapult 1 49
+    - U125 Priest 2 104
+    - U35 Soldier-Catapult1 3 49
+    - U250 Boat-War4 2 45
+    - R25 Juggernaught 1 45
+    - R24 Polytheism 1 104
+    - U250 Boat-War4 6 45
+    - U35 Soldier-Catapult1 2 49
+    - U75 Infantry3 18 12
+    - U35 Soldier-Catapult1 4 49
+- number: 3
+  name: Cleopatra
+  civ: Egyptian
+  human: false
+  view: [72, 72]
+  ai:
+    personality: ImmobileUnitsAII
+    personality_changes:
+      SNPercentCivilianExplorers: 0
+      SNPercentCivilianBuilders: 0
+      SNPercentCivilianGatherers: 0
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 0
+      SNCapCivilianGatherers: 0
+      SNTotalNumberExplorers: 0
+      SNMinimumCivilianExplorers: 0
+      SNInitialAttackDelay: 32768
+      SNTaskUngroupedSoldiers: 0
+      SNArtifactReturnDistance: 72
+      SNPercentExplorationRequired: 0
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 15
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 6
+      SNAttackGroupGatherSpacing: 10
+      SNPercentHealthRetreat: 0
+      SNPercentDeathRetreat: 0
+      SNPercentUnitHealthRetreat: 0
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNDefenseDistance: 0
+      SNSentryDistance: 0
+      SNSentryDistanceVariation: 0
+      SNDefendOverlapDistance: 5
+      SNAutoBuildTowers: 0
+      SNFoodGathererPercentage: 0
+      SNWoodGathererPercentage: 0
+      SNGoldGathererPercentage: 0
+      SNStoneGathererDistance: 0
+      SNFoodDropsiteDistance: 0
+      SNWoodDropsiteDistance: 0
+      SNStoneDropsiteDistance: 0
+      SNGoldDropsiteDistance: 0
+      SNNumberExploreGroups: 0
+      SNAttackSeparationTime: 270
+      SNEnemySightedResponseDistance: 8
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNNumberBoatExploreGroups: 0
+      SNStoragePitMaxDistance: 50
+      SNGranaryMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+- number: 4
+  name: Egyptian Forces
+  civ: Egyptian
+  human: false
+  view: [72, 72]
+  ai:
+    strategy: Cleo
+    personality: Tony
+    personality_changes:
+      SNPercentCivilianExplorers: 20
+      SNPercentCivilianBuilders: 40
+      SNPercentCivilianGatherers: 40
+      SNCapCivilianExplorers: 2
+      SNCapCivilianBuilders: 2
+      SNCapCivilianGatherers: -1
+      SNMinimumCivilianExplorers: 0
+      SNNumberAttackGroups: 3
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 7
+      SNGroupFillMethod: 1
+      SNConsecutiveIdleUnitLimit: 20
+      SNNumberExploreGroups: 1
+      SNMinimumExploreGroupSize: 2
+      SNMaximumExploreGroupSize: 3
+      SNPercentageExploreExterminators: 80
+      SNAttackGroupGatherSpacing: 3
+      SNPercentHealthRetreat: 90
+      SNPercentDeathRetreat: 75
+      SNPercentEnemySightedResponse: 50
+      SNNumberDefendGroups: 1
+      SNMaximumDefendGroupSize: 3
+      SNDefenseDistance: 2
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNAttackCoordination: 1
+      SNEnemySightedResponseDistance: 50
+      SNAttackSeparationTime: 20
+      SNAttackResponseSeparationTime: 30
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 2
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNMaximumBoatExploreGroupSize: 2
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 4 109
+    - T83 Man 4 109 1
+    - B12 Barracks1 1 -1
+    - B87 Range1 1 -1
+    - R7 Trireme 1 45
+    - U5 Soldier-Archer2 2 87
+    - R9 Trireme_with_Catapult 1 45
+    - R15 Guard_Tower 1 68
+    - T83 Man 2 109
+    - U5 Soldier-Archer2 2 87
+    - U17 Boat-Trans1 2 45
+    - B79 Watch_Tower 1 -1
+    - U250 Boat-War4 2 45
+    - B49 Siege_Workshop 1 -1
+    - R37 Alchemy 1 82
+    - U250 Boat-War4 2 45
+    - B82 Government_Center 1 -1
+    - T83 Man 2 109
+    - R110 Craftmanship 1 84
+    - U35 Soldier-Catapult1 2 49
+    - U41 Soldier-Chariot2 3 87
+    - R35 Engineering 1 82
+    - B104 Temple1 1 -1
+    - R106 Ballistics 1 82
+    - R52 Metallurgy 1 103
+    - U250 Boat-War4 2 45
+    - B79 Watch_Tower 2 -1
+    - U125 Priest 2 104
+    - U35 Soldier-Catapult1 3 49
+    - U250 Boat-War4 2 45
+    - R25 Juggernaught 1 45
+    - R24 Polytheism 1 104
+    - R2 Catapult_Tower 1 68
+    - U250 Boat-War4 6 45
+    - R49 Chain_Mail_-_Archers 1 103
+    - U35 Soldier-Catapult1 2 49
+    - U5 Soldier-Archer2 4 87
+    - U35 Soldier-Catapult1 4 49
+    - U250 Boat-War4 6 45
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

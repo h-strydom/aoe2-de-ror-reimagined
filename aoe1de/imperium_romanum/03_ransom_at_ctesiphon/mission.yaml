@@ -6,14 +6,168 @@ source: {campaign_file: 8 Imperium Romanum.aoecpn, scenario: Scx3-03-Ransom at C
   players: 5}
 
 players:
-- {number: 1, name: Roman Expeditionary Force, civ: Roman, human: true}
-- {number: 2, name: Parthian Brigands, civ: Persian, human: false}
-- {number: 3, name: Palmyran Bandits, civ: Palmyran, human: false}
-- {number: 4, name: Persian Raiders, civ: Persian, human: false}
-- {number: 5, name: Sasanian Empire, civ: Persian, human: false}
+- number: 1
+  name: Roman Expeditionary Force
+  civ: Roman
+  human: true
+  view: [137, 116]
+- number: 2
+  name: Parthian Brigands
+  civ: Persian
+  human: false
+  view: [137, 116]
+  ai:
+    strategy: Parthian cliffmen
+    personality: aggressive
+    personality_changes: {SNInitialAttackDelay: 100, SNMinimumAttackGroupSize: 6, SNEnemySightedResponseDistance: 25,
+      SNNumberBoatAttackGroups: 6}
+    build_list:
+    - U83 Man 8 109
+    - B12 Barracks1 1 -1
+    - T83 Man 5 109 2
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U83 Man 2 109
+    - B84 Market1 1 -1
+    - U37 Soldier-Cavalry1 2 101
+    - B104 Temple1 1 -1
+    - T39 Soldier-Cavalry3_Arc 2 87
+    - U83 Man 2 109
+    - T39 Soldier-Cavalry3_Arc 2 87
+    - U125 Priest 2 104
+    - T83 Man 2 109 2
+    - R22 Astrology 1 104
+    - B49 Siege_Workshop 1 -1
+    - R117 Iron-Shield 1 103
+    - U35 Soldier-Catapult1 1 49
+    - T37 Soldier-Cavalry1 2 101
+    - B49 Siege_Workshop 1 -1
+    - R52 Metallurgy 1 103
+    - T35 Soldier-Catapult1 1 49
+    - T37 Soldier-Cavalry1 4 101
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - U83 Man 2 109
+    - B82 Government_Center 1 -1
+    - R21 Mysticism 1 104
+    - U39 Soldier-Cavalry3_Arc 6 87
+    - U125 Priest 2 104
+    - U37 Soldier-Cavalry1 4 101
+    - R78 Cataphracts 1 101
+    - U35 Soldier-Catapult1 4 49
+- number: 3
+  name: Palmyran Bandits
+  civ: Palmyran
+  human: false
+  view: [72, 72]
+  ai:
+    strategy: Palmyran bandits
+    personality: Passive Aggressive
+    personality_changes: {SNInitialAttackDelay: 900, SNAttackSeparationTime: 40, SNEnemySightedResponseDistance: 16,
+      SNMinimumBoatAttackGroupSize: 6, SNMaximumBoatAttackGroupSize: 10}
+    build_list:
+    - U338 Soldier-Camel 2 101
+    - B109 Town_Center1 1 -1
+    - U83 Man 5 109
+    - B12 Barracks1 1 -1
+    - U83 Man 6 109
+    - B84 Market1 1 -1
+    - T83 Man 2 109 2
+    - B87 Range1 1 -1
+    - U41 Soldier-Chariot2 2 87
+    - B101 Stable1 1 -1
+    - B79 Watch_Tower 2 -1
+    - B82 Government_Center 1 -1
+    - U338 Soldier-Camel 2 101
+    - B101 Stable1 1 -1
+    - T338 Soldier-Camel 2 101
+    - T41 Soldier-Chariot2 2 87
+    - B49 Siege_Workshop 1 -1
+    - T338 Soldier-Camel 2 101
+    - R52 Metallurgy 1 103
+    - T338 Soldier-Camel 2 101
+    - R15 Guard_Tower 1 68
+    - U11 Soldier-Balista 2 49
+    - U338 Soldier-Camel 4 101
+    - B79 Watch_Tower 2 -1
+    - U11 Soldier-Balista 2 49
+    - R106 Ballistics 1 82
+    - R50 Chain_Mail-Cavalry 1 103
+    - U11 Soldier-Balista 2 49
+    - R35 Engineering 1 82
+- number: 4
+  name: Persian Raiders
+  civ: Persian
+  human: false
+  view: [72, 72]
+  ai:
+    personality: Passive
+    personality_changes:
+      SNInitialAttackDelay: 1200
+      SNNumberAttackGroups: 12
+      SNAttackSeparationTime: 60
+      SNPercentEnemySightedResponse: 80
+      SNEnemySightedResponseDistance: 12
+      SNMinimumBoatAttackGroupSize: 6
+      SNMaximumBoatAttackGroupSize: 10
+- number: 5
+  name: Sasanian Empire
+  civ: Persian
+  human: false
+  view: [72, 72]
+  ai:
+    personality: Ctes5
+    personality_changes:
+      ally: 0
+      SNPercentCivilianGatherers: 0
+      SNCapCivilianExplorers: -1
+      SNCapCivilianBuilders: -1
+      SNCapCivilianGatherers: -1
+      SNMinimumAttackGroupSize: 3
+      SNTotalNumberExplorers: 4
+      SNPercentEnemySightedResponse: 0
+      SNEnemySightedResponseDistance: 0
+      SNSentryDefenseDistance: 12
+      SNArtifactReturnDistance: 10
+      SNMinimumDefendGroupSize: 1
+      SNMaximumAttackGroupSize: 15
+      SNMaximumDefendGroupSize: 3
+      SNPercentDeathRetreat: 50
+      SNPercentExplorationRequired: 50
+      SNZeroPriorityDistance: 50
+      SNMinimumCivilianExplorers: 0
+      SNNumberAttackGroups: 0
+      SNAttackGroupGatherSpacing: 3
+      SNNumberExploreGroups: 0
+      SNMinimumExploreGroupSize: 0
+      SNMaximumExploreGroupSize: 0
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 0
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 0
+      SNArtifactDefendPriority: 0
+      SNDefenseDistance: 3
+      SNNumberBoatAttackGroups: 0
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 2
+      SNNumberBoatExploreGroups: 0
+      SNDockDefendPriority: 1
+      SNLockAttackAndAttackResponse: 1
+      SNPercentCivilianExplorers: 21
+      SNPercentCivilianBuilders: 0
+      SNEasiestReactionPercentage: 1
+      SNEasierReactionPercentage: 30
+      SNTaskUngroupedSoldiers: 0
 
-victory: {mode: custom, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

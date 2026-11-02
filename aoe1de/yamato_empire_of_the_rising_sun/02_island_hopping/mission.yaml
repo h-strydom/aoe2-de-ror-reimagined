@@ -6,11 +6,76 @@ source: {campaign_file: '4 Yamato, Empire of the Rising Sun.aoecpn', scenario: S
   players: 2}
 
 players:
-- {number: 1, name: Yamato, civ: Yamato, human: true}
-- {number: 2, name: Shikoku, civ: Shang, human: false}
+- number: 1
+  name: Yamato
+  civ: Yamato
+  human: true
+  view: [48, 48]
+- number: 2
+  name: Shikoku
+  civ: Shang
+  human: false
+  view: [48, 48]
+  ai:
+    strategy: Boats_War_Only_Any_Age01
+    city_plan: Default
+    personality: Island Hopping
+    personality_changes:
+      SNPercentCivilianExplorers: 5
+      SNPercentCivilianBuilders: 0
+      SNPercentCivilianGatherers: 95
+      SNCapCivilianBuilders: 0
+      SNCapCivilianGatherers: -1
+      SNTotalNumberExplorers: 4
+      SNArtifactReturnDistance: 10
+      SNZeroPriorityDistance: 50
+      SNConsecutiveIdleUnitLimit: 15
+      SNNumberAttackGroups: 0
+      SNMinimumAttackGroupSize: 3
+      SNMaximumAttackGroupSize: 7
+      SNAttackGroupGatherSpacing: 1
+      SNPercentDeathRetreat: 50
+      SNPercentUnitHealthRetreat: 50
+      SNMinimumDefendGroupSize: 1
+      SNMaximumDefendGroupSize: 3
+      SNGoldDefendPriority: 3
+      SNRuinsDefendPriority: 1
+      SNDefenseDistance: 3
+      SNSentryDistance: 12
+      SNDefendOverlapDistance: 10
+      SNNumberExploreGroups: 0
+      SNMaximumExploreGroupSize: 3
+      SNAttackSeparationTime: 30
+      SNAttackCoordination: 1
+      SNPercentEnemySightedResponse: 50
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 10
+      SNMinimumBoatAttackGroupSize: 2
+      SNMaximumBoatAttackGroupSize: 5
+      SNNumberBoatExploreGroups: 3
+      SNMinimumBoatExploreGroupSize: 3
+      SNMaximumBoatExploreGroupSize: 4
+      SNMaximumTownSize: 20
+      SNStoragePitMaxDistance: 50
+      SNGranaryMaxDistance: 50
+      SNEasiestReactionPercentage: 1
+      SNEasierReactionPercentage: 30
+      SNTaskUngroupedSoldiers: 0
+    build_list: [U13 Boat-Fishing1 3 45, U19 Boat-War1 99 45]
 
-victory: {mode: conquest, conquest: true, ruins: 0, artifacts: 5, discoveries: 0, exploration: 0, gold: 0, all_custom: true,
-  score: 900, time: 9000}
+victory:
+  mode: conquest
+  conquest: true
+  ruins: 0
+  artifacts: 5
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: true
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

@@ -5,11 +5,106 @@ display_name: The Siege in Canaan
 source: {campaign_file: 1 Ascent of Egypt.aoecpn, scenario: Scn1-12-Siege in Canaan.aoescn, map_size: 96, players: 2}
 
 players:
-- {number: 1, name: Kingdom of Egypt, civ: Egyptian, human: true}
-- {number: 2, name: Canaanites, civ: Phoenician, human: false}
+- number: 1
+  name: Kingdom of Egypt
+  civ: Egyptian
+  human: true
+  view: [48, 48]
+- number: 2
+  name: Canaanites
+  civ: Phoenician
+  human: false
+  view: [48, 48]
+  ai:
+    strategy: Scn1-12-P2
+    personality: Scn1-12-P2
+    personality_changes:
+      SNCapCivilianBuilders: 4
+      SNCapCivilianGatherers: -1
+      SNMinimumCivilianExplorers: 0
+      SNArtifactReturnDistance: 10
+      SNZeroPriorityDistance: 50
+      SNGroupCommanderSelectionMethod: 0
+      SNConsecutiveIdleUnitLimit: 1
+      SNDisableResign: 0
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNAttackGroupGatherSpacing: 10
+      SNMinimumDefendGroupSize: 2
+      SNMaximumDefendGroupSize: 4
+      SNDefenseDistance: 4
+      SNDefendOverlapDistance: 5
+      SNAutoBuildTowers: 0
+      SNFoodGathererPercentage: 45
+      SNWoodGathererPercentage: 35
+      SNGoldGathererPercentage: 20
+      SNStoneGathererDistance: 0
+      SNNumberExploreGroups: 1
+      SNInitialAttackDelay: 1500
+      SNAttackSeparationTime: 300
+      SNPercentEnemySightedResponse: 67
+      SNEnemySightedResponseDistance: 16
+      SNAttackResponseSeparationTime: 30
+      SNRetreatAfterTargetDestroyed: 1
+      SNLockAttackAndAttackResponse: 1
+      SNNumberBoatAttackGroups: 2
+      SNMinimumBoatAttackGroupSize: 1
+      SNMaximumBoatAttackGroupSize: 5
+      SNStoragePitMaxDistance: 50
+      SNGranaryMaxDistance: 50
+      SNAttackGroupSizeRandomness: 1
+      SNMaximumGAIAAttackResponse: 2
+      SNAttackSeparationTimeRandomness: 30
+      SNAttackIntelligence: 0
+      SNTaskUngroupedSoldiers: 0
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 5 109
+    - B12 Barracks1 1 -1
+    - U83 Man 3 109
+    - B84 Market1 1 -1
+    - B50 Farm 1 -1
+    - U83 Man 1 109
+    - T73 Soldier-Inf1 1 12 1
+    - T83 Man 2 109 1
+    - B50 Farm 1 -1
+    - T83 Man 2 109 1
+    - T73 Soldier-Inf1 1 12 1
+    - B50 Farm 1 -1
+    - B103 Storage_Pit1 1 -1
+    - T73 Soldier-Inf1 1 12 1
+    - B50 Farm 1 -1
+    - B50 Farm 1 -1
+    - T73 Soldier-Inf1 1 12 1
+    - T73 Soldier-Inf1 1 12 1
+    - B50 Farm 1 -1
+    - B87 Range1 1 -1
+    - T4 Soldier-Archer1 1 87 1
+    - R28 Wheel 1 84
+    - B101 Stable1 1 -1
+    - T4 Soldier-Archer1 1 87 1
+    - U40 Soldier-Chariot1 1 101
+    - A50 Farm 1 -1 1
+    - T83 Man 1 109 1
+    - B49 Siege_Workshop 1 -1
+    - U40 Soldier-Chariot1 1 101
+    - U35 Soldier-Catapult1 1 49
+    - U40 Soldier-Chariot1 3 101
+    - U35 Soldier-Catapult1 1 49
+    - U40 Soldier-Chariot1 3 101
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 0, time: 0}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 0
+  time: 0
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

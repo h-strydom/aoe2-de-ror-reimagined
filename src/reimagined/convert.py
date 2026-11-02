@@ -90,6 +90,42 @@ def placements(src: Scenario, conv: Conversion, terrain: list[int], dropped: Cou
                 yield owner, ror_id, u
 
 
+# AoE DE's "Disable Technology" entries -> RoR: a building to disable, or an age (tech) to disable.
+DISABLE_BUILDINGS = {"granary": "GRANARY", "storage_pit": "STORAGE_PIT", "dock": "DOCK", "barracks": "BARRACKS",
+                     "market": "MARKET", "archery_range": "ARCHERY_RANGE", "stable": "STABLE", "temple": "TEMPLE",
+                     "government_center": "GOVERNMENT_CENTER", "siege_workshop": "SIEGE_WORKSHOP",
+                     "academy": "ACADEMY", "town_center": "TOWN_CENTER", "wonder": "WONDER"}
+DISABLE_TECHS = {"tool_age": "TOOL_AGE", "bronze_age": "BRONZE_AGE", "iron_age": "IRON_AGE"}
+
+
+def ror_ai(p) -> str | None:
+    """The RoR AI setting closest to a computer player's AoE1 AI, or None for RoR's standard AI.
+    AoE1 AI files (build list, city plan, personality) are a different system from RoR's scripts, so
+    only their intent carries over: immobile units stay put, passive players do nothing on their own."""
+    if p.human or p.ai is None:
+        return None
+    names = f"{p.ai.strategy} {p.ai.personality}".lower()
+    if "immobile" in names:
+        return "immobile"
+    if "passive" in names and "aggressive" not in names:
+        return "none"
+    return None
+
+
+def player_settings(p) -> dict:
+    """player_set fields for a player's disables, starting view and AI."""
+    out: dict = {}
+    if p.disabled:
+        out["disabled_buildings"] = [DISABLE_BUILDINGS[d] for d in p.disabled if d in DISABLE_BUILDINGS]
+        out["disabled_techs"] = [DISABLE_TECHS[d] for d in p.disabled if d in DISABLE_TECHS]
+    if p.view:
+        out["initial_player_view_x"], out["initial_player_view_y"] = p.view
+    ai = ror_ai(p)
+    if ai:
+        out["ai"] = ai
+    return out
+
+
 def mission_text(src: Scenario, table: dict[int, str]) -> tuple[dict[str, str], dict[int, str], dict[int, list[str]]]:
     """The messages (instructions, hints, victory, loss, history) and player names the game shows
     (AoE DE's string table where the scenario names an id, else the scenario's own text), and each
@@ -134,6 +170,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                 "stone": int(r["stone"]), "population_cap": int(r["pop_cap"]),
                 "tribe_name": names.get(p.number, p.name),
                 "allied_victory": p.allied_victory,
+                **player_settings(p),
             })
         for p in active:
             others = [q for q in active if q.number != p.number]

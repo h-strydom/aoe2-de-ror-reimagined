@@ -5,10 +5,35 @@ display_name: Foraging
 source: {campaign_file: 1 Ascent of Egypt.aoecpn, scenario: Scn1-02-Foraging.aoescn, map_size: 48, players: 1}
 
 players:
-- {number: 1, name: Your Tribe, civ: Egyptian, human: true}
+- number: 1
+  name: Your Tribe
+  civ: Egyptian
+  human: true
+  view: [24, 24]
+  disabled:
+  - barracks
+  - market
+  - archery_range
+  - stable
+  - temple
+  - government_center
+  - siege_workshop
+  - academy
+  - tool_age
+  - bronze_age
+  - iron_age
 
-victory: {mode: custom, conquest: false, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: false
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:

@@ -3,8 +3,15 @@ title: Yamato, Empire of the Rising Sun
 display_name: Yamato, Empire of the Rising Sun
 source_file: 4 Yamato, Empire of the Rising Sun.aoecpn
 order: 4
-missions: [01_the_assassins, 02_island_hopping, 03_capture, 04_the_mountain_temple, 05_the_canyon_of_death, 06_coup,
-  07_jinshin_war, 08_fujiwara_revolts]
+missions:
+- 01_the_assassins
+- 02_island_hopping
+- 03_capture
+- 04_the_mountain_temple
+- 05_the_canyon_of_death
+- 06_coup
+- 07_jinshin_war
+- 08_fujiwara_revolts
 
 description: |-
   On the very edge of the eastern world, a new civilization was born beneath the rising sun. Follow the Yamato as they eclipse the neighboring clans to dominate Japan, turning the islands of rice farmers and fishermen into an empire of warriors and poets.

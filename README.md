@@ -68,9 +68,11 @@ uv run reimagined extract
 Fills `aoe1de/`'s campaign and mission files with everything the original campaigns hold, so the
 missions can be read and reworked without the game:
 - **campaign files:** the in-game name and the campaign description
-- **mission files:** the in-game name, the players (name, civ, human or computer), the victory
-  settings, every player's objectives, and the mission text: instructions, hints, victory, loss and
-  history
+- **mission files:** the in-game name, the players (name, civ, human or computer, start view, what the
+  editor's "Disable Technology" panel turned off, and each computer player's AoE1 AI: its build list,
+  city plan and personality, with the personality's settings that differ from AoE DE's stock one), the
+  victory settings, every player's objectives, and the mission text: instructions, hints, victory, loss
+  and history
 
 AoE DE scenarios have no triggers. A mission's objectives are its players' individual victory
 conditions (capture, create, destroy, bring an object somewhere, reach an amount, defeat a player),
@@ -112,7 +114,11 @@ sprite pins in that player colour. Pins that would overlap are nudged apart and 
 
 `aoe2de_ror/` aims to be a 100% faithful rebuild. What carries over:
 - the map: terrain, elevation and every object, at the same position, rotation and owner
-- the players: name, civ, starting age, resources, diplomacy, allied victory
+- the players: name, civ, starting age, resources, diplomacy, allied victory, start view, and the
+  buildings and ages the original disabled for them
+- the computer players' AI, as far as RoR allows: AoE1's AI files (build list, city plan, personality) are
+  a different system from RoR's scripts, so only their intent carries over. Players whose AoE1 AI keeps
+  its units still get RoR's immobile AI, passive ones no AI, and the rest RoR's standard AI
 - the mission text the game shows: instructions, hints, victory, loss and history
 - how a mission is won. AoE DE has no triggers: it has a victory mode and each player's victory
   conditions. The mode maps one to one. Each player's conditions become a trigger that declares

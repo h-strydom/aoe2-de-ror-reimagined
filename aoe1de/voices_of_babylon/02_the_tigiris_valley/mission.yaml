@@ -6,13 +6,266 @@ source: {campaign_file: 3 Voices of Babylon.aoecpn, scenario: Scn3-02-The Tigiri
   players: 4}
 
 players:
-- {number: 1, name: Babylonians, civ: Babylonian, human: true}
-- {number: 2, name: Ebla Raiders, civ: Persian, human: false}
-- {number: 3, name: Mari Raiders, civ: Sumerian, human: false}
-- {number: 4, name: Elam Raiders, civ: Assyrian, human: false}
+- number: 1
+  name: Babylonians
+  civ: Babylonian
+  human: true
+  view: [60, 60]
+  disabled: [iron_age]
+- number: 2
+  name: Ebla Raiders
+  civ: Persian
+  human: false
+  view: [60, 60]
+  disabled: [iron_age]
+  ai:
+    strategy: Default
+    city_plan: Default
+    personality: Scn3-2-P2
+    personality_changes:
+      SNCapCivilianExplorers: 0
+      SNCapCivilianBuilders: 2
+      SNTotalNumberExplorers: 1
+      SNMinimumCivilianExplorers: 0
+      SNNumberExploreGroups: 1
+      SNInitialAttackDelay: 3600
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
+      SNDisableResign: 1
+      SNArtifactReturnDistance: 12
+      SNPercentExplorationRequired: 75
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNMaximumFood: 2000
+      SNMaximumWood: 2000
+      SNMaximumStone: 750
+      SNMaximumGold: 2000
+      SNEnemySightedResponseDistance: 32
+      SNNumberBoatAttackGroups: 1
+      SNMinimumBoatAttackGroupSize: 3
+      SNMaximumBoatAttackGroupSize: 6
+      SNMostNeededResourceLookAhead: 4
+      SNStoragePitMaxDistance: 50
+      SNAutoBuildTransports: 1
+      SNAutoBuildWarships: 1
+      SNMaxStoragePits: 8
+      SNMaxGranaries: 2
+      SNMaxFarms: 12
+      SNMaximumGAIAAttackResponse: 3
+- number: 3
+  name: Mari Raiders
+  civ: Sumerian
+  human: false
+  view: [60, 60]
+  disabled: [iron_age]
+  ai:
+    strategy: SUMERIA CHARIOTS
+    city_plan: Default
+    personality: Scn3-2-P3
+    personality_changes:
+      SNCapCivilianBuilders: 4
+      SNMinimumCivilianExplorers: 0
+      SNNumberExploreGroups: 1
+      SNInitialAttackDelay: 90
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
+      SNDisableResign: 0
+      SNArtifactReturnDistance: 12
+      SNPercentExplorationRequired: 15
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNMaximumFood: 2000
+      SNMaximumWood: 2000
+      SNMaximumStone: 750
+      SNMaximumGold: 2000
+      SNEnemySightedResponseDistance: 18
+      SNNumberBoatAttackGroups: 1
+      SNMinimumBoatAttackGroupSize: 3
+      SNMaximumBoatAttackGroupSize: 6
+      SNMostNeededResourceLookAhead: 4
+      SNStoragePitMaxDistance: 50
+      SNAutoBuildTransports: 1
+      SNAutoBuildWarships: 1
+      SNMaxStoragePits: 8
+      SNMaxGranaries: 2
+      SNMaxFarms: 12
+      SNMaximumGAIAAttackResponse: 3
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 12 109
+    - B12 Barracks1 1 -1
+    - T83 Man 4 109 2
+    - C101 Tool_Age 1 109
+    - T347 Slinger 2 12 2
+    - B84 Market1 1 -1
+    - B101 Stable1 1 -1
+    - T299 Soldier-Scout 1 101 2
+    - U83 Man 2 109
+    - R16 Watch_Tower 1 68
+    - B79 Watch_Tower 2 -1
+    - U83 Man 2 109
+    - B50 Farm 2 -1
+    - T347 Slinger 2 12 2
+    - B87 Range1 1 -1
+    - U83 Man 2 109
+    - R81 Domestication 1 84
+    - B50 Farm 2 -1
+    - C102 Bronze_Age 1 109
+    - R28 Wheel 1 84
+    - T83 Man 1 109 2
+    - B101 Stable1 1 -1
+    - U40 Soldier-Chariot1 2 101
+    - T41 Soldier-Chariot2 2 87 2
+    - B50 Farm 2 -1
+    - U83 Man 2 109
+    - R42 Leather_Armor_Mounted 1 103
+    - B82 Government_Center 1 -1
+    - U40 Soldier-Chariot1 2 101
+    - R45 Scale_Armor_-_Cavalry 1 103
+    - R12 Sentry_Tower 1 68
+    - B104 Temple1 1 -1
+    - B87 Range1 1 -1
+    - T41 Soldier-Chariot2 2 87 2
+    - R107 Wood_Working 1 84
+    - U125 Priest 1 104
+    - U40 Soldier-Chariot1 2 101
+    - R31 Plow 1 84
+    - B50 Farm 2 -1
+    - T41 Soldier-Chariot2 2 87 2
+    - R46 Tool_Working 1 103
+    - B101 Stable1 1 -1
+    - U40 Soldier-Chariot1 2 101
+    - R41 Leather_Armor_-_Archer 1 103
+    - C103 Iron_Age 1 109
+    - R108 Gold_Mining 1 84
+    - B87 Range1 1 -1
+    - R106 Ballistics 1 82
+    - U40 Soldier-Chariot1 2 101
+    - R21 Mysticism 1 104
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - R44 Scale_Armor_-_Archers 1 103
+    - R32 Artisanship 1 84
+    - U125 Priest 1 104
+    - R34 Nobility 1 82
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - R51 Metal_Working 1 103
+    - U39 Soldier-Cavalry3_Arc 2 87
+    - U125 Priest 1 104
+    - R50 Chain_Mail_-_Cavalry 1 103
+    - R24 Polytheism 1 104
+    - U39 Soldier-Cavalry3_Arc 1 87
+    - R37 Alchemy 1 82
+    - R49 Chain_Mail_-_Archers 1 103
+    - R126 Scythe_Chariot 1 101
+    - B109 Town_Center1 1 -1
+    - B276 Wonder 1 -1
+    - U40 Soldier-Chariot1 2 101
+    - B87 Range1 1 -1
+    - R30 Coinage 1 84
+    - U39 Soldier-Cavalry3_Arc 12 87
+    - U125 Priest 1 104
+    - B101 Stable1 1 -1
+    - T41 Soldier-Chariot2 12 87
+    - U39 Soldier-Cavalry3_Arc 24 87
+    - U125 Priest 1 104
+    - B87 Range1 1 -1
+    - U39 Soldier-Cavalry3_Arc 175 87
+    - B109 Town_Center1 1 -1
+- number: 4
+  name: Elam Raiders
+  civ: Assyrian
+  human: false
+  view: [60, 60]
+  disabled: [iron_age]
+  ai:
+    strategy: Scx3-2-P4
+    city_plan: Default
+    personality: Scn3-2-P4
+    personality_changes:
+      SNCapCivilianBuilders: 4
+      SNMinimumCivilianExplorers: 0
+      SNNumberExploreGroups: 1
+      SNInitialAttackDelay: 90
+      SNInitialAttackDelayType: 2
+      SNTaskUngroupedSoldiers: 0
+      SNDisableResign: 0
+      SNArtifactReturnDistance: 12
+      SNPercentExplorationRequired: 15
+      SNNumberAttackGroups: 1
+      SNMinimumAttackGroupSize: 4
+      SNMaximumAttackGroupSize: 8
+      SNMaximumFood: 2000
+      SNMaximumWood: 2000
+      SNMaximumStone: 750
+      SNMaximumGold: 2000
+      SNEnemySightedResponseDistance: 18
+      SNNumberBoatAttackGroups: 1
+      SNMinimumBoatAttackGroupSize: 3
+      SNMaximumBoatAttackGroupSize: 6
+      SNMostNeededResourceLookAhead: 4
+      SNStoragePitMaxDistance: 50
+      SNAutoBuildTransports: 1
+      SNAutoBuildWarships: 1
+      SNMaxStoragePits: 8
+      SNMaxGranaries: 2
+      SNMaxFarms: 12
+      SNMaximumGAIAAttackResponse: 3
+    build_list:
+    - B109 Town_Center1 1 -1
+    - U83 Man 12 109
+    - B12 Barracks1 1 -1
+    - U75 Soldier-Inf3 1 12
+    - U83 Man 1 109
+    - U75 Soldier-Inf3 1 12
+    - U83 Man 1 109
+    - B87 Range1 1 -1
+    - T83 Man 1 109 1
+    - B104 Temple1 1 -1
+    - B49 Siege_Workshop 1 -1
+    - B84 Market1 1 -1
+    - U75 Soldier-Inf3 1 12
+    - B50 Farm 1 -1
+    - B45 Dock_1 1 -1
+    - B50 Farm 1 -1
+    - C103 Iron_Age 1 109
+    - R56 Improved_bow 1 87
+    - R28 Wheel 1 84
+    - U5 Soldier-Archer2 1 87
+    - R66 Long_Sword 1 12
+    - U19 Boat-War1 1 45
+    - U5 Soldier-Archer2 1 87
+    - U17 Boat-Transport1 1 45
+    - R77 Legion 1 12
+    - R20 Fanaticism 1 104
+    - U5 Soldier-Archer2 1 87
+    - U75 Soldier-Inf3 1 12
+    - U17 Boat-Transport1 1 45
+    - U5 Soldier-Archer2 1 87
+    - U75 Soldier-Inf3 1 12
+    - U5 Soldier-Archer2 2 87
+    - U19 Boat-War1 1 45
+    - B103 Storage_Pit1 1 -1
+    - R44 Scale_Armor_-_Archers 1 103
+    - U5 Soldier-Archer2 2 87
+    - R43 Scale_Armor_-_Soldiers 1 103
+    - T75 Soldier-Inf3 2 12 2
+    - U5 Soldier-Archer2 1 87 2
+    - T125 Priest 1 104 1
+    - R32 Artisanship 1 84
 
-victory: {mode: custom, conquest: true, ruins: 0, artifacts: 0, discoveries: 0, exploration: 0, gold: 0, all_custom: false,
-  score: 900, time: 9000}
+victory:
+  mode: custom
+  conquest: true
+  ruins: 0
+  artifacts: 0
+  discoveries: 0
+  exploration: 0
+  gold: 0
+  all_custom: false
+  score: 900
+  time: 9000
 
 # Each player's individual victory conditions, as the scenario stores them.
 objectives:
