@@ -116,9 +116,12 @@ sprite pins in that player colour. Pins that would overlap are nudged apart and 
 - the map: terrain, elevation and every object, at the same position, rotation and owner
 - the players: name, civ, starting age, resources, diplomacy, allied victory, start view, and the
   buildings and ages the original disabled for them
-- the computer players' AI, as far as RoR allows: AoE1's AI files (build list, city plan, personality) are
-  a different system from RoR's scripts, so only their intent carries over. Players whose AoE1 AI keeps
-  its units still get RoR's immobile AI, passive ones no AI, and the rest RoR's standard AI
+- the computer players' AI: each AoE1 AI (build list, personality) is translated into a RoR AI script
+  embedded in the map. It works through the original build list in order (buildings, units, research and
+  ages, with the original counts), keeps its army topped up afterwards, carries the personality's strategic
+  numbers over where RoR has the same setting, and attacks on the personality's timing and group sizes.
+  Passive personalities build but never attack, immobile-unit AIs get RoR's immobile AI, and none of them
+  resign. Not carried over: AoE1's city plans (RoR places buildings itself) and wall building
 - the mission text the game shows: instructions, hints, victory, loss and history
 - how a mission is won. AoE DE has no triggers: it has a victory mode and each player's victory
   conditions. The mode maps one to one. Each player's conditions become a trigger that declares

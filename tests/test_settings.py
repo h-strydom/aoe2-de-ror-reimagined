@@ -50,9 +50,22 @@ def test_disables_and_view_reach_the_ror_map(tmp_path):
     assert (p1.initial_player_view_x, p1.initial_player_view_y) == (24, 24)
 
 
-def test_ai_intent_carries_over(tmp_path):
+def test_ai_carries_over(tmp_path):
     assassins = _converted(tmp_path, "yamato_empire_of_the_rising_sun/01_the_assassins")
     assert assassins[2].personality == "Immobile AI"                    # AoE1 "ImmobileUnitsAII"
+    troy = _converted(tmp_path, "glory_of_greece/04_the_trojan_war")[2]
+    assert troy.personality == "TrojanWar2 (AoE1)"                      # its build list, as a RoR script
+    assert "; step 1: build TOWN_CENTER x1" in troy.ai_script and "(attack-now)" in troy.ai_script
     trade = _converted(tmp_path, "ascent_of_egypt/07_trade")
-    assert trade[3].personality == "NoneAi"                             # AoE1 "PASSIVE"
-    assert trade[2].personality == ""                                   # RoR's standard AI
+    assert trade[3].personality == "PASSIVE (AoE1)" and "(attack-now)" not in trade[3].ai_script
+
+
+def test_ai_translation():
+    from reimagined.ai import sn_name, translate
+    assert sn_name("SNPercentCivilianExplorers") == "sn-percent-civilian-explorers"
+    p = load_scenario(MISSIONS["glory_of_greece/04_the_trojan_war"].scenario_path).players[2]
+    t = translate(p.ai, missions.personality(p.ai.personality_text), load(), "Trojan Defenders")
+    assert t.spec["build_order"][:2] == [{"build": "TOWN_CENTER", "count": 1}, {"train": "VILLAGER", "count": 1}]
+    assert {"train": "VILLAGER", "count": 6} in t.spec["build_order"]          # counts add up per unit
+    assert t.spec["attack"]["first"] == 7200 and t.spec["attack"]["min_group"] == 1
+    assert any("walls aren't built" in s for s in t.skipped)

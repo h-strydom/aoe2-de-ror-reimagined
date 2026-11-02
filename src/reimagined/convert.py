@@ -17,10 +17,11 @@ from pathlib import Path
 from aoe2ed.campaign import Campaign as RorCampaign
 from aoe2ed.campaign import CampaignScenario
 from aoe2ed.session import SESSIONS
+from aoe2ed.tools.ai import ai_set
 from aoe2ed.tools.logic import triggers_add
 from aoe2ed.tools.world import diplomacy_set, options_set, player_set
 
-from . import layout, victory
+from . import ai, layout, missions, victory
 from .aoede import strings
 from .aoede.names import object_name
 from .aoede.scenario import Scenario, load_scenario
@@ -53,6 +54,8 @@ class ConvertResult:
     victory: str = ""                                    # RoR victory mode
     triggers: int = 0                                    # objective and victory triggers
     skipped: list[str] = field(default_factory=list)     # victory conditions that couldn't be converted
+    ai: dict[int, str] = field(default_factory=dict)     # computer player -> its RoR AI
+    ai_skipped: list[str] = field(default_factory=list)  # AoE1 build list lines that couldn't carry over
 
 
 def scenario_path(m: layout.Mission, out_root: Path = layout.AOE2DE_ROR) -> Path:
@@ -98,31 +101,30 @@ DISABLE_BUILDINGS = {"granary": "GRANARY", "storage_pit": "STORAGE_PIT", "dock":
 DISABLE_TECHS = {"tool_age": "TOOL_AGE", "bronze_age": "BRONZE_AGE", "iron_age": "IRON_AGE"}
 
 
-def ror_ai(p) -> str | None:
-    """The RoR AI setting closest to a computer player's AoE1 AI, or None for RoR's standard AI.
-    AoE1 AI files (build list, city plan, personality) are a different system from RoR's scripts, so
-    only their intent carries over: immobile units stay put, passive players do nothing on their own."""
+def ror_ai(p, conv: Conversion) -> str | ai.Translation | None:
+    """A computer player's AI in RoR: its AoE1 AI translated to a script (ai.py), RoR's immobile AI for
+    AoE1's immobile-unit AIs, None for human players. Passive personalities build but never attack."""
     if p.human or p.ai is None:
         return None
     names = f"{p.ai.strategy} {p.ai.personality}".lower()
     if "immobile" in names:
         return "immobile"
+    sns = missions.personality(p.ai.personality_text) if p.ai.personality_text else missions.default_personality()
+    label = p.ai.strategy or p.ai.personality or "Default"
+    tr = ai.translate(p.ai, sns, conv, f"{label} (AoE1)")
     if "passive" in names and "aggressive" not in names:
-        return "none"
-    return None
+        tr.spec.pop("attack", None)
+    return tr
 
 
 def player_settings(p) -> dict:
-    """player_set fields for a player's disables, starting view and AI."""
+    """player_set fields for a player's disables and starting view."""
     out: dict = {}
     if p.disabled:
         out["disabled_buildings"] = [DISABLE_BUILDINGS[d] for d in p.disabled if d in DISABLE_BUILDINGS]
         out["disabled_techs"] = [DISABLE_TECHS[d] for d in p.disabled if d in DISABLE_TECHS]
     if p.view:
         out["initial_player_view_x"], out["initial_player_view_y"] = p.view
-    ai = ror_ai(p)
-    if ai:
-        out["ai"] = ai
     return out
 
 
@@ -172,6 +174,15 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                 "allied_victory": p.allied_victory,
                 **player_settings(p),
             })
+        for p in active:
+            plan = ror_ai(p, conv)
+            if plan == "immobile":
+                ai_set(o.handle, p.number, "immobile")
+                res.ai[p.number] = "immobile"
+            elif plan is not None:
+                done = ai_set(o.handle, p.number, plan.spec)
+                res.ai[p.number] = f"{done['ai']}: {done['rules']} rules"
+                res.ai_skipped += [f"P{p.number} {s}" for s in plan.skipped]
         for p in active:
             others = [q for q in active if q.number != p.number]
             for q in others:

@@ -7,6 +7,10 @@
 - AoE DE scenario reader and an id-to-name table for AoE DE objects and terrains.
 - `aoe2de_ror/conversion.yaml`: explicit AoE DE -> RoR terrain and object mapping with per-mission overrides, validated on load.
 - `reimagined convert`: converts the campaigns to Return of Rome scenarios and campaign files in `aoe2de_ror/` (map, players, objects; no triggers yet). All 10 campaigns are converted and committed.
+- AI: every computer player's AoE1 AI is translated into a RoR AI script (reimagined.ai): its build list in
+  order, its army kept topped up, its personality's strategic numbers and attack timing. Built with
+  aoe-agent-editor 0.4.0's AI specs and embedded in the maps; 146 players across the campaigns, all scripts
+  check clean.
 - Per-player settings: the reader decodes the editor's "Disable Technology" panel, each player's start
   view and the embedded AoE1 AI files, so every scenario section is now decoded. Mission files list them
   (AI as build list plus personality changes); the RoR maps get the building and age disables, the start
