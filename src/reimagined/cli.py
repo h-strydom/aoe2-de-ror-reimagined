@@ -14,6 +14,9 @@ def main(argv: list[str] | None = None) -> int:
     p_conv = sub.add_parser("convert", help="convert campaigns to Return of Rome into aoe2de_ror/ (needs setup)")
     p_conv.add_argument("campaigns", nargs="*", help="campaign folder names (default: all)")
     p_conv.add_argument("--install", action="store_true", help="also install the campaigns into your profile as a local mod (needed for campaign screens)")
+    p_conv.add_argument("--ai-debug", action="store_true",
+                        help="computer players announce their build steps and attacks in chat (built into out/debug, "
+                             "not aoe2de_ror/; use with --install for playtests)")
     args = parser.parse_args(argv)
 
     if args.command == "setup":
@@ -38,12 +41,12 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  {p.relative_to(layout.ROOT)}")
         return 0
     if args.command == "convert":
-        return _convert(args.campaigns, args.install)
+        return _convert(args.campaigns, args.install, args.ai_debug)
     parser.print_help()
     return 0
 
 
-def _convert(names: list[str], install: bool = False) -> int:
+def _convert(names: list[str], install: bool = False, ai_debug: bool = False) -> int:
     from . import layout
     from .conversion import ConversionError, load
     from .convert import convert_campaign
@@ -67,7 +70,8 @@ def _convert(names: list[str], install: bool = False) -> int:
             print(f"error: {c.slug}: no source scenario in {', '.join(missing)}; run `reimagined setup`",
                   file=sys.stderr)
             return 1
-        paths, results = convert_campaign(c, conv)
+        out_root = layout.ROOT / "out" / "debug" if ai_debug else layout.AOE2DE_ROR
+        paths, results = convert_campaign(c, conv, out_root, ai_debug=ai_debug)
         print(f"{c.title}: {', '.join(p.name for p in paths)}")
         if install:
             from aoe2ed import screens as ed_screens

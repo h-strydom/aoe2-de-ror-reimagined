@@ -101,7 +101,7 @@ DISABLE_BUILDINGS = {"granary": "GRANARY", "storage_pit": "STORAGE_PIT", "dock":
 DISABLE_TECHS = {"tool_age": "TOOL_AGE", "bronze_age": "BRONZE_AGE", "iron_age": "IRON_AGE"}
 
 
-def ror_ai(p, conv: Conversion) -> str | ai.Translation | None:
+def ror_ai(p, conv: Conversion, debug: bool = False) -> str | ai.Translation | None:
     """A computer player's AI in RoR: its AoE1 AI translated to a script (ai.py), RoR's immobile AI for
     AoE1's immobile-unit AIs, None for human players. Passive personalities build but never attack."""
     if p.human or p.ai is None:
@@ -114,6 +114,8 @@ def ror_ai(p, conv: Conversion) -> str | ai.Translation | None:
     tr = ai.translate(p.ai, sns, conv, f"{label} (AoE1)")
     if "passive" in names and "aggressive" not in names:
         tr.spec.pop("attack", None)
+    if debug:
+        tr.spec["debug"] = True
     return tr
 
 
@@ -142,7 +144,8 @@ def mission_text(src: Scenario, table: dict[int, str]) -> tuple[dict[str, str], 
 
 
 @contextlib.contextmanager
-def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: dict[int, str] | None = None):
+def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: dict[int, str] | None = None,
+                   ai_debug: bool = False):
     """Yield (AoE2ScenarioParser scenario flagged for RoR, ConvertResult). The scenario lives in an
     aoe-agent-editor session that closes on exit, so write or inspect it inside the block."""
     res = ConvertResult(mission or src.filename, Path())
@@ -175,7 +178,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                 **player_settings(p),
             })
         for p in active:
-            plan = ror_ai(p, conv)
+            plan = ror_ai(p, conv, ai_debug)
             if plan == "immobile":
                 ai_set(o.handle, p.number, "immobile")
                 res.ai[p.number] = "immobile"
@@ -209,22 +212,24 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         SESSIONS.close(o.handle)
 
 
-def convert_mission(m: layout.Mission, conv: Conversion, out_root: Path = layout.AOE2DE_ROR) -> ConvertResult:
+def convert_mission(m: layout.Mission, conv: Conversion, out_root: Path = layout.AOE2DE_ROR,
+                    *, ai_debug: bool = False) -> ConvertResult:
     out = scenario_path(m, out_root)
     out.parent.mkdir(parents=True, exist_ok=True)
-    with build_scenario(load_scenario(m.scenario_path), conv.for_mission(m.key), m.key, strings.load()) as (s, res):
+    with build_scenario(load_scenario(m.scenario_path), conv.for_mission(m.key), m.key, strings.load(),
+                        ai_debug) as (s, res):
         s.write_to_file(str(out))
     res.out = out
     return res
 
 
-def convert_campaign(c: layout.CampaignInfo, conv: Conversion | None = None,
-                     out_root: Path = layout.AOE2DE_ROR) -> tuple[list[Path], list[ConvertResult]]:
+def convert_campaign(c: layout.CampaignInfo, conv: Conversion | None = None, out_root: Path = layout.AOE2DE_ROR,
+                     *, ai_debug: bool = False) -> tuple[list[Path], list[ConvertResult]]:
     """Convert every mission of a campaign and bundle them into its .aoe2campaign, plus the campaign
     screen (`<slug>_layout.json`, `<slug>.json`) when RoR has one for it. The campaign's internal name
     is its slug, which the game needs to find the screen."""
     conv = conv or load()
-    results = [convert_mission(m, conv, out_root) for m in c.missions]
+    results = [convert_mission(m, conv, out_root, ai_debug=ai_debug) for m in c.missions]
     bundle = RorCampaign(c.slug)
     for m, r in zip(c.missions, results, strict=True):
         bundle.scenarios.append(CampaignScenario(m.title, r.out.name, r.out.read_bytes()))

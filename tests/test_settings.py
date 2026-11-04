@@ -69,3 +69,13 @@ def test_ai_translation():
     assert {"train": "VILLAGER", "count": 6} in t.spec["build_order"]          # counts add up per unit
     assert t.spec["attack"]["first"] == 7200 and t.spec["attack"]["min_group"] == 1
     assert any("walls aren't built" in s for s in t.skipped)
+
+
+def test_water_maps_keep_transports_and_rebuild_buildings():
+    from reimagined.ai import translate
+    p = load_scenario(MISSIONS["glory_of_greece/04_the_trojan_war"].scenario_path).players[1]   # Troy
+    t = translate(p.ai, missions.personality(p.ai.personality_text), load(), "Troy")
+    assert t.spec["transports"] == 2 and t.spec["transport_unit"] == "LIGHT_TRANSPORT"
+    assert t.spec["villagers"] == 25 and "gatherers" not in t.spec                # auto split from its list
+    assert {"build": "STABLE", "count": 1} in t.spec["keep"] and {"build": "SIEGE_WORKSHOP", "count": 1} in t.spec["keep"]
+    assert not any(k.get("build") == "HOUSE" for k in t.spec["keep"])

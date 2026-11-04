@@ -14,6 +14,13 @@ sn-percent-civilian-explorers) when RoR's scripts know that name; the attack num
 attack (initial delay and separation time read as seconds: unverified in game). After the build list the
 AI keeps its army topped up to the build list's unit counts, as AoE1's AI rebuilds its list. Scripted AIs
 never resign.
+
+Villagers are trained up to 25 (DE's AIBuilder default) or the list's count, and the gatherer split follows
+what the list costs (aoe-agent-editor's gatherers: auto): AoE1's lists alone leave the AI too poor to fight.
+
+What the list builds is also kept standing afterwards (AoE1 lists rebuild their buildings: "these should all
+already be built, so these are here in case they need to be rebuilt"). Transport ships, from the list or
+SNAutoBuildTransports, are kept from the start, so attacks can cross water: the engine ferries attack groups.
 """
 from __future__ import annotations
 
@@ -32,6 +39,10 @@ ATTACK_SNS = {"SNInitialAttackDelay", "SNInitialAttackDelayType", "SNAttackSepar
               "SNAttackSeparationTimeRandomness", "SNMinimumAttackGroupSize", "SNMaximumAttackGroupSize",
               "SNNumberAttackGroups"}
 DEFAULT_FIRST_ATTACK, DEFAULT_ATTACK_EVERY = 600, 240
+AUTO_BUILT = {"HOUSE"}                        # the spec's houses rule keeps these going
+TRANSPORTS = {"LIGHT_TRANSPORT", "HEAVY_TRANSPORT"}
+MIN_TRANSPORTS = 2
+MIN_VILLAGERS = 25                            # DE's AIBuilder default: AoE1 lists name too few to keep an army going
 STEP_TIMEOUT = 180
 
 
@@ -57,7 +68,7 @@ def _tech_names() -> dict[int, str]:
 def translate(ai: Ai, personality: dict[str, int], conv: Conversion, name: str) -> Translation:
     """The AI spec for an AoE1 AI. personality: its strategic numbers (the stock ones where it has no file)."""
     t = Translation({"name": name, "step_timeout": STEP_TIMEOUT})
-    steps, totals, army = [], {}, {}
+    steps, totals, army, town = [], {}, {}, {}
     for line in _lines(ai.strategy_text):
         m = _LINE.match(line)
         if not m:
@@ -88,9 +99,19 @@ def translate(ai: Ai, personality: dict[str, int], conv: Conversion, name: str) 
         steps.append({verb: target.ror_name, "count": totals[target.ror_name]})
         if verb == "train" and target.ror_name != "VILLAGER":
             army[target.ror_name] = totals[target.ror_name]
+        elif verb == "build" and target.ror_name not in AUTO_BUILT:
+            town[target.ror_name] = totals[target.ror_name]
     t.spec["build_order"] = steps
-    if army:
-        t.spec["keep"] = [{"train": u, "count": n} for u, n in army.items()]
+    t.spec["villagers"] = max(totals.get("VILLAGER", 0), MIN_VILLAGERS)
+    keep = [{"build": b, "count": n} for b, n in town.items()]
+    keep += [{"train": u, "count": n} for u, n in army.items() if u not in TRANSPORTS]
+    if keep:
+        t.spec["keep"] = keep
+    ships = {u: n for u, n in army.items() if u in TRANSPORTS}
+    if ships or personality.get("SNAutoBuildTransports"):
+        unit = max(ships, key=ships.get) if ships else "LIGHT_TRANSPORT"
+        t.spec["transports"] = max(ships.get(unit, 0), MIN_TRANSPORTS)
+        t.spec["transport_unit"] = unit
     t.spec.update(_personality(personality))
     return t
 
@@ -112,5 +133,6 @@ def _personality(sns: dict[str, int]) -> dict:
         first = sns.get("SNInitialAttackDelay", DEFAULT_FIRST_ATTACK)
         out["attack"] = {"first": max(first, 1), "every": max(sns.get("SNAttackSeparationTime", DEFAULT_ATTACK_EVERY), 1),
                          "min_group": max(sns.get("SNMinimumAttackGroupSize", 4), 1),
-                         "max_group": max(sns.get("SNMaximumAttackGroupSize", 12), 1)}
+                         "max_group": max(sns.get("SNMaximumAttackGroupSize", 12), 1),
+                         "naval": sns.get("SNNumberBoatAttackGroups", 0) > 0}
     return out
