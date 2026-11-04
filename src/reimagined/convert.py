@@ -56,6 +56,7 @@ class ConvertResult:
     skipped: list[str] = field(default_factory=list)     # victory conditions that couldn't be converted
     ai: dict[int, str] = field(default_factory=dict)     # computer player -> its RoR AI
     ai_skipped: list[str] = field(default_factory=list)  # AoE1 build list lines that couldn't carry over
+    specs: dict[int, dict] = field(default_factory=dict)  # computer player -> its AI spec
 
 
 def scenario_path(m: layout.Mission, out_root: Path = layout.AOE2DE_ROR) -> Path:
@@ -184,6 +185,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                 res.ai[p.number] = "immobile"
             elif plan is not None:
                 done = ai_set(o.handle, p.number, plan.spec)
+                res.specs[p.number] = plan.spec
                 res.ai[p.number] = f"{done['ai']}: {done['rules']} rules"
                 res.ai_skipped += [f"P{p.number} {s}" for s in plan.skipped]
         for p in active:
@@ -221,6 +223,19 @@ def convert_mission(m: layout.Mission, conv: Conversion, out_root: Path = layout
         s.write_to_file(str(out))
     res.out = out
     return res
+
+
+def probe_mission(m: layout.Mission, conv: Conversion, out_root: Path, *, minutes: int = 15,
+                  ai_debug: bool = False) -> dict:
+    """The converted mission as an AI probe (aoe2ed.ai.probe): it records what every player builds, trains and
+    gathers, and stops itself after `minutes` game minutes. The checks compare each AI with its translated spec."""
+    from aoe2ed.ai.probe import probe
+
+    camp, mission = m.key.split("/")
+    out = out_root / f"probe_{camp}_{mission}.aoe2scenario"
+    with build_scenario(load_scenario(m.scenario_path), conv.for_mission(m.key), m.key, strings.load(),
+                        ai_debug) as (s, res):
+        return probe(s, out, specs=res.specs, game="ror", stop_after=minutes * 60)
 
 
 def convert_campaign(c: layout.CampaignInfo, conv: Conversion | None = None, out_root: Path = layout.AOE2DE_ROR,

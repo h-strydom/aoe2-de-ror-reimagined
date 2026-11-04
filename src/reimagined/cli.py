@@ -17,6 +17,13 @@ def main(argv: list[str] | None = None) -> int:
     p_conv.add_argument("--ai-debug", action="store_true",
                         help="computer players announce their build steps and attacks in chat (built into out/debug, "
                              "not aoe2de_ror/; use with --install for playtests)")
+    p_probe = sub.add_parser("probe", help="build an AI probe of one mission: records what the computer players do "
+                                           "and stops itself (see aoe-agent-editor's ai-behaviour guide)")
+    p_probe.add_argument("campaign", help="campaign folder name, e.g. glory_of_greece")
+    p_probe.add_argument("mission", help="mission number or folder, e.g. 4 or 04_the_trojan_war")
+    p_probe.add_argument("--minutes", type=int, default=15, help="game minutes to record (default 15)")
+    p_probe.add_argument("--ai-debug", action="store_true", help="AIs also announce build steps in chat")
+    p_probe.add_argument("--install", action="store_true", help="copy the probe into your RoR scenario folder")
     args = parser.parse_args(argv)
 
     if args.command == "setup":
@@ -42,6 +49,8 @@ def main(argv: list[str] | None = None) -> int:
         return 0
     if args.command == "convert":
         return _convert(args.campaigns, args.install, args.ai_debug)
+    if args.command == "probe":
+        return _probe(args.campaign, args.mission, args.minutes, args.ai_debug, args.install)
     parser.print_help()
     return 0
 
@@ -105,6 +114,30 @@ def _convert(names: list[str], install: bool = False, ai_debug: bool = False) ->
         for r in results:
             dropped = sum(r.dropped.values())
             print(f"  {r.mission}: {r.players} players, {r.placed} objects placed, {dropped} dropped")
+    return 0
+
+
+def _probe(campaign: str, mission: str, minutes: int, ai_debug: bool, install: bool) -> int:
+    from . import layout
+    from .conversion import load
+    from .convert import probe_mission
+
+    camp = next((c for c in layout.campaigns() if c.slug == campaign), None)
+    if camp is None:
+        print(f"error: no campaign {campaign}", file=sys.stderr)
+        return 1
+    m = next((m for m in camp.missions if m.folder.name == mission or m.folder.name.split("_")[0].lstrip("0") ==
+              mission.lstrip("0")), None)
+    if m is None:
+        print(f"error: {campaign} has no mission {mission}", file=sys.stderr)
+        return 1
+    res = probe_mission(m, load(), layout.ROOT / "out" / "probes", minutes=minutes, ai_debug=ai_debug)
+    print(res["scenario"])
+    print(f"  manifest {res['manifest']}")
+    print(f"  records {', '.join(res['tracked'])} for players {res['players']}; stops after {minutes} game minutes (~{res['real_minutes_at_8x']} real minutes at 8x)")
+    if install:
+        from aoe2ed import game
+        print(f"  installed: {game.install(res['scenario'], game='ror')['installed']}")
     return 0
 
 
