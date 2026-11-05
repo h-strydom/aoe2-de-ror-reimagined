@@ -113,8 +113,8 @@ on the mod site:
   `thumbnail.jpg`, `modes/...`), which the mod site requires. Upload it signed in at ageofempires.com/mods,
   as a Campaign.
 
-Beside each zip, for the mod page form: `[RoR-RI] <campaign>.jpg`, the campaign view (RoR's book with the
-campaign's map), and `[RoR-RI] <campaign>.txt`, the title and the original campaign's description. The mod's
+Beside each zip, for the mod page form: `[RoR-RI] <campaign>.jpg`, the campaign screen as the game shows it
+(RoR's book with the campaign's map, each mission's pin and name; 1920 x 1080), and `[RoR-RI] <campaign>.txt`, the title and the original campaign's description. The mod's
 `info.json` carries the same title and description. Each pack is about 25-100 MB (mostly intro images).
 
 ## Changing a campaign map

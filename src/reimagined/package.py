@@ -19,8 +19,10 @@ from .convert import campaign_path
 
 PREFIX = "[RoR-RI]"
 AUTHOR = "aoe2-de-ror-reimagined"
-THUMBNAIL = (1280, 540)                  # the campaign background's 64:27 shape
-PAGE_IMAGE = (1920, 810)                 # the image for the mod page, beside the zip
+THUMBNAIL = (1280, 720)                  # the campaign screen, 16:9
+PAGE_IMAGE = (1920, 1080)                # the image for the mod page, beside the zip
+FONT = Path("resources") / "_common" / "fonts" / "centbd_.ttf"     # the game's UI font (Century Gothic bold)
+LABEL_PX = 45                            # mission names: the layout's point size 45 (about 24 px a character)
 BUILD = layout.ROOT / "out"
 
 
@@ -83,13 +85,45 @@ def install(c: layout.CampaignInfo, campaign: Path, data: dict, mod: str, *, pro
                                            description=description_text, author=AUTHOR, profile=profile)
 
 
-def thumbnail(c: layout.CampaignInfo, dest: Path, size: tuple[int, int] = THUMBNAIL) -> Path | None:
-    """The campaign view (the book with the campaign's map) as a JPG, if the campaign has its own map."""
+def campaign_view(c: layout.CampaignInfo, lay: dict):
+    """The campaign screen as the game draws it: the book and map, each mission's pin and name, cropped to the
+    3840 x 2160 the screen shows. Pins come from our drawn files (out/maps/<slug>) or RoR's own."""
+    from PIL import Image, ImageDraw, ImageFont
+    own = campaign_maps.load()
+    bg = campaign_maps.render_background(c, own[c.slug]).convert("RGBA")
+    files = {m["Material"]: BUILD / "maps" / c.slug / m["FileName"] for m in lay.get("UserMaterials", [])}
+    ror = campaign_maps._ror_icon_files()
+    font = ImageFont.truetype(str(campaign_maps._game_dir() / FONT), LABEL_PX)
+    draw = ImageDraw.Draw(bg)
+    for w in (x["Widget"] for x in lay["Widgets"]):
+        if w["Type"] != "Button":
+            continue
+        vp = w["ViewPort"]
+        material = w["StateMaterials"]["StateNormal"].get("Material")
+        source = files.get(material) or ror.get(material)
+        x, y = vp["xorigin"] + campaign_maps.BG_OFFSET_X, vp["yorigin"]
+        if source and Path(source).is_file():
+            pin = Image.open(source).convert("RGBA").resize((vp["width"], vp["height"]))
+            bg.alpha_composite(pin, (x, y))
+        for child in (ch["Widget"] for ch in w.get("ChildWidgets", [])):
+            if child["Type"] == "CampaignTitle":
+                at = (x + child["ViewPort"]["xorigin"], y + child["ViewPort"]["yorigin"])
+                draw.text(at, child["Text"], font=font, fill=(255, 255, 255), stroke_width=4,
+                          stroke_fill=(30, 20, 12))
+    left = campaign_maps.BG_OFFSET_X
+    return bg.crop((left, 0, left + 3840, 2160)).convert("RGB")
+
+
+def thumbnail(c: layout.CampaignInfo, dest: Path, lay: dict | None, size: tuple[int, int] = THUMBNAIL) -> Path | None:
+    """The campaign view, with its pins when the layout is given, as a JPG; None without the campaign's map art."""
     own = campaign_maps.load()
     if c.slug not in own or not intros.has_art():
         return None
-    img = campaign_maps.render_background(c, own[c.slug]).convert("RGB").resize(size)
-    img.save(dest, quality=90)
+    if lay:
+        img = campaign_view(c, lay)
+    else:
+        img = campaign_maps.render_background(c, own[c.slug]).convert("RGB")
+    img.resize(size).save(dest, quality=90)
     return dest
 
 
@@ -104,8 +138,9 @@ def package(c: layout.CampaignInfo, out_dir: Path, warn=print) -> dict:
     with tempfile.TemporaryDirectory() as tmp:
         res = install(c, campaign, data, title, profile=Path(tmp), description_text=description(c), warn=warn)
         shutil.copytree(res["mod"], folder)
-    thumb = thumbnail(c, folder / "thumbnail.jpg")
-    image = thumbnail(c, out_dir / f"{title}.jpg", PAGE_IMAGE)          # for the mod page form
+    lay = data.get("_layout.json")
+    thumb = thumbnail(c, folder / "thumbnail.jpg", lay)
+    image = thumbnail(c, out_dir / f"{title}.jpg", lay, PAGE_IMAGE)     # for the mod page form
     page = out_dir / f"{title}.txt"
     page.write_text(f"Title:\n{title}\n\nDescription:\n{description(c)}\n", encoding="utf-8")
     zip_path = out_dir / f"{title}.zip"
