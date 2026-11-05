@@ -104,6 +104,22 @@ DISABLE_BUILDINGS = {"granary": "GRANARY", "storage_pit": "STORAGE_PIT", "dock":
 DISABLE_TECHS = {"tool_age": "TOOL_AGE", "bronze_age": "BRONZE_AGE", "iron_age": "IRON_AGE"}
 
 
+AGE_CAPS = {"tool_age": 1, "bronze_age": 2, "iron_age": 3}       # a disabled age caps the player below it
+ARMY_SHARE = 50                                                   # % of a computer player's soldiers from its civ bonuses
+
+
+def civ_army(p, spec: dict) -> dict:
+    """The AI spec's `army`: lean its soldiers toward the units the player's civ bonuses favour, among those it can
+    reach (its starting age or the ages its build order researches, below any disabled age) and make (not at a
+    disabled building)."""
+    reached = [{"TOOL_AGE": 2, "BRONZE_AGE": 3, "IRON_AGE": 4}.get(s.get("research"), 0)
+               for s in spec.get("build_order") or []]
+    age = max([p.starting_age + 1, *reached])
+    caps = [cap for d, cap in AGE_CAPS.items() if d in p.disabled]
+    return {"civ": ROR_CIVS[p.civ], "share": ARMY_SHARE, "max_age": min([age, *caps]),
+            "exclude": [DISABLE_BUILDINGS[d] for d in p.disabled if d in DISABLE_BUILDINGS]}
+
+
 def ror_ai(p, conv: Conversion, debug: bool = False) -> str | ai.Translation | None:
     """A computer player's AI in RoR: its AoE1 AI translated to a script (ai.py), RoR's immobile AI for
     AoE1's immobile-unit AIs, None for human players. Passive personalities build but never attack."""
@@ -117,6 +133,7 @@ def ror_ai(p, conv: Conversion, debug: bool = False) -> str | ai.Translation | N
     tr = ai.translate(p.ai, sns, conv, f"{label} (AoE1)")
     if "passive" in names and "aggressive" not in names:
         tr.spec.pop("attack", None)
+    tr.spec["army"] = civ_army(p, tr.spec)
     if debug:
         tr.spec["debug"] = True
     return tr
@@ -216,11 +233,16 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         if vp.triggers:
             triggers_add(o.handle, vp.triggers)
         res.victory, res.triggers, res.skipped = vp.mode, len(vp.triggers), vp.skipped
-        if conv.reveal or claim:
+        if conv.reveal or conv.show_base or claim:
             ctx = blocks.Ctx(s)
+            enemies = [p.number for p in active if not p.human and p.ai is not None
+                       and DIPLOMACY.get(src.diplomacy[p.number - 1][0], "ENEMY") == "ENEMY"]
             with games.use("ror"):
                 for area in conv.reveal:
                     blocks.reveal(ctx, area=area, player=1)
+                for area in conv.show_base:                 # the enemy AIs know where to attack from the start
+                    for e in enemies:
+                        blocks.reveal(ctx, area=area, player=e)
                 if claim:
                     blocks.claim_base(ctx, area=claim["area"], player=claim["player"],
                                       signal=AI_START_SIGNAL if claim["start_ai"] else None,

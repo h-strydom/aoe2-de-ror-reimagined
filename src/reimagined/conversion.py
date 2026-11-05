@@ -21,7 +21,7 @@ CONVERSION_FILE = layout.AOE2DE_ROR / "conversion.yaml"
 DROP = "drop"
 TOP_KEYS = {"terrain", "objects", "rules", "missions"}
 RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs", "ai_levels"}
-MISSION_KEYS = {"terrain", "objects", "reveal", "claim_base"}
+MISSION_KEYS = {"terrain", "objects", "reveal", "show_base", "claim_base"}
 CLAIM_KEYS = {"area", "player", "start_ai"}
 
 
@@ -48,6 +48,7 @@ class Conversion:
     missions: dict[str, dict] = field(default_factory=dict)   # "campaign/NN_mission" -> raw overrides
     ai_levels: str | None = None                    # "auto": computer players follow the game's difficulty
     reveal: tuple[tuple[int, int, int, int], ...] = ()    # this mission: areas player 1 starts with explored
+    show_base: tuple[tuple[int, int, int, int], ...] = ()  # this mission: areas player 1's enemies start knowing
     claim_base: dict | None = None                  # this mission: {area, player, start_ai}
 
     def for_mission(self, key: str) -> Conversion:
@@ -56,7 +57,8 @@ class Conversion:
         if not ov:
             return self
         return replace(self, terrain={**self.terrain, **ov["terrain"]}, objects={**self.objects, **ov["objects"]},
-                       reveal=ov.get("reveal", ()), claim_base=ov.get("claim_base"))
+                       reveal=ov.get("reveal", ()), show_base=ov.get("show_base", ()),
+                       claim_base=ov.get("claim_base"))
 
     def place(self, aoede_id: int, ror_terrain: int) -> int | None:
         """The RoR object for an AoE DE object standing on `ror_terrain`, or None if it's dropped.
@@ -149,8 +151,8 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
         bad = set(ov) - MISSION_KEYS
         problems += [f"missions.{key}: unknown key '{k}'" for k in sorted(bad)]
         t, o = _parse_maps(ov, f"missions.{key}.", problems)
-        reveal = tuple(a for i, a in enumerate(ov.get("reveal") or [])
-                       if _area(a, f"missions.{key}.reveal[{i}]", problems))
+        areas = {k: tuple(tuple(a) for i, a in enumerate(ov.get(k) or [])
+                          if _area(a, f"missions.{key}.{k}[{i}]", problems)) for k in ("reveal", "show_base")}
         claim = ov.get("claim_base")
         if claim is not None:
             if not isinstance(claim, dict) or set(claim) - CLAIM_KEYS or "area" not in claim:
@@ -162,7 +164,7 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
                          "start_ai": bool(claim.get("start_ai", False))}
             else:
                 claim = None
-        missions[key] = {"terrain": t, "objects": o, "reveal": tuple(tuple(a) for a in reveal), "claim_base": claim}
+        missions[key] = {"terrain": t, "objects": o, **areas, "claim_base": claim}
 
     levels = rules.get("ai_levels")
     if levels not in (None, "auto"):

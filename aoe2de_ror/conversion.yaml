@@ -342,6 +342,7 @@ rules:
 
 # Per-mission overrides. Besides terrain and objects:
 #   reveal: [[x1, y1, x2, y2], ...]     areas player 1 starts with explored (map revealers, gone after a second)
+#   show_base: [[x1, y1, x2, y2], ...]  areas player 1's enemy computer players start with explored
 #   claim_base: {area: [x1, y1, x2, y2], player: 1, start_ai: true}
 #                                       when the player's units reach the area, the Gaia buildings, villagers and
 #                                       soldiers there become theirs; start_ai: the computer players do nothing
@@ -350,60 +351,61 @@ missions:
   # Caesar starts alone and must find his base, Gaia's town on the south-east coast. The pirates wait for him.
   ave_caesar/01_caesars_revenge:
     claim_base: {area: [176, 3, 199, 40], player: 1, start_ai: true}
-  # Missions that start the player in an established town (a town center and 6+ buildings) start with
-  # that town and 8 tiles around it explored. Tutorials, missions without a town and starts spread over
+  # Missions that start the player in an established town (a town center and 6+ buildings): the enemy AIs start
+  # with that town and 8 tiles around it explored, so their first attacks know where to go instead of waiting to
+  # stumble on it. Only that area: no other map knowledge. Tutorials, town-less starts and starts spread over
   # most of the map (Pyrrhus, Alexander, Alesia, Zenobia, Odaenathus) are left as they were.
   ascent_of_egypt/08_religion:
-    reveal: [[33, 16, 71, 70]]
+    show_base: [[33, 16, 71, 70]]
   ascent_of_egypt/09_the_river_outpost:
-    reveal: [[43, 67, 80, 92]]
+    show_base: [[43, 67, 80, 92]]
   ascent_of_egypt/10_naval_warfare:
-    reveal: [[0, 12, 30, 69]]
+    show_base: [[0, 12, 30, 69]]
   ascent_of_egypt/11_a_wonder_of_the_world:
-    reveal: [[87, 14, 119, 64]]
+    show_base: [[87, 14, 119, 64]]
   ascent_of_egypt/12_siege_in_canaan:
-    reveal: [[5, 71, 63, 95]]
+    show_base: [[5, 71, 63, 95]]
   glory_of_greece/02_acropolis:
-    reveal: [[0, 90, 42, 119]]
+    show_base: [[0, 90, 42, 119]]
   glory_of_greece/04_the_trojan_war:
-    reveal: [[0, 0, 52, 51]]
+    show_base: [[0, 0, 52, 51]]
   glory_of_greece/05_colonization_of_ionia:
-    reveal: [[22, 9, 54, 43]]
+    show_base: [[22, 9, 54, 43]]
   glory_of_greece/06_the_siege_of_athens:
-    reveal: [[21, 0, 104, 76]]
+    show_base: [[21, 0, 104, 76]]
   voices_of_babylon/04_i_shall_return:
-    reveal: [[0, 22, 32, 93]]
+    show_base: [[0, 22, 32, 93]]
   voices_of_babylon/07_lord_of_the_euphrates:
-    reveal: [[53, 58, 88, 90]]
+    show_base: [[53, 58, 88, 90]]
   voices_of_babylon/08_the_conquest_of_nineveh:
-    reveal: [[0, 85, 46, 119]]
+    show_base: [[0, 85, 46, 119]]
   yamato_empire_of_the_rising_sun/04_the_mountain_temple:
-    reveal: [[10, 0, 44, 27]]
+    show_base: [[10, 0, 44, 27]]
   yamato_empire_of_the_rising_sun/06_coup:
-    reveal: [[49, 5, 83, 42]]
+    show_base: [[49, 5, 83, 42]]
   yamato_empire_of_the_rising_sun/07_jinshin_war:
-    reveal: [[37, 0, 93, 33]]
+    show_base: [[37, 0, 93, 33]]
   yamato_empire_of_the_rising_sun/08_fujiwara_revolts:
-    reveal: [[80, 0, 119, 49]]
+    show_base: [[80, 0, 119, 49]]
   reign_of_the_hittites/03_the_battle_of_kadesh:
-    reveal: [[64, 9, 95, 87]]
+    show_base: [[64, 9, 95, 87]]
   the_rise_of_rome/01_the_birth_of_rome:
-    reveal: [[66, 130, 108, 178]]
+    show_base: [[66, 130, 108, 178]]
   the_rise_of_rome/03_the_siege_of_syracuse:
-    reveal: [[81, 119, 127, 143]]
+    show_base: [[81, 119, 127, 143]]
   the_rise_of_rome/04_the_battle_of_the_metaurus:
-    reveal: [[7, 57, 55, 101]]
+    show_base: [[7, 57, 55, 101]]
   imperium_romanum/01_the_battle_of_actium:
-    reveal: [[73, 0, 128, 46]]
+    show_base: [[73, 0, 128, 46]]
   imperium_romanum/05_the_coming_of_the_huns:
-    reveal: [[142, 11, 195, 53]]
+    show_base: [[142, 11, 195, 53]]
   enemies_of_rome/02_the_third_macedonian_war:
-    reveal: [[0, 43, 25, 80]]
+    show_base: [[0, 43, 25, 80]]
   enemies_of_rome/03_the_revolt_of_spartacus:
-    reveal: [[1, 21, 39, 67]]
+    show_base: [[1, 21, 39, 67]]
   the_first_punic_war/01_the_battle_of_agrigentum:
-    reveal: [[63, 53, 119, 107]]
+    show_base: [[63, 53, 119, 107]]
   the_first_punic_war/02_the_battle_of_mylae:
-    reveal: [[19, 59, 65, 98]]
+    show_base: [[19, 59, 65, 98]]
   the_first_punic_war/03_the_battle_of_tunis:
-    reveal: [[64, 150, 122, 199]]
+    show_base: [[64, 150, 122, 199]]

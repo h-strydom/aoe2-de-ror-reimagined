@@ -41,6 +41,8 @@ def test_reveal_claim_base_and_ai_levels(tmp_path):
     caesar = conv.for_mission("ave_caesar/01_caesars_revenge")
     assert caesar.claim_base == {"area": (176, 3, 199, 40), "player": 1, "start_ai": True}
     assert conv.for_mission("ascent_of_egypt/01_hunting").claim_base is None
+    troy = conv.for_mission("glory_of_greece/04_the_trojan_war")
+    assert troy.show_base == ((0, 0, 52, 51),) and troy.reveal == ()       # the enemies know the base, not more
     conv = load(_with(tmp_path, "missions:\n  ascent_of_egypt/01_hunting:\n    reveal: [[0, 0, 20, 20]]\n"))
     assert conv.for_mission("ascent_of_egypt/01_hunting").reveal == ((0, 0, 20, 20),)
     bad = _with(tmp_path, "missions:\n  ascent_of_egypt/01_hunting:\n    reveal: [[0, 0, 20]]\n"
