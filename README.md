@@ -3,8 +3,17 @@
 Bring the **Age of Empires: Definitive Edition** campaigns to **Age of Empires II: DE – Return of
 Rome**: every campaign map converted tile for tile, then the campaigns reimagined on top of them.
 
-> **Status: early.** This repository is a clean rebuild of a working proof of concept. It's being
-> built bottom up, one tested layer at a time, so most of the pieces below don't exist yet.
+> **Status:** the faithful rebuild is done: all 10 campaigns are converted, playable and published on the
+> official mod site as **[RoR-RI] &lt;campaign&gt;**. Reimagining them comes next (see To do).
+
+## To do
+
+1. **Sound on the intro slides.** RoR didn't play AoE DE's narration, so first find out what audio a campaign
+   intro can play (RoR's own sound events, or sounds shipped in a mod).
+2. **Population cap 200** on every mission. Each player keeps its original scenario's cap today.
+3. **Campaign choices:** decisions that carry from one mission to the next (aoe-agent-editor's campaign bank
+   and `choice` block).
+4. The reimagined campaigns: edited maps, new objectives and upgrades.
 
 ## Goals
 
