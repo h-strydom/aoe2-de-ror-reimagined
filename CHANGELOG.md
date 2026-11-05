@@ -1,6 +1,8 @@
 # Changelog
 
 ## Unreleased
+- `reimagined package`: one mod per campaign for the official mod site, titled `[RoR-RI] <campaign>`, as a zip to
+  upload (mod files at the root, info.json, thumbnail) and a folder to test locally.
 - Repository set up: README, license, contributing guide, changelog, agent guidance, ignore rules.
 - `aoe1de/`: one folder per campaign and mission, with campaign and mission files.
 - `reimagined setup`: copies the AoE DE campaigns, their scenarios and game data from your install.

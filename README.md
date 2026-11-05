@@ -99,6 +99,23 @@ Converts every campaign (or just the ones you name, e.g. `reimagined convert asc
   AoE DE's map of the region inked on the page and a unit pin per mission in the campaign's colour, placed
   per `aoe2de_ror/campaign_maps.yaml`.
 
+## Publishing as mods
+
+```bash
+uv run reimagined package ascent_of_egypt --to "<folder>"
+```
+
+Builds one mod per campaign (or all, with no names), titled `[RoR-RI] <campaign>` so the series is easy to find
+on the mod site:
+- `<folder>/[RoR-RI] <campaign>/`, the mod itself: drop it into your profile's `mods/local/` to test it, with
+  the combined local mod from `convert --install` turned off so the campaign doesn't load twice.
+- `<folder>/[RoR-RI] <campaign>.zip`, to upload: the mod's files at the zip's root (`info.json`,
+  `thumbnail.jpg`, `modes/...`), which the mod site requires. Upload it signed in at ageofempires.com/mods,
+  as a Campaign.
+
+The thumbnail is the campaign screen's book and map; the description is the campaign's own, plus what this
+version is. Each pack is about 25-100 MB (mostly intro images).
+
 ## Changing a campaign map
 
 `aoe2de_ror/campaign_maps.yaml` holds, per campaign, which AoE DE briefing map is drawn on the page, the

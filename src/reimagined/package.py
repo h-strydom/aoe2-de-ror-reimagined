@@ -1,0 +1,120 @@
+"""Campaigns as mods: installed into your profile, or packaged one per campaign for the official mod site.
+
+A campaign's mod holds its .aoe2campaign, its campaign screen (`<slug>_layout.json`, our own map and pins) and
+its mission intros (`<slug>.json` and the slide images). The game reads campaign screens only from mods.
+
+Publishing (ageofempires.com/mods, signed in, or the in-game mod manager): upload the zip, which holds the mod's
+files at its root (info.json, thumbnail.jpg, modes/...), not a folder. Every published campaign is titled
+"[RoR-RI] <campaign>" so they're easy to find together.
+"""
+from __future__ import annotations
+
+import shutil
+import tempfile
+import zipfile
+from pathlib import Path
+
+from . import campaign_maps, intros, layout
+from .convert import campaign_path
+
+PREFIX = "[RoR-RI]"
+AUTHOR = "aoe2-de-ror-reimagined"
+SOURCE = "https://github.com/h-strydom/aoe2-de-ror-reimagined"
+THUMBNAIL = (1280, 540)                  # the campaign background's 64:27 shape
+BUILD = layout.ROOT / "out"
+
+
+def mod_title(c: layout.CampaignInfo) -> str:
+    return f"{PREFIX} {c.title}"
+
+
+def _demojibake(text: str) -> str:
+    """UTF-8 text that was read as Windows-1252 somewhere ("Republicâ€™s") back to what it says."""
+    try:
+        return text.encode("cp1252").decode("utf-8")
+    except (UnicodeEncodeError, UnicodeDecodeError):
+        return text
+
+
+def campaign_description(c: layout.CampaignInfo) -> str:
+    import yaml
+    spec = yaml.safe_load((c.root / f"{c.slug}.yaml").read_text(encoding="utf-8")) or {}
+    return _demojibake(str(spec.get("description") or "")).strip()
+
+
+def description(c: layout.CampaignInfo) -> str:
+    blurb = campaign_description(c)
+    return (f"{blurb}\n\n" if blurb else "") + (
+        f"The Age of Empires: Definitive Edition campaign {c.title}, rebuilt for Return of Rome: every map converted "
+        f"tile for tile, with its objectives, mission briefings and intros, and a campaign screen of its own. The "
+        f"computer players follow the difficulty (Standard, Moderate, Hard) and build armies around their "
+        f"civilization's bonuses, with no cheats.\n\nRequires the Return of Rome expansion. Play it from Return of "
+        f"Rome's campaign menu.\n\nPart of the {PREFIX} series. Source and issues: {SOURCE}")
+
+
+def campaign_files(c: layout.CampaignInfo, root: Path = layout.AOE2DE_ROR) -> tuple[Path, dict]:
+    """The converted campaign and its screen and intro data, as committed in aoe2de_ror/."""
+    from aoe2ed import screens as ed_screens
+    camp = campaign_path(c, root)
+    data = {suffix: ed_screens.read_json(p) for suffix in ("_layout.json", ".json")
+            if (p := camp.with_name(f"{c.slug}{suffix}")).is_file()}
+    if not camp.is_file():
+        raise FileNotFoundError(f"{camp} doesn't exist: run `reimagined convert {c.slug}` first")
+    return camp, data
+
+
+def install(c: layout.CampaignInfo, campaign: Path, data: dict, mod: str, *, profile: Path | None = None,
+            description_text: str = "", warn=print) -> dict:
+    """Install one campaign with its screen and intros into the local mod `mod` (under `profile`'s mods/local)."""
+    from aoe2ed import screens as ed_screens
+
+    from .screens import slide_images
+    widget_files = {}
+    if intros.has_art():
+        build = BUILD / "intros"
+        for rel, img in slide_images(c, data[".json"]).items():
+            dest = build / rel
+            dest.parent.mkdir(parents=True, exist_ok=True)
+            img.save(dest)
+            widget_files[rel] = dest
+    else:
+        warn("  (no AoE DE art copied: intros install without images; run `reimagined setup`)")
+    own = campaign_maps.load()
+    map_files = []
+    if c.slug in own and intros.has_art():
+        map_files = campaign_maps.files(c, own[c.slug], BUILD / "maps" / c.slug)
+    return ed_screens.install_campaign_mod(campaign, mod, layout=data.get("_layout.json"), intro=data.get(".json"),
+                                           files=map_files, widget_files=widget_files, game="ror",
+                                           description=description_text, author=AUTHOR, profile=profile)
+
+
+def thumbnail(c: layout.CampaignInfo, dest: Path) -> Path | None:
+    """The campaign background (book and map) as a JPG for the mod site, if the campaign has its own map."""
+    own = campaign_maps.load()
+    if c.slug not in own or not intros.has_art():
+        return None
+    img = campaign_maps.render_background(c, own[c.slug]).convert("RGB").resize(THUMBNAIL)
+    img.save(dest, quality=90)
+    return dest
+
+
+def package(c: layout.CampaignInfo, out_dir: Path, warn=print) -> dict:
+    """`out_dir/<title>/` (the mod, to drop into mods/local for a test) and `out_dir/<title>.zip` (to upload)."""
+    title = mod_title(c)
+    campaign, data = campaign_files(c)
+    out_dir.mkdir(parents=True, exist_ok=True)
+    folder = out_dir / title
+    if folder.exists():
+        shutil.rmtree(folder)
+    with tempfile.TemporaryDirectory() as tmp:
+        res = install(c, campaign, data, title, profile=Path(tmp), description_text=description(c), warn=warn)
+        shutil.copytree(res["mod"], folder)
+    thumb = thumbnail(c, folder / "thumbnail.jpg")
+    zip_path = out_dir / f"{title}.zip"
+    with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
+        for f in sorted(folder.rglob("*")):
+            if f.is_file():
+                z.write(f, f.relative_to(folder).as_posix())            # the mod's files at the zip's root
+    size = sum(f.stat().st_size for f in folder.rglob("*") if f.is_file())
+    return {"title": title, "folder": folder, "zip": zip_path, "thumbnail": thumb, "mb": round(size / 2**20, 1),
+            "zip_mb": round(zip_path.stat().st_size / 2**20, 1)}

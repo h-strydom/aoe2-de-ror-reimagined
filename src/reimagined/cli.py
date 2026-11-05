@@ -24,6 +24,11 @@ def main(argv: list[str] | None = None) -> int:
     p_probe.add_argument("--minutes", type=int, default=15, help="game minutes to record (default 15)")
     p_probe.add_argument("--ai-debug", action="store_true", help="AIs also announce build steps in chat")
     p_probe.add_argument("--install", action="store_true", help="copy the probe into your RoR scenario folder")
+    p_pack = sub.add_parser("package", help="package converted campaigns as mods for the official mod site, one per "
+                                            "campaign, titled '[RoR-RI] <campaign>' (a zip to upload, plus the mod "
+                                            "folder to test in mods/local)")
+    p_pack.add_argument("campaigns", nargs="*", help="campaign folder names (default: all)")
+    p_pack.add_argument("--to", help="output folder (default: out/mods)")
     args = parser.parse_args(argv)
 
     if args.command == "setup":
@@ -51,6 +56,8 @@ def main(argv: list[str] | None = None) -> int:
         return _convert(args.campaigns, args.install, args.ai_debug)
     if args.command == "probe":
         return _probe(args.campaign, args.mission, args.minutes, args.ai_debug, args.install)
+    if args.command == "package":
+        return _package(args.campaigns, args.to)
     parser.print_help()
     return 0
 
@@ -85,35 +92,40 @@ def _convert(names: list[str], install: bool = False, ai_debug: bool = False) ->
         if install:
             from aoe2ed import screens as ed_screens
 
-            from . import intros
+            from . import package
             from .convert import MOD_NAME
-            from .screens import slide_images
 
             data = {p.name[len(c.slug):]: ed_screens.read_json(p) for p in paths[1:]}
-            widget_files = {}
-            if intros.has_art():
-                build = layout.ROOT / "out" / "intros"
-                for rel, img in slide_images(c, data[".json"]).items():
-                    dest = build / rel
-                    dest.parent.mkdir(parents=True, exist_ok=True)
-                    img.save(dest)
-                    widget_files[rel] = dest
-            else:
-                print("  (no AoE DE art copied: intros install without images; run `reimagined setup`)")
-            from . import campaign_maps
-            own = campaign_maps.load()
-            map_files = []
-            if c.slug in own and intros.has_art():
-                map_files = campaign_maps.files(c, own[c.slug], layout.ROOT / "out" / "maps" / c.slug)
-            res = ed_screens.install_campaign_mod(paths[0], MOD_NAME, layout=data.get("_layout.json"),
-                                                  intro=data.get(".json"), files=map_files,
-                                                  widget_files=widget_files, game="ror",
-                                                  description="AoE DE campaigns converted to Return of Rome",
-                                                  author="aoe2-de-ror-reimagined")
+            res = package.install(c, paths[0], data, MOD_NAME,
+                                  description_text="AoE DE campaigns converted to Return of Rome")
             print(f"  installed into the {MOD_NAME!r} mod" + (f" ({res['next']})" if res["next"] else ""))
         for r in results:
             dropped = sum(r.dropped.values())
             print(f"  {r.mission}: {r.players} players, {r.placed} objects placed, {dropped} dropped")
+    return 0
+
+
+def _package(names: list[str], to: str | None) -> int:
+    from pathlib import Path
+
+    from . import layout, package
+    camps = layout.campaigns()
+    unknown = set(names) - {c.slug for c in camps}
+    if unknown:
+        print(f"error: no campaign {', '.join(sorted(unknown))}; choose from {', '.join(c.slug for c in camps)}",
+              file=sys.stderr)
+        return 1
+    out = Path(to) if to else layout.ROOT / "out" / "mods"
+    for c in camps:
+        if names and c.slug not in names:
+            continue
+        try:
+            res = package.package(c, out)
+        except FileNotFoundError as e:
+            print(f"error: {e}", file=sys.stderr)
+            return 1
+        print(f"{res['title']}: {res['zip']} ({res['zip_mb']} MB zipped, {res['mb']} MB unpacked)"
+              + ("" if res["thumbnail"] else "; no thumbnail (no campaign map art: run `reimagined setup`)"))
     return 0
 
 
