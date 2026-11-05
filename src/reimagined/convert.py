@@ -14,6 +14,7 @@ from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
 
+from aoe2ed import blocks, games
 from aoe2ed.campaign import Campaign as RorCampaign
 from aoe2ed.campaign import CampaignScenario
 from aoe2ed.session import SESSIONS
@@ -40,6 +41,7 @@ ROR_AGES = ("DARK", "FEUDAL", "CASTLE", "IMPERIAL", "POST_IMPERIAL")
 DIPLOMACY = {0: "ALLY", 1: "NEUTRAL", 3: "ENEMY"}
 MAX_ROR_PLAYERS = 8
 NORMAL_STATUS = 2
+AI_START_SIGNAL = 1               # AI Script Goal a mission's claim_base sends to computer players set to wait for it
 CAMPAIGN_TITLE = "AoE1 {title}"   # keeps them apart from RoR's own campaigns of the same name
 MOD_NAME = "AoE1 DE Campaigns (RoR Reimagined)"   # local mod `convert --install` writes; screens need a mod
 
@@ -178,12 +180,17 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                 "allied_victory": p.allied_victory,
                 **player_settings(p),
             })
+        claim = conv.claim_base
         for p in active:
             plan = ror_ai(p, conv, ai_debug)
             if plan == "immobile":
                 ai_set(o.handle, p.number, "immobile")
                 res.ai[p.number] = "immobile"
             elif plan is not None:
+                if conv.ai_levels:
+                    plan.spec["levels"] = conv.ai_levels
+                if claim and claim["start_ai"]:
+                    plan.spec["start"] = {"trigger": AI_START_SIGNAL}
                 done = ai_set(o.handle, p.number, plan.spec)
                 res.specs[p.number] = plan.spec
                 res.ai[p.number] = f"{done['ai']}: {done['rules']} rules"
@@ -209,6 +216,16 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         if vp.triggers:
             triggers_add(o.handle, vp.triggers)
         res.victory, res.triggers, res.skipped = vp.mode, len(vp.triggers), vp.skipped
+        if conv.reveal or claim:
+            ctx = blocks.Ctx(s)
+            with games.use("ror"):
+                for area in conv.reveal:
+                    blocks.reveal(ctx, area=area, player=1)
+                if claim:
+                    blocks.claim_base(ctx, area=claim["area"], player=claim["player"],
+                                      signal=AI_START_SIGNAL if claim["start_ai"] else None,
+                                      name="Base found")
+            res.triggers = len(ctx.trigger_names())
         yield s, res
     finally:
         SESSIONS.close(o.handle)

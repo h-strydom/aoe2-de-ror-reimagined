@@ -335,12 +335,18 @@ rules:
   min_road_cluster: 8
   # AoE DE's 17 civilizations (Gaia..Macedonian) are RoR's first 17, in the same order.
   civs: same_order
+  # Computer players follow the game's difficulty: Easiest and Standard play an easier version of the
+  # translated AI (fewer villagers and soldiers, later and smaller attacks), Moderate plays it as translated,
+  # Hard and up a harder one (aoe-agent-editor AI specs, levels: auto).
+  ai_levels: auto
 
-missions: {}
-# Example override (uncomment and adjust):
-# missions:
-#   ascent_of_egypt/04_the_dawn_of_a_new_age:
-#     terrain:
-#       34: SNOW
-#     objects:
-#       59: drop
+# Per-mission overrides. Besides terrain and objects:
+#   reveal: [[x1, y1, x2, y2], ...]     areas player 1 starts with explored (map revealers, gone after a second)
+#   claim_base: {area: [x1, y1, x2, y2], player: 1, start_ai: true}
+#                                       when the player's units reach the area, the Gaia buildings, villagers and
+#                                       soldiers there become theirs; start_ai: the computer players do nothing
+#                                       until then
+missions:
+  # Caesar starts alone and must find his base, Gaia's town on the south-east coast. The pirates wait for him.
+  ave_caesar/01_caesars_revenge:
+    claim_base: {area: [176, 3, 199, 40], player: 1, start_ai: true}

@@ -20,7 +20,9 @@ from . import layout
 CONVERSION_FILE = layout.AOE2DE_ROR / "conversion.yaml"
 DROP = "drop"
 TOP_KEYS = {"terrain", "objects", "rules", "missions"}
-RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs"}
+RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs", "ai_levels"}
+MISSION_KEYS = {"terrain", "objects", "reveal", "claim_base"}
+CLAIM_KEYS = {"area", "player", "start_ai"}
 
 
 class ConversionError(ValueError):
@@ -44,13 +46,17 @@ class Conversion:
     road_terrains: frozenset[int]                   # AoE DE terrain ids
     min_road_cluster: int
     missions: dict[str, dict] = field(default_factory=dict)   # "campaign/NN_mission" -> raw overrides
+    ai_levels: str | None = None                    # "auto": computer players follow the game's difficulty
+    reveal: tuple[tuple[int, int, int, int], ...] = ()    # this mission: areas player 1 starts with explored
+    claim_base: dict | None = None                  # this mission: {area, player, start_ai}
 
     def for_mission(self, key: str) -> Conversion:
         """The rules for one mission: its overrides on top of the global entries."""
         ov = self.missions.get(key)
         if not ov:
             return self
-        return replace(self, terrain={**self.terrain, **ov["terrain"]}, objects={**self.objects, **ov["objects"]})
+        return replace(self, terrain={**self.terrain, **ov["terrain"]}, objects={**self.objects, **ov["objects"]},
+                       reveal=ov.get("reveal", ()), claim_base=ov.get("claim_base"))
 
     def place(self, aoede_id: int, ror_terrain: int) -> int | None:
         """The RoR object for an AoE DE object standing on `ror_terrain`, or None if it's dropped.
@@ -139,12 +145,37 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
         if key not in known:
             problems.append(f"missions: '{key}' isn't a mission (use <campaign>/<NN_mission> from aoe1de/)")
             continue
-        bad = set(ov or {}) - {"terrain", "objects"}
+        ov = ov or {}
+        bad = set(ov) - MISSION_KEYS
         problems += [f"missions.{key}: unknown key '{k}'" for k in sorted(bad)]
-        t, o = _parse_maps(ov or {}, f"missions.{key}.", problems)
-        missions[key] = {"terrain": t, "objects": o}
+        t, o = _parse_maps(ov, f"missions.{key}.", problems)
+        reveal = tuple(a for i, a in enumerate(ov.get("reveal") or [])
+                       if _area(a, f"missions.{key}.reveal[{i}]", problems))
+        claim = ov.get("claim_base")
+        if claim is not None:
+            if not isinstance(claim, dict) or set(claim) - CLAIM_KEYS or "area" not in claim:
+                problems.append(f"missions.{key}.claim_base: expected {{area: [x1, y1, x2, y2], player: 1, "
+                                f"start_ai: true}}, got {claim}")
+                claim = None
+            elif _area(claim["area"], f"missions.{key}.claim_base.area", problems):
+                claim = {"area": tuple(claim["area"]), "player": int(claim.get("player", 1)),
+                         "start_ai": bool(claim.get("start_ai", False))}
+            else:
+                claim = None
+        missions[key] = {"terrain": t, "objects": o, "reveal": tuple(tuple(a) for a in reveal), "claim_base": claim}
 
+    levels = rules.get("ai_levels")
+    if levels not in (None, "auto"):
+        problems.append(f"rules.ai_levels: 'auto' or left out, got {levels!r}")
     if problems:
         raise ConversionError(problems)
     return Conversion(terrain, objects, frozenset(forest), frozenset(rules.get("road_terrains", [])),
-                      int(rules.get("min_road_cluster", 8)), missions)
+                      int(rules.get("min_road_cluster", 8)), missions, levels)
+
+
+def _area(value, where: str, problems: list[str]) -> bool:
+    ok = (isinstance(value, (list, tuple)) and len(value) == 4 and all(isinstance(v, int) for v in value)
+          and value[0] <= value[2] and value[1] <= value[3])
+    if not ok:
+        problems.append(f"{where}: an area is [x1, y1, x2, y2] in tiles, got {value}")
+    return ok

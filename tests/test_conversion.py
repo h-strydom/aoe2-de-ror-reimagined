@@ -30,8 +30,25 @@ def test_every_map_is_fully_covered():
 
 def _with(tmp_path, extra: str):
     p = tmp_path / "conversion.yaml"
-    p.write_text(CONVERSION_FILE.read_text(encoding="utf-8").replace("missions: {}", extra), encoding="utf-8")
+    head = CONVERSION_FILE.read_text(encoding="utf-8").split("\nmissions:")[0]    # missions is the last section
+    p.write_text(head + "\n" + extra, encoding="utf-8")
     return p
+
+
+def test_reveal_claim_base_and_ai_levels(tmp_path):
+    conv = load()
+    assert conv.ai_levels == "auto"
+    caesar = conv.for_mission("ave_caesar/01_caesars_revenge")
+    assert caesar.claim_base == {"area": (176, 3, 199, 40), "player": 1, "start_ai": True}
+    assert conv.for_mission("ascent_of_egypt/01_hunting").claim_base is None
+    conv = load(_with(tmp_path, "missions:\n  ascent_of_egypt/01_hunting:\n    reveal: [[0, 0, 20, 20]]\n"))
+    assert conv.for_mission("ascent_of_egypt/01_hunting").reveal == ((0, 0, 20, 20),)
+    bad = _with(tmp_path, "missions:\n  ascent_of_egypt/01_hunting:\n    reveal: [[0, 0, 20]]\n"
+                          "    claim_base: {area: [5, 5, 9, 9], when: later}\n")
+    with pytest.raises(ConversionError) as e:
+        load(bad)
+    problems = "\n".join(e.value.problems)
+    assert "an area is [x1, y1, x2, y2]" in problems and "claim_base: expected" in problems
 
 
 def test_mission_override_wins(tmp_path):
