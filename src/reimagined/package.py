@@ -19,8 +19,8 @@ from .convert import campaign_path
 
 PREFIX = "[RoR-RI]"
 AUTHOR = "aoe2-de-ror-reimagined"
-SOURCE = "https://github.com/h-strydom/aoe2-de-ror-reimagined"
 THUMBNAIL = (1280, 540)                  # the campaign background's 64:27 shape
+PAGE_IMAGE = (1920, 810)                 # the image for the mod page, beside the zip
 BUILD = layout.ROOT / "out"
 
 
@@ -43,13 +43,8 @@ def campaign_description(c: layout.CampaignInfo) -> str:
 
 
 def description(c: layout.CampaignInfo) -> str:
-    blurb = campaign_description(c)
-    return (f"{blurb}\n\n" if blurb else "") + (
-        f"The Age of Empires: Definitive Edition campaign {c.title}, rebuilt for Return of Rome: every map converted "
-        f"tile for tile, with its objectives, mission briefings and intros, and a campaign screen of its own. The "
-        f"computer players follow the difficulty (Standard, Moderate, Hard) and build armies around their "
-        f"civilization's bonuses, with no cheats.\n\nRequires the Return of Rome expansion. Play it from Return of "
-        f"Rome's campaign menu.\n\nPart of the {PREFIX} series. Source and issues: {SOURCE}")
+    """The mod's description: the original campaign's own, as AoE DE shows it."""
+    return campaign_description(c)
 
 
 def campaign_files(c: layout.CampaignInfo, root: Path = layout.AOE2DE_ROR) -> tuple[Path, dict]:
@@ -88,12 +83,12 @@ def install(c: layout.CampaignInfo, campaign: Path, data: dict, mod: str, *, pro
                                            description=description_text, author=AUTHOR, profile=profile)
 
 
-def thumbnail(c: layout.CampaignInfo, dest: Path) -> Path | None:
-    """The campaign background (book and map) as a JPG for the mod site, if the campaign has its own map."""
+def thumbnail(c: layout.CampaignInfo, dest: Path, size: tuple[int, int] = THUMBNAIL) -> Path | None:
+    """The campaign view (the book with the campaign's map) as a JPG, if the campaign has its own map."""
     own = campaign_maps.load()
     if c.slug not in own or not intros.has_art():
         return None
-    img = campaign_maps.render_background(c, own[c.slug]).convert("RGB").resize(THUMBNAIL)
+    img = campaign_maps.render_background(c, own[c.slug]).convert("RGB").resize(size)
     img.save(dest, quality=90)
     return dest
 
@@ -110,11 +105,15 @@ def package(c: layout.CampaignInfo, out_dir: Path, warn=print) -> dict:
         res = install(c, campaign, data, title, profile=Path(tmp), description_text=description(c), warn=warn)
         shutil.copytree(res["mod"], folder)
     thumb = thumbnail(c, folder / "thumbnail.jpg")
+    image = thumbnail(c, out_dir / f"{title}.jpg", PAGE_IMAGE)          # for the mod page form
+    page = out_dir / f"{title}.txt"
+    page.write_text(f"Title:\n{title}\n\nDescription:\n{description(c)}\n", encoding="utf-8")
     zip_path = out_dir / f"{title}.zip"
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         for f in sorted(folder.rglob("*")):
             if f.is_file():
                 z.write(f, f.relative_to(folder).as_posix())            # the mod's files at the zip's root
     size = sum(f.stat().st_size for f in folder.rglob("*") if f.is_file())
-    return {"title": title, "folder": folder, "zip": zip_path, "thumbnail": thumb, "mb": round(size / 2**20, 1),
+    return {"title": title, "folder": folder, "zip": zip_path, "thumbnail": thumb, "image": image, "page": page,
+            "mb": round(size / 2**20, 1),
             "zip_mb": round(zip_path.stat().st_size / 2**20, 1)}

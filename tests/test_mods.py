@@ -13,9 +13,9 @@ EGYPT = next(c for c in layout.campaigns() if c.slug == "ascent_of_egypt")
 
 def test_title_and_description():
     assert package.mod_title(EGYPT) == "[RoR-RI] Ascent of Egypt"
-    text = package.description(EGYPT)
-    assert "Return of Rome" in text and package.SOURCE in text and "â€" not in text
-    assert len(text) < 10_000                                     # the mod site's description limit
+    text = package.description(EGYPT)                              # the original campaign's own, nothing added
+    assert text.startswith("Take your first steps") and text.endswith("The River Outpost.")
+    assert "â€" not in text and len(text) < 10_000                 # the mod site's description limit
     assert package._demojibake("Republicâ€™s") == "Republic’s"
 
 
@@ -31,3 +31,8 @@ def test_package_zips_the_mod_files_at_the_root(tmp_path):
     assert not any(n.startswith("[RoR-RI]") for n in names)                   # files, not a folder
     info = json.loads((res["folder"] / "info.json").read_text(encoding="utf-8"))
     assert info["Title"] == "[RoR-RI] Ascent of Egypt" and res["zip_mb"] < 450
+    assert info["Description"] == package.description(EGYPT)
+    # beside the zip, for the mod page form: the campaign view image, and the title and description to paste
+    assert res["image"].name == "[RoR-RI] Ascent of Egypt.jpg" and res["image"].is_file()
+    page = res["page"].read_text(encoding="utf-8")
+    assert "[RoR-RI] Ascent of Egypt" in page and package.description(EGYPT) in page
