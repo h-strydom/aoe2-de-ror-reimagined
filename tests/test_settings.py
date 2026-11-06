@@ -43,6 +43,10 @@ def _converted(tmp_path, key):
     return AoE2DEScenario.from_file(str(convert_mission(MISSIONS[key], load(), tmp_path).out)).player_manager.players
 
 
+def _active(players, key):
+    return [players[p.number] for p in load_scenario(MISSIONS[key].scenario_path).active_players]
+
+
 def test_disables_and_view_reach_the_ror_map(tmp_path):
     p1 = _converted(tmp_path, "ascent_of_egypt/02_foraging")[1]
     assert set(p1.disabled_techs) == {101, 102, 103}                    # Tool, Bronze, Iron Age
@@ -91,3 +95,19 @@ def test_specific_build_item_builds_the_wonder():
     p = load_scenario(MISSIONS["glory_of_greece/08_alexander_the_great"].scenario_path).players[3]   # Persian Army
     t = translate(p.ai, missions.personality(p.ai.personality_text), load(), "Persian Army")
     assert "(game-time >= 360)" in t.spec["rules"]
+
+
+def test_population_200_where_player_1_can_build(tmp_path):
+    from aoe2ed.ai import per
+    troy = _converted(tmp_path, "glory_of_greece/04_the_trojan_war")
+    assert {pl.population_cap for pl in _active(troy, "glory_of_greece/04_the_trojan_war")} == {200}   # human and AI
+    script = troy[2].ai_script
+    assert "grow stage 8/8: villagers" in script
+    assert [d for d in per.check(script) if d.severity == "error"] == []
+    # Moderate grows over an hour in 8 stages; Standard 3x slower, Hard 2x faster (one copy of the rules per level)
+    assert all(f"(enable-timer 5 {s})" in script for s in (1350, 450, 225))
+    skirmish = _converted(tmp_path, "ascent_of_egypt/05_skirmish")             # no villager, no town center
+    assert {pl.population_cap for pl in _active(skirmish, "ascent_of_egypt/05_skirmish")} == {50}
+    assert "grow stage" not in skirmish[2].ai_script
+    caesar = _converted(tmp_path, "ave_caesar/01_caesars_revenge")             # claims a base
+    assert caesar[1].population_cap == 200

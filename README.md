@@ -10,10 +10,9 @@ Rome**: every campaign map converted tile for tile, then the campaigns reimagine
 
 1. **Sound on the intro slides.** RoR didn't play AoE DE's narration, so first find out what audio a campaign
    intro can play (RoR's own sound events, or sounds shipped in a mod).
-2. **Population cap 200** on every mission. Each player keeps its original scenario's cap today.
-3. **Campaign choices:** decisions that carry from one mission to the next (aoe-agent-editor's campaign bank
+2. **Campaign choices:** decisions that carry from one mission to the next (aoe-agent-editor's campaign bank
    and `choice` block).
-4. The reimagined campaigns: edited maps, new objectives and upgrades.
+3. The reimagined campaigns: edited maps, new objectives and upgrades.
 
 ## Goals
 
@@ -148,7 +147,10 @@ sprite pins in that player colour. Pins that would overlap are nudged apart and 
   ages, with the original counts), keeps its army topped up afterwards, carries the personality's strategic
   numbers over where RoR has the same setting, and attacks on the personality's timing and group sizes.
   Passive personalities build but never attack, immobile-unit AIs get RoR's immobile AI, and none of them
-  resign. Not carried over: AoE1's city plans (RoR places buildings itself) and wall building
+  resign. Where player 1 can build (they start with a villager or town center, or claim a base), every player's
+  population cap is 200 instead of AoE1's 50, and each computer player grows toward it: more villagers, soldiers,
+  production buildings, town centers and dropsites in stages over an hour on Moderate, 3 hours on Standard and
+  30 minutes on Hard (`rules.population` in `conversion.yaml`). Not carried over: AoE1's city plans (RoR places buildings itself) and wall building
 - the mission text the game shows: instructions, hints, victory, loss and history
 - how a mission is won. AoE DE has no triggers: it has a victory mode and each player's victory
   conditions. The mode maps one to one. Each player's conditions become a trigger that declares

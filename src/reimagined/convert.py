@@ -44,6 +44,7 @@ NORMAL_STATUS = 2
 AI_START_SIGNAL = 1               # AI Script Goal a mission's claim_base sends to computer players set to wait for it
 CAMPAIGN_TITLE = "AoE1 {title}"   # keeps them apart from RoR's own campaigns of the same name
 MOD_NAME = "AoE1 DE Campaigns (RoR Reimagined)"   # local mod `convert --install` writes; screens need a mod
+BUILDERS = ("Villager", "Town Center")            # AoE DE names: player 1 owning one can build (rules.population)
 
 
 @dataclass
@@ -163,6 +164,13 @@ def mission_text(src: Scenario, table: dict[int, str]) -> tuple[dict[str, str], 
     return data["text"], {p["number"]: p["name"] for p in data["players"]}, objectives
 
 
+def can_build(src: Scenario, conv: Conversion) -> bool:
+    """Whether player 1 can build in this mission: starts with a villager or a town center, or claims a base."""
+    if conv.claim_base:
+        return True
+    return any(object_name(u.type).startswith(BUILDERS) for u in src.players[0].units)
+
+
 @contextlib.contextmanager
 def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: dict[int, str] | None = None,
                    ai_debug: bool = False):
@@ -185,6 +193,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
 
         s.player_manager.active_players = len(active)
         res.players = len(active)
+        population = conv.population if conv.population and can_build(src, conv) else None
         for p in active:
             r = p.resources
             player_set(o.handle, p.number, {
@@ -192,7 +201,8 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                 "starting_age": ROR_AGES[p.starting_age],
                 "human": p.human,
                 "food": int(r["food"]), "wood": int(r["wood"]), "gold": int(r["gold"]),
-                "stone": int(r["stone"]), "population_cap": int(r["pop_cap"]),
+                "stone": int(r["stone"]),
+                "population_cap": population["cap"] if population else int(r["pop_cap"]),
                 "tribe_name": names.get(p.number, p.name),
                 "allied_victory": p.allied_victory,
                 **player_settings(p),
@@ -206,6 +216,8 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             elif plan is not None:
                 if conv.ai_levels:
                     plan.spec["levels"] = conv.ai_levels
+                if population:
+                    plan.spec["grow"] = {"to": population["cap"], "minutes": population["grow_minutes"]}
                 if claim and claim["start_ai"]:
                     plan.spec["start"] = {"trigger": AI_START_SIGNAL}
                 done = ai_set(o.handle, p.number, plan.spec)

@@ -20,7 +20,8 @@ from . import layout
 CONVERSION_FILE = layout.AOE2DE_ROR / "conversion.yaml"
 DROP = "drop"
 TOP_KEYS = {"terrain", "objects", "rules", "missions"}
-RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs", "ai_levels"}
+RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs", "ai_levels", "population"}
+POPULATION_KEYS = {"cap", "grow_minutes"}
 MISSION_KEYS = {"terrain", "objects", "reveal", "show_base", "claim_base"}
 CLAIM_KEYS = {"area", "player", "start_ai"}
 
@@ -50,6 +51,7 @@ class Conversion:
     reveal: tuple[tuple[int, int, int, int], ...] = ()    # this mission: areas player 1 starts with explored
     show_base: tuple[tuple[int, int, int, int], ...] = ()  # this mission: areas player 1's enemies start knowing
     claim_base: dict | None = None                  # this mission: {area, player, start_ai}
+    population: dict | None = None                  # {cap, grow_minutes}: missions where player 1 can build
 
     def for_mission(self, key: str) -> Conversion:
         """The rules for one mission: its overrides on top of the global entries."""
@@ -166,13 +168,19 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
                 claim = None
         missions[key] = {"terrain": t, "objects": o, **areas, "claim_base": claim}
 
+    population = rules.get("population")
+    if population is not None:
+        if (not isinstance(population, dict) or set(population) != POPULATION_KEYS
+                or not all(isinstance(v, int) and v > 0 for v in population.values())):
+            problems.append(f"rules.population: expected {{cap: 200, grow_minutes: 60}}, got {population!r}")
+            population = None
     levels = rules.get("ai_levels")
     if levels not in (None, "auto"):
         problems.append(f"rules.ai_levels: 'auto' or left out, got {levels!r}")
     if problems:
         raise ConversionError(problems)
     return Conversion(terrain, objects, frozenset(forest), frozenset(rules.get("road_terrains", [])),
-                      int(rules.get("min_road_cluster", 8)), missions, levels)
+                      int(rules.get("min_road_cluster", 8)), missions, levels, population=population)
 
 
 def _area(value, where: str, problems: list[str]) -> bool:

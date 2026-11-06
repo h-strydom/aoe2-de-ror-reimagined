@@ -339,6 +339,11 @@ rules:
   # translated AI (fewer villagers and soldiers, later and smaller attacks), Moderate plays it as translated,
   # Hard and up a harder one (aoe-agent-editor AI specs, levels: auto).
   ai_levels: auto
+  # Missions where player 1 can build (starts with a villager or town center, or claims a base): every player's
+  # population cap becomes `cap`, and each computer player macros toward it (more villagers, soldiers, production
+  # buildings, town centers and dropsites in stages over `grow_minutes` on Moderate; 3x slower on Standard, 2x
+  # faster on Hard). Hero and army-only missions keep their original cap.
+  population: {cap: 200, grow_minutes: 60}
 
 # Per-mission overrides. Besides terrain and objects:
 #   reveal: [[x1, y1, x2, y2], ...]     areas player 1 starts with explored (map revealers, gone after a second)
