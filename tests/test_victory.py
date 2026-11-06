@@ -54,3 +54,16 @@ def test_enemy_conditions_become_losses(tmp_path):
         assert triggers[f"P{p} Victory"].effects[0].source_player == p
     assert "P2 Objective 1" not in triggers                            # only the human player's lines show
 
+
+
+def test_destroying_a_wonder_that_is_built_later(tmp_path):
+    # Nineveh has no Wonder at the start: its AI builds one. "Own fewer than 1" would win at once.
+    res, _, triggers = _convert(tmp_path, "voices_of_babylon", "08_the_conquest_of_nineveh")
+    assert not res.skipped
+    win, objective, armed = triggers["P1 Victory"], triggers["P1 Objective 1"], triggers["P1 Victory armed 1"]
+    assert not win.enabled and not objective.enabled and armed.enabled
+    [cond] = armed.conditions
+    assert (cond.condition_type, cond.quantity, cond.object_list, cond.source_player) == (3, 1, 276, 2)   # owns one
+    assert {e.trigger_id for e in armed.effects} == {win.trigger_id, objective.trigger_id}
+    [cond] = win.conditions
+    assert (cond.condition_type, cond.quantity, cond.object_list, cond.source_player) == (4, 0, 276, 2)   # then none

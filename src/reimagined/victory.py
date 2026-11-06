@@ -11,6 +11,13 @@ player's individual victory conditions (aoede.scenario.VictoryCondition). AoE2/R
     are extra ways to win; with "all custom conditions required" they join the victory trigger instead.
 
 Individual conditions are always all required: Foraging (all_custom off) needs all three buildings.
+
+"Destroy N" of objects the target doesn't own yet would be met from the first second as "own fewer":
+Nineveh builds the Wonder you must destroy (Voices of Babylon 8 was won at once). Such a condition waits
+for the objects: an "armed" trigger fires once the target owns them and turns the objective and victory
+triggers on, which start off. Several of them arm one after another. "Destroy all" stays "own none", met
+when there are none from the start: AoE1 counts them so too (Yamato 1's Jomon win when Xu Fu dies, though
+he never owns some of the soldier types they must kill).
 """
 from __future__ import annotations
 
@@ -33,6 +40,12 @@ ENEMY = 3
 
 
 @dataclass
+class Condition:
+    cond: dict
+    arm: dict | None = None                           # met once there is something to destroy (None: from the start)
+
+
+@dataclass
 class VictoryPlan:
     mode: str                                         # RoR VictoryCondition name
     triggers: list[dict] = field(default_factory=list)
@@ -44,7 +57,7 @@ def _area(c: VictoryCondition) -> list[int]:
 
 
 def _condition(c: VictoryCondition, owner: int, src: Scenario, conv: Conversion, refs: dict[int, int],
-               start_counts: Counter) -> tuple[dict | None, str | None]:
+               start_counts: Counter) -> tuple[Condition | dict | None, str | None]:
     """(RoR trigger condition, problem) for one AoE DE victory condition of player `owner`."""
     def ref(uid: int) -> int | None:
         return refs.get(uid)
@@ -65,8 +78,13 @@ def _condition(c: VictoryCondition, owner: int, src: Scenario, conv: Conversion,
     if t == "destroy_multiple":
         if obj is None:
             return {"type": "own_fewer_objects", "quantity": 0, "source_player": c.player}, None
-        left = max(start_counts[(c.player, c.object_type)] - c.number, 0)
-        return {"type": "own_fewer_objects", "quantity": left, "object_list": obj, "source_player": c.player}, None
+        start = start_counts[(c.player, c.object_type)]
+        if start < c.number:
+            return Condition({"type": "own_fewer_objects", "quantity": 0, "object_list": obj, "source_player": c.player},
+                             {"type": "own_objects", "quantity": c.number, "object_list": obj,
+                              "source_player": c.player}), None
+        return {"type": "own_fewer_objects", "quantity": start - c.number, "object_list": obj,
+                "source_player": c.player}, None
     if t == "bring_to_area":
         return {"type": "bring_object_to_area", "unit_object": ref(c.source), "area": _area(c)}, None
     if t == "bring_to_object":
@@ -101,17 +119,24 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int], objective_texts:
         return [{"type": "declare_victory", "source_player": p, "enabled": True}]
 
     for p in active:
-        conds = []
+        conds, arms = [], []
         for i, c in enumerate(p.victory):
             cond, problem = _condition(c, p.number, src, conv, refs, start_counts)
             if problem:
                 out.skipped.append(f"player {p.number} {c.type}: {problem}")
                 continue
+            if isinstance(cond, Condition):
+                cond, arm = cond.cond, cond.arm
+            else:
+                arm = None
             conds.append(cond)
+            objective = f"P{p.number} Objective {i + 1}"
+            if arm:
+                arms.append((arm, objective if p.human else None))
             if p.human:
                 texts = objective_texts.get(p.number, [])
                 text = texts[i] if i < len(texts) else c.type
-                out.triggers.append({"name": f"P{p.number} Objective {i + 1}", "display_as_objective": True,
+                out.triggers.append({"name": objective, "display_as_objective": True, "enabled": arm is None,
                                      "display_on_screen": False, "description": text, "short_description": text,
                                      "description_order": i, "conditions": [cond]})
         enemies = [q.number for q in active if src.diplomacy[p.number - 1][q.number - 1] == ENEMY]
@@ -121,7 +146,15 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int], objective_texts:
             conds += mine + (conquest if gv["conquest"] and p.human else [])
             mine, conquest = [], []
         if conds:
-            out.triggers.append({"name": f"P{p.number} Victory", "conditions": conds, "effects": win(p.number)})
+            name = f"P{p.number} Victory"
+            out.triggers.append({"name": name, "enabled": not arms, "conditions": conds, "effects": win(p.number)})
+            for k, (arm, objective) in enumerate(arms):
+                last = k == len(arms) - 1
+                then = [objective] if objective else []
+                then += [name] if last else [f"P{p.number} Victory armed {k + 2}"]
+                out.triggers.append({"name": f"P{p.number} Victory armed {k + 1}", "enabled": k == 0,
+                                     "conditions": [arm],
+                                     "effects": [{"type": "activate_trigger", "trigger_id": t} for t in then]})
         if custom:
             for g in mine:
                 out.triggers.append({"name": f"P{p.number} Victory: attribute {g['attribute']}", "conditions": [g],

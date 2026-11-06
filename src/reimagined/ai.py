@@ -113,7 +113,25 @@ def translate(ai: Ai, personality: dict[str, int], conv: Conversion, name: str) 
         t.spec["transports"] = max(ships.get(unit, 0), MIN_TRANSPORTS)
         t.spec["transport_unit"] = unit
     t.spec.update(_personality(personality))
+    rule = _specific_build(personality, conv)
+    if rule:
+        t.spec["rules"] = rule
     return t
+
+
+def _specific_build(sns: dict[str, int], conv: Conversion) -> str | None:
+    """SNSpecificBuildItemToBuild / SNSpecificBuildItemTime: AoE1's "build this one building at this time" (Nineveh,
+    and an AI each in Alexander the Great and The Coming of the Huns, build a Wonder this way: Nineveh's victory
+    condition is destroying it). A raw rule: once that many minutes have passed (read as minutes: unverified),
+    build one whenever the player has none, so a razed foundation is started again."""
+    item = sns.get("SNSpecificBuildItemToBuild", -1)
+    target = conv.objects.get(item) if item > 0 else None
+    if target is None or target.ror_id is None:
+        return None
+    minutes = max(sns.get("SNSpecificBuildItemTime", 0), 0)
+    return (f"(defrule ; AoE1 specific build item: {target.ror_name} after {minutes} min\n"
+            f"\t(game-time >= {minutes * 60})\n\t(building-type-count-total {target.ror_id} < 1)\n"
+            f"\t(can-build {target.ror_id})\n=>\n\t(build {target.ror_id}))\n")
 
 
 def _lines(text: str) -> list[str]:

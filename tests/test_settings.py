@@ -79,3 +79,15 @@ def test_water_maps_keep_transports_and_rebuild_buildings():
     assert t.spec["villagers"] == 25 and "gatherers" not in t.spec                # auto split from its list
     assert {"build": "STABLE", "count": 1} in t.spec["keep"] and {"build": "SIEGE_WORKSHOP", "count": 1} in t.spec["keep"]
     assert not any(k.get("build") == "HOUSE" for k in t.spec["keep"])
+
+
+def test_specific_build_item_builds_the_wonder():
+    from aoe2ed.ai.spec import build_script
+    from reimagined.ai import translate
+    p = load_scenario(MISSIONS["voices_of_babylon/08_the_conquest_of_nineveh"].scenario_path).players[1]   # Nineveh
+    t = translate(p.ai, missions.personality(p.ai.personality_text), load(), "Nineveh")
+    script = build_script(t.spec)
+    assert "(game-time >= 0)" in script and "(build 276)" in script            # AoE1: a Wonder at minute 0
+    p = load_scenario(MISSIONS["glory_of_greece/08_alexander_the_great"].scenario_path).players[3]   # Persian Army
+    t = translate(p.ai, missions.personality(p.ai.personality_text), load(), "Persian Army")
+    assert "(game-time >= 360)" in t.spec["rules"]
