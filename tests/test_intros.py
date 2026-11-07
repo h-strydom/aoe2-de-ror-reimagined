@@ -34,7 +34,7 @@ def test_intro_file_points_each_mission_at_its_images():
     data = intros.intro(c, [["a", "b"], ["c"]])
     first = data["Scenarios"][0]["IntroSequence"]["SequenceItems"][0]["Data"]
     assert first["SlideImageSequence"] == f"textures/campaign/{c.slug}/1/intro/%d.png"
-    assert [s["String"] for s in first["Slides"]] == ["a", "b"]
+    assert [s["String"] for s in first["Slides"]] == ["a"]                # the opening slide only
     assert first["Slides"][0]["Duration"] == intros.MIN_SECONDS
     assert "Sound" not in first                                           # silent without voice lines
 
@@ -46,7 +46,7 @@ def test_voiced_missions_narrate_the_story_and_the_victory():
     data = intros.intro(c, [["story", "objectives"], ["quiet"]], told, ["You won.", "Also won."])
     first, second = data["Scenarios"]
     intro = first["IntroSequence"]["SequenceItems"][0]["Data"]
-    assert intro["Sound"] == "rorri_x_1_intro" and [s["String"] for s in intro["Slides"]] == ["story", "objectives"]
+    assert intro["Sound"] == "rorri_x_1_intro" and [s["String"] for s in intro["Slides"]] == ["story"]
     assert intro["Slides"][0]["Duration"] == 30.5                         # as long as the voice, plus a moment
     outro = first["OutroSequence"]["SequenceItems"][0]["Data"]
     assert outro["Sound"] == "rorri_x_1_victory" and outro["Slides"][0]["String"] == "You won."

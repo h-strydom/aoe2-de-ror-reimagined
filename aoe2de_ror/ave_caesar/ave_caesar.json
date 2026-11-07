@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy all enemy Docks.\n• If Caesar dies, the mission will be lost.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -100,25 +81,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Britannia, 55 to 54 BCE\n\nJulius Caesar, you have been governor of Roman Gaul for 8 years and have fought a series of brilliant campaigns against the many enemies of Rome. You correctly determined that you had to bring Gaul under Roman control to gain popularity in Rome and extend your power. Now, with the Gauls subdued and the German invaders expelled, you look north and west across the sea into Britain, a land clouded in mystery and surrounded by many strange legends. It is clear that the Britons assisted the Veneti during their war with you in Gaul, and so a punitive expedition is in order. It is unclear what lies beyond the misty waters and tall, white cliffs, but rumors of ancient tribes using chariots and fanatical druids conducting human sacrifices are beginning to spread among your troops.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 7.2,
-                           "TextFadeDuration": 7.0,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Capture and hold all the British centers of power (Ruins).\n• If Caesar dies, the mission will be lost.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -197,25 +159,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Kill the Gallic leader, Vercingetorix.\n• If Caesar dies, the mission will be lost.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -270,25 +213,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Pharsalus, 48 BCE\n\nAs expected, your bold move to cross the Rubicon into Italy has prompted a rebellion under the leadership of Pompey. The Republic has been hollowed out by civil wars and weak politicians, and so it is time for a strong man like yourself to bring Rome to its next phase. First, we must deal with the rebels. Pompey has fled to Greece after your quick successes in Italy. Having solidified your control in Rome and neutralized other Pompeian forces in Hispania, you have set sail to Greece to finish off Pompey. Your two armies will meet near the small city of Pharsalus to decide who will become the true ruler of Rome.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the forces of Pompey.\n• If Caesar dies, the mission will be lost.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

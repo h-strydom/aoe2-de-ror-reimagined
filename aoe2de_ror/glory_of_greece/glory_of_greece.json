@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy all Pelasgian Farms.\n• Build 5 Farms.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -100,25 +81,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Mycenae, 1400 BCE\n\nYour people are now largely settled, and they have prospered for the past several generations. You are not alone, however—other city-states have risen and begun to expand as well. As border clashes begin, it becomes clear that growth is possible only at the expense of neighboring rivals. The Tirynians covet the lands that you now control, and have begun to aggressively press the issue. This outrage must not be allowed to continue. Secure your control over this region by capturing the ancient Ruins close to the nearby town of Tiryns. Build two Sentry Towers adjacent to the Ruins to deter any further enemy incursions.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Capture the Ruins.\n• Construct 2 Sentry Towers beside the Ruins.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -197,25 +159,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Capture the Artifact.\n• Destroy the Minoan Temple.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -270,25 +213,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Ilium, 1194 BCE\n\nThe overseas expansion of the Mycenaeans has brought them into contact with other cultures that simultaneously pose opportunities and dangers. In a defiant but inspired act, Paris, prince of Troy (also called Ilium), has kidnapped the beautiful Helen of Sparta and taken her back to his home. The fury of your brother Menelaus, Helen's husband and king of Sparta, knows no bounds, and he has appealed to you, Agamemnon, king of Mycenae, for help. Jumping at the opportunity for war and renown, you have assembled a vast army bent on the destruction of Troy. The city-state lies far across the Aegean Sea, however, and the campaign will require a strong navy to launch a seaborne invasion of the Trojan heartland. Go forth dauntlessly—eternal fame and glory await!",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 7.8,
-                           "TextFadeDuration": 7.6,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Hector, prince of Troy, must be slain.\n• Paris, prince of Troy, must be slain.\n• Capture the Treasure of Priam.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -367,25 +291,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the three Luwian Government Centers.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -440,25 +345,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Athens, 405 BCE\n\nOver the past several centuries, the Greek city-states have expanded their influence both in Hellas and overseas. Now, a powerful coalition led by the dual monarchy of Sparta is challenging your city-state of Athens for dominance in a conflict that has lasted three decades. In the wake of the disastrous Sicilian Expedition, Sparta has seized the initiative, claiming several key victories and drawing ever closer to Athens. You have no hope of defeating the battle-hardened Spartans in the field at present, but there is a chance that you may be able to defend the city long enough for reinforcements and supplies to arrive and turn the tide in your favor. The Spartan army is reliant on a large baggage train of supplies—if it is captured, their siege will be delayed considerably.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Capture the Spartan baggage train (represented by four Artifacts).",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -537,25 +423,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.8,
-                           "TextFadeDuration": 6.6,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Capture the Artifact.\n• Escort the Artifact to your Government Center in the north of the map.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -610,25 +477,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Asia Minor, 334 BCE\n\nWar! The rivalry between Hellas and Persia has reignited after the irruption of the Macedonians into the region, and the Greeks have been united under you, Alexander of Macedon. You have dauntlessly marched into Asia Minor and are now surrounded by your enemies. Although they are numerous, they are disorganized, uncoordinated, and cowardly—no match for your disciplined forces. Seize the initiative and defeat them individually before they can prepare their defenses. Victory in this campaign will etch your name into the pages of history for eternity!",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 8.7,
-                           "TextFadeDuration": 8.5,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Defeat all your enemies or destroy the Wonders that they attempt to build.\n• Construct a Wonder in the flagged area in Egypt.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Eliminate the Jomon chieftain.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -100,25 +81,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Awaji and Shodo Islands, 178 CE\n\nYour chiefdom has grown since the ancient days when a Chinese boat first came to your shores. Your people have benefited from the goods brought by the seasonal Chinese trade ships and your craftsmen have learned to use bronze to fashion prized dotaku bells. These bells are buried into the earth to charge them with spiritual power and then rung as part of rituals to ensure the success of the rice harvests. Your settlements are growing, however, and new bells will be needed to protect your people's livelihood. Invade the neighboring islands and capture these valuable treasures.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Capture six Artifacts, each containing a dotaku bell.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -197,25 +159,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.1,
-                           "TextFadeDuration": 5.9,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the four Izumo Barracks\n• Capture the War Chest and bring it to your Temple",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -270,25 +213,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Izumo-taisha, 300 CE\n\nIt has been many years since the reign of Queen Himiko and war once again grips Japan. Your clan, the Yamato, controls the Kansai region, where you, Homutawake, rule as king. Rival lords, however, threaten your rule in this life and the next. They compete with one another over farming lands and the construction of giant burial mounds to house their remains. But you know that the great Shinto shrines are more prized than any rice paddy or mound. Your rivals, the Izumo clan, control one such shrine. Destroy it and build a greater shrine where it once stood to weaken your rivals' influence, and receive the blessings of the gods.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy Izumo Temple.\n• Build a Temple where Izumo Temple once stood.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -367,25 +291,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Recover the Artifact.\n• Bring the Artifact to the flagged area.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -440,25 +345,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Asuka, 645 CE\n\nThe Soga must be stopped! Since the days of Prince Shōtoku, the clan has had its thumb on the Imperial family, but now, they have gone too far. They plan to depose your mother, the Empress, and put a more compliant puppet on the Imperial throne. Prince Naka no Ōe, you must defeat the Soga and finally drive them from power, but exercise caution. They control the Imperial capital, and you are not yet in a strong position to confront them. You may need to hide your intentions by offering the Soga gifts of peace until you are powerful enough to defeat them.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy Soga Government Center.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -537,25 +423,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy Emperor Kōbun's Government Center.\n• Protect Asuka Government Center.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -610,25 +477,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Kyushu, 740 CE\n\nEmperor Shōmu, your great-grandfather, the Emperor Tenji, ended the power of the Soga clan by aligning with a minor courtier. In recognition of his aid, your ancestor bestowed the clan name Fujiwara to the courtier. Now, like the Soga they helped defeat, the Fujiwara have grown powerful and seek to dominate the Imperial throne. One of their clan leaders leads a rebellion in Kyushu. Defeat him and restore the people's faith in your divine rule.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Fujiwara revolt.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

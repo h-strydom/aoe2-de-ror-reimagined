@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.7,
-                           "TextFadeDuration": 6.5,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy both Roman Government Centers.\n• Do not allow your Government Center to be destroyed.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -112,25 +93,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 8.7,
-                           "TextFadeDuration": 8.5,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Bring two War Chests containing Roman supplies to the blue flagged area on your island.\n• Alternatively, kill your opponents.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -185,25 +147,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Carthaginian Coast, 255 BCE\n\nFrustrated by your victories in Sicily, the Romans have sent the general Regulus to attack our homeland in Africa. His army now threatens the city of Carthage while the Roman navy approaches to blockade our ports. You must defend Carthage from these attacks and turn the tides of the battle. May Ba'al Hammon protect us and grant us victory!",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 7.1,
-                           "TextFadeDuration": 6.9,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Roman Wonder.\n• Build your own Wonder in the center of Carthage, inside the blue flags.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

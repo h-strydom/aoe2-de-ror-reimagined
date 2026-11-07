@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.8,
-                           "TextFadeDuration": 6.6,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Bring Hannibal and both Armored Elephants past the double flags in the lower corner of the map.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -100,25 +81,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Thessaly, 171 BCE\n\nKing Perseus of Macedon, your spies in Rome have brought word that your rival, the King of Pergamon, traveled from his lands in western Anatolia to give a speech to the Roman Senate. In it, he slandered and defamed your highness and urged the Roman Senators to declare war on your kingdom. Now, Roman legions have landed in Thessaly and have been well-received by treacherous Greek cities such as Larissa. You must not allow the Romans time to become comfortable in Greek lands. Defeat the Romans and lay claim to the Greek cities rightly belonging to you as the heir to the Antigonid dynasty.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Government Center in Larissa (red).",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -197,25 +159,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Roman army before it destroys the rebellious slaves.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -270,25 +213,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Syria and Mesopotamia, 262 CE\n\nThe Emperor Valerian lies captive in a Persian dungeon following his defeat at Edessa. His son and successor, Gallienus, faces revolts in Egypt and Gaul. The Empire is in turmoil, and the Persian horde continues its westward march, nearing your client kingdom of Palmyra. The emperor is entrusting you, Odaenathus, King of Palmyra, to serve Rome by defeating the Persian host. Drive the Persians from Syria and take our war to their cities and you will be acclaimed Imperator Orientis, Commander of the East.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Persians.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

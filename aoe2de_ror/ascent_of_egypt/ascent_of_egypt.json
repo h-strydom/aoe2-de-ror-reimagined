@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 12.4,
-                           "TextFadeDuration": 12.2,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objective: Grow your tribe to 7 villagers.\n\n• Your Town Center supports only 4 villagers\n• You must build 1 House (supports 4 more villagers)\n• Houses cost 30 wood each\n• Villagers cost 50 food each",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -100,25 +81,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Nile Delta, 6500 BCE\n\nFor generations, the rich hunting lands along the Nile have provided for your people. Now, a series of droughts have withered the size of the herds and forced your kin to forage for new food sources. Fortunately, the banks of the Nile teem with fruits and edible plants. Hunting bands have returned from the east with berries, dates and leeks. Find these forage sites and collect food for your growing tribe. Once you have enough food, settle in this rich area by constructing a Granary, Storage Pit, and Dock.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 7.6,
-                           "TextFadeDuration": 7.4,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives: Collect food and then construct 3 buildings:\n\n• Granary (120 wood)\n• Storage Pit (120 wood)\n• Dock (100 wood)",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -197,25 +159,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 12.5,
-                           "TextFadeDuration": 12.3,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objective: Find 5 Discoveries before the Libyans find them.\n\n• Discoveries are in the shape of a white horse\n• Walk through the Discovery to capture it\n• Create multiple villagers to protect explorers",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -270,25 +213,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Nile River bank, around 6000 BCE\n\nExploration and contact with other cultures have brought new ideas to Egypt. Your people are learning new skills, including technologies for fishing and more complex stone tools. Advance your culture to the Tool Age to gain access to these skills and new capabilities.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 7.8,
-                           "TextFadeDuration": 7.6,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objective: Advance to the Tool Age. To do this you must:\n\n• Build a Town Center\n• Construct two different Stone Age buildings",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -367,25 +291,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 8.4,
-                           "TextFadeDuration": 8.2,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objective: Destroy the invading tribe.\n\n• Click units to reveal capabilities\n• Idle soldiers automatically attack enemies within sight",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -440,25 +345,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Nile Valley, around 3100 BCE\n\nThe future of Egypt is about to change. The great Pharaoh Narmer seeks to unite the Upper and Lower Kingdoms into a unified Egypt. Using the wealth brought from farming along the Nile's banks, he will finally be able to defeat his rivals. Take control of the villages along the river and build a surplus of 800 food to feed your people and Narmer's warriors. In addition, take control of the ancient stone circle of Nabta Playa, found in the desert to the west. Controlling this ancient Ruin will demonstrate Narmer's power to his opponents. Be wary of nearby peoples, however. You need not destroy them but know that they will attempt to undermine Narmer's goal of uniting Egypt.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 10.2,
-                           "TextFadeDuration": 10.0,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives: Control the Ruin and stockpile 800 food.\n\n• A Market must be constructed before Farms can be built\n• Research Technology to upgrade efficiency of Farms",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -537,25 +423,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 15.0,
-                           "TextFadeDuration": 14.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives: Stockpile 500 stone and 500 gold.\n\n• Villagers deposit stone and gold at the Town Center\n• Assign multiple villagers to mines to increase production\n• Establish trade routes with foreign Docks using Trade Boats or Merchant Ships",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -610,25 +477,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Heliopolis, around 2500 BCE\n\nEgyptian culture is flourishing and the population is growing. In order to provide for the administration of the kingdom and serve the gods, new professions have been established. Scribes and priests help the pharaoh in his dealings with the military, the people, and the gods. These new specialists have quickly gained prominence and become vital to Egyptian civilization.\n\nIn the north, west of the Nile Delta, scouts report Libyan raiding parties are approaching one of Egypt's most sacred cities, Heliopolis, built to honor the Sun God Ra. As the lector priest of the city's main temple and army scribe of the pharaoh, you are commanded to stop these raiders at all costs. The priests in the city have offered their services to support the army. However, you must be wary of the Libyans who bring a siege engine with them to demolish the city's walls. This machine could be useful for our own armies, so instead of destroying it, the pharaoh has ordered you to capture this Stone Thrower and bring it to the Town Center at Heliopolis.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 12.9,
-                           "TextFadeDuration": 12.7,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives: Capture (convert) the Stone Thrower and bring it to your Town Center.\n\n• Use Priests to convert enemy units\n• Research at the Temple for upgrades to Priests\n• Mine gold to replace killed Priests",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -707,25 +555,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 9.9,
-                           "TextFadeDuration": 9.7,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives: Find the island and build on it.\n\n• Locate the island on the Nile River\n• Build a Town Center on the island\n• Build two Sentry Towers on the island",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -780,25 +609,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Nile Delta, 1720 BCE\n\nThe forts along the Nile have brought peace to the south, but the Libyans have once again become a problem. They have been raiding the coasts and intercepting trade ships bringing goods from other lands to Egypt. Recently, they captured an important ship belonging to the pharaoh himself, and carried off a treasured Artifact sent to him by the kings of Canaan. Build a naval base in this area of the coast and attack the Libyan raiders in the Nile Delta. Recover the stolen Artifact and return it to your Town Center.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 12.1,
-                           "TextFadeDuration": 11.9,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives: Recover the stolen Artifact and bring it back to your Town Center.\n\n• Artifact colors indicate ownership\n• Artifacts cannot be destroyed\n• Artifacts can be moved on land or by vessel",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -877,25 +687,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 7.7,
-                           "TextFadeDuration": 7.5,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objective: Build a Wonder. To do this you must:\n\n• Advance to the Iron Age\n• Stockpile 1000 wood, 1000 stone, and 1000 gold",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -950,25 +741,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Megiddo, 1457 BCE\n\nEgypt is thriving under the rule of her new pharaohs, but it is time to look outward. Pharaoh Thutmose III is expanding the army and intends to use it to invade Canaan. For centuries, that land has been within the Egyptian sphere of influence, but now it must be added to the Empire once and for all. The Canaanites think they can resist Egypt and have formed an alliance, led by the kings of Kadesh and Megiddo. They are gathering a vast army, but the gods favor us. Commander, the pharaoh entrusts you with the first attacking division. Do not disappoint the pharaoh as he is watching your every move.\n\nTo display the objectives while you are playing the game, click the Objectives button in the upper-right corner of the game screen. For more tips on achieving the objective, click on Hints. To open this page again while you are playing the game, open the menu and click on the Scenario Instructions button.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objective: Destroy the Canaanite Government Center in the city of Megiddo.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

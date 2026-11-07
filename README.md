@@ -98,7 +98,8 @@ Converts every campaign (or just the ones you name, e.g. `reimagined convert asc
 - each mission into `aoe2de_ror/<campaign>/NN_<mission>/<campaign>_NN_<mission>.aoe2scenario`
 - each campaign into `aoe2de_ror/<campaign>/<campaign>.aoe2campaign`, titled "AoE1 <title>"
 - each campaign's intros (`<campaign>.json`): before every mission, a slideshow in the style of AoE DE's
-  own briefing screen, with the mission's briefing map and its instructions (story, then objectives).
+  own briefing screen: one slide with the mission's briefing map and its story (the objectives are in the
+  mission's instructions).
   The slide images are built from your local AoE DE copy at install time. Every intro plays AoE DE's narration
   of the story, and once a mission is won an outro shows its victory text, read by the same narrator. The voice
   lines are converted from your AoE DE copy at install time too, into `.wem` sounds the mod carries (RoR plays a

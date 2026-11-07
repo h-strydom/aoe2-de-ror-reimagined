@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Convert or destroy the Sumerians.\n• Convert or destroy the Akkadians.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -100,25 +81,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Tigris Valley, 1755 BCE\n\nThe addition of the Sumerian and Akkadian cities to the rising Babylonian Empire pleases Hammurabi greatly. Now, he sets a more difficult task for you. One of our frontier cities was recently sacked and important treasures, including a copy of Hammurabi's law code engraved in stone, were carried off to the Tigris River. Chase the raiders to where the treasures were taken and build up a force to recover them. They must not be allowed to move the treasures upstream. The prestige of your great king remains tarnished for as long as these treasures remain in enemy hands.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.2,
-                           "TextFadeDuration": 6.0,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Capture the 2 missing treasures (Artifacts) and return them to your side of the river.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -197,25 +159,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Hittite Army (Brown).\n• Take back the ruined city of Babylon (Ruins).",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -270,25 +213,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Babylon, 1185 – 1155 BCE\n\nFollowing the Hittite sack of Babylon, the city has come under the dominion of the Kassites, who have controlled it for nearly 500 years. Kassite rule is in danger, however, because of Elamite and Assyrian intrusions. Another Elamite army is pressing forward at this moment and is moving to take Babylon. If the city cannot be held, you are to save what you can, retreat downriver, and build up a new army. When you are prepared, retake the city of Babylon and destroy the invading Elamites.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Elamites.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -367,25 +291,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Capture the Artifact.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -440,25 +345,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Eastern Mesopotamia, 1119 BCE\n\nThe raid into Elam was successful and the statue of Marduk has been recovered, but it must be returned to Babylonia. There are still bands of Elamites and other enemies roaming the Zagros Mountains who wish to prevent the return of the statue. Bring the statue safely to your frontier Temple where it can be guarded prior to being moved to Babylon.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Return the statue of Marduk (Artifact) to its proper place (Temple).",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -537,25 +423,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.9,
-                           "TextFadeDuration": 6.7,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Northern Aramaeans (Red).\n• Destroy the Western Aramaeans across the river (Yellow).",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -610,25 +477,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Nineveh, 612 BCE\n\nFinally, Babylonia has been liberated from Assyrian oppression. Civil wars, rebellions and foreign invasions have brought the once-mighty empire to its knees. The Assyrians have fallen back behind the imposing walls of their capital at Nineveh while an army of Babylonians and Medes converge on the capital of Assyria. Destroy the Wonder in Nineveh to break the power of the Assyrians indefinitely.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Wonder in Nineveh.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

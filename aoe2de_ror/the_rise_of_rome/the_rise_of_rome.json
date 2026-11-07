@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Build a Sentry Tower next to each flag.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -100,25 +81,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Southern Italy, 280 to 272 BCE\n\nRoman conquests of the tribes of Central Italy have bred fear among the Greek colonists to the south. To their rescue comes a Macedonian, King Pyrrhus of Epirus, who lands in Italy with a mighty army including war elephants captured in the East. If Rome were to lose to the ambitious Pyrrhus, her southern expansion would be halted. If Pyrrhus can be defeated, however, Rome's victory would awaken the world to her growing power. The Senate is sending you, Consul, to meet these Greeks in battle and show them that their fears are well-deserved. For the first time, foreign men will know the fearsome might of Rome!",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Macedonians without losing your two Town Centers.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -197,25 +159,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 8.8,
-                           "TextFadeDuration": 8.6,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Place 10 Roman Legion units in the Syracuse forum (raised area marked by two yellow flags).\n• Do not kill Archimedes (Priest).",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -270,25 +213,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Metaurus River, 208 to 207 BCE\n\nHannibal is at the gates! Though the Carthaginian general and his savage mercenaries lack the strength to take Rome itself, they have set the Italian countryside aflame and have defeated every legion sent against them for the past ten years. Now, spies tell us that Hannibal has sought out his brother, Hasdrubal, who has slipped our grasps in Hispania and crossed the Alps just as Hannibal did a decade ago. If Hasdrubal's army is allowed to join Hannibal's, Rome would surely fall to the barbarous Carthaginians! Go now, Consul of Rome, divide our enemies and conquer them!",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the two Carthaginian forces, or build a Wonder that stands.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -367,25 +291,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 7.3,
-                           "TextFadeDuration": 7.1,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the three Docks in Carthage's harbor\n• Bring Scipio to the blue flags at Carthage's Byrsa Forum",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -440,25 +345,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Greece and Pontus, 89 to 63 BCE\n\nMithridates, the cunning King of Pontus, has expanded his kingdom on the Black Sea coast at the expense of Rome's allies in Anatolia. Claiming descent from both Alexander and the Persian King Cyrus the Great, he has incited the Greeks and Easterners to rebel against our interests, and has even forged an alliance with the mighty Tigranes, King of Artaxiad Armenia. The Senate is dispatching you with the legions to restore our eastern domains and humble this so-called King of Kings.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Wonder of Pontus.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

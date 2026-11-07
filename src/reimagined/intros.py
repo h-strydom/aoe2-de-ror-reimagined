@@ -127,9 +127,12 @@ def _voiced(text: str, voice) -> float:
 
 def intro(c: layout.CampaignInfo, texts: list[list[str]], voices: list[dict] | None = None,
           victories: list[str] | None = None) -> dict:
-    """The campaign's intro file: per mission, one slide per text over that mission's slide image. With its voice
-    lines (voices.mission_voices): the story slide plays the intro narration and lasts as long, and an outro
-    after a victory shows `victories[n]` read by the victory line, over the same image."""
+    """The campaign's intro file: per mission, its opening slide (the first text: the story) over that mission's
+    slide image. With its voice lines (voices.mission_voices) it plays the intro narration and lasts as long, and
+    an outro after a victory shows `victories[n]` read by the victory line, over the same image.
+
+    One slide only: a mod's own voice keeps playing through Next and Back (RoR playtest, 2026-11-07; two
+    slideshows per intro were worse, Back left the intro), and the objectives are in the mission's instructions."""
     if voices is not None and len(voices) != len(texts):
         raise ValueError(f"{c.slug}: {len(voices)} missions with voices, the campaign has {len(texts)}")
     scenarios = []
@@ -139,9 +142,9 @@ def intro(c: layout.CampaignInfo, texts: list[list[str]], voices: list[dict] | N
         data = {"SlideImageSequence": sequence}
         if "intro" in told:
             data["Sound"] = told["intro"].sound
-            data["Slides"] = [_slide(slides[0], _voiced(slides[0], told["intro"]))] + [_slide(t) for t in slides[1:]]
+            data["Slides"] = [_slide(slides[0], _voiced(slides[0], told["intro"]))]
         else:
-            data["Slides"] = [_slide(t) for t in slides]
+            data["Slides"] = [_slide(slides[0])]
         scenario = {"IntroSequence": {"SequenceItems": [{"Type": "SlideShow", "Data": data}]}}
         if "victory" in told and victories and victories[n - 1]:
             text = victories[n - 1]

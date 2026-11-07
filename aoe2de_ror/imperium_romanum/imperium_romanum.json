@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Destroy the Town Centers of the two enemy fortresses.\n• Sink Cleopatra's Barge.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -100,25 +81,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Italia, 69 CE\n\nThe brutal and likely insane Emperor Nero has died by his own hand, leaving no heir. Reveling in delusions of grandeur, a number of claimants to the throne have cast their lots forward. However, the soldiers under your command, Vespasian, are adamant in their belief that rule of the empire should be yours. Use your eastern legions to seize control of Rome while defending your flanks from the armies of the other usurpers. Place a monument in Rome to mark your ascension to the throne.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.8,
-                           "TextFadeDuration": 6.6,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Protect your Wonder.\n• Destroy Galba’s Wonder.\n• Build a new Wonder where Galba’s Wonder stood.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -197,25 +159,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 10.7,
-                           "TextFadeDuration": 10.5,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Recapture the three tribute wagons (Artifacts) and deliver them to the palace (foot of the Wonder) in Ctesiphon.\n• Destroy all Palmyran and Parthian Stables.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -282,25 +225,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Defeat the Palmyrans.\n• None of your Town Centers may be destroyed.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -355,25 +279,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Pannonia, 373 CE\n\nA new and more fearsome group of barbarians, the Huns, have been moving west from Central Asia for the past several decades. They are skilled horsemen and are rumored to be nigh invincible! Germanic and Alanic tribes alike flee before them, flooding towards the frontiers of the Empire. The upcoming invasion will be the ultimate test of the strength of the Empire. If you cannot parry their incursions, Rome will be sacked, and the empire overrun!",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 7.1,
-                           "TextFadeDuration": 6.9,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Build up and destroy the Huns (red).\n• Defend the Empire from Vandal, Gothic, and Alanic incursions.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

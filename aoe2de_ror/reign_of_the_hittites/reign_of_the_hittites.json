@@ -27,25 +27,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 9.1,
-                           "TextFadeDuration": 8.9,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Convert enemy villagers to build a settlement.\n• Build an army and send it forward to eliminate all remaining Hattians and Hurrians.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -112,25 +93,6 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Capture the Babylonian War Chest and return it to your camp.",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
                         }
                      ]
                   }
@@ -185,25 +147,6 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Kadesh, 1274 BCE\n\nMuwatalli, your empire stretches from the coasts of Arzawa in the west to the land of Canaan in the southeast, but such an empire breeds jealousy in foreign kings. In a betrayal of the agreement between you and his father, the Egyptian Pharaoh Ramesses II has captured your vassal, the Amorite kingdom of Amurru in the land of Syria. In retaliation, you have raised the call to war among your allies. The kings and princes of nineteen lands, among them Lukka, Ugarit, and Carchemish, join you in battle. The plain at Kadesh by the Arantu River will soon hear the thundering of your war chariots as if the storm god Tarhunna himself were beating the earth with his thunderbolts and battle axe!",
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 6.0,
-                           "TextFadeDuration": 5.8,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": "Objectives:\n• Bring the two War Chests to your city.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
