@@ -33,6 +33,10 @@ ROR_VICTORY = {"standard": "STANDARD", "conquest": "CONQUEST", "score": "SCORE",
                "custom": "CUSTOM"}
 # Global victory settings -> the RoR attribute (resource) that counts them; AoE2 kept AoE1's resource ids.
 GLOBAL_ATTRIBUTES = {"artifacts": 7, "ruins": 14, "discoveries": 13, "exploration": 22, "gold": 3}
+# AoE DE's Discovery has no RoR object: conversion.yaml places RoR's Ruins (52) instead, which the game counts in
+# Ruins (14). Capturing them left Discoveries (13) at 0 in game (Ascent of Egypt 3 playtest, 2026-11-07).
+RESOURCE = {13: 14}
+GLOBAL_ATTRIBUTES = {k: RESOURCE.get(v, v) for k, v in GLOBAL_ATTRIBUTES.items()}
 CURRENT_AGE = 6
 # AoE DE's "advance to the Tool Age" asks for current age 2 (Ascent of Egypt 4); RoR counts the Stone
 # Age as 0, so the Tool Age is 1. Unverified in game.
@@ -51,6 +55,9 @@ class VictoryPlan:
     mode: str                                         # RoR VictoryCondition name
     triggers: list[dict] = field(default_factory=list)
     skipped: list[str] = field(default_factory=list)  # conditions that point at objects the conversion dropped
+    # The Custom victory's Conquest checkbox (on by default in the scenario file): the original's setting. Left on,
+    # killing every Libyan won Ascent of Egypt 3 although AoE DE's custom victory there has no conquest.
+    conquest: bool = True
 
 
 def _area(c: VictoryCondition) -> list[int]:
@@ -92,7 +99,8 @@ def _condition(c: VictoryCondition, owner: int, src: Scenario, conv: Conversion,
         return {"type": "bring_object_to_object", "unit_object": ref(c.source), "next_object": ref(c.target)}, None
     if t == "attribute":
         amount = c.amount + AGE_OFFSET if c.number == CURRENT_AGE else c.amount
-        return {"type": "accumulate_attribute", "attribute": c.number, "quantity": amount, "source_player": owner}, None
+        return {"type": "accumulate_attribute", "attribute": RESOURCE.get(c.number, c.number), "quantity": amount,
+                "source_player": owner}, None
     if t == "create_in_area":
         return {"type": "objects_in_area", "quantity": c.number, "object_list": obj, "source_player": owner,
                 "area": _area(c)}, None
@@ -143,7 +151,7 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
     shown for human players)."""
     gv = src.global_victory
     mode = VICTORY_MODES[gv["mode"]]
-    out = VictoryPlan(ROR_VICTORY[mode])
+    out = VictoryPlan(ROR_VICTORY[mode], conquest=bool(gv["conquest"]) if mode == "custom" else True)
     active = src.active_players
     start_counts = Counter((p.number, u.type) for p in src.players for u in p.units)
     custom = mode == "custom"

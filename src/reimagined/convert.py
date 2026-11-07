@@ -260,7 +260,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         reimagined = reimagined_triggers(src, conv, mission, vp.triggers)
         progression.select_objects(reimagined, placed)
         vp.triggers += reimagined
-        options_set(o.handle, {"victory_condition": vp.mode})
+        options_set(o.handle, {"victory_condition": vp.mode, "victory_conquest": vp.conquest})
         if vp.triggers:
             triggers_add(o.handle, vp.triggers)
         res.victory, res.triggers, res.skipped = vp.mode, len(vp.triggers), vp.skipped

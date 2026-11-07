@@ -89,3 +89,11 @@ def test_objectives_have_checkboxes_and_counters(tmp_path):
     first, second = triggers["P1 Objective 1"], triggers["P1 Objective 2"]
     assert first.description_order > second.description_order               # higher shows higher: first on top
     assert second.short_description == "+ Build 5 Farms (<P1 Objective 2>/5)."
+
+
+def test_custom_victory_keeps_the_originals_conquest_setting(tmp_path):
+    """Ascent of Egypt 3 is a custom victory without conquest: killing every Libyan mustn't win, and its
+    discoveries (RoR Ruins) count in the Ruins resource."""
+    _, s, ts = _convert(tmp_path, "ascent_of_egypt", "03_discoveries")
+    assert s.sections["GlobalVictory"].conquest_required == 0
+    assert {c.attribute for c in ts["P1 Victory"].conditions} == {14}
