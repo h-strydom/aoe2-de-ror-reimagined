@@ -123,3 +123,10 @@ def test_setup_runs_before_the_upgrades_and_is_the_humans():
     assert names.index("RI Difficulty moderate 2") < names.index("RI Upgrades load")   # perks survive an empty start
     setup = ts[names.index("RI Difficulty moderate 2")]["effects"][-1]
     assert setup["type"] == "modify_resource" and setup["source_player"] == 2
+
+
+def test_select_resolves_to_the_placed_objects():
+    ts = [{"name": "t", "effects": [{"type": "remove_object", "source_player": 1,
+                                     "select": {"player": 0, "unit": [59]}}]}]
+    progression.select_objects(ts, {0: [(59, 7), (22, 8), (59, 9)], 1: [(59, 10)]})
+    assert ts[0]["effects"][0] == {"type": "remove_object", "selected_object_ids": [7, 9], "source_player": 0}

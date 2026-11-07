@@ -248,14 +248,18 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             setattr(s.message_manager, k, v)
 
         refs = {}
+        placed: dict[int, list[tuple[int, int]]] = {}
         for owner, ror_id, u in placements(src, conv, terrain, res.dropped):
             unit = s.unit_manager.add_unit(player=owner, unit_const=ror_id, x=u.x, y=u.y, z=u.z,
                                            rotation=u.rotation, status=NORMAL_STATUS)
             refs[u.id] = unit.reference_id
+            placed.setdefault(owner, []).append((ror_id, unit.reference_id))
             res.placed += 1
 
         vp = victory.plan(src, conv, refs, objective_texts)
-        vp.triggers += reimagined_triggers(src, conv, mission, vp.triggers)
+        reimagined = reimagined_triggers(src, conv, mission, vp.triggers)
+        progression.select_objects(reimagined, placed)
+        vp.triggers += reimagined
         options_set(o.handle, {"victory_condition": vp.mode})
         if vp.triggers:
             triggers_add(o.handle, vp.triggers)

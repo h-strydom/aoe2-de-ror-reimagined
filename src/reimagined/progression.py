@@ -249,6 +249,21 @@ def _player_all(triggers_: list[dict], player: int) -> list[dict]:
     return triggers_
 
 
+def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]]]) -> None:
+    """Resolve setup effects' `select: {player, unit}` (unit: an id or a list) into selected_object_ids: the objects
+    of those units the map places for that player. `placed` is player -> [(unit id, reference id)].
+    remove_object by unit type over an area left Gaia's forage bushes in place (Egypt 2 playtest, 2026-11-07);
+    remove_object on selected objects works (aoe-agent-editor's fog block)."""
+    for t in triggers_:
+        for e in t.get("effects") or []:
+            sel = e.pop("select", None)
+            if sel is None:
+                continue
+            units = sel["unit"] if isinstance(sel["unit"], list) else [sel["unit"]]
+            e["selected_object_ids"] = [ref for unit, ref in placed.get(sel.get("player", 0), []) if unit in units]
+            e["source_player"] = sel.get("player", 0)        # the objects' owner, over the human default
+
+
 def hand_over(plan_triggers: list[dict], player: int) -> list[str]:
     """Turn the human player's victory triggers into unlocking the end of the mission ("RI Primary complete"),
     and move their objective lines above the bonus lines. Returns the changed triggers' names."""
