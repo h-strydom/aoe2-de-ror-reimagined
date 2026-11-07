@@ -13,7 +13,9 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("extract", help="fill aoe1de/'s campaign and mission files with players, objectives and text")
     p_conv = sub.add_parser("convert", help="convert campaigns to Return of Rome into aoe2de_ror/ (needs setup)")
     p_conv.add_argument("campaigns", nargs="*", help="campaign folder names (default: all)")
-    p_conv.add_argument("--install", action="store_true", help="also install the campaigns into your profile as a local mod (needed for campaign screens)")
+    p_conv.add_argument("--install", action="store_true",
+                        help="also install each campaign into your profile as the local mod '[RoR-RI] <campaign>', "
+                             "where the game's mod manager can publish and update it")
     p_conv.add_argument("--ai-debug", action="store_true",
                         help="computer players announce their build steps and attacks in chat (built into out/debug, "
                              "not aoe2de_ror/; use with --install for playtests)")
@@ -93,12 +95,10 @@ def _convert(names: list[str], install: bool = False, ai_debug: bool = False) ->
             from aoe2ed import screens as ed_screens
 
             from . import package
-            from .convert import MOD_NAME
 
             data = {p.name[len(c.slug):]: ed_screens.read_json(p) for p in paths[1:]}
-            res = package.install(c, paths[0], data, MOD_NAME,
-                                  description_text="AoE DE campaigns converted to Return of Rome")
-            print(f"  installed into the {MOD_NAME!r} mod" + (f" ({res['next']})" if res["next"] else ""))
+            res = package.install_local(c, paths[0], data)
+            print(f"  installed as the local mod {res['title']!r}" + (f" ({res['next']})" if res["next"] else ""))
         for r in results:
             dropped = sum(r.dropped.values())
             print(f"  {r.mission}: {r.players} players, {r.placed} objects placed, {dropped} dropped")

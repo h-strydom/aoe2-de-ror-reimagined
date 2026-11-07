@@ -43,7 +43,6 @@ MAX_ROR_PLAYERS = 8
 NORMAL_STATUS = 2
 AI_START_SIGNAL = 1               # AI Script Goal a mission's claim_base sends to computer players set to wait for it
 CAMPAIGN_TITLE = "AoE1 {title}"   # keeps them apart from RoR's own campaigns of the same name
-MOD_NAME = "AoE1 DE Campaigns (RoR Reimagined)"   # local mod `convert --install` writes; screens need a mod
 BUILDERS = ("Villager", "Town Center")            # AoE DE names: player 1 owning one can build (rules.population)
 
 

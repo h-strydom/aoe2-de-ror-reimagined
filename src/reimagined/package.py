@@ -1,4 +1,5 @@
-"""Campaigns as mods: installed into your profile, or packaged one per campaign for the official mod site.
+"""Campaigns as mods, one per campaign titled "[RoR-RI] <campaign>": installed into your profile's mods/local (where
+the game's mod manager can publish and update them), or packaged as zips for the official mod site.
 
 A campaign's mod holds its .aoe2campaign, its campaign screen (`<slug>_layout.json`, our own map and pins) and
 its mission intros (`<slug>.json` and the slide images). The game reads campaign screens only from mods.
@@ -118,19 +119,37 @@ def thumbnail(c: layout.CampaignInfo, dest: Path, lay: dict | None, size: tuple[
     return dest
 
 
+def build_mod(c: layout.CampaignInfo, folder: Path, campaign: Path, data: dict, warn=print) -> dict:
+    """The campaign's mod in `folder` (replaced): its files, info.json and thumbnail."""
+    if folder.exists():
+        shutil.rmtree(folder)
+    with tempfile.TemporaryDirectory() as tmp:
+        res = install(c, campaign, data, mod_title(c), profile=Path(tmp), description_text=description(c), warn=warn)
+        shutil.copytree(res["mod"], folder)
+    thumb = thumbnail(c, folder / "thumbnail.jpg", data.get("_layout.json"))
+    return {"folder": folder, "thumbnail": thumb}
+
+
+def install_local(c: layout.CampaignInfo, campaign: Path, data: dict, *, profile: Path | None = None,
+                  warn=print) -> dict:
+    """Install the campaign's mod into the profile's mods/local/[RoR-RI] <campaign>, as it's published: the game's
+    mod manager publishes and updates it from there. Enable it once in Mods > Installed Mods and restart."""
+    from aoe2ed import screens as ed_screens
+    title = mod_title(c)
+    res = build_mod(c, ed_screens.mod_dir(title, "ror", profile), campaign, data, warn)
+    enabled = ed_screens.mod_enabled(title, profile)
+    return {**res, "title": title, "enabled": enabled,
+            "next": None if enabled else "enable it in Mods > Installed Mods, then restart the game"}
+
+
 def package(c: layout.CampaignInfo, out_dir: Path, warn=print) -> dict:
     """`out_dir/<title>/` (the mod, to drop into mods/local for a test) and `out_dir/<title>.zip` (to upload)."""
     title = mod_title(c)
     campaign, data = campaign_files(c)
     out_dir.mkdir(parents=True, exist_ok=True)
     folder = out_dir / title
-    if folder.exists():
-        shutil.rmtree(folder)
-    with tempfile.TemporaryDirectory() as tmp:
-        res = install(c, campaign, data, title, profile=Path(tmp), description_text=description(c), warn=warn)
-        shutil.copytree(res["mod"], folder)
+    thumb = build_mod(c, folder, campaign, data, warn)["thumbnail"]
     lay = data.get("_layout.json")
-    thumb = thumbnail(c, folder / "thumbnail.jpg", lay)
     image = thumbnail(c, out_dir / f"{title}.jpg", lay, PAGE_IMAGE)     # for the mod page form
     page = out_dir / f"{title}.txt"
     page.write_text(f"Title:\n{title}\n\nDescription:\n{description(c)}\n", encoding="utf-8")

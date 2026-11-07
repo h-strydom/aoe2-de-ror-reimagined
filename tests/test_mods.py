@@ -36,3 +36,19 @@ def test_package_zips_the_mod_files_at_the_root(tmp_path):
     assert res["image"].name == "[RoR-RI] Ascent of Egypt.jpg" and res["image"].is_file()
     page = res["page"].read_text(encoding="utf-8")
     assert "[RoR-RI] Ascent of Egypt" in page and package.description(EGYPT) in page
+
+
+@pytest.mark.skipif(not intros.has_art() or not package.campaign_path(EGYPT).is_file(),
+                    reason="needs `reimagined setup` art and the converted campaign")
+def test_install_local_writes_the_published_mod_into_mods_local(tmp_path):
+    campaign, data = package.campaign_files(EGYPT)
+    stale = tmp_path / "mods" / "local" / "[RoR-RI] Ascent of Egypt" / "old.txt"
+    stale.parent.mkdir(parents=True)
+    stale.write_text("from an older install")
+    res = package.install_local(EGYPT, campaign, data, profile=tmp_path, warn=lambda *_: None)
+    folder = tmp_path / "mods" / "local" / "[RoR-RI] Ascent of Egypt"
+    assert res["folder"] == folder and not stale.exists()                     # replaced, not merged
+    assert (folder / "thumbnail.jpg").is_file()
+    assert (folder / "modes/Pompeii/resources/_common/campaign/ascent_of_egypt.aoe2campaign").is_file()
+    info = json.loads((folder / "info.json").read_text(encoding="utf-8"))
+    assert info["Title"] == "[RoR-RI] Ascent of Egypt" and info["Description"] == package.description(EGYPT)

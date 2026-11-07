@@ -115,8 +115,7 @@ uv run reimagined package ascent_of_egypt --to "<folder>"
 
 Builds one mod per campaign (or all, with no names), titled `[RoR-RI] <campaign>` so the series is easy to find
 on the mod site:
-- `<folder>/[RoR-RI] <campaign>/`, the mod itself: drop it into your profile's `mods/local/` to test it, with
-  the combined local mod from `convert --install` turned off so the campaign doesn't load twice.
+- `<folder>/[RoR-RI] <campaign>/`, the mod itself (`convert --install` puts the same mod into `mods/local/`).
 - `<folder>/[RoR-RI] <campaign>.zip`, to upload: the mod's files at the zip's root (`info.json`,
   `thumbnail.jpg`, `modes/...`), which the mod site requires. Upload it signed in at ageofempires.com/mods,
   as a Campaign.
@@ -161,10 +160,12 @@ sprite pins in that player colour. Pins that would overlap are nudged apart and 
 The output is deterministic, and `uv run pytest` fails if the committed maps don't match what
 `convert` builds today.
 
-To play them, add `--install`: it installs the campaigns into your profile as a local mod,
-"AoE1 DE Campaigns (RoR Reimagined)", because the game only reads campaign screens from mods. Enable
-it once in Mods > Installed Mods and restart the game; the campaigns then show up under Return of
-Rome's campaigns.
+To play them, add `--install`: it installs each campaign into your profile as the local mod
+`mods/local/[RoR-RI] <campaign>`, the same mod that's published (the game only reads campaign screens from mods).
+Enable each once in Mods > Installed Mods and restart the game; the campaigns then show up under Return of
+Rome's campaigns. The game's mod manager can publish and update a local mod straight from there, so after a
+change `convert --install` is all an update needs. Turn off (or unsubscribe from) the published copy of a
+campaign while its local mod is on, or it loads twice.
 
 ## Changing the conversion
 
