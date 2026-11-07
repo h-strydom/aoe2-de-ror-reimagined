@@ -30,6 +30,13 @@
 # food); fish 455-458 (250 food). The Foraging map's river runs across rows 21-37 with shallow crossings at x 14-25
 # and 33-41 (terrain 4); the Town Center is at 22,18.
 #
+# Mission 3: Reveal Map is a player resource (203: 1 explored, 2 all visible). The Libyans (player 2, red) start
+# with 2 Clubmen (281, class 6) at 15,33 and 13,31 and a Scout (448, class 47) at 39,4, and no buildings. Axe (tech
+# 63) turns Clubmen into Axemen; the Storage Pit's first upgrades are Tool Working (46) and Leather Armor for
+# soldiers, archers and mounted units (40, 41, 42), all Tool Age. Stable is 101, Bowman 4 (40 food, 20 wood).
+# Villagers train as 83/293 (50 food, 20 s); Villager Population is resource 38. Units lost: Killed By Others
+# (154), and villagers killed by Gaia or animals (226, 227).
+#
 # Verified in game (2026-11-07): the Hunting upgrades and setups all work, Animal Decay Prevention (resource 292)
 # included; the forced Fishing Ship research works in the Stone Age. Unverified: villagers at 0 population.
 
@@ -121,6 +128,59 @@ upgrades:
     text: "Woodcutters gather wood twice as fast."
     effects: [{type: modify_attribute, object_list_unit_id: [123, 218], object_attributes: 13,
                operation: MULTIPLY, quantity: 2}]
+  # Discoveries, primary (quality of life)
+  charted_lands:
+    label: "Charted Lands"
+    text: "Every mission starts with the whole map explored."
+    effects: [{type: modify_resource, tribute_list: 203, operation: SET, quantity: 1}]
+  all_seeing:
+    label: "All-Seeing"
+    text: "Every mission starts with the whole map visible, no fog of war."
+    effects: [{type: modify_resource, tribute_list: 203, operation: SET, quantity: 2}]
+  # Discoveries, Moderate bonus (good)
+  early_riders:
+    label: "Early Riders"
+    text: "The Stable and Scouts are available from the Stone Age (unless a mission forbids the Stable)."
+    effects:
+      - {type: enable_disable_object, object_list_unit_id: [101, 448], enabled: 1, unless_disabled: [stable]}
+  woodland_bows:
+    label: "Woodland Bows"
+    text: "Bowmen cost 60 wood and no food."
+    effects:
+      - {type: modify_attribute, object_list_unit_id: 4, object_attributes: 103, operation: SET, quantity: 0}
+      - {type: modify_attribute, object_list_unit_id: 4, object_attributes: 104, operation: SET, quantity: 60}
+  # Discoveries, Hard bonus (great)
+  founding_families:
+    label: "Founding Families"
+    text: "Each mission, your first 10 villagers are free and train instantly."
+    effects:
+      # Remember the villager's price and training time (Light Footprint may have changed the price), then
+      # make it free and instant until 10 more villagers are alive than at the start.
+      - {type: modify_variable_by_resource, tribute_list: 38, operation: SET, variable: "RI free villagers until"}
+      - {type: change_variable, variable: "RI free villagers until", operation: ADD, quantity: 10}
+      - {type: modify_variable_by_attribute, object_list_unit_id: 83, object_attributes: 103, operation: SET,
+         variable: "RI villager food"}
+      - {type: modify_variable_by_attribute, object_list_unit_id: 83, object_attributes: 101, operation: SET,
+         variable: "RI villager time"}
+      - {type: modify_attribute, object_list_unit_id: [83, 293], object_attributes: 103, operation: SET, quantity: 0}
+      - {type: modify_attribute, object_list_unit_id: [83, 293], object_attributes: 101, operation: SET, quantity: 0}
+    triggers:
+      - name: count
+        looping: true
+        effects: [{type: modify_variable_by_resource, tribute_list: 38, operation: SET, variable: "RI villagers"}]
+      - name: done
+        conditions: [{type: compare_variables, variable: "RI villagers", comparison: LARGER_OR_EQUAL,
+                      variable2: "RI free villagers until"}]
+        effects:
+          - {type: modify_attribute_by_variable, object_list_unit_id: [83, 293], object_attributes: 103,
+             operation: SET, variable: "RI villager food"}
+          - {type: modify_attribute_by_variable, object_list_unit_id: [83, 293], object_attributes: 101,
+             operation: SET, variable: "RI villager time"}
+          - {type: deactivate_trigger, trigger_id: "@count"}
+  seasoned_gear:
+    label: "Seasoned Gear"
+    text: "Tool Working and the three Leather Armor upgrades are researched at the start of every mission."
+    effects: [{type: research_technology, technology: [46, 40, 41, 42], force_research_technology: 1}]
 
 missions:
   01_hunting:
@@ -181,3 +241,28 @@ missions:
           - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 41, location_y: 34}
           - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 39, location_y: 37}
         rewards: [light_footprint, swift_woodcutters]
+  03_discoveries:
+    rewards: [charted_lands, all_seeing]
+    bonus:
+      - text: "Defeat the Libyans."
+        conditions:
+          - {type: own_fewer_objects, source_player: 2, object_group: 6, quantity: 0}
+          - {type: own_fewer_objects, source_player: 2, object_group: 47, quantity: 0}
+        setup:
+          # Moderate and Hard: three more Clubmen with the Libyans in the south-west, another Scout in the north.
+          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 16, location_y: 29}
+          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 18, location_y: 29}
+          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 16, location_y: 31}
+          - {type: create_object, source_player: 2, object_list_unit_id: 448, location_x: 38, location_y: 6}
+        rewards: [early_riders, woodland_bows]
+      - text: "Lose no units."
+        # Complete with the main objective, unless a unit was lost first.
+        conditions: [{type: variable_value, variable: "RI primary", comparison: EQUAL, quantity: 1}]
+        fail:
+          - {type: accumulate_attribute, attribute: 154, quantity: 1}
+          - {type: accumulate_attribute, attribute: 226, quantity: 1}
+          - {type: accumulate_attribute, attribute: 227, quantity: 1}
+        setup:
+          # Hard: the Libyans have Axemen and Leather Armor.
+          - {type: research_technology, source_player: 2, technology: [63, 40, 41, 42], force_research_technology: 1}
+        rewards: [founding_families, seasoned_gear]

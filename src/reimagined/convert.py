@@ -176,13 +176,13 @@ def reimagined_triggers(src: Scenario, conv: Conversion, mission: str, plan_trig
     by difficulty, upgrades. Changes the human player's victory triggers in `plan_triggers` in place."""
     slug, _, folder = mission.partition("/")
     camp = next((c for c in layout.campaigns() if c.slug == slug), None)
-    human = next((p.number for p in src.active_players if p.human), None)
+    human = next((p for p in src.active_players if p.human), None)
     if camp is None or human is None or not folder:
         return []
     folders = [m.folder.name for m in camp.missions]
-    progression.hand_over(plan_triggers, human)
-    return progression.triggers(progression.load(slug), folders, folders.index(folder) + 1, player=human,
-                                town_center=can_build(src, conv))
+    progression.hand_over(plan_triggers, human.number)
+    return progression.triggers(progression.load(slug), folders, folders.index(folder) + 1, player=human.number,
+                                town_center=can_build(src, conv), disabled=set(human.disabled or []))
 
 
 @contextlib.contextmanager

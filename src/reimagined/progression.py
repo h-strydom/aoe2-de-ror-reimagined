@@ -98,23 +98,40 @@ def upgrade_line(up: dict) -> str:
     return f"{up['label']}: {up['text']}" if up.get("text") else up["label"]
 
 
-def expand(effects: list[dict]) -> list[dict]:
-    """One effect per unit when an effect's object_list_unit_id lists several."""
+def expand(effects: list[dict], disabled: frozenset[str] = frozenset()) -> list[dict]:
+    """One effect per unit (or tech) when an effect's object_list_unit_id (or technology) lists several; effects
+    marked `unless_disabled: [names]` are left out of missions that disable any of those (mission.yaml's
+    `disabled`)."""
     out = []
     for e in effects:
-        units = e.get("object_list_unit_id")
-        out.extend([{**e, "object_list_unit_id": u} for u in units] if isinstance(units, list) else [e])
+        e = dict(e)
+        if set(e.pop("unless_disabled", None) or []) & disabled:
+            continue
+        key = next((k for k in LIST_KEYS if isinstance(e.get(k), list)), None)
+        out.extend([{**e, key: v} for v in e[key]] if key else [e])
     return out
 
 
+LIST_KEYS = ("object_list_unit_id", "technology")
+
+
 def _player(effects: list[dict], player: int) -> list[dict]:
-    return [{"source_player": player, **e} for e in effects]
+    """Effects act for `player` unless they name one; effects without a player (variables, triggers) stay as they are."""
+    return [e if e["type"] in _NO_PLAYER else {"source_player": player, **e} for e in effects]
+
+
+# Effects without a source_player (aoe-agent-editor's effect reference).
+_NO_PLAYER = {"change_variable", "activate_trigger", "deactivate_trigger", "create_decision", "load_key_value",
+              "store_key_value", "delete_key", "modify_variable_by_variable", "clear_timer", "display_timer",
+              "clear_instructions", "change_color_mood", "script_call", "ai_script_goal"}
 
 
 def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1,
-             town_center: bool = True) -> list[dict]:
+             town_center: bool = True, disabled: frozenset[str] | set[str] = frozenset()) -> list[dict]:
     """The progression triggers for mission `number` (1-based) of a campaign whose missions are `folders`. The
-    human player's victory triggers must activate "RI Primary complete" instead of winning (hand_over)."""
+    human player's victory triggers must activate "RI Primary complete" instead of winning (hand_over).
+    `disabled`: what the mission disables for the human player (mission.yaml names: stable, tool_age...)."""
+    disabled = frozenset(disabled)
     out: list[dict] = []
     m = camp.missions.get(folders[number - 1]) or {}
     bonus = m.get("bonus") or []
@@ -132,8 +149,13 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
             out.append({"name": f"RI Difficulty {level} {q}", "conditions": [
                 {"type": "difficulty_level", "quantity": q}], "effects": [
                 {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1 + len(shown)},
-                *({"type": "activate_trigger", "trigger_id": f"RI Bonus {k}"} for k in range(1, len(shown) + 1)),
-                *_player([e for b in shown for e in expand(b.get("setup") or [])], player)]})
+                *({"type": "activate_trigger", "trigger_id": name} for k, b in enumerate(shown, start=1)
+                  for name in [f"RI Bonus {k}", *_fail_names(k, b)]),
+                *_player([e for b in shown for e in expand(b.get("setup") or [], disabled)], player)]})
+
+    def own(conds: list[dict]) -> list[dict]:
+        """Conditions about a player are the human's unless they say otherwise."""
+        return [{"source_player": player, **c} if c["type"] in _PLAYER_CONDITIONS else c for c in conds]
 
     # Upgrades earned anywhere in the campaign: load every slot, apply the chosen option.
     slots = _slots(camp, folders)
@@ -142,9 +164,20 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
             {"type": "load_key_value", "variable": f"RI {key}", "message": key, "quantity": 0} for key, _ in slots]})
         for key, pair in slots:
             for opt, up in enumerate(pair, start=1):
-                out.append({"name": f"RI Upgrade {key} {opt}", "conditions": [
+                name = f"RI Upgrade {key} {opt}"
+                extra = camp.upgrades[up].get("triggers") or []
+                out.append({"name": name, "conditions": [
                     {"type": "variable_value", "variable": f"RI {key}", "comparison": "EQUAL", "quantity": opt}],
-                    "effects": _player(expand(camp.upgrades[up].get("effects") or []), player)})
+                    "effects": _player(expand(camp.upgrades[up].get("effects") or [], disabled), player)
+                    + [{"type": "activate_trigger", "trigger_id": f"{name} {t['name']}"} for t in extra]})
+                # An upgrade's own triggers (e.g. watching for when a bonus runs out), named "<upgrade> <name>";
+                # trigger_id "@<name>" points at a sibling.
+                for t in extra:
+                    out.append({"name": f"{name} {t['name']}", "enabled": False, "looping": bool(t.get("looping")),
+                                "conditions": own(t.get("conditions") or []),
+                                "effects": _player([{**e, "trigger_id": f"{name} {e['trigger_id'][1:]}"}
+                                                    if str(e.get("trigger_id", "")).startswith("@") else e
+                                                    for e in expand(t.get("effects") or [], disabled)], player)})
 
     def reward(slot: str, pair: list[str] | None, decision: int) -> list[dict]:
         """Effects that offer slot's choice, and the triggers behind it. The choice counts as pending in the same
@@ -158,7 +191,7 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
         out.append({"name": offer, "enabled": False, "effects": [
             {"type": "create_decision", "decision_id": decision, "message": CHOOSE,
              "message_option1": camp.upgrades[pair[0]]["label"], "message_option2": camp.upgrades[pair[1]]["label"]}]})
-        for opt, (up, info) in enumerate(zip(pair, infos), start=1):
+        for opt, (up, info) in enumerate(zip(pair, infos, strict=True), start=1):
             line = upgrade_line(camp.upgrades[up])
             out.append({"name": info, "enabled": False, "display_as_objective": True, "display_on_screen": True,
                         "description": line, "short_description": line, "description_order": CHOICE_ORDER + 2 - opt,
@@ -175,15 +208,23 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
                 {"type": "activate_trigger", "trigger_id": offer},
                 *({"type": "activate_trigger", "trigger_id": info} for info in infos)]
 
-    # Bonus objectives: optional lines, off until the difficulty shows them.
+    # Bonus objectives: optional lines, off until the difficulty shows them. A bonus with `fail` conditions (each
+    # one alone fails it) can be lost: its line goes, a message says so, and it no longer counts toward ending.
     for k, b in enumerate(bonus, start=1):
         text = b["text"]
-        conds = [{"source_player": player, **c} if c["type"] in _PLAYER_CONDITIONS else c for c in b["conditions"]]
+        fails = _fail_names(k, b)
         out.append({"name": f"RI Bonus {k}", "enabled": False, "display_as_objective": True, "display_on_screen": True,
                     "description": f"- {text}", "short_description": f"- {text}", "description_order": BONUS_ORDER + 2 - k,
-                    "conditions": conds, "effects": [
+                    "conditions": own(b["conditions"]), "effects": [
                         {"type": "change_variable", "variable": "RI done", "operation": "ADD", "quantity": 1},
-                        *reward(f"bonus{k}", b.get("rewards"), 10 + k)]})
+                        *reward(f"bonus{k}", b.get("rewards"), 10 + k),
+                        *({"type": "deactivate_trigger", "trigger_id": f} for f in fails)]})
+        for name, cond in zip(fails, b.get("fail") or [], strict=True):
+            out.append({"name": name, "enabled": False, "conditions": own([cond]), "effects": [
+                {"type": "deactivate_trigger", "trigger_id": f"RI Bonus {k}"},
+                *({"type": "deactivate_trigger", "trigger_id": f} for f in fails if f != name),
+                {"type": "change_variable", "variable": "RI objectives", "operation": "SUBTRACT", "quantity": 1},
+                {"type": "display_instructions", "display_time": 10, "message": f"Bonus objective failed: {text}"}]})
 
     # The primary objective: what used to win the mission now unlocks ending it.
     unlock: list[dict] = []
@@ -234,9 +275,13 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     return _player_all(out, player)
 
 
+def _fail_names(k: int, b: dict) -> list[str]:
+    return [f"RI Bonus {k} fail {i}" for i in range(1, len(b.get("fail") or []) + 1)]
+
+
 # Conditions whose source_player is the human player unless the content says otherwise.
-_PLAYER_CONDITIONS = {"accumulate_attribute", "own_objects", "objects_in_area", "research_technology",
-                      "researching_tech"}
+_PLAYER_CONDITIONS = {"accumulate_attribute", "own_objects", "own_fewer_objects", "objects_in_area",
+                      "research_technology", "researching_tech", "player_defeated"}
 _PLAYER_EFFECTS = {"enable_disable_technology", "enable_technology_stacking", "change_technology_location",
                    "change_technology_name", "change_technology_description", "change_technology_research_time",
                    "declare_victory", "display_instructions"}

@@ -130,3 +130,38 @@ def test_select_resolves_to_the_placed_objects():
                                      "select": {"player": 0, "unit": [59]}}]}]
     progression.select_objects(ts, {0: [(59, 7), (22, 8), (59, 9)], 1: [(59, 10)]})
     assert ts[0]["effects"][0] == {"type": "remove_object", "selected_object_ids": [7, 9], "source_player": 0}
+
+
+def test_failable_bonus_and_mission_aware_upgrades():
+    camp = progression.Campaign(
+        upgrades={"stable": {"label": "S", "effects": [
+                      {"type": "enable_disable_object", "object_list_unit_id": 101, "enabled": 1,
+                       "unless_disabled": ["stable"]}]},
+                  "free": {"label": "F", "effects": [{"type": "change_variable", "variable": "v", "quantity": 1}],
+                           "triggers": [
+                               {"name": "count", "looping": True, "effects": [{"type": "change_variable",
+                                                                               "variable": "n", "quantity": 1}]},
+                               {"name": "stop", "conditions": [{"type": "variable_value", "variable": "n",
+                                                                "quantity": 10}],
+                                "effects": [{"type": "deactivate_trigger", "trigger_id": "@count"}]}]}},
+        missions={"01_one": {"rewards": ["stable", "free"], "bonus": [
+            {"text": "Lose nothing.", "conditions": [], "fail": [
+                {"type": "accumulate_attribute", "attribute": 154, "quantity": 1},
+                {"type": "accumulate_attribute", "attribute": 227, "quantity": 1}]}]}})
+    ts = by_name(progression.triggers(camp, ["01_one"], 1))
+    assert ts["RI Upgrade m01_primary 1"]["effects"][0]["type"] == "enable_disable_object"
+    assert by_name(progression.triggers(camp, ["01_one"], 1, disabled={"stable"}))[
+        "RI Upgrade m01_primary 1"]["effects"] == []                            # the mission takes the Stable away
+    free = ts["RI Upgrade m01_primary 2"]["effects"]
+    assert {e.get("trigger_id") for e in free} >= {"RI Upgrade m01_primary 2 count", "RI Upgrade m01_primary 2 stop"}
+    assert ts["RI Upgrade m01_primary 2 count"]["looping"] and not ts["RI Upgrade m01_primary 2 count"]["enabled"]
+    assert ts["RI Upgrade m01_primary 2 stop"]["effects"][0]["trigger_id"] == "RI Upgrade m01_primary 2 count"
+    fail = ts["RI Bonus 1 fail 1"]
+    assert fail["conditions"][0]["source_player"] == 1 and not fail["enabled"]
+    assert [e["type"] for e in fail["effects"]] == ["deactivate_trigger", "deactivate_trigger", "change_variable",
+                                                    "display_instructions"]
+    assert fail["effects"][2]["operation"] == "SUBTRACT"                      # the mission can still end by itself
+    moderate = [e.get("trigger_id") for e in ts["RI Difficulty moderate 2"]["effects"]]
+    assert {"RI Bonus 1", "RI Bonus 1 fail 1", "RI Bonus 1 fail 2"} <= set(moderate)
+    done = [e.get("trigger_id") for e in ts["RI Bonus 1"]["effects"] if e["type"] == "deactivate_trigger"]
+    assert done == ["RI Bonus 1 fail 1", "RI Bonus 1 fail 2"]                 # completing it stops the failing
