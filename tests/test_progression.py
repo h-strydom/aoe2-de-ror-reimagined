@@ -170,3 +170,27 @@ def test_a_slot_applies_one_upgrade_per_mission():
     one, two = ts["RI Upgrade m01_primary 1"]["effects"], ts["RI Upgrade m01_primary 2"]["effects"]
     assert one[-1] == {"type": "deactivate_trigger", "trigger_id": "RI Upgrade m01_primary 2"}
     assert two[-1] == {"type": "deactivate_trigger", "trigger_id": "RI Upgrade m01_primary 1"}
+
+
+def test_mission_setup_players_keep_alive_and_bonus_triggers():
+    camp = progression.Campaign(upgrades=CAMP.upgrades, missions={"01_one": {
+        "players": [{"number": 2, "name": "Raiders", "civ": "EGYPTIAN"}], "keep_alive": [2],
+        "setup": [{"type": "enable_disable_object", "object_list_unit_id": [50, 72], "enabled": 0}],
+        "rewards": ["a", "b"], "bonus": [{"text": "Rise.", "conditions": [], "triggers": [
+            {"name": "wave", "effects": [{"type": "attack_move", "source_player": 2},
+                                         {"type": "activate_trigger", "trigger_id": "@later"}]},
+            {"name": "later", "conditions": [{"type": "timer", "timer": 60}], "effects": []}]}]}})
+    assert progression.extra_players(camp, "01_one")[0]["name"] == "Raiders"
+    assert progression.keep_alive(camp, "01_one") == [2] and progression.keep_alive(camp, "02") == []
+    ts = progression.triggers(camp, ["01_one"], 1)
+    progression.select_objects(ts, {}, {2: 99})
+    ts = by_name(ts)
+    setup = [e["object_list_unit_id"] for e in ts["RI Objectives"]["effects"] if "object_list_unit_id" in e]
+    assert setup == [50, 72]                                                  # every difficulty, before upgrades
+    keep = ts["RI Keep P2"]["effects"]
+    assert all(e["selected_object_ids"] == [99] and e["source_player"] == 2 for e in keep)
+    assert keep[-1]["target_player"] == 1 and keep[-1]["visibility_state"] == "INVISIBLE"
+    assert not ts["RI Bonus 1 wave"]["enabled"]
+    assert ts["RI Bonus 1 wave"]["effects"][1]["trigger_id"] == "RI Bonus 1 later"
+    assert {"RI Bonus 1 wave", "RI Bonus 1 later"} <= {e.get("trigger_id")
+                                                       for e in ts["RI Difficulty moderate 2"]["effects"]}

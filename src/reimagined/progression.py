@@ -130,11 +130,40 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     m = camp.missions.get(folders[number - 1]) or {}
     bonus = m.get("bonus") or []
 
-    # How many objectives this difficulty has (primary + bonuses), showing its bonus lines, and its setup (for
-    # the human player unless an effect says otherwise). Before the upgrades, so a setup that empties the
-    # stockpile leaves what the upgrades add.
+    def own(conds: list[dict]) -> list[dict]:
+        """Conditions about a player are the human's unless they say otherwise."""
+        return [{"source_player": player, **c} if c["type"] in _PLAYER_CONDITIONS else c for c in conds]
+
+    def own_triggers(prefix: str, specs: list[dict]) -> list[str]:
+        """Content's own triggers (an upgrade's, a bonus objective's), named "<prefix> <name>", off until the
+        owner turns them on; trigger_id "@<name>" points at a sibling. Returns their names."""
+        names = []
+        for t in specs:
+            name = f"{prefix} {t['name']}"
+            out.append({"name": name, "enabled": False, "looping": bool(t.get("looping")),
+                        "conditions": own(t.get("conditions") or []),
+                        "effects": _player([{**e, "trigger_id": f"{prefix} {e['trigger_id'][1:]}"}
+                                            if str(e.get("trigger_id", "")).startswith("@") else e
+                                            for e in expand(t.get("effects") or [])], player)})
+            names.append(name)
+        return names
+
+    # The mission's own settings on every difficulty (`setup`), how many objectives this difficulty has (primary +
+    # bonuses), showing its bonus lines and running their setup and triggers (for the human player unless an
+    # effect says otherwise). All before the upgrades: a setup that empties the stockpile leaves what upgrades add,
+    # and an upgrade enabling what the mission disables wins.
     out.append({"name": "RI Objectives", "effects": [
-        {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1}]})
+        {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1},
+        *_player(expand(m.get("setup") or []), player)]})
+    for p_ in m.get("keep_alive") or []:
+        # A hidden marker the converter places keeps the player in the game: RoR ends it when only one side is
+        # left, even with the Custom victory's conquest off (Ascent of Egypt 3 playtest, 2026-11-08).
+        marker = {"select": {"marker": p_}}
+        out.append({"name": f"RI Keep P{p_}", "effects": [
+            {"type": "disable_unit_attackable", **marker}, {"type": "disable_object_selection", **marker},
+            {"type": "change_object_visibility", "target_player": player, "visibility_state": "INVISIBLE",
+             **marker}]})
+    bonus_triggers = {k: own_triggers(f"RI Bonus {k}", b.get("triggers") or []) for k, b in enumerate(bonus, 1)}
     levels = [("moderate", bonus[:1]), ("hard", bonus[:2])]
     for level, shown in levels:
         if not shown:
@@ -144,12 +173,8 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
                 {"type": "difficulty_level", "quantity": q}], "effects": [
                 {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1 + len(shown)},
                 *({"type": "activate_trigger", "trigger_id": name} for k, b in enumerate(shown, start=1)
-                  for name in [f"RI Bonus {k}", *_fail_names(k, b)]),
+                  for name in [f"RI Bonus {k}", *_fail_names(k, b), *bonus_triggers[k]]),
                 *_player([e for b in shown for e in expand(b.get("setup") or [])], player)]})
-
-    def own(conds: list[dict]) -> list[dict]:
-        """Conditions about a player are the human's unless they say otherwise."""
-        return [{"source_player": player, **c} if c["type"] in _PLAYER_CONDITIONS else c for c in conds]
 
     # Upgrades earned anywhere in the campaign: load every slot, apply the chosen option. A slot gives one upgrade
     # per mission: applying an option switches the other off, so re-picking a slot (replaying its mission) can't
@@ -161,20 +186,14 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
         for key, pair in slots:
             for opt, up in enumerate(pair, start=1):
                 name = f"RI Upgrade {key} {opt}"
-                extra = camp.upgrades[up].get("triggers") or []
-                out.append({"name": name, "conditions": [
-                    {"type": "variable_value", "variable": f"RI {key}", "comparison": "EQUAL", "quantity": opt}],
-                    "effects": _player(expand(camp.upgrades[up].get("effects") or []), player)
-                    + [{"type": "activate_trigger", "trigger_id": f"{name} {t['name']}"} for t in extra]
-                    + [{"type": "deactivate_trigger", "trigger_id": f"RI Upgrade {key} {3 - opt}"}]})
-                # An upgrade's own triggers (e.g. watching for when a bonus runs out), named "<upgrade> <name>";
-                # trigger_id "@<name>" points at a sibling.
-                for t in extra:
-                    out.append({"name": f"{name} {t['name']}", "enabled": False, "looping": bool(t.get("looping")),
-                                "conditions": own(t.get("conditions") or []),
-                                "effects": _player([{**e, "trigger_id": f"{name} {e['trigger_id'][1:]}"}
-                                                    if str(e.get("trigger_id", "")).startswith("@") else e
-                                                    for e in expand(t.get("effects") or [])], player)})
+                apply = {"name": name, "conditions": [
+                    {"type": "variable_value", "variable": f"RI {key}", "comparison": "EQUAL", "quantity": opt}]}
+                out.append(apply)
+                # An upgrade's own triggers (e.g. watching for when a bonus runs out) start with it.
+                extra = own_triggers(name, camp.upgrades[up].get("triggers") or [])
+                apply["effects"] = (_player(expand(camp.upgrades[up].get("effects") or []), player)
+                                    + [{"type": "activate_trigger", "trigger_id": t} for t in extra]
+                                    + [{"type": "deactivate_trigger", "trigger_id": f"RI Upgrade {key} {3 - opt}"}])
 
     def reward(slot: str, pair: list[str] | None, decision: int) -> list[dict]:
         """Effects that offer slot's choice, and the triggers behind it. The choice counts as pending in the same
@@ -291,9 +310,11 @@ def _player_all(triggers_: list[dict], player: int) -> list[dict]:
     return triggers_
 
 
-def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]]]) -> None:
+def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]]],
+                   markers: dict[int, int] | None = None) -> None:
     """Resolve setup effects' `select: {player, unit}` (unit: an id or a list) into selected_object_ids: the objects
     of those units the map places for that player. `placed` is player -> [(unit id, reference id)].
+    `select: {marker: player}` is that player's keep-alive marker (`markers`: player -> reference id).
     remove_object by unit type over an area left Gaia's forage bushes in place (Egypt 2 playtest, 2026-11-07);
     remove_object on selected objects works (aoe-agent-editor's fog block)."""
     for t in triggers_:
@@ -301,9 +322,24 @@ def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]
             sel = e.pop("select", None)
             if sel is None:
                 continue
+            if "marker" in sel:
+                e["selected_object_ids"] = [(markers or {})[sel["marker"]]]
+                e["source_player"] = sel["marker"]
+                continue
             units = sel["unit"] if isinstance(sel["unit"], list) else [sel["unit"]]
             e["selected_object_ids"] = [ref for unit, ref in placed.get(sel.get("player", 0), []) if unit in units]
             e["source_player"] = sel.get("player", 0)        # the objects' owner, over the human default
+
+
+def extra_players(camp: Campaign, folder: str) -> list[dict]:
+    """Players a mission adds ({number, name, civ}: a RoR civ name), enemies of everyone, without an AI: they act
+    through the mission's triggers. Mission content: `players: [...]`."""
+    return list((camp.missions.get(folder) or {}).get("players") or [])
+
+
+def keep_alive(camp: Campaign, folder: str) -> list[int]:
+    """Players that keep a hidden marker so they're never defeated outright (`keep_alive: [player]`)."""
+    return list((camp.missions.get(folder) or {}).get("keep_alive") or [])
 
 
 def hand_over(plan_triggers: list[dict], player: int) -> list[str]:

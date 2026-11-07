@@ -5,11 +5,17 @@
 #   for the human player unless they say otherwise) run at the start of every mission of the campaign. An effect
 #   whose object_list_unit_id lists several units runs once per unit.
 # missions.<NN_mission>:
+#   setup: [...]                  effects on every difficulty (the mission's own rules: what can be built...)
+#   players: [{number, name, civ}]  players the mission adds: enemies of all, no AI, moved by triggers
+#   keep_alive: [player]          a hidden, invulnerable House keeps the player from being defeated outright
 #   rewards: [upgrade, upgrade]   the choice offered on completing the primary objective
 #   bonus:                        Moderate shows the first, Hard both
 #     - text: ...                 the to-do line (shown as optional)
 #       conditions: [...]         trigger conditions, all met at once (source_player is the human unless given)
 #       setup: [...]              effects that change the mission on the difficulties that show this objective
+#       triggers: [{name, looping, conditions, effects}]   its own triggers, on with the objective ("@name": a
+#                                 sibling)
+#       fail: [condition, ...]    each one alone fails the objective
 #       rewards: [upgrade, upgrade]
 #
 # Tiers: the primary objective's choice is a quality-of-life upgrade, the Moderate bonus a good buff, the Hard
@@ -36,6 +42,15 @@
 # soldiers, archers and mounted units (40, 41, 42), all Tool Age. Stable is 101, Bowman 4 (40 food, 20 wood).
 # Villagers train as 83/293 (50 food, 20 s); Villager Population is resource 38. Units lost: Killed By Others
 # (154), and villagers killed by Gaia or animals (226, 227).
+#
+# Mission 4: only the player (Town Center at 28,26), elephants at 22,10 and 6,38, and 3 Whales (2625) that hold
+# 1,000 gold each. The Bronze Age (102) needs tech 75, granted by any two of Market/Archery Range/Stable (Tool Age
+# buildings). Egypt can't have the Catapult (tech 54, Stone Thrower 280 -> 550), Heavy Catapult (36), Phalangite
+# (Phalanx, 73) or Armored Elephant (125). Farm 50; walls 72/117/119/155; towers 79/234/235/236; Archery Range
+# 87/10/14; Stable 101/86/153; Barracks 12/498/132/20; Docks 45/133/47/51; Town Centers 109/71/141/142 (200 wood).
+# Gatherers: forager 120/354, hunter 122/216, farmer 259/214, fisherman 56/57, shepherd 590/592, Fishing Boat/Ship
+# 13/15, woodcutter 123/218, gold miner 579/581/2333/2334, stone miner 124/220. Storage Pit: Tool Working 46,
+# Leather Armor 40/41/42 (Tool), Scale Armor 43/44/45 and Metal Working 51 (Bronze).
 #
 # Verified in game (2026-11-07): the Hunting upgrades and setups all work, Animal Decay Prevention (resource 292)
 # included; the forced Fishing Ship research works in the Stone Age. Unverified: villagers at 0 population.
@@ -182,6 +197,129 @@ upgrades:
     label: "Seasoned Gear"
     text: "Tool Working and the three Leather Armor upgrades are researched at the start of every mission."
     effects: [{type: research_technology, technology: [46, 40, 41, 42], force_research_technology: 1}]
+  # Dawn of a New Age, primary (quality of life)
+  swift_advance:
+    label: "Swift Advance"
+    text: "Advancing to the next age is instant (it still costs the same)."
+    effects: [{type: change_technology_research_time, technology: [101, 102, 103], quantity: 0}]
+  free_town_center:
+    label: "Free Town Center"
+    text: "Each mission, your first new Town Center costs nothing."
+    effects:
+      # Count the Town Centers now (every age's), remember the price, build the next one for free.
+      - {type: count_units_into_variable, object_list_unit_id: 109, variable2: "RI tc a"}
+      - {type: count_units_into_variable, object_list_unit_id: 71, variable2: "RI tc b"}
+      - {type: count_units_into_variable, object_list_unit_id: 141, variable2: "RI tc c"}
+      - {type: count_units_into_variable, object_list_unit_id: 142, variable2: "RI tc d"}
+      - {type: modify_variable_by_variable, variable: "RI tc until", operation: SET, variable2: "RI tc a"}
+      - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc b"}
+      - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc c"}
+      - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc d"}
+      - {type: change_variable, variable: "RI tc until", operation: ADD, quantity: 1}
+      - {type: modify_variable_by_attribute, object_list_unit_id: 109, object_attributes: 104, operation: SET,
+         variable: "RI tc wood"}
+      - {type: modify_attribute, object_list_unit_id: [109, 71, 141, 142], object_attributes: 104, operation: SET,
+         quantity: 0}
+    triggers:
+      - name: count
+        looping: true
+        effects:
+          - {type: count_units_into_variable, object_list_unit_id: 109, variable2: "RI tc a"}
+          - {type: count_units_into_variable, object_list_unit_id: 71, variable2: "RI tc b"}
+          - {type: count_units_into_variable, object_list_unit_id: 141, variable2: "RI tc c"}
+          - {type: count_units_into_variable, object_list_unit_id: 142, variable2: "RI tc d"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: SET, variable2: "RI tc a"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc b"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc c"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc d"}
+      - name: done
+        conditions: [{type: compare_variables, variable: "RI tcs", comparison: LARGER_OR_EQUAL,
+                      variable2: "RI tc until"}]
+        effects:
+          - {type: modify_attribute_by_variable, object_list_unit_id: [109, 71, 141, 142], object_attributes: 104,
+             operation: SET, variable: "RI tc wood"}
+          - {type: deactivate_trigger, trigger_id: "@count"}
+  # Dawn of a New Age, Moderate bonus (good)
+  master_fishermen:
+    # The user's call: four times the load on purpose, fishers travel the farthest.
+    label: "Master Fishermen"
+    text: "Fishermen and Fishing Boats work 25% faster and carry 50 more food."
+    effects:
+      - {type: modify_attribute, object_list_unit_id: [56, 57, 13, 15], object_attributes: 14, operation: ADD,
+         quantity: 50}
+      - {type: modify_attribute, object_list_unit_id: [56, 57, 13, 15], object_attributes: 13, operation: MULTIPLY,
+         quantity: 1.25}
+  quartermasters:
+    label: "Quartermasters"
+    text: "The Storage Pit's Tool and Bronze Age upgrades are free, but take three times as long."
+    effects:
+      - {type: change_technology_cost, technology: [46, 40, 41, 42, 43, 44, 45, 51], resource_1: 0,
+         resource_1_quantity: 0, resource_2: 3, resource_2_quantity: 0}
+      - {type: change_technology_research_time, technology: 46, quantity: 120}
+      - {type: change_technology_research_time, technology: [40, 41, 42], quantity: 90}
+      - {type: change_technology_research_time, technology: [43, 44, 45], quantity: 180}
+      - {type: change_technology_research_time, technology: 51, quantity: 225}
+  # Dawn of a New Age, Hard bonus (great)
+  resource_mastery:
+    label: "Resource Mastery"
+    text: "Each Market resource upgrade also gives the other gatherers 2 more carrying capacity and 5% faster work."
+    triggers:
+      - name: wood working
+        conditions: [{type: research_technology, technology: 107}]
+        effects:
+          - {type: modify_attribute, object_list_unit_id: &food [120, 354, 122, 216, 259, 214, 56, 57, 590, 592, 13,
+                                                                 15], object_attributes: 14, operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *food, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+          - {type: modify_attribute, object_list_unit_id: &gold [579, 581, 2333, 2334], object_attributes: 14,
+             operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *gold, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+          - {type: modify_attribute, object_list_unit_id: &stone [124, 220], object_attributes: 14, operation: ADD,
+             quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *stone, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+      - name: gold mining
+        conditions: [{type: research_technology, technology: 108}]
+        effects:
+          - {type: modify_attribute, object_list_unit_id: *food, object_attributes: 14, operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *food, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+          - {type: modify_attribute, object_list_unit_id: &wood [123, 218], object_attributes: 14, operation: ADD,
+             quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *wood, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+          - {type: modify_attribute, object_list_unit_id: *stone, object_attributes: 14, operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *stone, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+      - name: stone mining
+        conditions: [{type: research_technology, technology: 109}]
+        effects:
+          - {type: modify_attribute, object_list_unit_id: *food, object_attributes: 14, operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *food, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+          - {type: modify_attribute, object_list_unit_id: *wood, object_attributes: 14, operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *wood, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+          - {type: modify_attribute, object_list_unit_id: *gold, object_attributes: 14, operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *gold, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+      - name: domestication
+        conditions: [{type: research_technology, technology: 81}]
+        effects:
+          - {type: modify_attribute, object_list_unit_id: *wood, object_attributes: 14, operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *wood, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+          - {type: modify_attribute, object_list_unit_id: *gold, object_attributes: 14, operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *gold, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+          - {type: modify_attribute, object_list_unit_id: *stone, object_attributes: 14, operation: ADD, quantity: 2}
+          - {type: modify_attribute, object_list_unit_id: *stone, object_attributes: 13, operation: MULTIPLY,
+             quantity: 1.05}
+  nile_arsenal:
+    label: "Nile Arsenal"
+    text: "Egypt gains the Catapult, Heavy Catapult, Phalangite and Armored Elephant upgrades (Iron Age)."
+    effects: [{type: enable_disable_technology, technology: [54, 36, 73, 125], enabled: 1}]
 
 missions:
   01_hunting:
@@ -239,6 +377,8 @@ missions:
           - {type: modify_resource, tribute_list: 3, operation: SET, quantity: 0}
         rewards: [light_footprint, swift_woodcutters]
   03_discoveries:
+    # Killing every Libyan ended the mission although its custom victory has no conquest (playtest 2026-11-08).
+    keep_alive: [2]
     rewards: [charted_lands, all_seeing]
     bonus:
       - text: "Defeat the Libyans."
@@ -263,3 +403,66 @@ missions:
           # Hard: the Libyans have Axemen and Leather Armor.
           - {type: research_technology, source_player: 2, technology: [63, 40, 41, 42], force_research_technology: 1}
         rewards: [founding_families, seasoned_gear]
+  04_the_dawn_of_a_new_age:
+    players: [{number: 2, name: "Raiders", civ: EGYPTIAN}]
+    keep_alive: [2]
+    setup:
+      # Every difficulty: no Farms or fortifications; the Barracks with Clubmen only (no Axemen), no Archery Range,
+      # Stable, Bowmen or Scouts (Early Riders still brings the Stable and Scouts: upgrades run after this).
+      - {type: enable_disable_object, object_list_unit_id: [50, 72, 117, 119, 155, 79, 234, 235, 236], enabled: 0}
+      - {type: enable_disable_object, object_list_unit_id: [87, 10, 14, 101, 86, 153, 4, 448], enabled: 0}
+      - {type: enable_disable_object, object_list_unit_id: [12, 498, 132, 20], enabled: 1}
+      - {type: enable_disable_technology, technology: 63, enabled: 0}
+    rewards: [swift_advance, free_town_center]
+    bonus:
+      - text: "Reach a population of 25 with 2 Docks."
+        conditions:
+          - {type: accumulate_attribute, attribute: 11, quantity: 25}
+          - {type: variable_value, variable: "RI docks", comparison: LARGER_OR_EQUAL, quantity: 2}
+        triggers:
+          # Docks change unit with each age: count them all.
+          - name: count docks
+            looping: true
+            effects:
+              - {type: count_units_into_variable, object_list_unit_id: 45, variable2: "RI docks a"}
+              - {type: count_units_into_variable, object_list_unit_id: 133, variable2: "RI docks b"}
+              - {type: count_units_into_variable, object_list_unit_id: 47, variable2: "RI docks c"}
+              - {type: modify_variable_by_variable, variable: "RI docks", operation: SET, variable2: "RI docks a"}
+              - {type: modify_variable_by_variable, variable: "RI docks", operation: ADD, variable2: "RI docks b"}
+              - {type: modify_variable_by_variable, variable: "RI docks", operation: ADD, variable2: "RI docks c"}
+        setup:
+          # Moderate and Hard: Raiders guard both elephants: 2 Clubmen and a Bowman in the north, 2 Clubmen and a
+          # Scout in the south-west.
+          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 22, location_y: 8}
+          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 24, location_y: 8}
+          - {type: create_object, source_player: 2, object_list_unit_id: 4, location_x: 23, location_y: 7}
+          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 8, location_y: 37}
+          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 8, location_y: 39}
+          - {type: create_object, source_player: 2, object_list_unit_id: 448, location_x: 9, location_y: 38}
+        rewards: [master_fishermen, quartermasters]
+      - text: "Reach the Bronze Age."
+        conditions: [{type: accumulate_attribute, attribute: 6, quantity: 2}]
+        setup:
+          # Hard: the Raiders have Axemen and the first Storage Pit upgrades, and a Bowman more at each elephant.
+          # The Bronze Age opens without its two Tool Age buildings (tech 75 granted); the Whales' gold pays for it.
+          - {type: research_technology, source_player: 2, technology: [63, 46, 40, 41, 42], force_research_technology: 1}
+          - {type: create_object, source_player: 2, object_list_unit_id: 4, location_x: 25, location_y: 7}
+          - {type: create_object, source_player: 2, object_list_unit_id: 4, location_x: 9, location_y: 36}
+          - {type: enable_disable_technology, technology: 102, enabled: 1}
+          - {type: research_technology, technology: 75, force_research_technology: 1}
+        triggers:
+          # Reaching the Tool Age brings the northern group down on the Town Center, the other a minute later.
+          - name: first wave
+            conditions: [{type: accumulate_attribute, attribute: 6, quantity: 1}]
+            effects:
+              - {type: attack_move, source_player: 2, area_x1: 19, area_y1: 4, area_x2: 28, area_y2: 14,
+                 location_x: 28, location_y: 26}
+              - {type: display_instructions, display_time: 8, message: "Raiders from the north are coming for your Town Center!"}
+              - {type: activate_trigger, trigger_id: "@second wave"}
+          - name: second wave
+            conditions: [{type: timer, timer: 60}]
+            effects:
+              - {type: attack_move, source_player: 2, area_x1: 1, area_y1: 32, area_x2: 12, area_y2: 44,
+                 location_x: 28, location_y: 26}
+              - {type: display_instructions, display_time: 8, message: "More Raiders, from the south-west!"}
+        rewards: [resource_mastery, nile_arsenal]

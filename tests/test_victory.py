@@ -97,3 +97,14 @@ def test_custom_victory_keeps_the_originals_conquest_setting(tmp_path):
     _, s, ts = _convert(tmp_path, "ascent_of_egypt", "03_discoveries")
     assert s.sections["GlobalVictory"].conquest_required == 0
     assert {c.attribute for c in ts["P1 Victory"].conditions} == {14}
+
+
+def test_added_players_and_keep_alive_markers(tmp_path):
+    """Egypt 4 adds the Raiders (no AI, enemies), and both they and Egypt 3's Libyans keep a hidden House."""
+    _, s, ts = _convert(tmp_path, "ascent_of_egypt", "04_the_dawn_of_a_new_age")
+    assert s.player_manager.active_players == 2 and s.player_manager.players[2].tribe_name == "Raiders"
+    assert s.sections["GlobalVictory"].conquest_required == 0
+    marker = [u for u in s.unit_manager.units[2] if u.unit_const == 70]
+    assert len(marker) == 1 and ts["RI Keep P2"].effects[0].selected_object_ids == [marker[0].reference_id]
+    _, s3, ts3 = _convert(tmp_path, "ascent_of_egypt", "03_discoveries")
+    assert [u.unit_const for u in s3.unit_manager.units[2]].count(70) == 1 and "RI Keep P2" in ts3
