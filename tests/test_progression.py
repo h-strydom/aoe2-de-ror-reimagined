@@ -6,7 +6,7 @@ import pytest
 from reimagined import progression
 
 CAMP = progression.Campaign(
-    upgrades={"a": {"label": "A", "effects": [{"type": "modify_resource", "tribute_list": 0, "operation": "ADD",
+    upgrades={"a": {"label": "A", "text": "Long A.", "effects": [{"type": "modify_resource", "tribute_list": 0, "operation": "ADD",
                                                "quantity": 50}]},
               "b": {"label": "B", "effects": []}, "c": {"label": "C", "effects": []}, "d": {"label": "D"}},
     missions={"01_one": {"rewards": ["a", "b"], "bonus": [
@@ -44,11 +44,32 @@ def test_bonus_objectives_follow_the_difficulty():
 
 def test_rewards_are_stored_per_objective():
     ts = by_name(progression.triggers(CAMP, FOLDERS, 1))
-    offer = ts["RI Reward bonus1"]["effects"][1]
+    offer = ts["RI Reward bonus1"]["effects"][0]
     assert offer["type"] == "create_decision" and (offer["message_option1"], offer["message_option2"]) == ("C", "D")
     pick = ts["RI Reward bonus1 pick 2"]["effects"]
     assert pick[0]["variable"] == "RI m01_bonus1" and pick[0]["quantity"] == 2
     assert pick[1] == {"type": "store_key_value", "variable": "RI m01_bonus1", "message": "m01_bonus1"}
+    assert {e["trigger_id"] for e in pick if e["type"] == "deactivate_trigger"} == {
+        "RI Reward bonus1 option 1", "RI Reward bonus1 option 2"}                # the long lines go once picked
+
+
+def test_completing_an_objective_marks_its_choice_pending_at_once():
+    """The last objective mustn't end the mission before its upgrade is picked."""
+    ts = by_name(progression.triggers(CAMP, FOLDERS, 1))
+    effects = ts["RI Bonus 1"]["effects"]
+    assert effects[0]["variable"] == "RI done" and effects[1] == {
+        "type": "change_variable", "variable": "RI pending", "operation": "ADD", "quantity": 1}
+    assert not any(e.get("variable") == "RI pending" for e in ts["RI Reward bonus1"]["effects"])
+
+
+def test_buttons_are_short_and_the_objectives_list_explains():
+    ts = by_name(progression.triggers(CAMP, FOLDERS, 2))
+    offer = ts["RI Reward primary"]["effects"][0]
+    assert (offer["message_option1"], offer["message_option2"]) == ("C", "A")
+    line = ts["RI Reward primary option 2"]
+    assert line["short_description"] == "A: Long A." and not line["enabled"] and line["display_on_screen"]
+    assert ts["RI Reward primary option 1"]["short_description"] == "C"
+    assert line["description_order"] < ts["RI Reward primary option 1"]["description_order"]
     assert "RI Reward bonus2" not in ts                                         # bonus 2 offers no reward
 
 

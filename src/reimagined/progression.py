@@ -41,8 +41,10 @@ REOFFER_SECONDS = 300
 PRIMARY_TEXT = ("Primary objective complete! Research End Mission at your Town Center to claim victory whenever you "
                 "like, or keep playing for the bonus objectives.")
 PRIMARY_TEXT_NO_TC = "Primary objective complete! You can end the mission now, or keep playing for the bonus objectives."
-CHOOSE = "Choose a permanent upgrade for this campaign:"
+CHOOSE = "Choose a permanent upgrade for this campaign (details in your objectives):"
 OBJECTIVE_ORDER_OFFSET = 10      # primary lines above the bonus lines (higher display order shows higher)
+BONUS_ORDER = 3                  # bonus lines (orders 4, 3), then a pending choice's two options (2, 1)
+CHOICE_ORDER = 1
 
 
 @dataclass
@@ -88,6 +90,11 @@ def _slots(camp: Campaign, folders: list[str]) -> list[tuple[str, list[str]]]:
     return out
 
 
+def upgrade_line(up: dict) -> str:
+    """An upgrade's line in the objectives list: its short label (the popup button) and what it does."""
+    return f"{up['label']}: {up['text']}" if up.get("text") else up["label"]
+
+
 def _player(effects: list[dict], player: int) -> list[dict]:
     return [{"source_player": player, **e} for e in effects]
 
@@ -125,29 +132,40 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
                 *({"type": "activate_trigger", "trigger_id": f"RI Bonus {k}"} for k in range(1, len(shown) + 1))]})
 
     def reward(slot: str, pair: list[str] | None, decision: int) -> list[dict]:
-        """Effects that offer slot's choice (activating its trigger), and the trigger set itself."""
+        """Effects that offer slot's choice, and the triggers behind it. The choice counts as pending in the same
+        trigger that completes the objective, so "RI All done" can't end the mission before it's picked. The popup's
+        buttons carry the short labels; while it's up, each option's full text shows in the objectives list."""
         if not pair:
             return []
         key = slot_key(number, slot)
         offer = f"RI Reward {slot}"
+        infos = [f"{offer} option {opt}" for opt in (1, 2)]
         out.append({"name": offer, "enabled": False, "effects": [
-            {"type": "change_variable", "variable": "RI pending", "operation": "ADD", "quantity": 1},
             {"type": "create_decision", "decision_id": decision, "message": CHOOSE,
              "message_option1": camp.upgrades[pair[0]]["label"], "message_option2": camp.upgrades[pair[1]]["label"]}]})
+        for opt, (up, info) in enumerate(zip(pair, infos), start=1):
+            line = upgrade_line(camp.upgrades[up])
+            out.append({"name": info, "enabled": False, "display_as_objective": True, "display_on_screen": True,
+                        "description": line, "short_description": line, "description_order": CHOICE_ORDER + 2 - opt,
+                        "conditions": [{"type": "variable_value", "variable": "RI never", "comparison": "EQUAL",
+                                        "quantity": 1}]})
         for opt in (1, 2):
             out.append({"name": f"{offer} pick {opt}", "conditions": [
                 {"type": "decision_triggered", "decision_id": decision, "decision_option": opt}], "effects": [
                 {"type": "change_variable", "variable": f"RI {key}", "operation": "SET", "quantity": opt},
                 {"type": "store_key_value", "variable": f"RI {key}", "message": key},
+                *({"type": "deactivate_trigger", "trigger_id": info} for info in infos),
                 {"type": "change_variable", "variable": "RI pending", "operation": "SUBTRACT", "quantity": 1}]})
-        return [{"type": "activate_trigger", "trigger_id": offer}]
+        return [{"type": "change_variable", "variable": "RI pending", "operation": "ADD", "quantity": 1},
+                {"type": "activate_trigger", "trigger_id": offer},
+                *({"type": "activate_trigger", "trigger_id": info} for info in infos)]
 
     # Bonus objectives: optional lines, off until the difficulty shows them.
     for k, b in enumerate(bonus, start=1):
         text = b["text"]
         conds = [{"source_player": player, **c} if c["type"] in _PLAYER_CONDITIONS else c for c in b["conditions"]]
         out.append({"name": f"RI Bonus {k}", "enabled": False, "display_as_objective": True, "display_on_screen": True,
-                    "description": f"- {text}", "short_description": f"- {text}", "description_order": 3 - k,
+                    "description": f"- {text}", "short_description": f"- {text}", "description_order": BONUS_ORDER + 2 - k,
                     "conditions": conds, "effects": [
                         {"type": "change_variable", "variable": "RI done", "operation": "ADD", "quantity": 1},
                         *reward(f"bonus{k}", b.get("rewards"), 10 + k)]})
