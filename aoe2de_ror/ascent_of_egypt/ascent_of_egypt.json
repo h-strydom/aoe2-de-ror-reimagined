@@ -7,13 +7,51 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/1/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_01_INTRO",
                      "Slides": [
                         {
-                           "Duration": 17.6,
-                           "TextFadeDuration": 17.400000000000002,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Island in the Nile Delta, 8000 BCE\n\nEgypt is a land blessed with plentiful plants and wildlife, making it an excellent place to settle your wandering tribe of hunters and gatherers. Even though your people have primitive technology and rely on stone tools, they are skilled hunters.",
+                           "String": 244101,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 16.22,
+                           "TextFadeDuration": 16.02,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244102,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 12.9,
+                           "TextFadeDuration": 12.5,
+                           "FadeInTime": 0.2,
+                           "String": 244103,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -59,13 +97,51 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/2/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_02_INTRO",
                      "Slides": [
                         {
-                           "Duration": 33.2,
-                           "TextFadeDuration": 33.0,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Nile Delta, 6500 BCE\n\nFor generations, the rich hunting lands along the Nile have provided for your people. Now, a series of droughts have withered the size of the herds and forced your kin to forage for new food sources. Fortunately, the banks of the Nile teem with fruits and edible plants. Hunting bands have returned from the east with berries, dates and leeks. Find these forage sites and collect food for your growing tribe. Once you have enough food, settle in this rich area by constructing a Granary, Storage Pit, and Dock.",
+                           "String": 244106,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 16.63,
+                           "TextFadeDuration": 16.43,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244107,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 19.03,
+                           "TextFadeDuration": 18.63,
+                           "FadeInTime": 0.2,
+                           "String": 244108,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -111,13 +187,51 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/3/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_03_INTRO",
                      "Slides": [
                         {
-                           "Duration": 24.4,
-                           "TextFadeDuration": 24.2,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Island in the Nile Delta, 8000 BCE\n\nAs your hunters venture out, they begin to encounter other cultures to the west, along the Mediterranean Coast. You have sent parties of explorers to search the borderlands to learn about these people whom you call Libyans. According to legends, there are sacred sites nearby. These can be recognized by the shape of a white horse etched into the ground.",
+                           "String": 244111,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 14.82,
+                           "TextFadeDuration": 14.62,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244112,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 12.51,
+                           "TextFadeDuration": 12.11,
+                           "FadeInTime": 0.2,
+                           "String": 244113,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -163,13 +277,51 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/4/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_04_INTRO",
                      "Slides": [
                         {
-                           "Duration": 18.9,
-                           "TextFadeDuration": 18.7,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Nile River bank, around 6000 BCE\n\nExploration and contact with other cultures have brought new ideas to Egypt. Your people are learning new skills, including technologies for fishing and more complex stone tools. Advance your culture to the Tool Age to gain access to these skills and new capabilities.",
+                           "String": 244116,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 11.45,
+                           "TextFadeDuration": 11.25,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244117,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 10.22,
+                           "TextFadeDuration": 9.82,
+                           "FadeInTime": 0.2,
+                           "String": 244118,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -215,13 +367,51 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/5/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_05_INTRO",
                      "Slides": [
                         {
-                           "Duration": 26.8,
-                           "TextFadeDuration": 26.6,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Lower Egypt, around 3800 BCE\n\nNew technologies have allowed your tribe to grow but have also brought conflict. The spread of the Sahara's sands has forced neighboring tribes to migrate into your lands to seize control of your foraging sites and defensive positions. Raiding parties from Upper Egypt have come down the river. Intercept and destroy these invaders before they infiltrate your villages and steal your food supplies.",
+                           "String": 244121,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 14.5,
+                           "TextFadeDuration": 14.3,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244122,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 14.62,
+                           "TextFadeDuration": 14.22,
+                           "FadeInTime": 0.2,
+                           "String": 244123,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -267,13 +457,70 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/6/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_06_INTRO",
                      "Slides": [
                         {
-                           "Duration": 44.4,
-                           "TextFadeDuration": 44.199999999999996,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Nile Valley, around 3100 BCE\n\nThe future of Egypt is about to change. The great Pharaoh Narmer seeks to unite the Upper and Lower Kingdoms into a unified Egypt. Using the wealth brought from farming along the Nile's banks, he will finally be able to defeat his rivals. Take control of the villages along the river and build a surplus of 800 food to feed your people and Narmer's warriors. In addition, take control of the ancient stone circle of Nabta Playa, found in the desert to the west. Controlling this ancient Ruin will demonstrate Narmer's power to his opponents. Be wary of nearby peoples, however. You need not destroy them but know that they will attempt to undermine Narmer's goal of uniting Egypt.",
+                           "String": 244126,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 16.89,
+                           "TextFadeDuration": 16.69,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244127,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 16.75,
+                           "TextFadeDuration": 16.55,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244128,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 19.11,
+                           "TextFadeDuration": 18.72,
+                           "FadeInTime": 0.2,
+                           "String": 244129,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -319,13 +566,89 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/7/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_07_INTRO",
                      "Slides": [
                         {
-                           "Duration": 45.0,
-                           "TextFadeDuration": 44.8,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Mediterranean, around 2700 BCE\n\nThe reputation of a united Egypt is spreading to all corners of the world and trade has vastly increased your people's wealth. With this prosperity, the Pharaoh Djoser has decided that a mere mastaba, a simple mud tomb, will not be enough to serve him in the afterlife. Instead, he has ordered the architect Imhotep to design a stepped pyramid that will be visible from miles away. Such a large project will require great resources. You have been ordered to go to the north and set up a trade post to collect the gold for the pyramid. At the same time, you must venture into the desert and find a quarry to supply stone for the construction. Your trading partners, the Minoans, Canaanites, and Libyans, could become jealous of Egypt's success and might even cease trade and attack your people. In case our diplomats fail to keep the peace, you must defend your trade ships. The pharaoh is entrusting you with the success of this project.",
+                           "String": 244131,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 18.16,
+                           "TextFadeDuration": 17.96,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244132,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 17.96,
+                           "TextFadeDuration": 17.76,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244133,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 17.76,
+                           "TextFadeDuration": 17.56,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244134,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 13.04,
+                           "TextFadeDuration": 12.64,
+                           "FadeInTime": 0.2,
+                           "String": 244135,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -371,13 +694,89 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/8/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_08_INTRO",
                      "Slides": [
                         {
-                           "Duration": 45.0,
-                           "TextFadeDuration": 44.8,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Heliopolis, around 2500 BCE\n\nEgyptian culture is flourishing and the population is growing. In order to provide for the administration of the kingdom and serve the gods, new professions have been established. Scribes and priests help the pharaoh in his dealings with the military, the people, and the gods. These new specialists have quickly gained prominence and become vital to Egyptian civilization.\n\nIn the north, west of the Nile Delta, scouts report Libyan raiding parties are approaching one of Egypt's most sacred cities, Heliopolis, built to honor the Sun God Ra. As the lector priest of the city's main temple and army scribe of the pharaoh, you are commanded to stop these raiders at all costs. The priests in the city have offered their services to support the army. However, you must be wary of the Libyans who bring a siege engine with them to demolish the city's walls. This machine could be useful for our own armies, so instead of destroying it, the pharaoh has ordered you to capture this Stone Thrower and bring it to the Town Center at Heliopolis.",
+                           "String": 244136,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 16.23,
+                           "TextFadeDuration": 16.03,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244137,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 17.66,
+                           "TextFadeDuration": 17.46,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244138,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 12.71,
+                           "TextFadeDuration": 12.51,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244139,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 22.88,
+                           "TextFadeDuration": 22.48,
+                           "FadeInTime": 0.2,
+                           "String": 244140,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -423,13 +822,70 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/9/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_09_INTRO",
                      "Slides": [
                         {
-                           "Duration": 35.8,
-                           "TextFadeDuration": 35.599999999999994,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "The Fourth Cataract, 1878-1860 BCE\n\nFor centuries, the Nubians of the South have attacked and pillaged our cities in Upper Egypt. Pharaoh Senusret III is determined to deal with them for good. His plan is to subdue lower Nubia by building forts along the Nile River all the way to the Fourth Cataract. To the south of your position, there is an island on the Nile which would be an ideal location for such a fort. Explore the island, clear it of enemies, and build a Town Center and two Sentry Towers there. But remember to be wary of Nubian raiders coming down the river.",
+                           "String": 244141,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 10.15,
+                           "TextFadeDuration": 9.95,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244142,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 14.02,
+                           "TextFadeDuration": 13.82,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244143,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 11.06,
+                           "TextFadeDuration": 10.66,
+                           "FadeInTime": 0.2,
+                           "String": 244144,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -475,13 +931,70 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/10/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_10_INTRO",
                      "Slides": [
                         {
-                           "Duration": 33.8,
-                           "TextFadeDuration": 33.599999999999994,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Nile Delta, 1720 BCE\n\nThe forts along the Nile have brought peace to the south, but the Libyans have once again become a problem. They have been raiding the coasts and intercepting trade ships bringing goods from other lands to Egypt. Recently, they captured an important ship belonging to the pharaoh himself, and carried off a treasured Artifact sent to him by the kings of Canaan. Build a naval base in this area of the coast and attack the Libyan raiders in the Nile Delta. Recover the stolen Artifact and return it to your Town Center.",
+                           "String": 244146,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 12.7,
+                           "TextFadeDuration": 12.5,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244147,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 9.21,
+                           "TextFadeDuration": 9.01,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244148,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 14.94,
+                           "TextFadeDuration": 14.54,
+                           "FadeInTime": 0.2,
+                           "String": 244149,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -527,13 +1040,89 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/11/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_11_INTRO",
                      "Slides": [
                         {
-                           "Duration": 45.0,
-                           "TextFadeDuration": 44.8,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Karnak, 1490 – 1460 BCE\n\nOur people have endured many dark nights, but finally Egypt awakens to the dawn of a new era. The pharaohs have driven out the foreign invaders and secured Egypt's borders. The reigning pharaoh, Queen Hatshepsut, promises to be one of the greatest rulers of this land. She has already extended the temple complexes at Karnak and Luxor, but her ambition knows no bounds. She plans to construct an even larger temple called Djeser-Djeseru, the \"holy of holies,\" and has given you the opportunity to oversee its construction. Gathering all the resources for such a monument may prove difficult because of our troubled relations with the Canaanites, but we can still rely on the Minoans of Crete for help. This task will be difficult, but Hatshepsut wishes you the best of luck and the blessings of the gods.",
+                           "String": 244151,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 17.8,
+                           "TextFadeDuration": 17.6,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244152,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 17.45,
+                           "TextFadeDuration": 17.25,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244153,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 11.52,
+                           "TextFadeDuration": 11.32,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244154,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 11.46,
+                           "TextFadeDuration": 11.06,
+                           "FadeInTime": 0.2,
+                           "String": 244155,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -579,13 +1168,70 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ascent_of_egypt/12/intro/%d.png",
+                     "Sound": "PLAY_AOECAM1_12_INTRO",
                      "Slides": [
                         {
-                           "Duration": 45.0,
-                           "TextFadeDuration": 44.8,
+                           "Duration": 4.9,
+                           "TextFadeDuration": 4.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Megiddo, 1457 BCE\n\nEgypt is thriving under the rule of her new pharaohs, but it is time to look outward. Pharaoh Thutmose III is expanding the army and intends to use it to invade Canaan. For centuries, that land has been within the Egyptian sphere of influence, but now it must be added to the Empire once and for all. The Canaanites think they can resist Egypt and have formed an alliance, led by the kings of Kadesh and Megiddo. They are gathering a vast army, but the gods favor us. Commander, the pharaoh entrusts you with the first attacking division. Do not disappoint the pharaoh as he is watching your every move.\n\nTo display the objectives while you are playing the game, click the Objectives button in the upper-right corner of the game screen. For more tips on achieving the objective, click on Hints. To open this page again while you are playing the game, open the menu and click on the Scenario Instructions button.",
+                           "String": 244156,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 12.64,
+                           "TextFadeDuration": 12.44,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244157,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 15.64,
+                           "TextFadeDuration": 15.44,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244158,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 16.9,
+                           "TextFadeDuration": 16.5,
+                           "FadeInTime": 0.2,
+                           "String": 244159,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

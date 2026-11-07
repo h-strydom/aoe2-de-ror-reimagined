@@ -30,6 +30,30 @@ def test_intro_file_points_each_mission_at_its_images():
     assert first["SlideImageSequence"] == f"textures/campaign/{c.slug}/1/intro/%d.png"
     assert [s["String"] for s in first["Slides"]] == ["a", "b"]
     assert first["Slides"][0]["Duration"] == intros.MIN_SECONDS
+    assert "Sound" not in first                                           # silent without RoR's narration
+
+
+def test_narrated_missions_play_rors_voice_over_then_our_objectives():
+    c = CAMPAIGNS[0]
+    told = [{"sound": "PLAY_X_1_INTRO", "slides": [{"Duration": 4.9, "TextFadeDuration": 4.7, "String": 7}]},
+            {"sound": "PLAY_X_2_INTRO", "slides": [{"Duration": 9.0, "String": 8}]}]
+    data = intros.intro(c, [["story", "objectives"], ["story only"]], told)
+    first, second = (s["IntroSequence"]["SequenceItems"][0]["Data"] for s in data["Scenarios"])
+    assert first["Sound"] == "PLAY_X_1_INTRO" and [s["String"] for s in first["Slides"]] == [7, "objectives"]
+    assert first["Slides"][0]["Duration"] == 4.9 and first["Slides"][0]["TextRect"] == intros.TEXT_RECT
+    assert [s["String"] for s in second["Slides"]] == [8]
+    with pytest.raises(ValueError, match="missions"):
+        intros.intro(c, [["one"]], told)
+
+
+@pytest.mark.skipif(intros.ror_narration("voices_of_babylon") is None, reason="needs Return of Rome installed")
+def test_ror_narration_matches_the_remade_campaigns():
+    counts = {slug: len(c.missions) for c in CAMPAIGNS if (slug := c.slug) in intros.ROR_NARRATION}
+    for slug, n in counts.items():
+        told = intros.ror_narration(slug)
+        assert len(told) == n and all(t["sound"].startswith("PLAY_AOECAM") for t in told)
+    assert intros.ror_narration("voices_of_babylon")[7]["sound"] == "PLAY_AOECAM4_8_INTRO"   # Nineveh
+    assert intros.ror_narration("ave_caesar") is None
 
 
 @pytest.mark.skipif(not intros.has_art(), reason="run `reimagined setup` first")

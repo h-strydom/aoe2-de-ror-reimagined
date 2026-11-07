@@ -8,8 +8,9 @@ Rome**: every campaign map converted tile for tile, then the campaigns reimagine
 
 ## To do
 
-1. **Sound on the intro slides.** RoR didn't play AoE DE's narration, so first find out what audio a campaign
-   intro can play (RoR's own sound events, or sounds shipped in a mod).
+1. **Narration for the other six campaigns.** Egypt, Greece, Babylon and the First Punic War play RoR's own
+   voice-over; Yamato, the Hittites, Rise of Rome, Ave Caesar, Imperium Romanum and Enemies of Rome have none in
+   RoR, and a mod's own audio files don't play.
 2. **Campaign choices:** decisions that carry from one mission to the next (aoe-agent-editor's campaign bank
    and `choice` block).
 3. The reimagined campaigns: edited maps, new objectives and upgrades.
@@ -101,8 +102,9 @@ Converts every campaign (or just the ones you name, e.g. `reimagined convert asc
 - each campaign into `aoe2de_ror/<campaign>/<campaign>.aoe2campaign`, titled "AoE1 <title>"
 - each campaign's intros (`<campaign>.json`): before every mission, a slideshow in the style of AoE DE's
   own briefing screen, with the mission's briefing map and its instructions (story, then objectives).
-  The slide images are built from your local AoE DE copy at install time. They're silent: RoR only
-  plays its own sounds, so AoE DE's narration can't be added.
+  The slide images are built from your local AoE DE copy at install time. The four campaigns RoR remade
+  (Ascent of Egypt, Glory of Greece, Voices of Babylon, The First Punic War) play RoR's own narration over its
+  timed story slides, then show the objectives; the others are silent, since RoR only plays its own sounds.
 - each campaign's screen (`<campaign>_layout.json`), in the style of RoR's own: RoR's campaign book with
   AoE DE's map of the region inked on the page and a unit pin per mission in the campaign's colour, placed
   per `aoe2de_ror/campaign_maps.yaml`.

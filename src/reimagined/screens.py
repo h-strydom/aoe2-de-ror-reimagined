@@ -31,7 +31,8 @@ def screens(c: layout.CampaignInfo, title: str) -> dict[str, dict]:
     """File suffix -> content: the intro file (".json", AoE DE's briefing text per mission) and the
     campaign screen ("_layout.json", our own map, campaign_maps.py)."""
     specs = mission_specs(c)
-    out = {".json": intros.intro(c, [intros.slide_texts(s["text"]["instructions"]) for s in specs])}
+    out = {".json": intros.intro(c, [intros.slide_texts(s["text"]["instructions"]) for s in specs],
+                                 intros.ror_narration(c.slug))}
     own = campaign_maps.load()
     if c.slug in own:
         labels = [f"{i}. {n}" for i, n in enumerate(display_names(c), start=1)]

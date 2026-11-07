@@ -7,13 +7,33 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/1/intro/%d.png",
+                     "Sound": "PLAY_AOECAM4_1_INTRO",
                      "Slides": [
                         {
-                           "Duration": 20.7,
-                           "TextFadeDuration": 20.5,
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Mesopotamia, 1760 BCE\n\nThe small city state of Babylon is growing under the energetic leadership of its new king, Hammurabi. You have been sent down river to bring some enclaves of Sumerians and Akkadians into the fold. Use your powers of persuasion when you can, but do not hesitate to resort to war if they prove to be resistant.",
+                           "String": 244256,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 25.34,
+                           "TextFadeDuration": 25.14,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244257,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -59,13 +79,51 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/2/intro/%d.png",
+                     "Sound": "PLAY_AOECAM4_2_INTRO",
                      "Slides": [
                         {
-                           "Duration": 37.3,
-                           "TextFadeDuration": 37.099999999999994,
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Tigris Valley, 1755 BCE\n\nThe addition of the Sumerian and Akkadian cities to the rising Babylonian Empire pleases Hammurabi greatly. Now, he sets a more difficult task for you. One of our frontier cities was recently sacked and important treasures, including a copy of Hammurabi's law code engraved in stone, were carried off to the Tigris River. Chase the raiders to where the treasures were taken and build up a force to recover them. They must not be allowed to move the treasures upstream. The prestige of your great king remains tarnished for as long as these treasures remain in enemy hands.",
+                           "String": 244261,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 21.14,
+                           "TextFadeDuration": 20.94,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244262,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 21.25,
+                           "TextFadeDuration": 21.05,
+                           "FadeInTime": 0.2,
+                           "String": 244263,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -111,13 +169,33 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/3/intro/%d.png",
+                     "Sound": "PLAY_AOECAM4_3_INTRO",
                      "Slides": [
                         {
-                           "Duration": 26.1,
-                           "TextFadeDuration": 25.900000000000002,
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Euphrates River Bank, 1595 BCE\n\nDisaster has struck - a Hittite army has marched down the shore of the Euphrates River and sacked Babylon! Although your party is isolated among enemies in the marsh lands, this is our only hope for exacting vengeance on the raiders. A Hittite force remains in the area, trying to gather more loot. Clear your enemies from the marsh lands and burn the Hittite encampment to the ground!",
+                           "String": 244266,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 29.5,
+                           "TextFadeDuration": 29.3,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244267,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -163,13 +241,52 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/4/intro/%d.png",
+                     "Sound": "PLAY_AOECAM4_4_INTRO",
                      "Slides": [
                         {
-                           "Duration": 32.3,
-                           "TextFadeDuration": 32.099999999999994,
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Babylon, 1185 – 1155 BCE\n\nFollowing the Hittite sack of Babylon, the city has come under the dominion of the Kassites, who have controlled it for nearly 500 years. Kassite rule is in danger, however, because of Elamite and Assyrian intrusions. Another Elamite army is pressing forward at this moment and is moving to take Babylon. If the city cannot be held, you are to save what you can, retreat downriver, and build up a new army. When you are prepared, retake the city of Babylon and destroy the invading Elamites.",
+                           "String": 244271,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 18.73,
+                           "TextFadeDuration": 18.53,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244272,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 17.22,
+                           "TextFadeDuration": 17.02,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244273,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -215,13 +332,51 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/5/intro/%d.png",
+                     "Sound": "PLAY_AOECAM4_5_INTRO",
                      "Slides": [
                         {
-                           "Duration": 45.0,
-                           "TextFadeDuration": 44.8,
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Karun River near Susa, 1120 BCE\n\nThe glory of Babylon has been restored by the reconquest of lands formerly lost to the Elamites, and by ejecting the foreign Kassite rulers from our territories. However, King Nebuchadnezzar I vows that taking back former Babylonian land is not enough. The Elamites must feel his wrath in their homeland. Nebuchadnezzar I has ordered you to attack Susa, the capital of the Elamites, just across the Karun river. In one of their previous raids, the Elamites carted off a golden statue of the most important god of the Babylonians; Marduk. Your task is to recapture it to strengthen Nebuchadnezzar's legitimacy back home. Peoples long oppressed by the Elamites will give you aid in your quest if you can locate them.",
+                           "String": 244276,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 28.49,
+                           "TextFadeDuration": 28.29,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244277,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 24.32,
+                           "TextFadeDuration": 24.12,
+                           "FadeInTime": 0.2,
+                           "String": 244278,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -267,13 +422,33 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/6/intro/%d.png",
+                     "Sound": "PLAY_AOECAM4_6_INTRO",
                      "Slides": [
                         {
-                           "Duration": 23.7,
-                           "TextFadeDuration": 23.5,
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Eastern Mesopotamia, 1119 BCE\n\nThe raid into Elam was successful and the statue of Marduk has been recovered, but it must be returned to Babylonia. There are still bands of Elamites and other enemies roaming the Zagros Mountains who wish to prevent the return of the statue. Bring the statue safely to your frontier Temple where it can be guarded prior to being moved to Babylon.",
+                           "String": 244281,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 26.58,
+                           "TextFadeDuration": 26.38,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244282,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -319,13 +494,52 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/7/intro/%d.png",
+                     "Sound": "PLAY_AOECAM4_7_INTRO",
                      "Slides": [
                         {
-                           "Duration": 37.8,
-                           "TextFadeDuration": 37.599999999999994,
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "The Euphrates River, 748 – 734 BCE\n\nBabylonia has succumbed to the continuous invasions of the Aramaeans—yet another semi-nomadic tribe from the west. The empire has been reduced to poverty and our kings hold onto little more than their grand titles. Things are about to change, however—an Assyrian general named Tiglath-Pileser has rebelled against his king and has taken the throne. He is willing to support our new king Nabonassar to retake land lost to the Aramaeans, our common enemy. Nabonassar commands you to revitalize the Babylonian armies and destroy the invaders encroaching on our territory.",
+                           "String": 244286,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 13.24,
+                           "TextFadeDuration": 13.04,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244287,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 28.59,
+                           "TextFadeDuration": 28.39,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244288,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -371,13 +585,33 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/8/intro/%d.png",
+                     "Sound": "PLAY_AOECAM4_8_INTRO",
                      "Slides": [
                         {
-                           "Duration": 26.0,
-                           "TextFadeDuration": 25.8,
+                           "Duration": 5,
+                           "TextFadeDuration": 4.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": "Nineveh, 612 BCE\n\nFinally, Babylonia has been liberated from Assyrian oppression. Civil wars, rebellions and foreign invasions have brought the once-mighty empire to its knees. The Assyrians have fallen back behind the imposing walls of their capital at Nineveh while an army of Babylonians and Medes converge on the capital of Assyria. Destroy the Wonder in Nineveh to break the power of the Assyrians indefinitely.",
+                           "String": 244291,
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        },
+                        {
+                           "Duration": 31.11,
+                           "TextFadeDuration": 30.91,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": 244292,
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
