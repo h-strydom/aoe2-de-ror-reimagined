@@ -204,6 +204,13 @@ every terrain and object on every map is covered.
 Anyone who just wants faithful Return of Rome versions of the AoE DE campaigns can take the
 converted maps straight from `aoe2de_ror/`.
 
+## Bugs and feedback
+
+Playing the [RoR-RI] campaigns and something's wrong, or you have an idea? Open an issue:
+[report a bug](https://github.com/h-strydom/aoe2-de-ror-reimagined/issues/new?template=bug_report.yml) (it asks
+for the campaign, mission and difficulty) or
+[share feedback](https://github.com/h-strydom/aoe2-de-ror-reimagined/issues/new?template=feedback.yml).
+
 ## Related
 
 - [aoe-agent-editor](https://github.com/h-strydom/aoe-agent-editor): the scenario toolkit and Claude

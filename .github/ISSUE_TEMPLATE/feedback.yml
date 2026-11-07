@@ -1,0 +1,30 @@
+name: Feedback or idea
+description: Comments on a campaign, balance, or ideas for the reimagined campaigns
+title: "[Feedback] "
+labels: [feedback]
+body:
+  - type: dropdown
+    id: campaign
+    attributes:
+      label: Campaign
+      options:
+        - All / general
+        - Ascent of Egypt
+        - Glory of Greece
+        - Voices of Babylon
+        - Yamato, Empire of the Rising Sun
+        - Reign of the Hittites
+        - The Rise of Rome
+        - Ave Caesar
+        - Imperium Romanum
+        - Enemies of Rome
+        - The First Punic War
+    validations:
+      required: true
+  - type: textarea
+    id: feedback
+    attributes:
+      label: Your feedback
+      description: What you liked, what felt off (too easy, too hard, slow), or what you'd like to see.
+    validations:
+      required: true

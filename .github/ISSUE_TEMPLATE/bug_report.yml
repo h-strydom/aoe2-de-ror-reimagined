@@ -1,0 +1,66 @@
+name: Bug report
+description: Something in a [RoR-RI] campaign doesn't work as it should
+title: "[Bug] <campaign> <mission>: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for playing and reporting. One problem per report, please.
+  - type: dropdown
+    id: campaign
+    attributes:
+      label: Campaign
+      options:
+        - Ascent of Egypt
+        - Glory of Greece
+        - Voices of Babylon
+        - Yamato, Empire of the Rising Sun
+        - Reign of the Hittites
+        - The Rise of Rome
+        - Ave Caesar
+        - Imperium Romanum
+        - Enemies of Rome
+        - The First Punic War
+        - Not campaign-specific
+    validations:
+      required: true
+  - type: input
+    id: mission
+    attributes:
+      label: Mission
+      description: Its number or name, e.g. "8, The Conquest of Nineveh".
+    validations:
+      required: true
+  - type: dropdown
+    id: difficulty
+    attributes:
+      label: Difficulty
+      options:
+        - Standard
+        - Moderate
+        - Hard
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      description: What you did and what went wrong. Roughly when in the mission (game time) helps.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+  - type: input
+    id: updated
+    attributes:
+      label: Mod update
+      description: The date at the top of the mod's Change List, so we know which version you played.
+  - type: textarea
+    id: extra
+    attributes:
+      label: Screenshots or saved game
+      description: Drag images or a zipped saved game (.aoe2record) here if you have them.
