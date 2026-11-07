@@ -23,7 +23,11 @@ dependencies = [
 reimagined = "reimagined.cli:main"
 
 [dependency-groups]
-dev = ["pytest>=8", "ruff>=0.8"]
+dev = [
+    "pytest>=8",
+    "pytest-xdist>=3.8.0",
+ "ruff>=0.8",
+]
 
 [build-system]
 requires = ["hatchling"]
@@ -38,6 +42,8 @@ packages = ["src/reimagined"]
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 pythonpath = ["src"]
+# Tests run side by side, one worker per CPU core (`-n 0` for one process, e.g. with a debugger).
+addopts = "-n auto"
 
 [tool.ruff]
 line-length = 120

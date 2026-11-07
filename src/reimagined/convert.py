@@ -9,7 +9,9 @@ or owned by an inactive player) are counted in the result, so nothing disappears
 from __future__ import annotations
 
 import contextlib
+import functools
 from collections import Counter
+from concurrent.futures import Executor
 from dataclasses import dataclass, field
 from pathlib import Path
 
@@ -303,12 +305,20 @@ def probe_mission(m: layout.Mission, conv: Conversion, out_root: Path, *, minute
 
 
 def convert_campaign(c: layout.CampaignInfo, conv: Conversion | None = None, out_root: Path = layout.AOE2DE_ROR,
-                     *, ai_debug: bool = False) -> tuple[list[Path], list[ConvertResult]]:
+                     *, ai_debug: bool = False, pool: Executor | None = None
+                     ) -> tuple[list[Path], list[ConvertResult]]:
     """Convert every mission of a campaign and bundle them into its .aoe2campaign, plus the campaign
     screen (`<slug>_layout.json`, `<slug>.json`) when RoR has one for it. The campaign's internal name
-    is its slug, which the game needs to find the screen."""
+    is its slug, which the game needs to find the screen. With a process `pool`, missions convert side by side."""
     conv = conv or load()
-    results = [convert_mission(m, conv, out_root, ai_debug=ai_debug) for m in c.missions]
+    convert = functools.partial(convert_mission, conv=conv, out_root=out_root, ai_debug=ai_debug)
+    results = list(pool.map(convert, c.missions) if pool else map(convert, c.missions))
+    return bundle_campaign(c, results, out_root), results
+
+
+def bundle_campaign(c: layout.CampaignInfo, results: list[ConvertResult],
+                    out_root: Path = layout.AOE2DE_ROR) -> list[Path]:
+    """Bundle a campaign's converted missions into its .aoe2campaign and write its screen files."""
     bundle = RorCampaign(c.slug)
     for m, r in zip(c.missions, results, strict=True):
         bundle.scenarios.append(CampaignScenario(m.title, r.out.name, r.out.read_bytes()))
@@ -318,4 +328,4 @@ def convert_campaign(c: layout.CampaignInfo, conv: Conversion | None = None, out
         f = path.with_name(f"{c.slug}{suffix}")
         f.write_text(dumps(data), encoding="utf-8", newline="\n")
         paths.append(f)
-    return paths, results
+    return paths

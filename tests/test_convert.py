@@ -91,43 +91,38 @@ def test_mission_override_reaches_the_map(tmp_path):
     assert all(s.map_manager.terrain[i].terrain_id == 32 for i in sand)
 
 
-@needs_ror
-def test_campaign_file_and_screen(tmp_path):
-    c = CAMPAIGNS[0]                                         # Ascent of Egypt: 12 missions, RoR has its screen
-    paths, results = convert_campaign(c, load(), tmp_path)
-    camp = RorCampaign.read(campaign_path(c, tmp_path))
+@pytest.mark.parametrize("c", CAMPAIGNS[:1], ids=lambda c: c.slug)
+def test_campaign_file_and_screen(c):
+    """Reads the committed build (test_committed_maps_are_up_to_date checks it's what convert makes today)."""
+    out = layout.AOE2DE_ROR                                  # Ascent of Egypt: 12 missions, RoR has its screen
+    camp = RorCampaign.read(campaign_path(c, out))
     assert camp.name == c.slug                               # the game finds the screen by the internal name
     assert [s.name for s in camp.scenarios] == [m.title for m in c.missions]
-    assert [s.data for s in camp.scenarios] == [r.out.read_bytes() for r in results]
-    lay = json.loads((tmp_path / c.slug / f"{c.slug}_layout.json").read_text(encoding="utf-8"))
+    assert [s.data for s in camp.scenarios] == [scenario_path(m, out).read_bytes() for m in c.missions]
+    lay = json.loads((out / c.slug / f"{c.slug}_layout.json").read_text(encoding="utf-8"))
     widgets = {w["Widget"]["Name"]: w["Widget"] for w in lay["Widgets"]}
     assert widgets["TitleLabel"]["Text"] == "AoE1 Ascent of Egypt" and "ZPlane" not in json.dumps(lay)
     assert widgets["ScenarioButton12"]["ChildWidgets"][0]["Widget"]["Text"] == "12. The Siege in Canaan"
-    intro = json.loads((tmp_path / c.slug / f"{c.slug}.json").read_text(encoding="utf-8"))
-    assert len(intro["Scenarios"]) == 12 and len(paths) == 3
+    intro = json.loads((out / c.slug / f"{c.slug}.json").read_text(encoding="utf-8"))
+    assert len(intro["Scenarios"]) == 12
 
 
-@needs_ror
-def test_campaigns_without_ror_art_get_our_own_screen(tmp_path):
-    c = next(c for c in CAMPAIGNS if c.slug == "reign_of_the_hittites")
-    paths, _ = convert_campaign(c, load(), tmp_path)
-    assert paths == [campaign_path(c, tmp_path), tmp_path / c.slug / f"{c.slug}.json",
-                     tmp_path / c.slug / f"{c.slug}_layout.json"]
-    lay = json.loads(paths[2].read_text(encoding="utf-8"))
+@pytest.mark.parametrize("c", [c for c in CAMPAIGNS if c.slug == "reign_of_the_hittites"], ids=lambda c: c.slug)
+def test_campaigns_without_ror_art_get_our_own_screen(c):
+    out = layout.AOE2DE_ROR                                  # the committed build, as above
+    lay = json.loads((out / c.slug / f"{c.slug}_layout.json").read_text(encoding="utf-8"))
     assert lay["UserMaterials"][0]["FileName"] == f"{c.slug}_map.dds"
 
 
 @needs_ror
-def test_committed_maps_are_up_to_date(tmp_path):
+@pytest.mark.parametrize("c", CAMPAIGNS, ids=lambda c: c.slug)
+def test_committed_maps_are_up_to_date(c, tmp_path, mission_pool):
     """aoe2de_ror/ must be what `reimagined convert` builds from conversion.yaml today."""
-    conv = load()
+    paths, results = convert_campaign(c, load(), tmp_path, pool=mission_pool)
+    assert not [r.skipped for r in results if r.skipped], f"{c.slug}: victory conditions not converted"
     stale = []
-    for c in CAMPAIGNS:
-        paths, results = convert_campaign(c, conv, tmp_path)
-        assert not [r.skipped for r in results if r.skipped], f"{c.slug}: victory conditions not converted"
-        fresh = paths + [scenario_path(m, tmp_path) for m in c.missions]
-        for f in fresh:
-            committed = layout.AOE2DE_ROR / f.relative_to(tmp_path)
-            if not committed.is_file() or committed.read_bytes() != f.read_bytes():
-                stale.append(str(committed.relative_to(layout.ROOT)))
-    assert not stale, f"run `uv run reimagined convert`; out of date: {stale}"
+    for f in paths + [scenario_path(m, tmp_path) for m in c.missions]:
+        committed = layout.AOE2DE_ROR / f.relative_to(tmp_path)
+        if not committed.is_file() or committed.read_bytes() != f.read_bytes():
+            stale.append(str(committed.relative_to(layout.ROOT)))
+    assert not stale, f"run `uv run reimagined convert {c.slug}`; out of date: {stale}"

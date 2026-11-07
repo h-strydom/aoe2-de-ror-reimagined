@@ -94,7 +94,24 @@ uv run reimagined convert
 ```
 
 Converts every campaign (or just the ones you name, e.g. `reimagined convert ascent_of_egypt`) into
-`aoe2de_ror/`, following `conversion.yaml`:
+`aoe2de_ror/`, following `conversion.yaml`. Missions convert side by side, one per CPU core (`-j N` for
+fewer).
+
+For a quick round after a small change, convert and test only the campaigns it touches:
+
+```bash
+uv run reimagined convert --changed
+uv run pytest --campaign changed
+```
+
+"Changed" means everything not yet pushed (uncommitted edits, new files, unpushed commits). A campaign's own
+files touch only that campaign: its `aoe1de/` files, its `aoe2de_ror/<campaign>/` files and its
+`aoe2de_ror/reimagined/<campaign>.yaml`. Docs touch none. Anything else (the converter's code, `conversion.yaml`,
+the tests) counts as every campaign. `uv run reimagined changed` prints which campaigns it picks, and
+`pytest --campaign <slug>` picks one by hand. The tests always run side by side; use `-n 0` to run them in one
+process, for example under a debugger.
+
+The conversion writes:
 - each mission into `aoe2de_ror/<campaign>/NN_<mission>/<campaign>_NN_<mission>.aoe2scenario`
 - each campaign into `aoe2de_ror/<campaign>/<campaign>.aoe2campaign`, titled "AoE1 <title>"
 - each campaign's intros (`<campaign>.json`): before every mission, a slideshow in the style of AoE DE's

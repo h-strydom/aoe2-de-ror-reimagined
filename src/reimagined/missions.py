@@ -256,11 +256,13 @@ def campaign_document(c: layout.CampaignInfo, table: dict[int, str]) -> str:
     return "".join(out)
 
 
-def documents(root=layout.AOE1DE, table: dict[int, str] | None = None) -> dict:
-    """Path -> the text each campaign and mission file should have."""
+def documents(root=layout.AOE1DE, table: dict[int, str] | None = None, slugs: list[str] | None = None) -> dict:
+    """Path -> the text each campaign and mission file should have (of the campaigns `slugs`, default all)."""
     table = strings.load() if table is None else table
     out = {}
     for c in layout.campaigns(root):
+        if slugs is not None and c.slug not in slugs:
+            continue
         out[root / f"{c.slug}.yaml"] = campaign_document(c, table)
         for i, m in enumerate(c.missions, start=1):
             out[m.folder / "mission.yaml"] = mission_document(c, i, table)

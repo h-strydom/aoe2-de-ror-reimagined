@@ -61,7 +61,8 @@ def test_mission_files_have_text_and_objectives():
 
 
 @needs_setup
-def test_committed_files_are_up_to_date():
-    stale = [str(p.relative_to(layout.ROOT)) for p, text in missions.documents().items()
+@pytest.mark.parametrize("slug", [c.slug for c in CAMPAIGNS])
+def test_committed_files_are_up_to_date(slug):
+    stale = [str(p.relative_to(layout.ROOT)) for p, text in missions.documents(slugs=[slug]).items()
              if not p.is_file() or p.read_text(encoding="utf-8") != text]
     assert not stale, f"run `uv run reimagined extract`; out of date: {stale}"

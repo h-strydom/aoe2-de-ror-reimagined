@@ -10,6 +10,8 @@ def main(argv: list[str] | None = None) -> int:
     sub = parser.add_subparsers(dest="command")
     p_setup = sub.add_parser("setup", help="copy the AoE DE campaigns and game data from your install into aoe1de/")
     p_setup.add_argument("--from", dest="source", help="AoE DE folder (default: AOEDE_DIR, then Steam)")
+    sub.add_parser("changed", help="list the campaigns your uncommitted and unpushed changes touch, for "
+                                   "`pytest --campaign` (prints 'all' when shared code or settings changed)")
     sub.add_parser("extract", help="fill aoe1de/'s campaign and mission files with players, objectives and text")
     p_conv = sub.add_parser("convert", help="convert campaigns to Return of Rome into aoe2de_ror/ (needs setup)")
     p_conv.add_argument("campaigns", nargs="*", help="campaign folder names (default: all)")
@@ -19,6 +21,11 @@ def main(argv: list[str] | None = None) -> int:
     p_conv.add_argument("--images-to", metavar="FOLDER",
                         help="also write each campaign's mod page image ('[RoR-RI] <campaign>.png', the campaign "
                              "screen at 1920 x 1080) and its title and description (.txt) into FOLDER")
+    p_conv.add_argument("--changed", action="store_true",
+                        help="only the campaigns your uncommitted and unpushed changes touch (all of them when shared "
+                             "code or settings changed); see `reimagined changed`")
+    p_conv.add_argument("-j", "--jobs", type=int, default=0,
+                        help="missions converted at once (default: one per CPU core)")
     p_conv.add_argument("--ai-debug", action="store_true",
                         help="computer players announce their build steps and attacks in chat (built into out/debug, "
                              "not aoe2de_ror/; use with --install for playtests)")
@@ -57,8 +64,21 @@ def main(argv: list[str] | None = None) -> int:
         for p in changed:
             print(f"  {p.relative_to(layout.ROOT)}")
         return 0
+    if args.command == "changed":
+        from .changed import changed_campaigns
+        slugs = changed_campaigns()
+        print("all" if slugs is None else " ".join(slugs) or "none")
+        return 0
     if args.command == "convert":
-        return _convert(args.campaigns, args.install, args.ai_debug, args.images_to)
+        names = args.campaigns
+        if args.changed:
+            from .changed import changed_campaigns
+            slugs = changed_campaigns()
+            if slugs == []:
+                print("no campaign changed")
+                return 0
+            names = names + (slugs or [])
+        return _convert(names, args.install, args.ai_debug, args.images_to, args.jobs)
     if args.command == "probe":
         return _probe(args.campaign, args.mission, args.minutes, args.ai_debug, args.install)
     if args.command == "package":
@@ -67,10 +87,13 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-def _convert(names: list[str], install: bool = False, ai_debug: bool = False, images_to: str | None = None) -> int:
+def _convert(names: list[str], install: bool = False, ai_debug: bool = False, images_to: str | None = None,
+             jobs: int = 0) -> int:
+    import os
+    from concurrent.futures import ProcessPoolExecutor
+
     from . import layout
     from .conversion import ConversionError, load
-    from .convert import convert_campaign
 
     try:
         conv = load()
@@ -83,39 +106,49 @@ def _convert(names: list[str], install: bool = False, ai_debug: bool = False, im
         print(f"error: no campaign {', '.join(sorted(unknown))}; choose from {', '.join(c.slug for c in camps)}",
               file=sys.stderr)
         return 1
-    for c in camps:
-        if names and c.slug not in names:
-            continue
+    chosen = [c for c in camps if not names or c.slug in names]
+    for c in chosen:
         missing = [m.folder.name for m in c.missions if not m.scenario_path.is_file()]
         if missing:
             print(f"error: {c.slug}: no source scenario in {', '.join(missing)}; run `reimagined setup`",
                   file=sys.stderr)
             return 1
-        out_root = layout.ROOT / "out" / "debug" if ai_debug else layout.AOE2DE_ROR
-        paths, results = convert_campaign(c, conv, out_root, ai_debug=ai_debug)
-        print(f"{c.title}: {', '.join(p.name for p in paths)}")
-        if install:
-            from aoe2ed import screens as ed_screens
+    # Missions are independent: convert them all side by side, then bundle and report each campaign in order.
+    from .convert import bundle_campaign, convert_mission
 
-            from . import package
-
-            data = {p.name[len(c.slug):]: ed_screens.read_json(p) for p in paths[1:]}
-            res = package.install_local(c, paths[0], data)
-            print(f"  installed as the local mod {res['title']!r}" + (f" ({res['next']})" if res["next"] else ""))
-        if images_to:
-            from pathlib import Path
-
-            from aoe2ed import screens as ed_screens
-
-            from . import package
-
-            lay = ed_screens.read_json(paths[0].with_name(f"{c.slug}_layout.json"))
-            image, page = package.page_files(c, Path(images_to), lay)
-            print(f"  mod page: {image or '(no image: run `reimagined setup` for the map art)'}, {page.name}")
-        for r in results:
-            dropped = sum(r.dropped.values())
-            print(f"  {r.mission}: {r.players} players, {r.placed} objects placed, {dropped} dropped")
+    out_root = layout.ROOT / "out" / "debug" if ai_debug else layout.AOE2DE_ROR
+    with ProcessPoolExecutor(jobs or os.cpu_count() or 1) as pool:
+        futures = {c.slug: [pool.submit(convert_mission, m, conv, out_root, ai_debug=ai_debug) for m in c.missions]
+                   for c in chosen}
+        for c in chosen:
+            results = [f.result() for f in futures[c.slug]]
+            _report(c, bundle_campaign(c, results, out_root), results, install, images_to)
     return 0
+
+
+def _report(c, paths, results, install: bool, images_to: str | None) -> None:
+    print(f"{c.title}: {', '.join(p.name for p in paths)}")
+    if install:
+        from aoe2ed import screens as ed_screens
+
+        from . import package
+
+        data = {p.name[len(c.slug):]: ed_screens.read_json(p) for p in paths[1:]}
+        res = package.install_local(c, paths[0], data)
+        print(f"  installed as the local mod {res['title']!r}" + (f" ({res['next']})" if res["next"] else ""))
+    if images_to:
+        from pathlib import Path
+
+        from aoe2ed import screens as ed_screens
+
+        from . import package
+
+        lay = ed_screens.read_json(paths[0].with_name(f"{c.slug}_layout.json"))
+        image, page = package.page_files(c, Path(images_to), lay)
+        print(f"  mod page: {image or '(no image: run `reimagined setup` for the map art)'}, {page.name}")
+    for r in results:
+        dropped = sum(r.dropped.values())
+        print(f"  {r.mission}: {r.players} players, {r.placed} objects placed, {dropped} dropped")
 
 
 def _package(names: list[str], to: str | None) -> int:
