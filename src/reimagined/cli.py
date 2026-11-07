@@ -16,6 +16,9 @@ def main(argv: list[str] | None = None) -> int:
     p_conv.add_argument("--install", action="store_true",
                         help="also install each campaign into your profile as the local mod '[RoR-RI] <campaign>', "
                              "where the game's mod manager can publish and update it")
+    p_conv.add_argument("--images-to", metavar="FOLDER",
+                        help="also write each campaign's mod page image ('[RoR-RI] <campaign>.jpg', the campaign "
+                             "screen at 1920 x 1080) and its title and description (.txt) into FOLDER")
     p_conv.add_argument("--ai-debug", action="store_true",
                         help="computer players announce their build steps and attacks in chat (built into out/debug, "
                              "not aoe2de_ror/; use with --install for playtests)")
@@ -55,7 +58,7 @@ def main(argv: list[str] | None = None) -> int:
             print(f"  {p.relative_to(layout.ROOT)}")
         return 0
     if args.command == "convert":
-        return _convert(args.campaigns, args.install, args.ai_debug)
+        return _convert(args.campaigns, args.install, args.ai_debug, args.images_to)
     if args.command == "probe":
         return _probe(args.campaign, args.mission, args.minutes, args.ai_debug, args.install)
     if args.command == "package":
@@ -64,7 +67,7 @@ def main(argv: list[str] | None = None) -> int:
     return 0
 
 
-def _convert(names: list[str], install: bool = False, ai_debug: bool = False) -> int:
+def _convert(names: list[str], install: bool = False, ai_debug: bool = False, images_to: str | None = None) -> int:
     from . import layout
     from .conversion import ConversionError, load
     from .convert import convert_campaign
@@ -99,6 +102,16 @@ def _convert(names: list[str], install: bool = False, ai_debug: bool = False) ->
             data = {p.name[len(c.slug):]: ed_screens.read_json(p) for p in paths[1:]}
             res = package.install_local(c, paths[0], data)
             print(f"  installed as the local mod {res['title']!r}" + (f" ({res['next']})" if res["next"] else ""))
+        if images_to:
+            from pathlib import Path
+
+            from aoe2ed import screens as ed_screens
+
+            from . import package
+
+            lay = ed_screens.read_json(paths[0].with_name(f"{c.slug}_layout.json"))
+            image, page = package.page_files(c, Path(images_to), lay)
+            print(f"  mod page: {image or '(no image: run `reimagined setup` for the map art)'}, {page.name}")
         for r in results:
             dropped = sum(r.dropped.values())
             print(f"  {r.mission}: {r.players} players, {r.placed} objects placed, {dropped} dropped")

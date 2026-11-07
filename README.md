@@ -164,7 +164,8 @@ To play them, add `--install`: it installs each campaign into your profile as th
 `mods/local/[RoR-RI] <campaign>`, the same mod that's published (the game only reads campaign screens from mods).
 Enable each once in Mods > Installed Mods and restart the game; the campaigns then show up under Return of
 Rome's campaigns. The game's mod manager can publish and update a local mod straight from there, so after a
-change `convert --install` is all an update needs. Turn off (or unsubscribe from) the published copy of a
+change `convert --install` is all an update needs. Add `--images-to <folder>` for each campaign's mod page
+image and its title and description (the `.jpg` and `.txt` that `package` writes beside the zips). Turn off (or unsubscribe from) the published copy of a
 campaign while its local mod is on, or it loads twice.
 
 ## Changing the conversion

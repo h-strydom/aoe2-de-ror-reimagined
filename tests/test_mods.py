@@ -52,3 +52,13 @@ def test_install_local_writes_the_published_mod_into_mods_local(tmp_path):
     assert (folder / "modes/Pompeii/resources/_common/campaign/ascent_of_egypt.aoe2campaign").is_file()
     info = json.loads((folder / "info.json").read_text(encoding="utf-8"))
     assert info["Title"] == "[RoR-RI] Ascent of Egypt" and info["Description"] == package.description(EGYPT)
+
+
+@pytest.mark.skipif(not intros.has_art() or not package.campaign_path(EGYPT).is_file(),
+                    reason="needs `reimagined setup` art and the converted campaign")
+def test_page_files_write_the_mod_page_image_and_text(tmp_path):
+    from PIL import Image
+    _, data = package.campaign_files(EGYPT)
+    image, page = package.page_files(EGYPT, tmp_path / "pages", data["_layout.json"])
+    assert image == tmp_path / "pages" / "[RoR-RI] Ascent of Egypt.jpg" and Image.open(image).size == (1920, 1080)
+    assert package.description(EGYPT) in page.read_text(encoding="utf-8")
