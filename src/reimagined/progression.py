@@ -38,7 +38,13 @@ from . import layout
 
 DATA = layout.AOE2DE_ROR / "reimagined"
 END_TECH, END_LOCATION, END_BUTTON, END_SECONDS = 153, 109, 10, 5
-DIFFICULTY = {"moderate": [2], "hard": [1, 0, -1]}          # the Difficulty Level condition's values (equality)
+# The Difficulty Level condition is true at its level *or easier* (values: Easiest 4, Standard 3, Moderate 2, Hard 1,
+# Hardest 0, Extreme -1). One trigger per level 1, 0 and -1 all fired on Hard: the Libyans' Leather Armor was
+# applied three times (6 melee armour on Axemen; Ascent of Egypt 3 playtest, 2026-11-08). So Moderate is "Moderate
+# or easier" and not "Standard or easier"; Hard and harder are not "Moderate or easier".
+DIFFICULTY = {"moderate": [{"type": "difficulty_level", "quantity": 2},
+                           {"type": "difficulty_level", "quantity": 3, "inverted": True}],
+              "hard": [{"type": "difficulty_level", "quantity": 2, "inverted": True}]}
 SLOTS = ("primary", "bonus1", "bonus2")
 REOFFER_SECONDS = 300
 PRIMARY_TEXT = ("Primary objective complete! Research End Mission at your Town Center to claim victory whenever you "
@@ -168,13 +174,11 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     for level, shown in levels:
         if not shown:
             continue
-        for q in DIFFICULTY[level]:
-            out.append({"name": f"RI Difficulty {level} {q}", "conditions": [
-                {"type": "difficulty_level", "quantity": q}], "effects": [
-                {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1 + len(shown)},
-                *({"type": "activate_trigger", "trigger_id": name} for k, b in enumerate(shown, start=1)
-                  for name in [f"RI Bonus {k}", *_fail_names(k, b), *bonus_triggers[k]]),
-                *_player([e for b in shown for e in expand(b.get("setup") or [])], player)]})
+        out.append({"name": f"RI Difficulty {level}", "conditions": DIFFICULTY[level], "effects": [
+            {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1 + len(shown)},
+            *({"type": "activate_trigger", "trigger_id": name} for k, b in enumerate(shown, start=1)
+              for name in [f"RI Bonus {k}", *_fail_names(k, b), *bonus_triggers[k]]),
+            *_player([e for b in shown for e in expand(b.get("setup") or [])], player)]})
 
     # Upgrades earned anywhere in the campaign: load every slot, apply the chosen option. A slot gives one upgrade
     # per mission: applying an option switches the other off, so re-picking a slot (replaying its mission) can't

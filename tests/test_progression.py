@@ -34,13 +34,17 @@ def test_every_mission_loads_every_slot_and_applies_picks():
 def test_bonus_objectives_follow_the_difficulty():
     ts = by_name(progression.triggers(CAMP, FOLDERS, 1))
     assert not ts["RI Bonus 1"]["enabled"] and ts["RI Bonus 1"]["short_description"] == "- Hunt."
-    moderate = ts["RI Difficulty moderate 2"]["effects"]
+    moderate = ts["RI Difficulty moderate"]["effects"]
     assert [e["trigger_id"] for e in moderate if e["type"] == "activate_trigger"] == ["RI Bonus 1"]
     assert moderate[0]["quantity"] == 2
-    hard = ts["RI Difficulty hard 1"]["effects"]
+    hard = ts["RI Difficulty hard"]["effects"]
     assert [e["trigger_id"] for e in hard if e["type"] == "activate_trigger"] == ["RI Bonus 1", "RI Bonus 2"]
     assert hard[0]["quantity"] == 3
-    assert "RI Difficulty hard -1" in ts                                        # Extreme plays as Hard
+    # The condition is true at its level or easier: one trigger per band, so a setup runs once.
+    assert ts["RI Difficulty moderate"]["conditions"] == [
+        {"type": "difficulty_level", "quantity": 2}, {"type": "difficulty_level", "quantity": 3, "inverted": True}]
+    assert ts["RI Difficulty hard"]["conditions"] == [{"type": "difficulty_level", "quantity": 2, "inverted": True}]
+    assert not any(n.startswith("RI Difficulty hard ") for n in ts)
     assert ts["RI Bonus 2"]["conditions"][0]["source_player"] == 1             # the human's unless given
     assert ts["RI Bonus 1"]["conditions"][0]["source_player"] == 0
 
@@ -107,10 +111,10 @@ def test_ascent_of_egypt_content_loads():
 
 def test_bonus_setup_runs_on_its_difficulty_and_lists_expand():
     ts = by_name(progression.triggers(CAMP, FOLDERS, 1))
-    moderate = [e for e in ts["RI Difficulty moderate 2"]["effects"] if e["type"] not in ("change_variable",
+    moderate = [e for e in ts["RI Difficulty moderate"]["effects"] if e["type"] not in ("change_variable",
                                                                                           "activate_trigger")]
     assert moderate == [{"type": "create_object", "source_player": 0, "object_list_unit_id": 1029}]
-    hard = [e["object_list_unit_id"] for e in ts["RI Difficulty hard 1"]["effects"] if "object_list_unit_id" in e]
+    hard = [e["object_list_unit_id"] for e in ts["RI Difficulty hard"]["effects"] if "object_list_unit_id" in e]
     assert hard == [1029, 1301, 333]                                            # Hard: both setups, one per unit
 
 
@@ -120,8 +124,8 @@ def test_setup_runs_before_the_upgrades_and_is_the_humans():
             {"type": "modify_resource", "tribute_list": 0, "operation": "SET", "quantity": 0}]}]}})
     ts = progression.triggers(camp, ["01_one"], 1, player=2)
     names = [t["name"] for t in ts]
-    assert names.index("RI Difficulty moderate 2") < names.index("RI Upgrades load")   # perks survive an empty start
-    setup = ts[names.index("RI Difficulty moderate 2")]["effects"][-1]
+    assert names.index("RI Difficulty moderate") < names.index("RI Upgrades load")   # perks survive an empty start
+    setup = ts[names.index("RI Difficulty moderate")]["effects"][-1]
     assert setup["type"] == "modify_resource" and setup["source_player"] == 2
 
 
@@ -158,7 +162,7 @@ def test_failable_bonus_and_upgrade_triggers():
     assert [e["type"] for e in fail["effects"]] == ["deactivate_trigger", "deactivate_trigger", "change_variable",
                                                     "display_instructions"]
     assert fail["effects"][2]["operation"] == "SUBTRACT"                      # the mission can still end by itself
-    moderate = [e.get("trigger_id") for e in ts["RI Difficulty moderate 2"]["effects"]]
+    moderate = [e.get("trigger_id") for e in ts["RI Difficulty moderate"]["effects"]]
     assert {"RI Bonus 1", "RI Bonus 1 fail 1", "RI Bonus 1 fail 2"} <= set(moderate)
     done = [e.get("trigger_id") for e in ts["RI Bonus 1"]["effects"] if e["type"] == "deactivate_trigger"]
     assert done == ["RI Bonus 1 fail 1", "RI Bonus 1 fail 2"]                 # completing it stops the failing
@@ -193,4 +197,4 @@ def test_mission_setup_players_keep_alive_and_bonus_triggers():
     assert not ts["RI Bonus 1 wave"]["enabled"]
     assert ts["RI Bonus 1 wave"]["effects"][1]["trigger_id"] == "RI Bonus 1 later"
     assert {"RI Bonus 1 wave", "RI Bonus 1 later"} <= {e.get("trigger_id")
-                                                       for e in ts["RI Difficulty moderate 2"]["effects"]}
+                                                       for e in ts["RI Difficulty moderate"]["effects"]}
