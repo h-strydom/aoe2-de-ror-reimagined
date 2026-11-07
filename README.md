@@ -211,6 +211,18 @@ Playing the [RoR-RI] campaigns and something's wrong, or you have an idea? Open 
 for the campaign, mission and difficulty) or
 [share feedback](https://github.com/h-strydom/aoe2-de-ror-reimagined/issues/new?template=feedback.yml).
 
+## Make your own version
+
+Everything that shapes the campaigns is here and MIT licensed, so fork it and change what you like:
+- swap terrain or objects, everywhere or in one mission, and tune per-mission settings in
+  `aoe2de_ror/conversion.yaml` (see [Changing the conversion](#changing-the-conversion));
+- change the population cap and how fast computer players grow under its `rules`;
+- move or restyle the campaign-screen pins in `aoe2de_ror/campaign_maps.yaml`.
+
+You need your own AoE DE install for `setup`, then `uv run reimagined convert --install` puts your version into
+your mods folder to play and publish. Please give it your own title rather than the `[RoR-RI]` prefix, so players
+can tell the two apart.
+
 ## Related
 
 - [aoe-agent-editor](https://github.com/h-strydom/aoe-agent-editor): the scenario toolkit and Claude
