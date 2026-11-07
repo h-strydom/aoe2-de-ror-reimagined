@@ -2,49 +2,94 @@
 #
 # upgrades: this campaign's permanent upgrades: label (short, the popup button), text (what it does, shown in the
 #   objectives list while the choice is up). Once picked, an upgrade's effects (aoe-agent-editor trigger effects,
-#   for the human player unless they say otherwise) run at the start of every mission of the campaign.
+#   for the human player unless they say otherwise) run at the start of every mission of the campaign. An effect
+#   whose object_list_unit_id lists several units runs once per unit.
 # missions.<NN_mission>:
 #   rewards: [upgrade, upgrade]   the choice offered on completing the primary objective
 #   bonus:                        Moderate shows the first, Hard both
 #     - text: ...                 the to-do line (shown as optional)
 #       conditions: [...]         trigger conditions, all met at once (source_player is the human unless given)
+#       setup: [...]              effects that change the mission on the difficulties that show this objective
 #       rewards: [upgrade, upgrade]
 #
-# Pilot content (2026-11-07): placeholders to reshape while playtesting.
+# Tiers: the primary objective's choice is a quality-of-life upgrade, the Moderate bonus a good buff, the Hard
+# bonus a great one.
+#
+# Unit ids and stats are RoR's (empires2_x2_p1.dat, read with genieutils, 2026-11-07): Town Centers 109/71/141/142
+# hold 4 population in their first storage; Gazelle 22 (150 food), Gazelle King 163, Elephant 1301 (45 HP, 10
+# attack, no armour, 300 food), Elephant King 333, Lion 1029 (20 HP), Crocodile 1031 (20 HP, 4 attack), Crocodile
+# King 200, bears 486/2089/2090, fish 53/69/455-459, berry bushes 302/1053/1054/2733. Villagers are object class 4
+# (Civilian) and attack in class 4 (melee, the hunters' spears too); hunters are units 122 (male) and 216 (female).
+# Drop-off points are a per-villager list in the data that no trigger can change, so "food can be dropped off at
+# Houses" isn't possible (swapped for faster hunting).
+#
+# Unverified in game: Animal Decay Prevention (resource 292) stopping RoR's carcass decay; whether the extra Town
+# Center population and the extra food on animals and bushes already on the map (modify_object_attribute, map-wide
+# without an area) reach existing objects.
 
 upgrades:
-  hunters_cache:
-    label: "Hunters' Cache"
-    text: "+50 food at the start of every mission."
-    effects: [{type: modify_resource, tribute_list: 0, operation: ADD, quantity: 50}]
-  timber_stock:
-    label: "Timber Stock"
-    text: "+50 wood at the start of every mission."
-    effects: [{type: modify_resource, tribute_list: 1, operation: ADD, quantity: 50}]
-  quarry_finds:
-    label: "Quarry Finds"
-    text: "+50 stone at the start of every mission."
-    effects: [{type: modify_resource, tribute_list: 2, operation: ADD, quantity: 50}]
-  nile_gold:
-    label: "Nile Gold"
-    text: "+50 gold at the start of every mission."
-    effects: [{type: modify_resource, tribute_list: 3, operation: ADD, quantity: 50}]
-  smoked_meat:
-    label: "Smoked Meat"
-    text: "+100 food at the start of every mission."
-    effects: [{type: modify_resource, tribute_list: 0, operation: ADD, quantity: 100}]
-  reed_stores:
-    label: "Reed Stores"
-    text: "+100 wood at the start of every mission."
-    effects: [{type: modify_resource, tribute_list: 1, operation: ADD, quantity: 100}]
+  # Hunting, primary (quality of life)
+  preserved_meat:
+    label: "Preserved Meat"
+    text: "Hunted animals no longer lose food over time."
+    effects: [{type: modify_resource, tribute_list: 292, operation: SET, quantity: 1}]
+  town_hearth:
+    label: "Town Hearth"
+    text: "Town Centers support 5 more population."
+    effects: [{type: modify_attribute, object_list_unit_id: [109, 71, 141, 142], object_attributes: 21,
+               operation: ADD, quantity: 5}]
+  # Hunting, Moderate bonus (good)
+  granary_stores:
+    label: "Granary Stores"
+    text: "+500 food at the start of every mission."
+    effects: [{type: modify_resource, tribute_list: 0, operation: ADD, quantity: 500}]
+  bountiful_land:
+    label: "Bountiful Land"
+    text: "Wild animals, fish and berry bushes hold 50 more food (farms excluded)."
+    effects:
+      # the animals, fish and bushes on the map (Gaia's), each object (a change to the unit type as well might add
+      # the 50 twice to objects already placed)
+      - {type: modify_object_attribute, source_player: 0, object_attributes: 21, operation: ADD, quantity: 50,
+         object_list_unit_id: [22, 163, 1301, 333, 1029, 1031, 200, 486, 2089, 2090, 53, 69, 455, 456, 457, 458,
+                               459, 302, 1053, 1054, 2733]}
+  # Hunting, Hard bonus (great)
+  hardened_hunters:
+    label: "Hardened Hunters"
+    text: "Villagers have 30 more hit points and 3 more attack."
+    effects:
+      - {type: modify_attribute_for_class, object_group2: 4, object_attributes: 0, operation: ADD, quantity: 30}
+      - {type: modify_attribute_for_class, object_group2: 4, object_attributes: 9, operation: ADD,
+         armour_attack_class: 4, armour_attack_quantity: 3}
+  swift_hunters:
+    label: "Swift Hunters"
+    text: "Hunters gather food twice as fast."
+    effects: [{type: modify_attribute, object_list_unit_id: [122, 216], object_attributes: 13,
+               operation: MULTIPLY, quantity: 2}]
 
 missions:
   01_hunting:
-    rewards: [hunters_cache, timber_stock]
+    rewards: [preserved_meat, town_hearth]
     bonus:
-      - text: "Hunt all the gazelles on the island."
-        conditions: [{type: own_fewer_objects, source_player: 0, object_list: GAZELLE, quantity: 0}]
-        rewards: [quarry_finds, nile_gold]
-      - text: "Grow your population to 15."
-        conditions: [{type: accumulate_attribute, attribute: 11, quantity: 15}]
-        rewards: [smoked_meat, reed_stores]
+      - text: "Stockpile 500 food."
+        conditions: [{type: accumulate_attribute, attribute: 0, quantity: 500}]
+        setup:
+          # Moderate and Hard: predators. Three lions on the open land east, south-west and north, two more
+          # crocodiles by the west and east shores (the map has one, at 12,10; the Town Center is at 23,22).
+          - {type: create_object, source_player: 0, object_list_unit_id: 1029, location_x: 38, location_y: 20}
+          - {type: create_object, source_player: 0, object_list_unit_id: 1029, location_x: 10, location_y: 31}
+          - {type: create_object, source_player: 0, object_list_unit_id: 1029, location_x: 32, location_y: 8}
+          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 3, location_y: 17}
+          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 42, location_y: 27}
+        rewards: [granary_stores, bountiful_land]
+      - text: "Hunt the elephant."
+        conditions: [{type: own_fewer_objects, source_player: 0, object_list: 1301, quantity: 0}]
+        setup:
+          # Hard: the island's one elephant (at 32,1) gets 120 hit points instead of 45, and 1 melee and 2 pierce
+          # armour, so the hunters' 4-damage spears do 3.
+          - {type: modify_attribute, source_player: 0, object_list_unit_id: 1301, object_attributes: 0,
+             operation: ADD, quantity: 75}
+          - {type: modify_attribute, source_player: 0, object_list_unit_id: 1301, object_attributes: 8,
+             operation: ADD, armour_attack_class: 4, armour_attack_quantity: 1}
+          - {type: modify_attribute, source_player: 0, object_list_unit_id: 1301, object_attributes: 8,
+             operation: ADD, armour_attack_class: 3, armour_attack_quantity: 2}
+        rewards: [hardened_hunters, swift_hunters]

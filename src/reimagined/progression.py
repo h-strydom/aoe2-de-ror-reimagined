@@ -10,6 +10,9 @@ build (no villager or Town Center at the start) offer a popup instead, again fiv
 playing". Losing still works as before. Once every objective on the difficulty is done, the mission ends by itself
 after any pending upgrade choice.
 
+A bonus objective may change the mission when its difficulty shows it (`setup` effects: more predators, a
+tougher quarry...); Hard runs both bonus objectives' setups.
+
 Each objective may offer a choice of two upgrades (the game's decision popup). The pick is stored in the campaign
 bank under the objective's slot ("m01_primary", "m01_bonus1"...), and every mission of the campaign loads every
 slot at its start and applies the chosen upgrades. One slot per objective: replaying it lets the player re-pick,
@@ -95,6 +98,15 @@ def upgrade_line(up: dict) -> str:
     return f"{up['label']}: {up['text']}" if up.get("text") else up["label"]
 
 
+def expand(effects: list[dict]) -> list[dict]:
+    """One effect per unit when an effect's object_list_unit_id lists several."""
+    out = []
+    for e in effects:
+        units = e.get("object_list_unit_id")
+        out.extend([{**e, "object_list_unit_id": u} for u in units] if isinstance(units, list) else [e])
+    return out
+
+
 def _player(effects: list[dict], player: int) -> list[dict]:
     return [{"source_player": player, **e} for e in effects]
 
@@ -116,7 +128,7 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
             for opt, up in enumerate(pair, start=1):
                 out.append({"name": f"RI Upgrade {key} {opt}", "conditions": [
                     {"type": "variable_value", "variable": f"RI {key}", "comparison": "EQUAL", "quantity": opt}],
-                    "effects": _player(camp.upgrades[up].get("effects") or [], player)})
+                    "effects": _player(expand(camp.upgrades[up].get("effects") or []), player)})
 
     # How many objectives this difficulty has (primary + bonuses), and showing its bonus lines.
     out.append({"name": "RI Objectives", "effects": [
@@ -129,7 +141,8 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
             out.append({"name": f"RI Difficulty {level} {q}", "conditions": [
                 {"type": "difficulty_level", "quantity": q}], "effects": [
                 {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1 + len(shown)},
-                *({"type": "activate_trigger", "trigger_id": f"RI Bonus {k}"} for k in range(1, len(shown) + 1))]})
+                *({"type": "activate_trigger", "trigger_id": f"RI Bonus {k}"} for k in range(1, len(shown) + 1)),
+                *(e for b in shown for e in expand(b.get("setup") or []))]})
 
     def reward(slot: str, pair: list[str] | None, decision: int) -> list[dict]:
         """Effects that offer slot's choice, and the triggers behind it. The choice counts as pending in the same

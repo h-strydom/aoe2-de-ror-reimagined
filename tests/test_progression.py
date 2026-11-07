@@ -11,8 +11,9 @@ CAMP = progression.Campaign(
               "b": {"label": "B", "effects": []}, "c": {"label": "C", "effects": []}, "d": {"label": "D"}},
     missions={"01_one": {"rewards": ["a", "b"], "bonus": [
         {"text": "Hunt.", "conditions": [{"type": "own_fewer_objects", "source_player": 0, "quantity": 0}],
-         "rewards": ["c", "d"]},
-        {"text": "Grow.", "conditions": [{"type": "accumulate_attribute", "attribute": 11, "quantity": 15}]}]},
+         "rewards": ["c", "d"], "setup": [{"type": "create_object", "source_player": 0, "object_list_unit_id": 1029}]},
+        {"text": "Grow.", "conditions": [{"type": "accumulate_attribute", "attribute": 11, "quantity": 15}],
+         "setup": [{"type": "modify_attribute", "source_player": 0, "object_list_unit_id": [1301, 333]}]}]},
         "02_two": {"rewards": ["c", "a"]}})
 FOLDERS = ["01_one", "02_two"]
 
@@ -34,9 +35,11 @@ def test_bonus_objectives_follow_the_difficulty():
     ts = by_name(progression.triggers(CAMP, FOLDERS, 1))
     assert not ts["RI Bonus 1"]["enabled"] and ts["RI Bonus 1"]["short_description"] == "- Hunt."
     moderate = ts["RI Difficulty moderate 2"]["effects"]
-    assert [e.get("trigger_id") for e in moderate[1:]] == ["RI Bonus 1"] and moderate[0]["quantity"] == 2
+    assert [e["trigger_id"] for e in moderate if e["type"] == "activate_trigger"] == ["RI Bonus 1"]
+    assert moderate[0]["quantity"] == 2
     hard = ts["RI Difficulty hard 1"]["effects"]
-    assert [e.get("trigger_id") for e in hard[1:]] == ["RI Bonus 1", "RI Bonus 2"] and hard[0]["quantity"] == 3
+    assert [e["trigger_id"] for e in hard if e["type"] == "activate_trigger"] == ["RI Bonus 1", "RI Bonus 2"]
+    assert hard[0]["quantity"] == 3
     assert "RI Difficulty hard -1" in ts                                        # Extreme plays as Hard
     assert ts["RI Bonus 2"]["conditions"][0]["source_player"] == 1             # the human's unless given
     assert ts["RI Bonus 1"]["conditions"][0]["source_player"] == 0
@@ -99,4 +102,13 @@ def test_content_errors_are_reported(tmp_path):
 
 def test_ascent_of_egypt_content_loads():
     camp = progression.load("ascent_of_egypt")
-    assert camp.missions["01_hunting"]["rewards"] == ["hunters_cache", "timber_stock"]
+    assert camp.missions["01_hunting"]["rewards"] == ["preserved_meat", "town_hearth"]
+
+
+def test_bonus_setup_runs_on_its_difficulty_and_lists_expand():
+    ts = by_name(progression.triggers(CAMP, FOLDERS, 1))
+    moderate = [e for e in ts["RI Difficulty moderate 2"]["effects"] if e["type"] not in ("change_variable",
+                                                                                          "activate_trigger")]
+    assert moderate == [{"type": "create_object", "source_player": 0, "object_list_unit_id": 1029}]
+    hard = [e["object_list_unit_id"] for e in ts["RI Difficulty hard 1"]["effects"] if "object_list_unit_id" in e]
+    assert hard == [1029, 1301, 333]                                            # Hard: both setups, one per unit
