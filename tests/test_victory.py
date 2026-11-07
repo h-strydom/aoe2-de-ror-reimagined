@@ -96,7 +96,8 @@ def test_custom_victory_leaves_winning_to_the_triggers(tmp_path):
     Egypt 3 mustn't win. Its discoveries (RoR Ruins) count in the Ruins resource."""
     _, s, ts = _convert(tmp_path, "ascent_of_egypt", "03_discoveries")
     gv = s.sections["GlobalVictory"]
-    assert gv.conquest_required == 0 and gv.all_custom_conditions_required == 1   # "All" of nothing checked
+    assert gv.conquest_required == 0 and gv.all_custom_conditions_required == 1   # "All", and
+    assert gv.artifacts_required == 10                                            # relics no map has
     assert {c.attribute for c in ts["P1 Victory"].conditions} == {14}
 
 

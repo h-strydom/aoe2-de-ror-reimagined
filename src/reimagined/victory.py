@@ -42,6 +42,7 @@ CURRENT_AGE = 6
 # Age as 0, so the Tool Age is 1. Unverified in game.
 AGE_OFFSET = -1
 ENEMY = 3
+RELICS_NEVER = 10          # a Custom victory's Relics: no map has that many (most Artifacts: Yamato 2, 6)
 
 
 @dataclass
@@ -57,14 +58,16 @@ class VictoryPlan:
     skipped: list[str] = field(default_factory=list)  # conditions that point at objects the conversion dropped
 
     def options(self) -> dict:
-        """The scenario's victory options. A Custom victory checks none of the game's own conditions and asks for
-        "All" of them: the triggers carry every way to win (conquest included, as "P<n> Victory: conquest"), so the
-        reimagined layer decides when a mission ends. Left at "Any One", defeating the last enemy still won
-        Ascent of Egypt 3 with conquest off and a hidden House keeping the Libyans alive; "All" with nothing
-        checked didn't (the user's own scenario, playtest 2026-11-08)."""
+        """The scenario's victory options. A Custom victory the game itself can never call: conquest off, "All"
+        required, and Relics the maps don't have (RELICS_NEVER). The triggers carry every way to win (conquest
+        included, as "P<n> Victory: conquest"), so the reimagined layer decides when a mission ends.
+        How it was found (Ascent of Egypt 3, 2026-11-08): conquest off with "Any One", then with "All" and nothing
+        checked, both still won the moment the last Libyan died, a hidden House keeping them in the game or not.
+        The user's own scenario holds with Relics 10 and "All". Unverified in a converted mission."""
         if self.mode != "CUSTOM":
             return {"victory_condition": self.mode}
-        return {"victory_condition": self.mode, "victory_conquest": False, "victory_custom_conditions_required": True}
+        return {"victory_condition": self.mode, "victory_conquest": False, "victory_custom_conditions_required": True,
+                "victory_relics": RELICS_NEVER}
 
 
 def _area(c: VictoryCondition) -> list[int]:
