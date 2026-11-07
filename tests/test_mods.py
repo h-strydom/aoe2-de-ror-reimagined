@@ -33,7 +33,7 @@ def test_package_zips_the_mod_files_at_the_root(tmp_path):
     assert info["Title"] == "[RoR-RI] Ascent of Egypt" and res["zip_mb"] < 450
     assert info["Description"] == package.description(EGYPT)
     # beside the zip, for the mod page form: the campaign view image, and the title and description to paste
-    assert res["image"].name == "[RoR-RI] Ascent of Egypt.jpg" and res["image"].is_file()
+    assert res["image"].name == "[RoR-RI] Ascent of Egypt.png" and res["image"].is_file()
     page = res["page"].read_text(encoding="utf-8")
     assert "[RoR-RI] Ascent of Egypt" in page and package.description(EGYPT) in page
 
@@ -60,5 +60,5 @@ def test_page_files_write_the_mod_page_image_and_text(tmp_path):
     from PIL import Image
     _, data = package.campaign_files(EGYPT)
     image, page = package.page_files(EGYPT, tmp_path / "pages", data["_layout.json"])
-    assert image == tmp_path / "pages" / "[RoR-RI] Ascent of Egypt.jpg" and Image.open(image).size == (1920, 1080)
+    assert image == tmp_path / "pages" / "[RoR-RI] Ascent of Egypt.png" and Image.open(image).size == (1920, 1080)
     assert package.description(EGYPT) in page.read_text(encoding="utf-8")

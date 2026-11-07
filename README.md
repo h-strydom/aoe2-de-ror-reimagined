@@ -120,7 +120,7 @@ on the mod site:
   `thumbnail.jpg`, `modes/...`), which the mod site requires. Upload it signed in at ageofempires.com/mods,
   as a Campaign.
 
-Beside each zip, for the mod page form: `[RoR-RI] <campaign>.jpg`, the campaign screen as the game shows it
+Beside each zip, for the mod page form: `[RoR-RI] <campaign>.png`, the campaign screen as the game shows it
 (RoR's book with the campaign's map and each mission's pin, no text; 1920 x 1080), and `[RoR-RI] <campaign>.txt`, the title and the original campaign's description. The mod's
 `info.json` carries the same title and description. Each pack is about 25-100 MB (mostly intro images).
 
@@ -165,7 +165,7 @@ To play them, add `--install`: it installs each campaign into your profile as th
 Enable each once in Mods > Installed Mods and restart the game; the campaigns then show up under Return of
 Rome's campaigns. The game's mod manager can publish and update a local mod straight from there, so after a
 change `convert --install` is all an update needs. Add `--images-to <folder>` for each campaign's mod page
-image and its title and description (the `.jpg` and `.txt` that `package` writes beside the zips). Turn off (or unsubscribe from) the published copy of a
+image and its title and description (the `.png` and `.txt` that `package` writes beside the zips). Turn off (or unsubscribe from) the published copy of a
 campaign while its local mod is on, or it loads twice.
 
 ## Changing the conversion

@@ -143,14 +143,14 @@ def install_local(c: layout.CampaignInfo, campaign: Path, data: dict, *, profile
 
 
 def page_files(c: layout.CampaignInfo, out_dir: Path, lay: dict | None) -> tuple[Path | None, Path]:
-    """For the mod page form, in `out_dir`: `[RoR-RI] <campaign>.jpg`, the campaign screen as the game shows it
+    """For the mod page form, in `out_dir`: `[RoR-RI] <campaign>.png`, the campaign screen as the game shows it
     (1920 x 1080; None without the campaign's map art), and `.txt`, the title and description to paste."""
     title = mod_title(c)
     out_dir.mkdir(parents=True, exist_ok=True)
     own = campaign_maps.load()
     if c.slug in own and intros.has_art():                    # the drawn pins the image shows, current
         campaign_maps.files(c, own[c.slug], BUILD / "maps" / c.slug)
-    image = thumbnail(c, out_dir / f"{title}.jpg", lay, PAGE_IMAGE)
+    image = thumbnail(c, out_dir / f"{title}.png", lay, PAGE_IMAGE)
     page = out_dir / f"{title}.txt"
     page.write_text(f"Title:\n{title}\n\nDescription:\n{description(c)}\n", encoding="utf-8")
     return image, page

@@ -17,7 +17,7 @@ def main(argv: list[str] | None = None) -> int:
                         help="also install each campaign into your profile as the local mod '[RoR-RI] <campaign>', "
                              "where the game's mod manager can publish and update it")
     p_conv.add_argument("--images-to", metavar="FOLDER",
-                        help="also write each campaign's mod page image ('[RoR-RI] <campaign>.jpg', the campaign "
+                        help="also write each campaign's mod page image ('[RoR-RI] <campaign>.png', the campaign "
                              "screen at 1920 x 1080) and its title and description (.txt) into FOLDER")
     p_conv.add_argument("--ai-debug", action="store_true",
                         help="computer players announce their build steps and attacks in chat (built into out/debug, "
