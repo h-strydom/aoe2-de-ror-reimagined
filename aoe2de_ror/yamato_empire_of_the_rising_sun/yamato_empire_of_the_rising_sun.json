@@ -7,6 +7,7 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/1/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_1_intro",
                      "Slides": [
                         {
                            "Duration": 35.2,
@@ -50,6 +51,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/1/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_1_victory",
+                     "Slides": [
+                        {
+                           "Duration": 17.2,
+                           "TextFadeDuration": 17.0,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "After defeating the Jomon chieftain, you scaled the mountain and found no elixir. If you were to return to China, the Emperor would be most displeased with your failure. You decide to stay and settle in this land. The Jomon will need a leader and you have much to teach them.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -59,10 +92,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/2/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_2_intro",
                      "Slides": [
                         {
                            "Duration": 38.4,
-                           "TextFadeDuration": 38.199999999999996,
+                           "TextFadeDuration": 38.2,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Awaji and Shodo Islands, 178 CE\n\nYour chiefdom has grown since the ancient days when a Chinese boat first came to your shores. Your people have benefited from the goods brought by the seasonal Chinese trade ships and your craftsmen have learned to use bronze to fashion prized dotaku bells. These bells are buried into the earth to charge them with spiritual power and then rung as part of rituals to ensure the success of the rice harvests. Your settlements are growing, however, and new bells will be needed to protect your people's livelihood. Invade the neighboring islands and capture these valuable treasures.",
@@ -102,6 +136,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/2/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_2_victory",
+                     "Slides": [
+                        {
+                           "Duration": 19.0,
+                           "TextFadeDuration": 18.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "With these dotaku bells, you have ensured the success of the coming harvests. Your settlements continue to grow, but so do those of your rivals. Some chieftains have taken their men from the fields and formed war bands which aggressively attack rival settlements. Every region of Japan is touched by war.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -111,10 +177,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/3/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_3_intro",
                      "Slides": [
                         {
-                           "Duration": 28.2,
-                           "TextFadeDuration": 28.0,
+                           "Duration": 30.6,
+                           "TextFadeDuration": 30.4,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Nara, 180 CE\n\nWar has raged over the islands for many years, and the spirits are angry. Their disharmony is felt in the trembles of the earth and the waves which fall over and sweep away the coastal villages. Though you are young, Himiko, as a shaman queen, you know how to assuage the gods and restore the harmony of Japan and her people. Many proud kings remain untouched by the spirits, however. Use your magic and show them the folly of their ways.",
@@ -133,10 +200,42 @@
                         },
                         {
                            "Duration": 6.1,
-                           "TextFadeDuration": 5.8999999999999995,
+                           "TextFadeDuration": 5.9,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Objectives:\n• Destroy the four Izumo Barracks\n• Capture the War Chest and bring it to your Temple",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/3/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_3_victory",
+                     "Slides": [
+                        {
+                           "Duration": 25.6,
+                           "TextFadeDuration": 25.4,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Queen Himiko, you have pleased the spirits and saved untold lives from the blight of war. Japan is finally united under your rule and harmony has been restored. You will send envoys to China to establish relations with the mighty Cao Wei kingdom. And when you finally breathe your last, your people will inter your remains in a great earthen mound built to honor your illustrious life.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -163,10 +262,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/4/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_4_intro",
                      "Slides": [
                         {
-                           "Duration": 40.9,
-                           "TextFadeDuration": 40.699999999999996,
+                           "Duration": 41.3,
+                           "TextFadeDuration": 41.1,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Izumo-taisha, 300 CE\n\nIt has been many years since the reign of Queen Himiko and war once again grips Japan. Your clan, the Yamato, controls the Kansai region, where you, Homutawake, rule as king. Rival lords, however, threaten your rule in this life and the next. They compete with one another over farming lands and the construction of giant burial mounds to house their remains. But you know that the great Shinto shrines are more prized than any rice paddy or mound. Your rivals, the Izumo clan, control one such shrine. Destroy it and build a greater shrine where it once stood to weaken your rivals' influence, and receive the blessings of the gods.",
@@ -206,6 +306,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/4/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_4_victory",
+                     "Slides": [
+                        {
+                           "Duration": 21.6,
+                           "TextFadeDuration": 21.4,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "The gods have blessed your reign, Emperor Homutawake. Your defeat of the Izumo and their Kibi allies has strengthened your clan, making the Yamato the predominant power on Honshu island. You have constructed shrines throughout your lands, and begun construction of a great burial mound to house your remains after your work on this earth is done.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -215,10 +347,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/5/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_5_intro",
                      "Slides": [
                         {
-                           "Duration": 41.6,
-                           "TextFadeDuration": 41.4,
+                           "Duration": 42.6,
+                           "TextFadeDuration": 42.4,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Mount Shigi, 587 CE\n\nMuch has changed in the many generations since the Yamato clan rose to rule Japan. Now, the clan has been splintered into many and the old Shinto ways have been challenged by Buddhist missionaries from China. The Mononobe clan are opponents of the new faith and have held the ears of the Emperors for generations, but the Soga are gaining influence. The sudden death of your father, the Emperor, has opened the rifts in the Imperial court and the Mononobe now threaten civil war. In an affront to your Buddhist beliefs, they have seized relics of the Buddha. Prince Shōtoku, travel to Mount Shigi, defeat the Mononobe, and recover these relics.",
@@ -258,6 +391,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/5/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_5_victory",
+                     "Slides": [
+                        {
+                           "Duration": 15.4,
+                           "TextFadeDuration": 15.2,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Prince Shōtoku, your victory has crippled the Mononobe clan and restored Soga influence over the Imperial House. The relics you recovered will be deposited inside the foundations of a great Buddhist temple you will build at Asuka.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -267,10 +432,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/6/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_6_intro",
                      "Slides": [
                         {
-                           "Duration": 35.9,
-                           "TextFadeDuration": 35.699999999999996,
+                           "Duration": 39.9,
+                           "TextFadeDuration": 39.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Asuka, 645 CE\n\nThe Soga must be stopped! Since the days of Prince Shōtoku, the clan has had its thumb on the Imperial family, but now, they have gone too far. They plan to depose your mother, the Empress, and put a more compliant puppet on the Imperial throne. Prince Naka no Ōe, you must defeat the Soga and finally drive them from power, but exercise caution. They control the Imperial capital, and you are not yet in a strong position to confront them. You may need to hide your intentions by offering the Soga gifts of peace until you are powerful enough to defeat them.",
@@ -310,6 +476,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/6/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_6_victory",
+                     "Slides": [
+                        {
+                           "Duration": 30.8,
+                           "TextFadeDuration": 30.6,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Prince Naka no Ōe, you have returned the Imperial family to glory by your victory over the Soga. Though it will be many years before you ascend the throne as Emperor Tenji, your victory has assured that your uncle and mother will be secure in their reigns. Your uncle has already begun to institute reforms to increase Imperial power and reduce the influence of the clan heads. It is your hope that the Emperor of Japan will never again be a pawn of the clans.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -319,10 +517,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/7/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_7_intro",
                      "Slides": [
                         {
-                           "Duration": 30.9,
-                           "TextFadeDuration": 30.7,
+                           "Duration": 32.4,
+                           "TextFadeDuration": 32.2,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Ōtsu, 672 CE\n\nPrince Ōama, your elder brother, Emperor Tenji, has passed from this world. Though he was a great man, his final act was a grave mistake: he named a son of a lowborn wife as Emperor. This will ruin the authority and legitimacy of the Emperor as a descendant of gods on both family lines. What will the Chinese Emperor think of Japan now that it is ruled by a man of low birth? You have no choice, Prince Ōama. You must depose your nephew and take the Chrysanthemum Throne of Japan.",
@@ -362,6 +561,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/7/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_7_victory",
+                     "Slides": [
+                        {
+                           "Duration": 27.6,
+                           "TextFadeDuration": 27.4,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "You have saved Imperial legitimacy by ascending the throne as Emperor Tenmu. You will continue the reforms of your uncle and brother, strengthening both Japan and the Imperial power. To achieve these goals, you have found a ready ally in the very clan that assisted your brother in defeating the Soga years ago: the Nakatomi, now bearing the honorific clan name Fujiwara. Surely, they will be loyal friends of the Emperor for generations.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -371,10 +602,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/8/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_8_intro",
                      "Slides": [
                         {
-                           "Duration": 28.9,
-                           "TextFadeDuration": 28.7,
+                           "Duration": 29.9,
+                           "TextFadeDuration": 29.7,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Kyushu, 740 CE\n\nEmperor Shōmu, your great-grandfather, the Emperor Tenji, ended the power of the Soga clan by aligning with a minor courtier. In recognition of his aid, your ancestor bestowed the clan name Fujiwara to the courtier. Now, like the Soga they helped defeat, the Fujiwara have grown powerful and seek to dominate the Imperial throne. One of their clan leaders leads a rebellion in Kyushu. Defeat him and restore the people's faith in your divine rule.",
@@ -397,6 +629,38 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Objectives:\n• Destroy the Fujiwara revolt.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/yamato_empire_of_the_rising_sun/8/intro/%d.png",
+                     "Sound": "rorri_yamato_empire_of_the_rising_sun_8_victory",
+                     "Slides": [
+                        {
+                           "Duration": 27.6,
+                           "TextFadeDuration": 27.4,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "You have restored peace to Japan, but wars and the intrigues of court weigh heavily on your spirit. You hope that with your victory and the weakening of the most powerful clan, you will be able to one day abdicate the throne in favor of your daughter. You will retire to a Buddhist temple to become a monk and walk the Eightfold Path. After all, with your victory, most assuredly, no clan will ever again dare to challenge the Yamato Emperor!",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

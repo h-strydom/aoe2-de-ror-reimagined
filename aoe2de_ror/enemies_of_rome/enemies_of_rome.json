@@ -7,6 +7,7 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/enemies_of_rome/1/intro/%d.png",
+                     "Sound": "rorri_enemies_of_rome_1_intro",
                      "Slides": [
                         {
                            "Duration": 29.3,
@@ -50,6 +51,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/enemies_of_rome/1/intro/%d.png",
+                     "Sound": "rorri_enemies_of_rome_1_victory",
+                     "Slides": [
+                        {
+                           "Duration": 10.8,
+                           "TextFadeDuration": 10.6,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Your crossing of the Alps was a masterstroke in the annals of history. All of Carthage applauds you and your army. With Italy before you, Rome will feel your vengeance!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -59,6 +92,7 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/enemies_of_rome/2/intro/%d.png",
+                     "Sound": "rorri_enemies_of_rome_2_intro",
                      "Slides": [
                         {
                            "Duration": 38.2,
@@ -102,6 +136,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/enemies_of_rome/2/intro/%d.png",
+                     "Sound": "rorri_enemies_of_rome_2_victory",
+                     "Slides": [
+                        {
+                           "Duration": 16.0,
+                           "TextFadeDuration": 15.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Your great victory over Rome and her allies has brought renewed glory to Macedon. The Romans fear you and now know not to be so easily drawn to war through the lies of jealous men. Soon, you will have your revenge on the King of Pergamon.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -111,10 +177,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/enemies_of_rome/3/intro/%d.png",
+                     "Sound": "rorri_enemies_of_rome_3_intro",
                      "Slides": [
                         {
-                           "Duration": 45.0,
-                           "TextFadeDuration": 44.8,
+                           "Duration": 47.6,
+                           "TextFadeDuration": 47.4,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Central Italy, 73 to 71 BCE\n\nFrom Thracian mercenary to Roman soldier to gladiator slave, you have known much bloodshed, Spartacus, but precious little freedom. You and your fellow gladiators made a daring escape from your bonds and defied the Roman authorities. Your success inspired other slaves to throw off their yokes and join your slave army. While the Romans call themselves free citizens, slavery is everywhere in the Republic, and you have found no shortage of willing followers. Now, in a fit of irony, the Roman Senate sends Rome's wealthiest man, Marcus Crassus, to defeat your slave revolt. He is ruthless and will give no quarter to the freed slaves under your command. Defeat Crassus and inspire more of your brothers and sisters to fight for their freedom.",
@@ -154,6 +221,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/enemies_of_rome/3/intro/%d.png",
+                     "Sound": "rorri_enemies_of_rome_3_victory",
+                     "Slides": [
+                        {
+                           "Duration": 18.6,
+                           "TextFadeDuration": 18.4,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Against all odds, you defeated the Roman legions and ordered Crassus, Rome's richest man, flogged. With Rome's large slave population now in open revolt, the city itself will fall to your army. You have not only won freedom for yourself, Spartacus, but for tens of thousands.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -163,10 +262,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/enemies_of_rome/4/intro/%d.png",
+                     "Sound": "rorri_enemies_of_rome_4_intro",
                      "Slides": [
                         {
-                           "Duration": 33.7,
-                           "TextFadeDuration": 33.5,
+                           "Duration": 35.6,
+                           "TextFadeDuration": 35.4,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Syria and Mesopotamia, 262 CE\n\nThe Emperor Valerian lies captive in a Persian dungeon following his defeat at Edessa. His son and successor, Gallienus, faces revolts in Egypt and Gaul. The Empire is in turmoil, and the Persian horde continues its westward march, nearing your client kingdom of Palmyra. The emperor is entrusting you, Odaenathus, King of Palmyra, to serve Rome by defeating the Persian host. Drive the Persians from Syria and take our war to their cities and you will be acclaimed Imperator Orientis, Commander of the East.",
@@ -189,6 +289,38 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Objectives:\n• Destroy the Persians.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/enemies_of_rome/4/intro/%d.png",
+                     "Sound": "rorri_enemies_of_rome_4_victory",
+                     "Slides": [
+                        {
+                           "Duration": 19.9,
+                           "TextFadeDuration": 19.7,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Word of your success has reached the Emperor Gallienus. He is most pleased with his Palmyran allies and confers great titles upon you. Enjoy the spoils of victory, Odaenathus, and the company of your young sons and beautiful wife Zenobia, as the triumphs of ambitious men like yourself are often fleeting.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

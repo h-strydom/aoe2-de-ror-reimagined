@@ -7,33 +7,14 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/1/intro/%d.png",
-                     "Sound": "PLAY_AOECAM4_1_INTRO",
+                     "Sound": "rorri_voices_of_babylon_1_intro",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
+                           "Duration": 20.7,
+                           "TextFadeDuration": 20.5,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244256,
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 25.34,
-                           "TextFadeDuration": 25.14,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244257,
+                           "String": "Mesopotamia, 1760 BCE\n\nThe small city state of Babylon is growing under the energetic leadership of its new king, Hammurabi. You have been sent down river to bring some enclaves of Sumerians and Akkadians into the fold. Use your powers of persuasion when you can, but do not hesitate to resort to war if they prove to be resistant.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -70,6 +51,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/1/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_1_victory",
+                     "Slides": [
+                        {
+                           "Duration": 29.0,
+                           "TextFadeDuration": 28.8,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "You have managed to capture both Akkad and Sumer, reestablishing a great part of Sargon's old empire. With Babylonian rule extended to the other city states, you can bring Hammurabi's law code to them, and ensure further peace and stability in the empire. However, there is no time to revel in your success. The people in the Zagros mountains are restless and threaten the peace. Hammurabi has called upon your services once again to deal with them.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -79,51 +92,14 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/2/intro/%d.png",
-                     "Sound": "PLAY_AOECAM4_2_INTRO",
+                     "Sound": "rorri_voices_of_babylon_2_intro",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
+                           "Duration": 37.3,
+                           "TextFadeDuration": 37.1,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244261,
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 21.14,
-                           "TextFadeDuration": 20.94,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244262,
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 21.25,
-                           "TextFadeDuration": 21.05,
-                           "FadeInTime": 0.2,
-                           "String": 244263,
+                           "String": "Tigris Valley, 1755 BCE\n\nThe addition of the Sumerian and Akkadian cities to the rising Babylonian Empire pleases Hammurabi greatly. Now, he sets a more difficult task for you. One of our frontier cities was recently sacked and important treasures, including a copy of Hammurabi's law code engraved in stone, were carried off to the Tigris River. Chase the raiders to where the treasures were taken and build up a force to recover them. They must not be allowed to move the treasures upstream. The prestige of your great king remains tarnished for as long as these treasures remain in enemy hands.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -160,23 +136,21 @@
                   }
                }
             ]
-         }
-      },
-      {
-         "IntroSequence": {
+         },
+         "OutroSequence": {
             "SequenceItems": [
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideImageSequence": "textures/campaign/voices_of_babylon/3/intro/%d.png",
-                     "Sound": "PLAY_AOECAM4_3_INTRO",
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/2/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_2_victory",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
+                           "Duration": 25.6,
+                           "TextFadeDuration": 25.4,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244266,
+                           "String": "The great king Hammurabi has died. During his lifetime, you managed to prevent raids and invasions into the Babylonian heartland, ensuring Babylon's continued success. But with Hammurabi's death, the Babylonian Empire has gradually started to decline. Only time will tell when we will have another great king such as Hammurabi to once again make Babylonia a great power.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -189,13 +163,28 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/3/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_3_intro",
+                     "Slides": [
                         {
-                           "Duration": 29.5,
-                           "TextFadeDuration": 29.3,
+                           "Duration": 26.1,
+                           "TextFadeDuration": 25.9,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244267,
+                           "String": "Euphrates River Bank, 1595 BCE\n\nDisaster has struck - a Hittite army has marched down the shore of the Euphrates River and sacked Babylon! Although your party is isolated among enemies in the marsh lands, this is our only hope for exacting vengeance on the raiders. A Hittite force remains in the area, trying to gather more loot. Clear your enemies from the marsh lands and burn the Hittite encampment to the ground!",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -232,6 +221,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/3/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_3_victory",
+                     "Slides": [
+                        {
+                           "Duration": 13.1,
+                           "TextFadeDuration": 12.9,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "This is a sad day for the Babylonians because our city has been sacked and our future is grim. At least our soldiers can return home, knowing that they have done everything they could to prevent this disaster.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -241,52 +262,14 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/4/intro/%d.png",
-                     "Sound": "PLAY_AOECAM4_4_INTRO",
+                     "Sound": "rorri_voices_of_babylon_4_intro",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
+                           "Duration": 32.3,
+                           "TextFadeDuration": 32.1,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244271,
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 18.73,
-                           "TextFadeDuration": 18.53,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244272,
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 17.22,
-                           "TextFadeDuration": 17.02,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244273,
+                           "String": "Babylon, 1185 – 1155 BCE\n\nFollowing the Hittite sack of Babylon, the city has come under the dominion of the Kassites, who have controlled it for nearly 500 years. Kassite rule is in danger, however, because of Elamite and Assyrian intrusions. Another Elamite army is pressing forward at this moment and is moving to take Babylon. If the city cannot be held, you are to save what you can, retreat downriver, and build up a new army. When you are prepared, retake the city of Babylon and destroy the invading Elamites.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -323,6 +306,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/4/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_4_victory",
+                     "Slides": [
+                        {
+                           "Duration": 18.1,
+                           "TextFadeDuration": 17.9,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Even though we lost the war against the Elamites, there is a silver lining in it all. Our Kassite overlords have fallen, and their dynasty has been overthrown. The new army you have built can serve the new Babylonian king. Under him, we will be able to restore Babylon to its former glory.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -332,51 +347,14 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/5/intro/%d.png",
-                     "Sound": "PLAY_AOECAM4_5_INTRO",
+                     "Sound": "rorri_voices_of_babylon_5_intro",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
+                           "Duration": 46.1,
+                           "TextFadeDuration": 45.9,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244276,
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 28.49,
-                           "TextFadeDuration": 28.29,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244277,
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 24.32,
-                           "TextFadeDuration": 24.12,
-                           "FadeInTime": 0.2,
-                           "String": 244278,
+                           "String": "Karun River near Susa, 1120 BCE\n\nThe glory of Babylon has been restored by the reconquest of lands formerly lost to the Elamites, and by ejecting the foreign Kassite rulers from our territories. However, King Nebuchadnezzar I vows that taking back former Babylonian land is not enough. The Elamites must feel his wrath in their homeland. Nebuchadnezzar I has ordered you to attack Susa, the capital of the Elamites, just across the Karun river. In one of their previous raids, the Elamites carted off a golden statue of the most important god of the Babylonians; Marduk. Your task is to recapture it to strengthen Nebuchadnezzar's legitimacy back home. Peoples long oppressed by the Elamites will give you aid in your quest if you can locate them.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -413,23 +391,21 @@
                   }
                }
             ]
-         }
-      },
-      {
-         "IntroSequence": {
+         },
+         "OutroSequence": {
             "SequenceItems": [
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideImageSequence": "textures/campaign/voices_of_babylon/6/intro/%d.png",
-                     "Sound": "PLAY_AOECAM4_6_INTRO",
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/5/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_5_victory",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
+                           "Duration": 14.8,
+                           "TextFadeDuration": 14.6,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244281,
+                           "String": "You have sacked Susa and defeated the Elamites, a magnificent achievement that will be remembered for ages. Now, all that remains for you to do is safely return the statue of Marduk to Babylon, along with the loot that we took from Susa.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -442,13 +418,28 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/6/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_6_intro",
+                     "Slides": [
                         {
-                           "Duration": 26.58,
-                           "TextFadeDuration": 26.38,
+                           "Duration": 23.7,
+                           "TextFadeDuration": 23.5,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244282,
+                           "String": "Eastern Mesopotamia, 1119 BCE\n\nThe raid into Elam was successful and the statue of Marduk has been recovered, but it must be returned to Babylonia. There are still bands of Elamites and other enemies roaming the Zagros Mountains who wish to prevent the return of the statue. Bring the statue safely to your frontier Temple where it can be guarded prior to being moved to Babylon.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -485,6 +476,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/6/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_6_victory",
+                     "Slides": [
+                        {
+                           "Duration": 23.2,
+                           "TextFadeDuration": 23.0,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "After your campaign in Elam and the sack of their capital, the Elamite king was murdered. Now, his kingdom is falling apart, and the Elamites are in disarray. It is unlikely that they will dare to attack our lands again soon. While you return the golden statue of the god Marduk to its temple in Babylon, you are welcomed by a large mass of cheering people in the streets.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -494,52 +517,14 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/voices_of_babylon/7/intro/%d.png",
-                     "Sound": "PLAY_AOECAM4_7_INTRO",
+                     "Sound": "rorri_voices_of_babylon_7_intro",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
+                           "Duration": 37.8,
+                           "TextFadeDuration": 37.6,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244286,
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 13.24,
-                           "TextFadeDuration": 13.04,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244287,
-                           "ImageRect": {
-                              "x": 0,
-                              "y": 0,
-                              "width": 3840,
-                              "height": 2160
-                           },
-                           "TextRect": {
-                              "x": 230,
-                              "y": 400,
-                              "width": 1300,
-                              "height": 1350
-                           }
-                        },
-                        {
-                           "Duration": 28.59,
-                           "TextFadeDuration": 28.39,
-                           "FadeInTime": 0.2,
-                           "FadeOutTime": 0.2,
-                           "String": 244288,
+                           "String": "The Euphrates River, 748 – 734 BCE\n\nBabylonia has succumbed to the continuous invasions of the Aramaeans—yet another semi-nomadic tribe from the west. The empire has been reduced to poverty and our kings hold onto little more than their grand titles. Things are about to change, however—an Assyrian general named Tiglath-Pileser has rebelled against his king and has taken the throne. He is willing to support our new king Nabonassar to retake land lost to the Aramaeans, our common enemy. Nabonassar commands you to revitalize the Babylonian armies and destroy the invaders encroaching on our territory.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -576,23 +561,21 @@
                   }
                }
             ]
-         }
-      },
-      {
-         "IntroSequence": {
+         },
+         "OutroSequence": {
             "SequenceItems": [
                {
                   "Type": "SlideShow",
                   "Data": {
-                     "SlideImageSequence": "textures/campaign/voices_of_babylon/8/intro/%d.png",
-                     "Sound": "PLAY_AOECAM4_8_INTRO",
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/7/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_7_victory",
                      "Slides": [
                         {
-                           "Duration": 5,
-                           "TextFadeDuration": 4.8,
+                           "Duration": 13.8,
+                           "TextFadeDuration": 13.6,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244291,
+                           "String": "You have achieved a great feat by defeating our enemies, and Nabonassar has promoted you to field general. For as long as Nabonassar lives, Babylonia will be independent. What will happen after he dies is yet to be seen.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -605,13 +588,28 @@
                               "width": 1300,
                               "height": 1350
                            }
-                        },
+                        }
+                     ]
+                  }
+               }
+            ]
+         }
+      },
+      {
+         "IntroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/8/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_8_intro",
+                     "Slides": [
                         {
-                           "Duration": 31.11,
-                           "TextFadeDuration": 30.91,
+                           "Duration": 26.0,
+                           "TextFadeDuration": 25.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
-                           "String": 244292,
+                           "String": "Nineveh, 612 BCE\n\nFinally, Babylonia has been liberated from Assyrian oppression. Civil wars, rebellions and foreign invasions have brought the once-mighty empire to its knees. The Assyrians have fallen back behind the imposing walls of their capital at Nineveh while an army of Babylonians and Medes converge on the capital of Assyria. Destroy the Wonder in Nineveh to break the power of the Assyrians indefinitely.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
@@ -631,6 +629,38 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Objectives:\n• Destroy the Wonder in Nineveh.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/voices_of_babylon/8/intro/%d.png",
+                     "Sound": "rorri_voices_of_babylon_8_victory",
+                     "Slides": [
+                        {
+                           "Duration": 11.7,
+                           "TextFadeDuration": 11.5,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Nineveh has been destroyed and the Assyrian Empire has been broken. A new era has arrived—one of Babylonian rule. The coalition congratulates you on a job well done.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

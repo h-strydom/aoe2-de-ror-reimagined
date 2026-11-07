@@ -15,7 +15,7 @@ import tempfile
 import zipfile
 from pathlib import Path
 
-from . import campaign_maps, intros, layout
+from . import campaign_maps, intros, layout, voices
 from .convert import campaign_path
 
 PREFIX = "[RoR-RI]"
@@ -79,9 +79,15 @@ def install(c: layout.CampaignInfo, campaign: Path, data: dict, mod: str, *, pro
     map_files = []
     if c.slug in own and intros.has_art():
         map_files = campaign_maps.files(c, own[c.slug], BUILD / "maps" / c.slug)
+    from .screens import mission_specs
+    sounds = voices.sound_files(voices.mission_voices(c.slug, mission_specs(c)), BUILD / "sounds")
+    if not sounds:
+        warn("  (no AoE DE voice-over copied: intros install silent; run `reimagined setup`)")
+    # Installed under its title, which the Custom Campaign list shows (the intro file names its images by slug).
     return ed_screens.install_campaign_mod(campaign, mod, layout=data.get("_layout.json"), intro=data.get(".json"),
                                            files=map_files, widget_files=widget_files, game="ror",
-                                           description=description_text, author=AUTHOR, profile=profile)
+                                           description=description_text, author=AUTHOR, profile=profile,
+                                           name=c.title, sound_files=sounds)
 
 
 def campaign_view(c: layout.CampaignInfo, lay: dict):

@@ -5,10 +5,9 @@ mission name in the title bar and the mission's briefing map in AoE DE's map bor
 the slide text (the mission instructions: story, then objectives) on the empty parchment beside it.
 
 Verified in game (RoR): slide images load from the mod's `modes/Pompeii/widgetui/` as
-`textures/campaign/<campaign>/<mission>/intro/<n>.png` with n counting from 1; custom narration does
-not play (MP3, WAV, OGG all silent; RoR only plays sounds from its Wwise packages). The four campaigns RoR
-remade (ROR_NARRATION) play RoR's own voice-over: its Sound event with its slide timing and text; the rest
-are silent.
+`textures/campaign/<campaign>/<mission>/intro/<n>.png` with n counting from 1. Each mission's intro plays AoE
+DE's narration of its instructions and, once the mission is won, an outro shows the victory text read by the
+same narrator (voices.py: .wem sounds from the mod, which RoR plays by name; verified 2026-11-07).
 The images are built from the local AoE DE copies (git-ignored); the intro JSON is committed.
 """
 from __future__ import annotations
@@ -30,12 +29,7 @@ TEXT_RECT = {"x": 230, "y": 400, "width": 1300, "height": 1350}
 CHARS_PER_SECOND = 16                     # reading pace for slide durations (no narration)
 MIN_SECONDS, MAX_SECONDS = 6.0, 45.0
 FONT = "georgiab.ttf"
-# The AoE1 campaigns RoR remade with narration, by its intro file (<game>/ROR_CAMPAIGNS/<name>.json, Sound
-# PLAY_AOECAM<n>_<mission>_INTRO). Matched 2026-11-07 by every mission's location line and opening sentence in
-# RoR's English string table, which equal AoE DE's (aoecam2 is The First Punic War, not a Hittite campaign).
-ROR_NARRATION = {"ascent_of_egypt": "aoecam1", "the_first_punic_war": "aoecam2", "glory_of_greece": "aoecam3",
-                 "voices_of_babylon": "aoecam4"}
-ROR_CAMPAIGNS = "modes/Pompeii/resources/_common/campaign"
+VOICE_TAIL = 0.5                          # seconds a narrated slide stays after the voice ends
 
 
 @cache
@@ -116,52 +110,45 @@ def image_path(slug: str, number: int, slide: int) -> str:
     return f"textures/campaign/{slug}/{number}/intro/{slide}.png"
 
 
-def ror_narration(slug: str) -> list[dict] | None:
-    """RoR's own narrated intro per mission, for the campaigns RoR remade: [{sound, slides}], slides as RoR times
-    them (Duration, fades, String = a RoR string id, which the game shows in the player's language). None for the
-    others, or without the game installed."""
-    name = ROR_NARRATION.get(slug)
-    if name is None:
-        return None
-    from aoe2ed.config import paths
-    from aoe2ed.screens import read_json
-    game = paths().game
-    path = game / ROR_CAMPAIGNS / f"{name}.json" if game else None
-    if path is None or not path.is_file():
-        return None
-    out = []
-    for sc in read_json(path)["Scenarios"]:
-        data = sc["IntroSequence"]["SequenceItems"][0]["Data"]
-        slides = [{k: s[k] for k in ("Duration", "TextFadeDuration", "FadeInTime", "FadeOutTime", "String") if k in s}
-                  for s in data["Slides"]]
-        out.append({"sound": data["Sound"], "slides": slides})
-    return out
+def _timing(duration: float) -> dict:
+    return {"Duration": duration, "TextFadeDuration": max(round(duration - 0.2, 1), 0.1), "FadeInTime": 0.2,
+            "FadeOutTime": 0.2}
 
 
-def _slide(text: str | int, timing: dict | None = None) -> dict:
-    timing = timing or {"Duration": seconds(text), "TextFadeDuration": max(seconds(text) - 0.2, 0.1),
-                        "FadeInTime": 0.2, "FadeOutTime": 0.2}
-    return {**timing, "String": text, "ImageRect": {"x": 0, "y": 0, "width": 3840, "height": 2160},
-            "TextRect": dict(TEXT_RECT)}
+def _slide(text: str, duration: float | None = None) -> dict:
+    return {**_timing(seconds(text) if duration is None else duration), "String": text,
+            "ImageRect": {"x": 0, "y": 0, "width": 3840, "height": 2160}, "TextRect": dict(TEXT_RECT)}
 
 
-def intro(c: layout.CampaignInfo, texts: list[list[str]], narration: list[dict] | None = None) -> dict:
-    """The campaign's intro file: per mission, one slide per text over that mission's slide image. With RoR's
-    narration (ror_narration), the story is RoR's own narrated slides (its Sound event and timing) and our
-    objectives slides follow."""
-    if narration is not None and len(narration) != len(texts):
-        raise ValueError(f"{c.slug}: RoR's intro has {len(narration)} missions, the campaign {len(texts)}")
+def _voiced(text: str, voice) -> float:
+    """A narrated slide lasts as long as its voice line, and at least the reading time."""
+    return max(seconds(text), round(voice.seconds + VOICE_TAIL, 1))
+
+
+def intro(c: layout.CampaignInfo, texts: list[list[str]], voices: list[dict] | None = None,
+          victories: list[str] | None = None) -> dict:
+    """The campaign's intro file: per mission, one slide per text over that mission's slide image. With its voice
+    lines (voices.mission_voices): the story slide plays the intro narration and lasts as long, and an outro
+    after a victory shows `victories[n]` read by the victory line, over the same image."""
+    if voices is not None and len(voices) != len(texts):
+        raise ValueError(f"{c.slug}: {len(voices)} missions with voices, the campaign has {len(texts)}")
     scenarios = []
     for n, slides in enumerate(texts, start=1):
-        data = {"SlideImageSequence": image_path(c.slug, n, 0).replace("/0.png", "/%d.png")}
-        if narration:
-            told = narration[n - 1]
-            data["Sound"] = told["sound"]
-            data["Slides"] = [_slide(s["String"], {k: v for k, v in s.items() if k != "String"})
-                              for s in told["slides"]] + [_slide(t) for t in slides[1:]]
+        sequence = image_path(c.slug, n, 0).replace("/0.png", "/%d.png")
+        told = (voices or [{}] * len(texts))[n - 1]
+        data = {"SlideImageSequence": sequence}
+        if "intro" in told:
+            data["Sound"] = told["intro"].sound
+            data["Slides"] = [_slide(slides[0], _voiced(slides[0], told["intro"]))] + [_slide(t) for t in slides[1:]]
         else:
             data["Slides"] = [_slide(t) for t in slides]
-        scenarios.append({"IntroSequence": {"SequenceItems": [{"Type": "SlideShow", "Data": data}]}})
+        scenario = {"IntroSequence": {"SequenceItems": [{"Type": "SlideShow", "Data": data}]}}
+        if "victory" in told and victories and victories[n - 1]:
+            text = victories[n - 1]
+            scenario["OutroSequence"] = {"SequenceItems": [{"Type": "SlideShow", "Data": {
+                "SlideImageSequence": sequence, "Sound": told["victory"].sound,
+                "Slides": [_slide(text, _voiced(text, told["victory"]))]}}]}
+        scenarios.append(scenario)
     return {"Scenarios": scenarios}
 
 

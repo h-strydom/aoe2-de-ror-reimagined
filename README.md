@@ -8,12 +8,9 @@ Rome**: every campaign map converted tile for tile, then the campaigns reimagine
 
 ## To do
 
-1. **Narration for the other six campaigns.** Egypt, Greece, Babylon and the First Punic War play RoR's own
-   voice-over; Yamato, the Hittites, Rise of Rome, Ave Caesar, Imperium Romanum and Enemies of Rome have none in
-   RoR, and a mod's own audio files don't play.
-2. **Campaign choices:** decisions that carry from one mission to the next (aoe-agent-editor's campaign bank
+1. **Campaign choices:** decisions that carry from one mission to the next (aoe-agent-editor's campaign bank
    and `choice` block).
-3. The reimagined campaigns: edited maps, new objectives and upgrades.
+2. The reimagined campaigns: edited maps, new objectives and upgrades.
 
 ## Goals
 
@@ -102,9 +99,10 @@ Converts every campaign (or just the ones you name, e.g. `reimagined convert asc
 - each campaign into `aoe2de_ror/<campaign>/<campaign>.aoe2campaign`, titled "AoE1 <title>"
 - each campaign's intros (`<campaign>.json`): before every mission, a slideshow in the style of AoE DE's
   own briefing screen, with the mission's briefing map and its instructions (story, then objectives).
-  The slide images are built from your local AoE DE copy at install time. The four campaigns RoR remade
-  (Ascent of Egypt, Glory of Greece, Voices of Babylon, The First Punic War) play RoR's own narration over its
-  timed story slides, then show the objectives; the others are silent, since RoR only plays its own sounds.
+  The slide images are built from your local AoE DE copy at install time. Every intro plays AoE DE's narration
+  of the story, and once a mission is won an outro shows its victory text, read by the same narrator. The voice
+  lines are converted from your AoE DE copy at install time too, into `.wem` sounds the mod carries (RoR plays a
+  mod's sounds only as `.wem`).
 - each campaign's screen (`<campaign>_layout.json`), in the style of RoR's own: RoR's campaign book with
   AoE DE's map of the region inked on the page and a unit pin per mission in the campaign's colour, placed
   per `aoe2de_ror/campaign_maps.yaml`.
@@ -165,7 +163,7 @@ The output is deterministic, and `uv run pytest` fails if the committed maps don
 To play them, add `--install`: it installs each campaign into your profile as the local mod
 `mods/local/[RoR-RI] <campaign>`, the same mod that's published (the game only reads campaign screens from mods).
 Enable each once in Mods > Installed Mods and restart the game; the campaigns then show up under Return of
-Rome's campaigns. The game's mod manager can publish and update a local mod straight from there, so after a
+Rome's campaigns, listed by title (the campaign file is installed as `<title>.aoe2campaign`). The game's mod manager can publish and update a local mod straight from there, so after a
 change `convert --install` is all an update needs. Add `--images-to <folder>` for each campaign's mod page
 image and its title and description (the `.png` and `.txt` that `package` writes beside the zips). Turn off (or unsubscribe from) the published copy of a
 campaign while its local mod is on, or it loads twice.

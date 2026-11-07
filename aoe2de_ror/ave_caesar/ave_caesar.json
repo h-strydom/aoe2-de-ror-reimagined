@@ -7,10 +7,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ave_caesar/1/intro/%d.png",
+                     "Sound": "rorri_ave_caesar_1_intro",
                      "Slides": [
                         {
-                           "Duration": 33.0,
-                           "TextFadeDuration": 32.8,
+                           "Duration": 33.4,
+                           "TextFadeDuration": 33.2,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Asia Minor, 75 BCE\n\nOh, the rumors when the rich families in Rome heard that the young Caesar of the Julii Family had been captured by Cilician pirates. Thank the gods that you are free now. I had hoped to dissuade you from raising a fleet and attacking the pirates to exact your vengeance, instead of returning to Rome and your family. But I see you have made up your mind and, knowing your late father, I recognize this stubbornness runs in the family. So, set sail, young Caesar, and redeem your family name once and for all.",
@@ -50,6 +51,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/ave_caesar/1/intro/%d.png",
+                     "Sound": "rorri_ave_caesar_1_victory",
+                     "Slides": [
+                        {
+                           "Duration": 26.8,
+                           "TextFadeDuration": 26.6,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "The expedition against your kidnappers has boosted your reputation among the Roman elite and has shown you to be a man of your word. People will think twice before taking action against you, and several senators have asked for your friendship. Two mighty men, Pompey and Crassus, have even asked you to join them in a triumvirate and rule over Rome together. Soon, you will be one of the most important men in the whole Republic.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -59,10 +92,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ave_caesar/2/intro/%d.png",
+                     "Sound": "rorri_ave_caesar_2_intro",
                      "Slides": [
                         {
-                           "Duration": 45.0,
-                           "TextFadeDuration": 44.8,
+                           "Duration": 51.0,
+                           "TextFadeDuration": 50.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Britannia, 55 to 54 BCE\n\nJulius Caesar, you have been governor of Roman Gaul for 8 years and have fought a series of brilliant campaigns against the many enemies of Rome. You correctly determined that you had to bring Gaul under Roman control to gain popularity in Rome and extend your power. Now, with the Gauls subdued and the German invaders expelled, you look north and west across the sea into Britain, a land clouded in mystery and surrounded by many strange legends. It is clear that the Britons assisted the Veneti during their war with you in Gaul, and so a punitive expedition is in order. It is unclear what lies beyond the misty waters and tall, white cliffs, but rumors of ancient tribes using chariots and fanatical druids conducting human sacrifices are beginning to spread among your troops.",
@@ -102,6 +136,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/ave_caesar/2/intro/%d.png",
+                     "Sound": "rorri_ave_caesar_2_victory",
+                     "Slides": [
+                        {
+                           "Duration": 23.1,
+                           "TextFadeDuration": 22.9,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "The Britons' admission to Rome secures the northern flank of Gaul. Although you did not conquer the island, the information on the terrain and the local tribes will ease the full-fledged subjugation of the British Isles by Rome… if that proves necessary. For now, it is back to the mainland. There are rumblings that tribal leaders in Gaul are fomenting a new rebellion.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -111,6 +177,7 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ave_caesar/3/intro/%d.png",
+                     "Sound": "rorri_ave_caesar_3_intro",
                      "Slides": [
                         {
                            "Duration": 45.0,
@@ -154,6 +221,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/ave_caesar/3/intro/%d.png",
+                     "Sound": "rorri_ave_caesar_3_victory",
+                     "Slides": [
+                        {
+                           "Duration": 48.9,
+                           "TextFadeDuration": 48.7,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "With the defeat of Vercingetorix and the Gauls, you have brought almost nine years of constant fighting to a close. All of Gaul has been added to the Roman Empire, and according to some sources millions of enemies have died in the process. The very name \"Caesar\" will become synonymous with leadership. Such success is not without its price, however. Jealous of your success and celebrity, and concerned about the size of our army, enemies in Rome have started to plot against you. On top of that, the Triumvirate with Crassus and Pompey has come to a sudden end when Crassus died in battle against the Parthians, which means it is once again each man for himself. With Western Europe at your feet, it is time to return home and deal with your old friend and former ally, Pompey.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -163,10 +262,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/ave_caesar/4/intro/%d.png",
+                     "Sound": "rorri_ave_caesar_4_intro",
                      "Slides": [
                         {
-                           "Duration": 39.8,
-                           "TextFadeDuration": 39.599999999999994,
+                           "Duration": 41.4,
+                           "TextFadeDuration": 41.2,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Pharsalus, 48 BCE\n\nAs expected, your bold move to cross the Rubicon into Italy has prompted a rebellion under the leadership of Pompey. The Republic has been hollowed out by civil wars and weak politicians, and so it is time for a strong man like yourself to bring Rome to its next phase. First, we must deal with the rebels. Pompey has fled to Greece after your quick successes in Italy. Having solidified your control in Rome and neutralized other Pompeian forces in Hispania, you have set sail to Greece to finish off Pompey. Your two armies will meet near the small city of Pharsalus to decide who will become the true ruler of Rome.",
@@ -189,6 +289,38 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Objectives:\n• Destroy the forces of Pompey.\n• If Caesar dies, the mission will be lost.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/ave_caesar/4/intro/%d.png",
+                     "Sound": "rorri_ave_caesar_4_victory",
+                     "Slides": [
+                        {
+                           "Duration": 18.9,
+                           "TextFadeDuration": 18.7,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Your decisive victory over Pompey solidifies your position as ruler of Rome. The entire Senate is forced to confirm you. You are remembered as the greatest of the Romans. Future emperors of Rome, Russia, and Germany will be called Caesar, Tsar, and Kaiser after you.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

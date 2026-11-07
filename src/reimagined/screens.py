@@ -11,7 +11,7 @@ import json
 
 import yaml
 
-from . import campaign_maps, intros, layout
+from . import campaign_maps, intros, layout, voices
 
 
 def display_names(c: layout.CampaignInfo) -> list[str]:
@@ -32,7 +32,8 @@ def screens(c: layout.CampaignInfo, title: str) -> dict[str, dict]:
     campaign screen ("_layout.json", our own map, campaign_maps.py)."""
     specs = mission_specs(c)
     out = {".json": intros.intro(c, [intros.slide_texts(s["text"]["instructions"]) for s in specs],
-                                 intros.ror_narration(c.slug))}
+                                 voices.mission_voices(c.slug, specs),
+                                 [(s["text"].get("victory") or "").strip() for s in specs])}
     own = campaign_maps.load()
     if c.slug in own:
         labels = [f"{i}. {n}" for i, n in enumerate(display_names(c), start=1)]

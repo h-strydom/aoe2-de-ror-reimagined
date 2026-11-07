@@ -7,6 +7,7 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/reign_of_the_hittites/1/intro/%d.png",
+                     "Sound": "rorri_reign_of_the_hittites_1_intro",
                      "Slides": [
                         {
                            "Duration": 41.0,
@@ -50,6 +51,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/reign_of_the_hittites/1/intro/%d.png",
+                     "Sound": "rorri_reign_of_the_hittites_1_victory",
+                     "Slides": [
+                        {
+                           "Duration": 32.2,
+                           "TextFadeDuration": 32.0,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "You have pleased the gods and conquered a great land for your people. In honor of your victory, a tablet is prepared. It reads: Anitta, son of Pithana, King of Kussara, speak! Dear to the storm god, I, Anitta, the Great King, marched on the city of the Hattians and took it in the night by the blessing of my goddess. In its place, I sowed weeds and cursed the site that whosoever raises the city of the Hattians again may the storm god smite him!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -59,10 +92,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/reign_of_the_hittites/2/intro/%d.png",
+                     "Sound": "rorri_reign_of_the_hittites_2_intro",
                      "Slides": [
                         {
-                           "Duration": 45.0,
-                           "TextFadeDuration": 44.8,
+                           "Duration": 51.0,
+                           "TextFadeDuration": 50.8,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Babylon, 1595 BCE\n\nThe stelae erected in Hattusa, and along the goat paths in the far reaches of your domains, tell of the exploits of your grandfather Hattusili. It was he who united the clans of your people. It was he who first among kings reached the seas. It was he who subdued the lands of Alalakh and dethroned the many kings of Arzawa. Who are you to Hattusili?\n\nTarhunna, storm god, is displeased with your reign. Dark clouds come from the west and the sun's warmth no longer falls upon the land. Your people grow hungry and the warriors are restless. You must lead them south to raid where no Hittite king has ever stood. Be worthy of your grandfather so that stelae may one day tell of the conquests of Mursili, King of Hattusa.",
@@ -102,6 +136,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/reign_of_the_hittites/2/intro/%d.png",
+                     "Sound": "rorri_reign_of_the_hittites_2_victory",
+                     "Slides": [
+                        {
+                           "Duration": 35.6,
+                           "TextFadeDuration": 35.4,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "The scribe tells of your victory: Mursili, King of Hattusa, anointed priest of the storm god Tarhunna, steward of the Sun God, overlord of the earth, marched on Babylon, on the road no king had ever taken, and defeated the lords of Babylon of number no less than fifty, and took captives numbering no less than two thousand. He carried off to Hattusa oxen, ingots of bronze and copper, and the god Marduk of Babylon. Of the oxen, he made sacrifices to the gods who were pleased with his devotions.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -111,10 +177,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/reign_of_the_hittites/3/intro/%d.png",
+                     "Sound": "rorri_reign_of_the_hittites_3_intro",
                      "Slides": [
                         {
-                           "Duration": 44.4,
-                           "TextFadeDuration": 44.199999999999996,
+                           "Duration": 46.4,
+                           "TextFadeDuration": 46.2,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Kadesh, 1274 BCE\n\nMuwatalli, your empire stretches from the coasts of Arzawa in the west to the land of Canaan in the southeast, but such an empire breeds jealousy in foreign kings. In a betrayal of the agreement between you and his father, the Egyptian Pharaoh Ramesses II has captured your vassal, the Amorite kingdom of Amurru in the land of Syria. In retaliation, you have raised the call to war among your allies. The kings and princes of nineteen lands, among them Lukka, Ugarit, and Carchemish, join you in battle. The plain at Kadesh by the Arantu River will soon hear the thundering of your war chariots as if the storm god Tarhunna himself were beating the earth with his thunderbolts and battle axe!",
@@ -137,6 +204,38 @@
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Objectives:\n• Bring the two War Chests to your city.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/reign_of_the_hittites/3/intro/%d.png",
+                     "Sound": "rorri_reign_of_the_hittites_3_victory",
+                     "Slides": [
+                        {
+                           "Duration": 32.1,
+                           "TextFadeDuration": 31.9,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Like the storm god, who slew the giant serpent Illuyanka with his thunderbolts, you drove the Egyptians before your chariots and turned them to dust and ash. In Egypt, the lamentations of the women will be heard for 40 days and there will be much gnashing of teeth. On the records of your people's history, kept within the archives at Hattusa, your name will be among the mightiest of Hittite kings, and your sons will carve your image into a great rock wall so that you will watch over your land for an eternity.",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,

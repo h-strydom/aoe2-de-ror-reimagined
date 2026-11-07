@@ -25,8 +25,8 @@ def test_package_zips_the_mod_files_at_the_root(tmp_path):
     res = package.package(EGYPT, tmp_path, warn=lambda *_: None)
     names = zipfile.ZipFile(res["zip"]).namelist()
     assert {"info.json", "thumbnail.jpg"} <= set(names)
-    assert "modes/Pompeii/resources/_common/campaign/ascent_of_egypt.aoe2campaign" in names
-    assert "modes/Pompeii/resources/_common/campaign/ascent_of_egypt_layout.json" in names
+    assert "modes/Pompeii/resources/_common/campaign/Ascent of Egypt.aoe2campaign" in names
+    assert "modes/Pompeii/resources/_common/campaign/Ascent of Egypt_layout.json" in names
     assert any(n.startswith("modes/Pompeii/widgetui/textures/campaign/ascent_of_egypt/") for n in names)
     assert not any(n.startswith("[RoR-RI]") for n in names)                   # files, not a folder
     info = json.loads((res["folder"] / "info.json").read_text(encoding="utf-8"))
@@ -49,7 +49,8 @@ def test_install_local_writes_the_published_mod_into_mods_local(tmp_path):
     folder = tmp_path / "mods" / "local" / "[RoR-RI] Ascent of Egypt"
     assert res["folder"] == folder and not stale.exists()                     # replaced, not merged
     assert (folder / "thumbnail.jpg").is_file()
-    assert (folder / "modes/Pompeii/resources/_common/campaign/ascent_of_egypt.aoe2campaign").is_file()
+    assert (folder / "modes/Pompeii/resources/_common/campaign/Ascent of Egypt.aoe2campaign").is_file()
+    assert (folder / "modes/Pompeii/resources/_common/drs/sounds/rorri_ascent_of_egypt_1_intro.wem").is_file()
     info = json.loads((folder / "info.json").read_text(encoding="utf-8"))
     assert info["Title"] == "[RoR-RI] Ascent of Egypt" and info["Description"] == package.description(EGYPT)
 

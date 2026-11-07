@@ -7,10 +7,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/imperium_romanum/1/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_1_intro",
                      "Slides": [
                         {
-                           "Duration": 31.0,
-                           "TextFadeDuration": 30.8,
+                           "Duration": 31.4,
+                           "TextFadeDuration": 31.2,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Actium, 31 BCE\n\nMarc Antony has taken the offensive, crossing the Gulf of Ambracia in a maneuver designed to strike quickly at your camp. Cleopatra, meanwhile, has laid anchor within the gulf, her barge protected by the Egyptian navy. Should Antony's attack be repulsed, she will likely flee to Egypt where reinforcements await. Your destiny is in your hands, Octavian. Deal a crushing blow to your enemies here, and nobody will be able to challenge your claim to the title of Princeps Civitatis!",
@@ -50,6 +51,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/1/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_1_victory",
+                     "Slides": [
+                        {
+                           "Duration": 28.5,
+                           "TextFadeDuration": 28.3,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Your glorious victory over the combined forces of Antony and Cleopatra has compelled them to flee to Egypt. Although some additional maneuvers will doubtless be required to secure the lands that had rebelled under Antony, the main danger is past. You have solidified your control of Rome; and you are now positioned to take more power than any Roman ever has before. Soon, the citizens of Rome will be heaping endless praise on you during your triumph!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -59,6 +92,7 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/imperium_romanum/2/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_2_intro",
                      "Slides": [
                         {
                            "Duration": 31.4,
@@ -102,6 +136,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/2/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_2_victory",
+                     "Slides": [
+                        {
+                           "Duration": 27.1,
+                           "TextFadeDuration": 26.9,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Hail Caesar! Your outstanding victories in the field have made you the unquestioned heir to the throne in Rome. The people are tired of civil war and look forward to your enlightened rule. The duties of managing the Roman Empire are vast, and you will find yourself heavily burdened, but your legacy as a restorer of order and an effective administrator will live on for millennia. Fortune beckons you to further glory!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -111,10 +177,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/imperium_romanum/3/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_3_intro",
                      "Slides": [
                         {
-                           "Duration": 45.0,
-                           "TextFadeDuration": 44.8,
+                           "Duration": 63.1,
+                           "TextFadeDuration": 62.9,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Mesopotamia, 262 CE\n\nAfter a century of decline and relative dormancy, Persia has revived as a world power. The ineffectual Parthian state has been overthrown by the House of Sasan, which has formed a new dynasty and swiftly asserted its dominance over the old Parthian lands. In response to the threat that it posed to the eastern frontier of the Roman Empire, Emperor Valerian set out to conquer the lands of this Sasanian Empire. After a disastrous engagement against the Persian King Shapur I near Edessa, Valerian was captured and is held prisoner in the Persian capital of Ctesiphon.\n\nA caravan of gold and precious goods was dispatched towards Ctesiphon to ransom Valerian and ease the tension between the Romans and their Sasanian neighbors. The caravan, however, was waylaid and the ransom stolen. Parthian and Palmyran bandits still operate out of hidden enclaves in the Zagros Mountains. You are to restore order in this region, recover the ransom, and deliver it to Ctesiphon.",
@@ -154,6 +221,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/3/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_3_victory",
+                     "Slides": [
+                        {
+                           "Duration": 33.2,
+                           "TextFadeDuration": 33.0,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Your quick and effective action in Mesopotamia has restored much popular confidence in the Roman military. Unfortunately, the Persians were not swayed by your offer of ransom, and the former Emperor Valerian is doomed to live out his life as slave to Shapur I. All is not lost, however. Your exploits have succeeded in convincing the Palmyrans that Rome is still strong despite the dangerous Sasanian neighbor to the east. The Palmyrans will support you in future conflicts against the Sassanids.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -163,10 +262,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/imperium_romanum/4/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_4_intro",
                      "Slides": [
                         {
                            "Duration": 32.4,
-                           "TextFadeDuration": 32.199999999999996,
+                           "TextFadeDuration": 32.2,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Thrace, 271 CE\n\nAs the Third Century Crisis drags on, the weaknesses in the overextended Roman Empire become more and more evident. The Alemanni confederation threatens the northern portion of Italia, and the Getae have invaded the Balkans. The Palmyrans, once loyal allies, have rebelled under the leadership of Septimia Zenobia and seized most of our eastern provinces. Defend the northern frontiers of the empire, Emperor Aurelian, while destroying the Palmyrans and restoring the eastern provinces to Roman control.",
@@ -206,6 +306,38 @@
                   }
                }
             ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/4/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_4_victory",
+                     "Slides": [
+                        {
+                           "Duration": 30.7,
+                           "TextFadeDuration": 30.5,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Success! Due to your martial and military prowess as an emperor, you have restored Imperial control in the provinces and saved the Empire from ruin. The Senate and the people hail your complete victory over the Palmyrans, Alemanni, and Getae. Although Germanic incursions may continue from time to time, the security of the frontiers has been improved considerably. Prepare for your triumph in the city of Rome, where you will present the defeated Zenobia and parade her through the streets!",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
          }
       },
       {
@@ -215,10 +347,11 @@
                   "Type": "SlideShow",
                   "Data": {
                      "SlideImageSequence": "textures/campaign/imperium_romanum/5/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_5_intro",
                      "Slides": [
                         {
                            "Duration": 29.1,
-                           "TextFadeDuration": 28.900000000000002,
+                           "TextFadeDuration": 28.9,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Pannonia, 373 CE\n\nA new and more fearsome group of barbarians, the Huns, have been moving west from Central Asia for the past several decades. They are skilled horsemen and are rumored to be nigh invincible! Germanic and Alanic tribes alike flee before them, flooding towards the frontiers of the Empire. The upcoming invasion will be the ultimate test of the strength of the Empire. If you cannot parry their incursions, Rome will be sacked, and the empire overrun!",
@@ -237,10 +370,42 @@
                         },
                         {
                            "Duration": 7.1,
-                           "TextFadeDuration": 6.8999999999999995,
+                           "TextFadeDuration": 6.9,
                            "FadeInTime": 0.2,
                            "FadeOutTime": 0.2,
                            "String": "Objectives:\n• Build up and destroy the Huns (red).\n• Defend the Empire from Vandal, Gothic, and Alanic incursions.",
+                           "ImageRect": {
+                              "x": 0,
+                              "y": 0,
+                              "width": 3840,
+                              "height": 2160
+                           },
+                           "TextRect": {
+                              "x": 230,
+                              "y": 400,
+                              "width": 1300,
+                              "height": 1350
+                           }
+                        }
+                     ]
+                  }
+               }
+            ]
+         },
+         "OutroSequence": {
+            "SequenceItems": [
+               {
+                  "Type": "SlideShow",
+                  "Data": {
+                     "SlideImageSequence": "textures/campaign/imperium_romanum/5/intro/%d.png",
+                     "Sound": "rorri_imperium_romanum_5_victory",
+                     "Slides": [
+                        {
+                           "Duration": 34.4,
+                           "TextFadeDuration": 34.2,
+                           "FadeInTime": 0.2,
+                           "FadeOutTime": 0.2,
+                           "String": "Your people breathe a sigh of relief as your armies emerge victorious from the bloody conflict with these formidable invaders. The barbarians that were not killed or captured have fled far from your borders or have been incorporated into your armies as auxiliary forces. One day, they may eventually return, but, despite numerous apocalyptic predictions, the Roman Empire is secure for the time being. You can now concentrate on planning your campaign against Persia and expanding the borders of the Empire to new heights. Hail Caesar!",
                            "ImageRect": {
                               "x": 0,
                               "y": 0,
