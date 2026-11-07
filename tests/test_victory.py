@@ -34,7 +34,7 @@ def test_religion_objectives_and_custom_victory(tmp_path):
     res, s, triggers = _convert(tmp_path, "ascent_of_egypt", "08_religion")
     assert res.victory == "CUSTOM" and not res.skipped
     assert triggers["P1 Objective 1"].display_as_objective and triggers["P1 Objective 1"].display_on_screen
-    assert triggers["P1 Objective 1"].short_description == "Bring the Stone Thrower to the marked area."
+    assert triggers["P1 Objective 1"].short_description == "Bring the Libyan Raiders' Stone Thrower to the marked area."
     win = triggers["P1 Victory"]
     assert [c.condition_type for c in win.conditions] == [1, 7]       # bring object to area, capture object
     assert win.effects[0].source_player == 1

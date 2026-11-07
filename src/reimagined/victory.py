@@ -103,9 +103,11 @@ def _condition(c: VictoryCondition, owner: int, src: Scenario, conv: Conversion,
     return None, f"no RoR condition for '{t}'"
 
 
-def plan(src: Scenario, conv: Conversion, refs: dict[int, int], objective_texts: dict[int, list[str]]) -> VictoryPlan:
+def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
+         objective_texts: dict[int, list[tuple[str, list[int]]]]) -> VictoryPlan:
     """Options and triggers for a converted scenario. refs: AoE DE unit id -> RoR unit reference id.
-    objective_texts: per player, a line for each of their conditions (shown for human players)."""
+    objective_texts: per player, (line, indexes of the conditions it covers) per to-do line (objectives.lines;
+    shown for human players)."""
     gv = src.global_victory
     mode = VICTORY_MODES[gv["mode"]]
     out = VictoryPlan(ROR_VICTORY[mode])
@@ -120,7 +122,7 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int], objective_texts:
         return [{"type": "declare_victory", "source_player": p, "enabled": True}]
 
     for p in active:
-        conds, arms = [], []
+        conds, arms, ticks = [], [], {}
         for i, c in enumerate(p.victory):
             cond, problem = _condition(c, p.number, src, conv, refs, start_counts)
             if problem:
@@ -131,24 +133,24 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int], objective_texts:
             else:
                 arm = None
             conds.append(cond)
-            objective = f"P{p.number} Objective {i + 1}"
-            met = f"{objective} met"
+            met = f"P{p.number} Objective {i + 1} met"
             if arm:
                 arms.append((arm, met if p.human else None))
             if p.human:
-                texts = objective_texts.get(p.number, [])
-                text = texts[i] if i < len(texts) else c.type
-                # On screen as well as in the objectives panel: the game's to-do list, ticked when met. An armed
-                # condition shows from the start and ticks through a variable its hidden "met" trigger sets.
-                tick = cond
+                # An armed condition shows from the start and ticks through a variable its hidden "met" trigger sets.
+                ticks[i] = cond
                 if arm:
                     var = f"p{p.number}_objective_{i + 1}"
-                    tick = {"type": "variable_value", "variable": var, "comparison": "EQUAL", "quantity": 1}
+                    ticks[i] = {"type": "variable_value", "variable": var, "comparison": "EQUAL", "quantity": 1}
                     out.triggers.append({"name": met, "enabled": False, "conditions": [cond], "effects": [
                         {"type": "change_variable", "variable": var, "operation": "SET", "quantity": 1}]})
-                out.triggers.append({"name": objective, "display_as_objective": True, "display_on_screen": True,
-                                     "description": text, "short_description": text, "description_order": i,
-                                     "conditions": [tick]})
+        # On screen as well as in the objectives panel: the game's to-do list, a line ticked when its conditions
+        # are all met (objectives.lines: conditions that read the same share one).
+        groups = objective_texts.get(p.number) or [(c.type, [i]) for i, c in enumerate(p.victory)]
+        for order, (text, indexes) in enumerate(g for g in groups if any(i in ticks for i in g[1])):
+            out.triggers.append({"name": f"P{p.number} Objective {order + 1}", "display_as_objective": True,
+                                 "display_on_screen": True, "description": text, "short_description": text,
+                                 "description_order": order, "conditions": [ticks[i] for i in indexes if i in ticks]})
         enemies = [q.number for q in active if src.diplomacy[p.number - 1][q.number - 1] == ENEMY]
         conquest = [{"type": "player_defeated", "source_player": q} for q in enemies]
         mine = [dict(g, source_player=p.number) for g in globals_]

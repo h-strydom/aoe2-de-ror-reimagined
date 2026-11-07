@@ -9,7 +9,6 @@ or owned by an inactive player) are counted in the result, so nothing disappears
 from __future__ import annotations
 
 import contextlib
-import re
 from collections import Counter
 from dataclasses import dataclass, field
 from pathlib import Path
@@ -22,7 +21,7 @@ from aoe2ed.tools.ai import ai_set
 from aoe2ed.tools.logic import triggers_add
 from aoe2ed.tools.world import diplomacy_set, options_set, player_set
 
-from . import ai, layout, missions, victory
+from . import ai, layout, missions, objectives, victory
 from .aoede import strings
 from .aoede.names import object_name
 from .aoede.scenario import Scenario, load_scenario
@@ -150,17 +149,17 @@ def player_settings(p) -> dict:
     return out
 
 
-def mission_text(src: Scenario, table: dict[int, str]) -> tuple[dict[str, str], dict[int, str], dict[int, list[str]]]:
+def mission_text(src: Scenario, table: dict[int, str]) -> tuple[dict[str, str], dict[int, str],
+                                                              dict[int, list[tuple[str, list[int]]]]]:
     """The messages (instructions, hints, victory, loss, history) and player names the game shows
     (AoE DE's string table where the scenario names an id, else the scenario's own text), and each
-    player's objective lines."""
+    player's to-do lines with the conditions each covers (objectives.lines)."""
     data = mission_data(src, table)
-    objectives: dict[int, list[str]] = {}
+    names = {p["number"]: p["name"] for p in data["players"]}
+    mine: dict[int, list[dict]] = {}
     for o in data["objectives"]:
-        line = re.sub(r" \(#\d+\)", "", o["summary"])
-        line = re.sub(r"the area \(.*\)", "the marked area", line)   # AoE DE's wording (strings 62804, 62808)
-        objectives.setdefault(o["player"], []).append(line + ".")
-    return data["text"], {p["number"]: p["name"] for p in data["players"]}, objectives
+        mine.setdefault(o["player"], []).append(o)
+    return data["text"], names, {p: objectives.lines(objs, names) for p, objs in mine.items()}
 
 
 def can_build(src: Scenario, conv: Conversion) -> bool:
