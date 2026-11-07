@@ -21,7 +21,7 @@ from aoe2ed.tools.ai import ai_set
 from aoe2ed.tools.logic import triggers_add
 from aoe2ed.tools.world import diplomacy_set, options_set, player_set
 
-from . import ai, layout, missions, objectives, victory
+from . import ai, layout, missions, objectives, progression, victory
 from .aoede import strings
 from .aoede.names import object_name
 from .aoede.scenario import Scenario, load_scenario
@@ -169,6 +169,20 @@ def can_build(src: Scenario, conv: Conversion) -> bool:
     return any(object_name(u.type).startswith(BUILDERS) for u in src.players[0].units)
 
 
+def reimagined_triggers(src: Scenario, conv: Conversion, mission: str, plan_triggers: list[dict]) -> list[dict]:
+    """The reimagined layer (progression.py) for a campaign mission: winning unlocks ending it, bonus objectives
+    by difficulty, upgrades. Changes the human player's victory triggers in `plan_triggers` in place."""
+    slug, _, folder = mission.partition("/")
+    camp = next((c for c in layout.campaigns() if c.slug == slug), None)
+    human = next((p.number for p in src.active_players if p.human), None)
+    if camp is None or human is None or not folder:
+        return []
+    folders = [m.folder.name for m in camp.missions]
+    progression.hand_over(plan_triggers, human)
+    return progression.triggers(progression.load(slug), folders, folders.index(folder) + 1, player=human,
+                                town_center=can_build(src, conv))
+
+
 @contextlib.contextmanager
 def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: dict[int, str] | None = None,
                    ai_debug: bool = False):
@@ -239,6 +253,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             res.placed += 1
 
         vp = victory.plan(src, conv, refs, objective_texts)
+        vp.triggers += reimagined_triggers(src, conv, mission, vp.triggers)
         options_set(o.handle, {"victory_condition": vp.mode})
         if vp.triggers:
             triggers_add(o.handle, vp.triggers)

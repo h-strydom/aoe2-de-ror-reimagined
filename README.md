@@ -125,6 +125,17 @@ Beside each zip, for the mod page form: `[RoR-RI] <campaign>.png`, the campaign 
 (RoR's book with the campaign's map and each mission's pin, no text; 1920 x 1080), and `[RoR-RI] <campaign>.txt`, the title and the original campaign's description. The mod's
 `info.json` carries the same title and description. Each pack is about 25-100 MB (mostly intro images).
 
+## Reimagined: difficulty, bonus objectives and upgrades
+
+On top of the faithful maps (`src/reimagined/progression.py`, content in `aoe2de_ror/reimagined/<campaign>.yaml`):
+- **Difficulty:** Standard has the mission's primary objective; Moderate adds a bonus objective; Hard is brutal and
+  adds a second. Bonus objectives show as optional lines.
+- **No ending on the primary objective:** completing it unlocks an "End Mission" tech at the Town Center (a popup
+  in missions without one); research it to claim victory whenever you like. You can still lose while chasing the
+  bonus objectives. Once everything on the difficulty is done, the mission ends by itself.
+- **Upgrades:** each objective can offer a choice of two permanent upgrades. Picks are kept in the campaign bank and
+  apply in every mission of the campaign; replaying a mission lets you re-pick an objective's upgrade, never stack it.
+
 ## Changing a campaign map
 
 `aoe2de_ror/campaign_maps.yaml` holds, per campaign, which AoE DE briefing map is drawn on the page, the

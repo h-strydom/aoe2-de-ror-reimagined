@@ -1,0 +1,43 @@
+# Ascent of Egypt, reimagined: bonus objectives by difficulty and the upgrades they unlock (progression.py).
+#
+# upgrades: this campaign's permanent upgrades. Once picked, an upgrade's effects (aoe-agent-editor trigger effects,
+#   for the human player unless they say otherwise) run at the start of every mission of the campaign.
+# missions.<NN_mission>:
+#   rewards: [upgrade, upgrade]   the choice offered on completing the primary objective
+#   bonus:                        Moderate shows the first, Hard both
+#     - text: ...                 the to-do line (shown as optional)
+#       conditions: [...]         trigger conditions, all met at once (source_player is the human unless given)
+#       rewards: [upgrade, upgrade]
+#
+# Pilot content (2026-11-07): placeholders to reshape while playtesting.
+
+upgrades:
+  hunters_cache:
+    label: "Hunters' Cache: +50 food at the start of every mission"
+    effects: [{type: modify_resource, tribute_list: 0, operation: ADD, quantity: 50}]
+  timber_stock:
+    label: "Timber Stock: +50 wood at the start of every mission"
+    effects: [{type: modify_resource, tribute_list: 1, operation: ADD, quantity: 50}]
+  quarry_finds:
+    label: "Quarry Finds: +50 stone at the start of every mission"
+    effects: [{type: modify_resource, tribute_list: 2, operation: ADD, quantity: 50}]
+  nile_gold:
+    label: "Nile Gold: +50 gold at the start of every mission"
+    effects: [{type: modify_resource, tribute_list: 3, operation: ADD, quantity: 50}]
+  smoked_meat:
+    label: "Smoked Meat: +100 food at the start of every mission"
+    effects: [{type: modify_resource, tribute_list: 0, operation: ADD, quantity: 100}]
+  reed_stores:
+    label: "Reed Stores: +100 wood at the start of every mission"
+    effects: [{type: modify_resource, tribute_list: 1, operation: ADD, quantity: 100}]
+
+missions:
+  01_hunting:
+    rewards: [hunters_cache, timber_stock]
+    bonus:
+      - text: "Hunt all the gazelles on the island."
+        conditions: [{type: own_fewer_objects, source_player: 0, object_list: GAZELLE, quantity: 0}]
+        rewards: [quarry_finds, nile_gold]
+      - text: "Grow your population to 15."
+        conditions: [{type: accumulate_attribute, attribute: 11, quantity: 15}]
+        rewards: [smoked_meat, reed_stores]

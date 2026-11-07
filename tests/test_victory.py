@@ -37,7 +37,7 @@ def test_religion_objectives_and_custom_victory(tmp_path):
     assert triggers["P1 Objective 1"].short_description == "+ Bring the Libyan Raiders' Stone Thrower to the marked area."
     win = triggers["P1 Victory"]
     assert [c.condition_type for c in win.conditions] == [1, 7]       # bring object to area, capture object
-    assert win.effects[0].source_player == 1
+    assert win.effects[0].effect_type == 8                           # unlocks ending the mission (progression.py)
     assert "P1 Victory: conquest" in triggers                         # conquest is on, all_custom off
 
 
