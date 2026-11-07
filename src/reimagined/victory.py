@@ -61,9 +61,10 @@ class VictoryPlan:
         """The scenario's victory options. A Custom victory the game itself can never call: conquest off, "All"
         required, and Relics the maps don't have (RELICS_NEVER). The triggers carry every way to win (conquest
         included, as "P<n> Victory: conquest"), so the reimagined layer decides when a mission ends.
-        How it was found (Ascent of Egypt 3, 2026-11-08): conquest off with "Any One", then with "All" and nothing
-        checked, both still won the moment the last Libyan died, a hidden House keeping them in the game or not.
-        The user's own scenario holds with Relics 10 and "All". Unverified in a converted mission."""
+        These are the settings of the user's own RoR scenario, which doesn't end when the last enemy dies. What
+        made converted missions end anyway was a scenario header byte the RoR editor saves as 0 and the parser
+        wrote as 1 (aoe-agent-editor 0.12.0 fixes it): Ascent of Egypt 3 with that byte zeroed and these settings
+        held in game (probe, 2026-11-08). Whether these settings matter once the byte is right is untested."""
         if self.mode != "CUSTOM":
             return {"victory_condition": self.mode}
         return {"victory_condition": self.mode, "victory_conquest": False, "victory_custom_conditions_required": True,

@@ -98,6 +98,9 @@ def test_custom_victory_leaves_winning_to_the_triggers(tmp_path):
     gv = s.sections["GlobalVictory"]
     assert gv.conquest_required == 0 and gv.all_custom_conditions_required == 1   # "All", and
     assert gv.artifacts_required == 10                                            # relics no map has
+    # Saved like the RoR editor saves: data set 11, and the header byte that otherwise ends the game on the last
+    # enemy's defeat at 0.
+    assert list(s.sections["FileHeader"].unknown_numbers) == [11] and s.sections["DataHeader"].unknown == bytes(9)
     assert {c.attribute for c in ts["P1 Victory"].conditions} == {14}
 
 
