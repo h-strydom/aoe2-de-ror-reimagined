@@ -7,7 +7,7 @@
 # missions.<NN_mission>:
 #   setup: [...]                  effects on every difficulty (the mission's own rules: what can be built...)
 #   players: [{number, name, civ}]  players the mission adds: enemies of all, no AI, moved by triggers
-#   keep_alive: [player]          a hidden, invulnerable House keeps the player from being defeated outright
+#   keep_alive: [player]          a hidden, invulnerable House keeps the player in the game (not defeated)
 #   rewards: [upgrade, upgrade]   the choice offered on completing the primary objective
 #   bonus:                        Moderate shows the first, Hard both
 #     - text: ...                 the to-do line (shown as optional)
@@ -377,8 +377,6 @@ missions:
           - {type: modify_resource, tribute_list: 3, operation: SET, quantity: 0}
         rewards: [light_footprint, swift_woodcutters]
   03_discoveries:
-    # Killing every Libyan ended the mission although its custom victory has no conquest (playtest 2026-11-08).
-    keep_alive: [2]
     rewards: [charted_lands, all_seeing]
     bonus:
       - text: "Defeat the Libyans."
@@ -405,7 +403,7 @@ missions:
         rewards: [founding_families, seasoned_gear]
   04_the_dawn_of_a_new_age:
     players: [{number: 2, name: "Raiders", civ: EGYPTIAN}]
-    keep_alive: [2]
+    keep_alive: [2]          # on Standard they have no units: without it they'd show as defeated at the start
     setup:
       # Every difficulty: no Farms or fortifications; the Barracks with Clubmen only (no Axemen), no Archery Range,
       # Stable, Bowmen or Scouts (Early Riders still brings the Stable and Scouts: upgrades run after this).

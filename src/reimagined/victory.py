@@ -55,9 +55,16 @@ class VictoryPlan:
     mode: str                                         # RoR VictoryCondition name
     triggers: list[dict] = field(default_factory=list)
     skipped: list[str] = field(default_factory=list)  # conditions that point at objects the conversion dropped
-    # The Custom victory's Conquest checkbox (on by default in the scenario file): the original's setting. Left on,
-    # killing every Libyan won Ascent of Egypt 3 although AoE DE's custom victory there has no conquest.
-    conquest: bool = True
+
+    def options(self) -> dict:
+        """The scenario's victory options. A Custom victory checks none of the game's own conditions and asks for
+        "All" of them: the triggers carry every way to win (conquest included, as "P<n> Victory: conquest"), so the
+        reimagined layer decides when a mission ends. Left at "Any One", defeating the last enemy still won
+        Ascent of Egypt 3 with conquest off and a hidden House keeping the Libyans alive; "All" with nothing
+        checked didn't (the user's own scenario, playtest 2026-11-08)."""
+        if self.mode != "CUSTOM":
+            return {"victory_condition": self.mode}
+        return {"victory_condition": self.mode, "victory_conquest": False, "victory_custom_conditions_required": True}
 
 
 def _area(c: VictoryCondition) -> list[int]:
@@ -151,7 +158,7 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
     shown for human players)."""
     gv = src.global_victory
     mode = VICTORY_MODES[gv["mode"]]
-    out = VictoryPlan(ROR_VICTORY[mode], conquest=bool(gv["conquest"]) if mode == "custom" else True)
+    out = VictoryPlan(ROR_VICTORY[mode])
     active = src.active_players
     start_counts = Counter((p.number, u.type) for p in src.players for u in p.units)
     custom = mode == "custom"

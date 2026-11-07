@@ -297,12 +297,13 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                                                   status=NORMAL_STATUS).reference_id
 
         vp = victory.plan(src, conv, refs, objective_texts)
-        if extras:
-            vp.conquest = False          # the added players must not end the mission by being defeated
+        if extras and vp.mode != "CUSTOM":
+            # Only a Custom victory keeps the game from ending when an added player is defeated.
+            raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")
         reimagined = reimagined_triggers(src, conv, mission, vp.triggers)
         progression.select_objects(reimagined, placed, markers)
         vp.triggers += reimagined
-        options_set(o.handle, {"victory_condition": vp.mode, "victory_conquest": vp.conquest})
+        options_set(o.handle, vp.options())
         if vp.triggers:
             triggers_add(o.handle, vp.triggers)
         res.victory, res.triggers, res.skipped = vp.mode, len(vp.triggers), vp.skipped

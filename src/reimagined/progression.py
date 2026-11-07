@@ -156,8 +156,8 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
         {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1},
         *_player(expand(m.get("setup") or []), player)]})
     for p_ in m.get("keep_alive") or []:
-        # A hidden marker the converter places keeps the player in the game: RoR ends it when only one side is
-        # left, even with the Custom victory's conquest off (Ascent of Egypt 3 playtest, 2026-11-08).
+        # A hidden marker the converter places keeps the player in the game, e.g. an added player with no units
+        # on Standard. (Winning on the last enemy's defeat is the victory options' business: victory.py.)
         marker = {"select": {"marker": p_}}
         out.append({"name": f"RI Keep P{p_}", "effects": [
             {"type": "disable_unit_attackable", **marker}, {"type": "disable_object_selection", **marker},

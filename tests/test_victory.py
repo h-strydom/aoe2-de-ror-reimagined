@@ -91,20 +91,20 @@ def test_objectives_have_checkboxes_and_counters(tmp_path):
     assert second.short_description == "+ Build 5 Farms (<P1 Objective 2>/5)."
 
 
-def test_custom_victory_keeps_the_originals_conquest_setting(tmp_path):
-    """Ascent of Egypt 3 is a custom victory without conquest: killing every Libyan mustn't win, and its
-    discoveries (RoR Ruins) count in the Ruins resource."""
+def test_custom_victory_leaves_winning_to_the_triggers(tmp_path):
+    """A custom victory checks none of the game's conditions and asks for "All": killing every Libyan in Ascent of
+    Egypt 3 mustn't win. Its discoveries (RoR Ruins) count in the Ruins resource."""
     _, s, ts = _convert(tmp_path, "ascent_of_egypt", "03_discoveries")
-    assert s.sections["GlobalVictory"].conquest_required == 0
+    gv = s.sections["GlobalVictory"]
+    assert gv.conquest_required == 0 and gv.all_custom_conditions_required == 1   # "All" of nothing checked
     assert {c.attribute for c in ts["P1 Victory"].conditions} == {14}
 
 
 def test_added_players_and_keep_alive_markers(tmp_path):
-    """Egypt 4 adds the Raiders (no AI, enemies), and both they and Egypt 3's Libyans keep a hidden House."""
+    """Egypt 4 adds the Raiders (no AI, enemies), who keep a hidden House: with no units on Standard they'd
+    show as defeated at the start."""
     _, s, ts = _convert(tmp_path, "ascent_of_egypt", "04_the_dawn_of_a_new_age")
     assert s.player_manager.active_players == 2 and s.player_manager.players[2].tribe_name == "Raiders"
     assert s.sections["GlobalVictory"].conquest_required == 0
     marker = [u for u in s.unit_manager.units[2] if u.unit_const == 70]
     assert len(marker) == 1 and ts["RI Keep P2"].effects[0].selected_object_ids == [marker[0].reference_id]
-    _, s3, ts3 = _convert(tmp_path, "ascent_of_egypt", "03_discoveries")
-    assert [u.unit_const for u in s3.unit_manager.units[2]].count(70) == 1 and "RI Keep P2" in ts3
