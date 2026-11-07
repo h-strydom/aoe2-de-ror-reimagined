@@ -98,15 +98,10 @@ def upgrade_line(up: dict) -> str:
     return f"{up['label']}: {up['text']}" if up.get("text") else up["label"]
 
 
-def expand(effects: list[dict], disabled: frozenset[str] = frozenset()) -> list[dict]:
-    """One effect per unit (or tech) when an effect's object_list_unit_id (or technology) lists several; effects
-    marked `unless_disabled: [names]` are left out of missions that disable any of those (mission.yaml's
-    `disabled`)."""
+def expand(effects: list[dict]) -> list[dict]:
+    """One effect per unit (or tech) when an effect's object_list_unit_id (or technology) lists several."""
     out = []
     for e in effects:
-        e = dict(e)
-        if set(e.pop("unless_disabled", None) or []) & disabled:
-            continue
         key = next((k for k in LIST_KEYS if isinstance(e.get(k), list)), None)
         out.extend([{**e, key: v} for v in e[key]] if key else [e])
     return out
@@ -127,11 +122,10 @@ _NO_PLAYER = {"change_variable", "activate_trigger", "deactivate_trigger", "crea
 
 
 def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1,
-             town_center: bool = True, disabled: frozenset[str] | set[str] = frozenset()) -> list[dict]:
+             town_center: bool = True) -> list[dict]:
     """The progression triggers for mission `number` (1-based) of a campaign whose missions are `folders`. The
     human player's victory triggers must activate "RI Primary complete" instead of winning (hand_over).
-    `disabled`: what the mission disables for the human player (mission.yaml names: stable, tool_age...)."""
-    disabled = frozenset(disabled)
+    Upgrades trump the mission's own settings (an upgrade enabling the Stable enables it where a mission doesn't)."""
     out: list[dict] = []
     m = camp.missions.get(folders[number - 1]) or {}
     bonus = m.get("bonus") or []
@@ -151,13 +145,15 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
                 {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1 + len(shown)},
                 *({"type": "activate_trigger", "trigger_id": name} for k, b in enumerate(shown, start=1)
                   for name in [f"RI Bonus {k}", *_fail_names(k, b)]),
-                *_player([e for b in shown for e in expand(b.get("setup") or [], disabled)], player)]})
+                *_player([e for b in shown for e in expand(b.get("setup") or [])], player)]})
 
     def own(conds: list[dict]) -> list[dict]:
         """Conditions about a player are the human's unless they say otherwise."""
         return [{"source_player": player, **c} if c["type"] in _PLAYER_CONDITIONS else c for c in conds]
 
-    # Upgrades earned anywhere in the campaign: load every slot, apply the chosen option.
+    # Upgrades earned anywhere in the campaign: load every slot, apply the chosen option. A slot gives one upgrade
+    # per mission: applying an option switches the other off, so re-picking a slot (replaying its mission) can't
+    # add the second on top of the first; the new pick counts from the next mission (an upgrade can't be undone).
     slots = _slots(camp, folders)
     if slots:
         out.append({"name": "RI Upgrades load", "effects": [
@@ -168,8 +164,9 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
                 extra = camp.upgrades[up].get("triggers") or []
                 out.append({"name": name, "conditions": [
                     {"type": "variable_value", "variable": f"RI {key}", "comparison": "EQUAL", "quantity": opt}],
-                    "effects": _player(expand(camp.upgrades[up].get("effects") or [], disabled), player)
-                    + [{"type": "activate_trigger", "trigger_id": f"{name} {t['name']}"} for t in extra]})
+                    "effects": _player(expand(camp.upgrades[up].get("effects") or []), player)
+                    + [{"type": "activate_trigger", "trigger_id": f"{name} {t['name']}"} for t in extra]
+                    + [{"type": "deactivate_trigger", "trigger_id": f"RI Upgrade {key} {3 - opt}"}]})
                 # An upgrade's own triggers (e.g. watching for when a bonus runs out), named "<upgrade> <name>";
                 # trigger_id "@<name>" points at a sibling.
                 for t in extra:
@@ -177,7 +174,7 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
                                 "conditions": own(t.get("conditions") or []),
                                 "effects": _player([{**e, "trigger_id": f"{name} {e['trigger_id'][1:]}"}
                                                     if str(e.get("trigger_id", "")).startswith("@") else e
-                                                    for e in expand(t.get("effects") or [], disabled)], player)})
+                                                    for e in expand(t.get("effects") or [])], player)})
 
     def reward(slot: str, pair: list[str] | None, decision: int) -> list[dict]:
         """Effects that offer slot's choice, and the triggers behind it. The choice counts as pending in the same

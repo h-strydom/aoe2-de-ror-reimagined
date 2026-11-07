@@ -132,11 +132,10 @@ def test_select_resolves_to_the_placed_objects():
     assert ts[0]["effects"][0] == {"type": "remove_object", "selected_object_ids": [7, 9], "source_player": 0}
 
 
-def test_failable_bonus_and_mission_aware_upgrades():
+def test_failable_bonus_and_upgrade_triggers():
     camp = progression.Campaign(
         upgrades={"stable": {"label": "S", "effects": [
-                      {"type": "enable_disable_object", "object_list_unit_id": 101, "enabled": 1,
-                       "unless_disabled": ["stable"]}]},
+                      {"type": "enable_disable_object", "object_list_unit_id": 101, "enabled": 1}]},
                   "free": {"label": "F", "effects": [{"type": "change_variable", "variable": "v", "quantity": 1}],
                            "triggers": [
                                {"name": "count", "looping": True, "effects": [{"type": "change_variable",
@@ -150,8 +149,6 @@ def test_failable_bonus_and_mission_aware_upgrades():
                 {"type": "accumulate_attribute", "attribute": 227, "quantity": 1}]}]}})
     ts = by_name(progression.triggers(camp, ["01_one"], 1))
     assert ts["RI Upgrade m01_primary 1"]["effects"][0]["type"] == "enable_disable_object"
-    assert by_name(progression.triggers(camp, ["01_one"], 1, disabled={"stable"}))[
-        "RI Upgrade m01_primary 1"]["effects"] == []                            # the mission takes the Stable away
     free = ts["RI Upgrade m01_primary 2"]["effects"]
     assert {e.get("trigger_id") for e in free} >= {"RI Upgrade m01_primary 2 count", "RI Upgrade m01_primary 2 stop"}
     assert ts["RI Upgrade m01_primary 2 count"]["looping"] and not ts["RI Upgrade m01_primary 2 count"]["enabled"]
@@ -165,3 +162,11 @@ def test_failable_bonus_and_mission_aware_upgrades():
     assert {"RI Bonus 1", "RI Bonus 1 fail 1", "RI Bonus 1 fail 2"} <= set(moderate)
     done = [e.get("trigger_id") for e in ts["RI Bonus 1"]["effects"] if e["type"] == "deactivate_trigger"]
     assert done == ["RI Bonus 1 fail 1", "RI Bonus 1 fail 2"]                 # completing it stops the failing
+
+
+def test_a_slot_applies_one_upgrade_per_mission():
+    """Re-picking a slot's other option in its own mission mustn't stack both: each option switches the other off."""
+    ts = by_name(progression.triggers(CAMP, FOLDERS, 1))
+    one, two = ts["RI Upgrade m01_primary 1"]["effects"], ts["RI Upgrade m01_primary 2"]["effects"]
+    assert one[-1] == {"type": "deactivate_trigger", "trigger_id": "RI Upgrade m01_primary 2"}
+    assert two[-1] == {"type": "deactivate_trigger", "trigger_id": "RI Upgrade m01_primary 1"}

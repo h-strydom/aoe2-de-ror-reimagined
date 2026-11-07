@@ -140,9 +140,10 @@ upgrades:
   # Discoveries, Moderate bonus (good)
   early_riders:
     label: "Early Riders"
-    text: "The Stable and Scouts are available from the Stone Age (unless a mission forbids the Stable)."
+    text: "The Stable and Scouts are available from the Stone Age."
     effects:
-      - {type: enable_disable_object, object_list_unit_id: [101, 448], enabled: 1, unless_disabled: [stable]}
+      # Perks trump a mission's own settings: this enables them even where a mission disables the Stable.
+      - {type: enable_disable_object, object_list_unit_id: [101, 448], enabled: 1}
   woodland_bows:
     label: "Woodland Bows"
     text: "Bowmen cost 60 wood and no food."
@@ -230,16 +231,12 @@ missions:
       - text: "Have 4 fishing boats."
         conditions: [{type: own_objects, object_group: 21, quantity: 4}]
         setup:
-          # Hard: no starting resources (the upgrades still add theirs: they run after this), and crocodiles by
-          # both crossings, on open ground (spots next to rocks placed nothing: 2 of 4 appeared in playtest).
+          # Hard: no starting resources (the upgrades still add theirs: they run after this). No crocodiles: the
+          # user dropped them after playtests (they'd be food anyway).
           - {type: modify_resource, tribute_list: 0, operation: SET, quantity: 0}
           - {type: modify_resource, tribute_list: 1, operation: SET, quantity: 0}
           - {type: modify_resource, tribute_list: 2, operation: SET, quantity: 0}
           - {type: modify_resource, tribute_list: 3, operation: SET, quantity: 0}
-          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 18, location_y: 23}
-          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 19, location_y: 34}
-          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 41, location_y: 34}
-          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 39, location_y: 37}
         rewards: [light_footprint, swift_woodcutters]
   03_discoveries:
     rewards: [charted_lands, all_seeing]

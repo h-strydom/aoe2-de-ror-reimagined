@@ -182,7 +182,7 @@ def reimagined_triggers(src: Scenario, conv: Conversion, mission: str, plan_trig
     folders = [m.folder.name for m in camp.missions]
     progression.hand_over(plan_triggers, human.number)
     return progression.triggers(progression.load(slug), folders, folders.index(folder) + 1, player=human.number,
-                                town_center=can_build(src, conv), disabled=set(human.disabled or []))
+                                town_center=can_build(src, conv))
 
 
 @contextlib.contextmanager
