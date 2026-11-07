@@ -6,7 +6,8 @@ player's individual victory conditions (aoede.scenario.VictoryCondition). AoE2/R
   - the victory mode maps one to one (standard, conquest, score, time, custom);
   - each player with individual conditions gets a "P<n> Victory" trigger: all their conditions at
     once -> declare victory for that player. An enemy's conditions (Caesar must die) so become a loss;
-  - the human player's conditions also show as objective lines that tick off when met;
+  - the human player's conditions also show as objective lines, on screen (the game's to-do list) and in the
+    objectives panel, that tick off when met;
   - in custom mode, the global settings (conquest, artifacts, ruins, discoveries, exploration, gold)
     are extra ways to win; with "all custom conditions required" they join the victory trigger instead.
 
@@ -131,14 +132,23 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int], objective_texts:
                 arm = None
             conds.append(cond)
             objective = f"P{p.number} Objective {i + 1}"
+            met = f"{objective} met"
             if arm:
-                arms.append((arm, objective if p.human else None))
+                arms.append((arm, met if p.human else None))
             if p.human:
                 texts = objective_texts.get(p.number, [])
                 text = texts[i] if i < len(texts) else c.type
-                out.triggers.append({"name": objective, "display_as_objective": True, "enabled": arm is None,
-                                     "display_on_screen": False, "description": text, "short_description": text,
-                                     "description_order": i, "conditions": [cond]})
+                # On screen as well as in the objectives panel: the game's to-do list, ticked when met. An armed
+                # condition shows from the start and ticks through a variable its hidden "met" trigger sets.
+                tick = cond
+                if arm:
+                    var = f"p{p.number}_objective_{i + 1}"
+                    tick = {"type": "variable_value", "variable": var, "comparison": "EQUAL", "quantity": 1}
+                    out.triggers.append({"name": met, "enabled": False, "conditions": [cond], "effects": [
+                        {"type": "change_variable", "variable": var, "operation": "SET", "quantity": 1}]})
+                out.triggers.append({"name": objective, "display_as_objective": True, "display_on_screen": True,
+                                     "description": text, "short_description": text, "description_order": i,
+                                     "conditions": [tick]})
         enemies = [q.number for q in active if src.diplomacy[p.number - 1][q.number - 1] == ENEMY]
         conquest = [{"type": "player_defeated", "source_player": q} for q in enemies]
         mine = [dict(g, source_player=p.number) for g in globals_]
