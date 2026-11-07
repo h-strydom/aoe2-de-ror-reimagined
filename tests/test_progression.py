@@ -112,3 +112,14 @@ def test_bonus_setup_runs_on_its_difficulty_and_lists_expand():
     assert moderate == [{"type": "create_object", "source_player": 0, "object_list_unit_id": 1029}]
     hard = [e["object_list_unit_id"] for e in ts["RI Difficulty hard 1"]["effects"] if "object_list_unit_id" in e]
     assert hard == [1029, 1301, 333]                                            # Hard: both setups, one per unit
+
+
+def test_setup_runs_before_the_upgrades_and_is_the_humans():
+    camp = progression.Campaign(upgrades=CAMP.upgrades, missions={"01_one": {"rewards": ["a", "b"], "bonus": [
+        {"text": "Bare.", "conditions": [], "setup": [
+            {"type": "modify_resource", "tribute_list": 0, "operation": "SET", "quantity": 0}]}]}})
+    ts = progression.triggers(camp, ["01_one"], 1, player=2)
+    names = [t["name"] for t in ts]
+    assert names.index("RI Difficulty moderate 2") < names.index("RI Upgrades load")   # perks survive an empty start
+    setup = ts[names.index("RI Difficulty moderate 2")]["effects"][-1]
+    assert setup["type"] == "modify_resource" and setup["source_player"] == 2

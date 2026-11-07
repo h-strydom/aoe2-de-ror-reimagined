@@ -119,18 +119,9 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     m = camp.missions.get(folders[number - 1]) or {}
     bonus = m.get("bonus") or []
 
-    # Upgrades earned anywhere in the campaign: load every slot, apply the chosen option.
-    slots = _slots(camp, folders)
-    if slots:
-        out.append({"name": "RI Upgrades load", "effects": [
-            {"type": "load_key_value", "variable": f"RI {key}", "message": key, "quantity": 0} for key, _ in slots]})
-        for key, pair in slots:
-            for opt, up in enumerate(pair, start=1):
-                out.append({"name": f"RI Upgrade {key} {opt}", "conditions": [
-                    {"type": "variable_value", "variable": f"RI {key}", "comparison": "EQUAL", "quantity": opt}],
-                    "effects": _player(expand(camp.upgrades[up].get("effects") or []), player)})
-
-    # How many objectives this difficulty has (primary + bonuses), and showing its bonus lines.
+    # How many objectives this difficulty has (primary + bonuses), showing its bonus lines, and its setup (for
+    # the human player unless an effect says otherwise). Before the upgrades, so a setup that empties the
+    # stockpile leaves what the upgrades add.
     out.append({"name": "RI Objectives", "effects": [
         {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1}]})
     levels = [("moderate", bonus[:1]), ("hard", bonus[:2])]
@@ -142,7 +133,18 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
                 {"type": "difficulty_level", "quantity": q}], "effects": [
                 {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1 + len(shown)},
                 *({"type": "activate_trigger", "trigger_id": f"RI Bonus {k}"} for k in range(1, len(shown) + 1)),
-                *(e for b in shown for e in expand(b.get("setup") or []))]})
+                *_player([e for b in shown for e in expand(b.get("setup") or [])], player)]})
+
+    # Upgrades earned anywhere in the campaign: load every slot, apply the chosen option.
+    slots = _slots(camp, folders)
+    if slots:
+        out.append({"name": "RI Upgrades load", "effects": [
+            {"type": "load_key_value", "variable": f"RI {key}", "message": key, "quantity": 0} for key, _ in slots]})
+        for key, pair in slots:
+            for opt, up in enumerate(pair, start=1):
+                out.append({"name": f"RI Upgrade {key} {opt}", "conditions": [
+                    {"type": "variable_value", "variable": f"RI {key}", "comparison": "EQUAL", "quantity": opt}],
+                    "effects": _player(expand(camp.upgrades[up].get("effects") or []), player)})
 
     def reward(slot: str, pair: list[str] | None, decision: int) -> list[dict]:
         """Effects that offer slot's choice, and the triggers behind it. The choice counts as pending in the same

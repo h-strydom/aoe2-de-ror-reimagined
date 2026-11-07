@@ -23,9 +23,15 @@
 # Drop-off points are a per-villager list in the data that no trigger can change, so "food can be dropped off at
 # Houses" isn't possible (swapped for faster hunting).
 #
-# Unverified in game: Animal Decay Prevention (resource 292) stopping RoR's carcass decay; whether the extra Town
-# Center population and the extra food on animals and bushes already on the map (modify_object_attribute, map-wide
-# without an area) reach existing objects.
+# Mission 2: Houses are 70/463/464/465 (30 wood); builders 118/212, woodcutters 123/218; every villager unit
+# type (object class 4) costs 1 population, and RoR's own Logistics tech halves infantry by setting each unit's
+# population (attribute 110, negative = takes population) to -0.5. RoR's only fishing upgrade is the Fishing Ship
+# (tech 4, Bronze Age; Fishing Boat 13 -> Fishing Ship 15, both object class 21). Forage bushes are unit 59 (150
+# food); fish 455-458 (250 food). The Foraging map's river runs across rows 21-37 with shallow crossings at x 14-25
+# and 33-41 (terrain 4); the Town Center is at 22,18.
+#
+# Verified in game (2026-11-07): the Hunting upgrades and setups all work, Animal Decay Prevention (resource 292)
+# included. Unverified: villagers at half population, the forced Fishing Ship research in the Stone Age.
 
 upgrades:
   # Hunting, primary (quality of life)
@@ -66,6 +72,51 @@ upgrades:
     effects: [{type: modify_attribute, object_list_unit_id: [122, 216], object_attributes: 13,
                operation: MULTIPLY, quantity: 2}]
 
+  # Foraging, primary (quality of life)
+  cheap_housing:
+    label: "Cheap Housing"
+    text: "Houses cost 10 wood."
+    effects: [{type: modify_attribute, object_list_unit_id: [70, 463, 464, 465], object_attributes: 104,
+               operation: SET, quantity: 10}]
+  quick_builders:
+    label: "Quick Builders"
+    text: "Villagers build 20% faster."
+    effects: [{type: modify_attribute, object_list_unit_id: [118, 212], object_attributes: 13,
+               operation: MULTIPLY, quantity: 1.2}]
+  # Foraging, Moderate bonus (good)
+  master_fishers:
+    label: "Master Fishers"
+    text: "Start every mission with the Fishing Ship upgrade: Fishing Boats become Fishing Ships."
+    effects: [{type: research_technology, technology: 4, force_research_technology: 1}]
+  timber_discount:
+    label: "Timber Discount"
+    text: "Buildings other than Houses cost 50 less wood."
+    effects: [{type: modify_attribute, object_attributes: 104, operation: ADD, quantity: -50, object_list_unit_id: [
+      12, 498, 132, 20,         # Barracks
+      87, 10, 14,               # Archery Range
+      103, 105, 18, 19,         # Academy
+      104, 30, 31, 32,          # Temple
+      45, 133, 47, 51,          # Dock
+      49, 150,                  # Siege Workshop
+      68, 129, 130, 131,        # Granary
+      562, 563, 564, 565,       # Storage Pit
+      84, 116, 137,             # Market
+      101, 86, 153,             # Stable
+      109, 71, 141, 142,        # Town Center
+      209, 210]}]               # Government Center
+  # Foraging, Hard bonus (great)
+  light_footprint:
+    label: "Light Footprint"
+    text: "Villagers take half a population space."
+    effects: [{type: modify_attribute, object_attributes: 110, operation: SET, quantity: -0.5, object_list_unit_id: [
+      83, 293, 56, 57, 118, 120, 122, 123, 124, 156, 206, 212, 214, 216, 218, 220, 222, 259, 354, 579, 581, 590,
+      592, 1891, 1892, 2333, 2334]}]
+  swift_woodcutters:
+    label: "Swift Woodcutters"
+    text: "Woodcutters gather wood twice as fast."
+    effects: [{type: modify_attribute, object_list_unit_id: [123, 218], object_attributes: 13,
+               operation: MULTIPLY, quantity: 2}]
+
 missions:
   01_hunting:
     rewards: [preserved_meat, town_hearth]
@@ -93,3 +144,35 @@ missions:
           - {type: modify_attribute, source_player: 0, object_list_unit_id: 1301, object_attributes: 8,
              operation: ADD, armour_attack_class: 3, armour_attack_quantity: 2}
         rewards: [hardened_hunters, swift_hunters]
+  02_foraging:
+    rewards: [cheap_housing, quick_builders]
+    bonus:
+      - text: "Stockpile 500 wood."
+        conditions: [{type: accumulate_attribute, attribute: 1, quantity: 500}]
+        setup:
+          # Moderate and Hard: no forage; fish in the river instead, either side of the crossings.
+          - {type: remove_object, source_player: 0, object_list_unit_id: 59, area_x1: 0, area_y1: 0, area_x2: 47,
+             area_y2: 47}
+          - {type: create_object, source_player: 0, object_list_unit_id: 455, location_x: 6, location_y: 29}
+          - {type: create_object, source_player: 0, object_list_unit_id: 456, location_x: 11, location_y: 29}
+          - {type: create_object, source_player: 0, object_list_unit_id: 457, location_x: 2, location_y: 32}
+          - {type: create_object, source_player: 0, object_list_unit_id: 458, location_x: 29, location_y: 23}
+          - {type: create_object, source_player: 0, object_list_unit_id: 455, location_x: 29, location_y: 29}
+          - {type: create_object, source_player: 0, object_list_unit_id: 456, location_x: 34, location_y: 30}
+          - {type: create_object, source_player: 0, object_list_unit_id: 457, location_x: 44, location_y: 29}
+          - {type: create_object, source_player: 0, object_list_unit_id: 458, location_x: 43, location_y: 31}
+        rewards: [master_fishers, timber_discount]
+      - text: "Have 4 fishing boats."
+        conditions: [{type: own_objects, object_group: 21, quantity: 4}]
+        setup:
+          # Hard: no starting resources (the upgrades still add theirs: they run after this), and crocodiles on
+          # both crossings.
+          - {type: modify_resource, tribute_list: 0, operation: SET, quantity: 0}
+          - {type: modify_resource, tribute_list: 1, operation: SET, quantity: 0}
+          - {type: modify_resource, tribute_list: 2, operation: SET, quantity: 0}
+          - {type: modify_resource, tribute_list: 3, operation: SET, quantity: 0}
+          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 19, location_y: 28}
+          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 22, location_y: 31}
+          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 37, location_y: 28}
+          - {type: create_object, source_player: 0, object_list_unit_id: 1031, location_x: 38, location_y: 33}
+        rewards: [light_footprint, swift_woodcutters]
