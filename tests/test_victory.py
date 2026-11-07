@@ -34,7 +34,7 @@ def test_religion_objectives_and_custom_victory(tmp_path):
     res, s, triggers = _convert(tmp_path, "ascent_of_egypt", "08_religion")
     assert res.victory == "CUSTOM" and not res.skipped
     assert triggers["P1 Objective 1"].display_as_objective and triggers["P1 Objective 1"].display_on_screen
-    assert triggers["P1 Objective 1"].short_description == "Bring the Libyan Raiders' Stone Thrower to the marked area."
+    assert triggers["P1 Objective 1"].short_description == "+ Bring the Libyan Raiders' Stone Thrower to the marked area."
     win = triggers["P1 Victory"]
     assert [c.condition_type for c in win.conditions] == [1, 7]       # bring object to area, capture object
     assert win.effects[0].source_player == 1
@@ -74,3 +74,18 @@ def test_destroying_a_wonder_that_is_built_later(tmp_path):
     assert (cond.condition_type, cond.quantity, cond.object_list, cond.source_player) == (4, 0, 276, 2)
     [cond] = win.conditions
     assert (cond.condition_type, cond.quantity, cond.object_list, cond.source_player) == (4, 0, 276, 2)   # then none
+
+
+def test_objectives_have_checkboxes_and_counters(tmp_path):
+    _, _, triggers = _convert(tmp_path, "ascent_of_egypt", "01_hunting")
+    line = triggers["P1 Objective 1"]
+    assert line.short_description == "+ Grow your population to 7 (<P1 Objective 1>/7)."   # "+ " draws the box
+    [count] = triggers["P1 Objective 1 count"].effects                     # population into the line's variable
+    assert triggers["P1 Objective 1 count"].looping and count.effect_type == 86 and count.tribute_list == 11
+    _, _, triggers = _convert(tmp_path, "the_rise_of_rome", "01_the_birth_of_rome")
+    assert triggers["P1 Objective 1"].short_description.endswith("(<P1 Objective 1>/12).")
+    assert sum(1 for n in triggers if n.startswith("P1 Objective 1 count ")) == 12        # one per tower site
+    _, _, triggers = _convert(tmp_path, "glory_of_greece", "01_claiming_territory")
+    first, second = triggers["P1 Objective 1"], triggers["P1 Objective 2"]
+    assert first.description_order > second.description_order               # higher shows higher: first on top
+    assert second.short_description == "+ Build 5 Farms (<P1 Objective 2>/5)."

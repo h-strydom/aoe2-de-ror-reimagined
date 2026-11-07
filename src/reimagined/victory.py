@@ -103,6 +103,39 @@ def _condition(c: VictoryCondition, owner: int, src: Scenario, conv: Conversion,
     return None, f"no RoR condition for '{t}'"
 
 
+MAX_COUNTED = 30          # "Build 5 Farms" counts with a trigger per step; larger counts show no counter
+
+
+def _counter(name: str, conds: list[dict], player: int, armed: bool) -> tuple[int, list[dict]] | None:
+    """(target, triggers) for an objective line's progress counter, which the line shows as "(<name>/target)":
+    looping triggers keep the variable `name` current. The game's own campaigns count this way ("+ <Variable 1>/4
+    Chinese factions defeated."). Several conditions count how many are met; a resource goal (population, food,
+    discoveries...) is the player's amount; "own" or "in area" goals count objects up to the target."""
+    if armed or not conds:
+        return None
+    loop = {"looping": True}
+    if len(conds) > 1:
+        return len(conds), [
+            {"name": f"{name} count", **loop, "effects": [
+                {"type": "change_variable", "variable": name, "operation": "SET", "quantity": 0}]},
+            *({"name": f"{name} count {k + 1}", **loop, "conditions": [c], "effects": [
+                {"type": "change_variable", "variable": name, "operation": "ADD", "quantity": 1}]}
+              for k, c in enumerate(conds))]
+    [c] = conds
+    if c["type"] == "accumulate_attribute" and c["attribute"] != CURRENT_AGE:
+        return c["quantity"], [{"name": f"{name} count", **loop, "effects": [
+            {"type": "modify_variable_by_resource", "tribute_list": c["attribute"], "source_player": player,
+             "operation": "SET", "variable": name}]}]
+    if c["type"] in ("own_objects", "objects_in_area") and 1 < c["quantity"] <= MAX_COUNTED:
+        steps = [{"name": f"{name} count", **loop, "effects": [
+            {"type": "change_variable", "variable": name, "operation": "SET", "quantity": 0}]}]
+        for k in range(1, c["quantity"] + 1):
+            steps.append({"name": f"{name} count {k}", **loop, "conditions": [dict(c, quantity=k)], "effects": [
+                {"type": "change_variable", "variable": name, "operation": "SET", "quantity": k}]})
+        return c["quantity"], steps
+    return None
+
+
 def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
          objective_texts: dict[int, list[tuple[str, list[int]]]]) -> VictoryPlan:
     """Options and triggers for a converted scenario. refs: AoE DE unit id -> RoR unit reference id.
@@ -122,7 +155,7 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
         return [{"type": "declare_victory", "source_player": p, "enabled": True}]
 
     for p in active:
-        conds, arms, ticks = [], [], {}
+        conds, arms, ticks, armed_ix = [], [], {}, set()
         for i, c in enumerate(p.victory):
             cond, problem = _condition(c, p.number, src, conv, refs, start_counts)
             if problem:
@@ -136,6 +169,7 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
             met = f"P{p.number} Objective {i + 1} met"
             if arm:
                 arms.append((arm, met if p.human else None))
+                armed_ix.add(i)
             if p.human:
                 # An armed condition shows from the start and ticks through a variable its hidden "met" trigger sets.
                 ticks[i] = cond
@@ -147,10 +181,21 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
         # On screen as well as in the objectives panel: the game's to-do list, a line ticked when its conditions
         # are all met (objectives.lines: conditions that read the same share one).
         groups = objective_texts.get(p.number) or [(c.type, [i]) for i, c in enumerate(p.victory)]
-        for order, (text, indexes) in enumerate(g for g in groups if any(i in ticks for i in g[1])):
-            out.triggers.append({"name": f"P{p.number} Objective {order + 1}", "display_as_objective": True,
-                                 "display_on_screen": True, "description": text, "short_description": text,
-                                 "description_order": order, "conditions": [ticks[i] for i in indexes if i in ticks]})
+        shown = [g for g in groups if any(i in ticks for i in g[1])]
+        for order, (text, indexes) in enumerate(shown):
+            name = f"P{p.number} Objective {order + 1}"
+            tick = [ticks[i] for i in indexes if i in ticks]
+            counter = _counter(name, tick, p.number, armed=any(i in armed_ix for i in indexes))
+            short = text
+            if counter:
+                total, triggers = counter
+                out.triggers += triggers
+                short = f"{text.removesuffix('.')} (<{name}>/{total})."
+            # "+ " is how the game's own objectives start; on screen it draws as the checkbox. Higher display order
+            # shows higher, so the first line gets the highest.
+            out.triggers.append({"name": name, "display_as_objective": True, "display_on_screen": True,
+                                 "description": f"+ {text}", "short_description": f"+ {short}",
+                                 "description_order": len(shown) - order, "conditions": tick})
         enemies = [q.number for q in active if src.diplomacy[p.number - 1][q.number - 1] == ENEMY]
         conquest = [{"type": "player_defeated", "source_player": q} for q in enemies]
         mine = [dict(g, source_player=p.number) for g in globals_]
