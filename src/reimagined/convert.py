@@ -181,8 +181,7 @@ def reimagined_triggers(src: Scenario, conv: Conversion, mission: str, plan_trig
         return []
     folders = [m.folder.name for m in camp.missions]
     progression.hand_over(plan_triggers, human.number)
-    return progression.triggers(progression.load(slug), folders, folders.index(folder) + 1, player=human.number,
-                                town_center=can_build(src, conv))
+    return progression.triggers(progression.load(slug), folders, folders.index(folder) + 1, player=human.number)
 
 
 def mission_content(mission: str) -> tuple[progression.Campaign, str]:

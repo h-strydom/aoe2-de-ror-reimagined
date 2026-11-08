@@ -4,11 +4,10 @@ permanent upgrades chosen on completing objectives, kept in the campaign bank.
 Difficulty (the game's, as the campaign offers it): Standard has the primary objective only; Moderate adds the
 first bonus objective; Hard (and Hardest/Extreme) add the second too. The bonus lines show as optional ("- ").
 
-Completing the primary objective doesn't end the mission: a popup says so and an "End Mission" tech appears at the
-Town Center, which ends the mission in victory the moment its research starts. Missions where the player can't
-build (no villager or Town Center at the start) offer a popup instead, again five minutes after each "keep
-playing". Losing still works as before. Once every objective on the difficulty is done, the mission ends by itself
-after any pending upgrade choice.
+Completing the primary objective doesn't end the mission: a decision popup offers to end it ("Claim victory" or
+"Keep playing", offered again five minutes after each "Keep playing"); decisions stack in the game's panel, beside
+any upgrade choice. Losing still works as before. Once every objective on the difficulty is done, the mission ends
+by itself after any pending upgrade choice.
 
 A bonus objective may change the mission when its difficulty shows it (`setup` effects: more predators, a
 tougher quarry...); Hard runs both bonus objectives' setups.
@@ -20,12 +19,6 @@ never stack (the game asks on a replay whether to keep the new choices).
 
 The content (bonus objectives, upgrades, which objective offers which) lives in aoe2de_ror/reimagined/<campaign>.yaml.
 
-End Mission uses RoR tech 153 "Dupl. Stone Age": no effect, no building, and its only prerequisite is the Stone
-Age, so the game researches it by itself at the start. Re-enabled with stacking (researchable again), moved to the
-Town Center (109; RoR's own age techs live there and show in every age) and renamed. Its *research starting* ends
-the mission (condition researching_tech), as "researched" is true from the start. Every tech a civ can't otherwise
-research needs the Tool Age or later, which rules those out for the early missions (RoR tech trees, 2026-11-07).
-Unverified in game.
 """
 from __future__ import annotations
 
@@ -38,7 +31,6 @@ import yaml
 from . import layout
 
 DATA = layout.AOE2DE_ROR / "reimagined"
-END_TECH, END_LOCATION, END_BUTTON, END_SECONDS = 153, 109, 10, 5
 # The Difficulty Level condition is true at its level *or easier* (values: Easiest 4, Standard 3, Moderate 2, Hard 1,
 # Hardest 0, Extreme -1). One trigger per level 1, 0 and -1 all fired on Hard: the Libyans' Leather Armor was
 # applied three times (6 melee armour on Axemen; Ascent of Egypt 3 playtest, 2026-11-08). So Moderate is "Moderate
@@ -51,9 +43,7 @@ DIFFICULTY = {"moderate": [{"type": "difficulty_level", "quantity": 2},
               "hard": [{"type": "difficulty_level", "quantity": 2, "inverted": True}]}
 SLOTS = ("primary", "bonus1", "bonus2")
 REOFFER_SECONDS = 300
-PRIMARY_TEXT = ("Primary objective complete! Research End Mission at your Town Center to claim victory whenever you "
-                "like, or keep playing for the bonus objectives.")
-PRIMARY_TEXT_NO_TC = "Primary objective complete! You can end the mission now, or keep playing for the bonus objectives."
+PRIMARY_TEXT = "Primary objective complete! You can end the mission now, or keep playing for the bonus objectives."
 CHOOSE = "Choose a permanent upgrade for this campaign (what each does is on the Scouts page):"
 OBJECTIVE_ORDER_OFFSET = 10      # primary lines above the bonus lines (higher display order shows higher)
 BONUS_ORDER = 3                  # bonus lines (orders 4, 3)
@@ -142,8 +132,7 @@ _NO_PLAYER = {"change_variable", "activate_trigger", "deactivate_trigger", "crea
               "clear_instructions", "change_color_mood", "script_call", "ai_script_goal"}
 
 
-def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1,
-             town_center: bool = True) -> list[dict]:
+def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1) -> list[dict]:
     """The progression triggers for mission `number` (1-based) of a campaign whose missions are `folders`. The
     human player's victory triggers must activate "RI Primary complete" instead of winning (hand_over).
     Upgrades trump the mission's own settings (an upgrade enabling the Stable enables it where a mission doesn't)."""
@@ -186,7 +175,7 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
         {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1},
         *_player(tree_effects(camp, folders, number), player),
         *_player(expand(m.get("setup") or []), player)]})
-    # The main objective's extra line from a difficulty up (`primary_extra`): End Mission waits for it too.
+    # The main objective's extra line from a difficulty up (`primary_extra`): ending waits for it too.
     extra = m.get("primary_extra")
     if extra:
         out.append({"name": "RI Primary extra", "enabled": False, "display_as_objective": True,
@@ -275,45 +264,30 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
                 {"type": "change_variable", "variable": "RI objectives", "operation": "SUBTRACT", "quantity": 1},
                 {"type": "display_instructions", "display_time": 10, "message": f"Bonus objective failed: {text}"}]})
 
-    # The primary objective: what used to win the mission now unlocks ending it.
-    unlock: list[dict] = []
-    if town_center:
-        unlock = [
-            {"type": "enable_disable_technology", "technology": END_TECH, "enabled": 1},
-            {"type": "enable_technology_stacking", "technology": END_TECH},
-            {"type": "change_technology_location", "technology": END_TECH, "object_list_unit_id_2": END_LOCATION,
-             "button_location": END_BUTTON},
-            {"type": "change_technology_name", "technology": END_TECH, "message": "End Mission"},
-            {"type": "change_technology_description", "technology": END_TECH,
-             "message": "Claim victory and end the mission."},
-            {"type": "change_technology_research_time", "technology": END_TECH, "quantity": END_SECONDS},
-            {"type": "activate_trigger", "trigger_id": "RI End Mission"}]
-        out.append({"name": "RI End Mission", "enabled": False, "conditions": [
-            {"type": "researching_tech", "technology": END_TECH}], "effects": [
-            {"type": "declare_victory", "enabled": True}]})
-    else:
-        out.append({"name": "RI End offer", "enabled": False, "effects": [
-            {"type": "create_decision", "decision_id": 20, "message": "End the mission now?",
-             "message_option1": "Claim victory", "message_option2": "Keep playing"}]})
-        out.append({"name": "RI End offer claim", "conditions": [
-            {"type": "decision_triggered", "decision_id": 20, "decision_option": 1}],
-            "effects": [{"type": "declare_victory", "enabled": True}]})
-        out.append({"name": "RI End offer later", "looping": True, "conditions": [
-            {"type": "decision_triggered", "decision_id": 20, "decision_option": 2}],
-            "effects": [{"type": "activate_trigger", "trigger_id": "RI End offer again"}]})
-        out.append({"name": "RI End offer again", "enabled": False, "looping": False, "conditions": [
-            {"type": "timer", "timer": REOFFER_SECONDS}], "effects": [
-            {"type": "activate_trigger", "trigger_id": "RI End offer"}]})
-        unlock = [{"type": "activate_trigger", "trigger_id": "RI End offer"}]
+    # The primary objective: what used to win the mission now offers ending it, a decision popup ("Claim victory"
+    # or "Keep playing", offered again a while after each "Keep playing"). Decisions stack in the game's panel, so
+    # it sits beside any upgrade choice (the user, 2026-11-08; it replaced an "End Mission" tech at the Town
+    # Center).
+    out.append({"name": "RI End offer", "enabled": False, "effects": [
+        {"type": "create_decision", "decision_id": 20, "message": "End the mission now?",
+         "message_option1": "Claim victory", "message_option2": "Keep playing"}]})
+    out.append({"name": "RI End offer claim", "conditions": [
+        {"type": "decision_triggered", "decision_id": 20, "decision_option": 1}],
+        "effects": [{"type": "declare_victory", "enabled": True}]})
+    out.append({"name": "RI End offer later", "looping": True, "conditions": [
+        {"type": "decision_triggered", "decision_id": 20, "decision_option": 2}],
+        "effects": [{"type": "activate_trigger", "trigger_id": "RI End offer again"}]})
+    out.append({"name": "RI End offer again", "enabled": False, "looping": False, "conditions": [
+        {"type": "timer", "timer": REOFFER_SECONDS}], "effects": [
+        {"type": "activate_trigger", "trigger_id": "RI End offer"}]})
     # Several triggers may win (the objectives, conquest...): the first one counts.
     out.append({"name": "RI Primary complete", "enabled": False, "conditions": [
         {"type": "variable_value", "variable": "RI primary", "comparison": "EQUAL", "quantity": 0},
         {"type": "variable_value", "variable": "RI primary gate", "comparison": "EQUAL", "quantity": 0}], "effects": [
         {"type": "change_variable", "variable": "RI primary", "operation": "SET", "quantity": 1},
         {"type": "change_variable", "variable": "RI done", "operation": "ADD", "quantity": 1},
-        {"type": "display_instructions", "display_time": 15,
-         "message": PRIMARY_TEXT if town_center else PRIMARY_TEXT_NO_TC},
-        *unlock, *reward("primary", m.get("rewards"), 1),
+        {"type": "display_instructions", "display_time": 15, "message": PRIMARY_TEXT},
+        {"type": "activate_trigger", "trigger_id": "RI End offer"}, *reward("primary", m.get("rewards"), 1),
         {"type": "activate_trigger", "trigger_id": "RI All done"}]})
 
     # Everything on this difficulty done, no choice pending: the mission ends.
@@ -354,6 +328,7 @@ def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]
                    unit_hp: dict[int, int] | None = None) -> None:
     """Resolve setup effects' `select: {player, unit}` (unit: an id or a list) into selected_object_ids: the objects
     of those units the map places for that player. `placed` is player -> [(unit id, reference id)].
+    `target: {player, unit}` aims an effect (attack_move...) at those placed units: one copy per unit.
     `select: {group: name}` is a group of the mission's own units (`groups`: name -> (player, reference ids); each
     unit's `group`, and "from <level>" for its difficulty). A condition selecting a group holds for any of its units
     (one per unit, joined by OR); its `quantity: full` is each unit's full hit points (`unit_hp`, from the mission
@@ -378,6 +353,19 @@ def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]
                 conds += ([{"type": "or"}] if i else []) + [one]
         if "conditions" in t:
             t["conditions"] = conds
+        if "effects" in t:
+            aimed = []
+            for e in t["effects"]:
+                target = e.pop("target", None)
+                if target is None:
+                    aimed.append(e)
+                    continue
+                # Aimed at units the map places for a player, one effect per unit in order: an order at a dead unit
+                # does nothing, so the last one still alive is the target.
+                units = target["unit"] if isinstance(target["unit"], list) else [target["unit"]]
+                aimed += [{**e, "location_object_reference": ref}
+                          for unit, ref in placed.get(target["player"], []) if unit in units]
+            t["effects"] = aimed
         for e in t.get("effects") or []:
             sel = e.pop("select", None)
             if sel is None:

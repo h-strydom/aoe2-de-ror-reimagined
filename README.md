@@ -147,8 +147,8 @@ Beside each zip, for the mod page form: `[RoR-RI] <campaign>.png`, the campaign 
 On top of the faithful maps (`src/reimagined/progression.py`, content in `aoe2de_ror/reimagined/<campaign>.yaml`):
 - **Difficulty:** Standard has the mission's primary objective; Moderate adds a bonus objective; Hard is brutal and
   adds a second. Bonus objectives show as optional lines.
-- **No ending on the primary objective:** completing it unlocks an "End Mission" tech at the Town Center (a popup
-  in missions without one); research it to claim victory whenever you like. You can still lose while chasing the
+- **No ending on the primary objective:** completing it brings up a "Claim victory / Keep playing" choice (again five
+  minutes after each "Keep playing"), so you can end the mission whenever you like. You can still lose while chasing the
   bonus objectives. Once everything on the difficulty is done, the mission ends by itself.
 - **Upgrades:** each objective can offer a choice of two permanent upgrades. Picks are kept in the campaign bank and
   apply in every mission of the campaign; replaying a mission lets you re-pick an objective's upgrade, never stack it.

@@ -618,22 +618,11 @@ missions:
         rewards: [resource_mastery, nile_arsenal]
   05_skirmish:
     # Mission 5: your 4 Axemen and 3 Bowmen around 20,23 against the Egyptian Raiders' 3 Axemen and 3 Bowmen in the
-    # south-east (46,46 to 65,61). No Town Center: the mission ends through the "End the mission now?" popup. Water
-    # fills the north-east corner (x 46+, y 0-28); the beach nearest your army is around 47,20.
-    players:
-      # Hard's landing party: allied to the Raiders but their own player, so you can win before it arrives. Its
-      # ship waits hidden in the water corner from the start (a player with nothing on the map at the start is
-      # defeated at once).
-      - {number: 3, name: "Raider Landing Party", civ: EGYPTIAN, allies: [2]}
+    # south-east (46,46 to 65,61). No Town Center. Water fills the north-east corner (x 46+, y 0-28); the beach
+    # nearest your army is around 47,20.
     units:
-      - {player: 3, unit: 545, x: 69, y: 2, group: ship}
       # Moderate and Hard: the Raiders' chieftain, a Short Swordsman (60 hit points).
       - {player: 2, unit: 74, x: 58, y: 51, from: moderate, group: chieftain}
-    setup:
-      # The landing ship stays out of sight and out of reach until Hard sends it.
-      - {type: change_object_visibility, select: {group: ship}, target_player: 1, visibility_state: INVISIBLE}
-      - {type: disable_unit_attackable, select: {group: ship}}
-      - {type: disable_object_selection, select: {group: ship}}
     rewards: [keen_eyes, field_dressing]
     bonus:
       - text: "Slay the Raider chieftain."
@@ -647,51 +636,51 @@ missions:
         fail:
           - {type: accumulate_attribute, attribute: 154, quantity: 3}
         triggers:
-          # Hard: 5 minutes in, the landing party's ship sails from the corner to the beach near 47,20, drops 2
-          # Slingers and an Axeman, sails back and goes. They attack-move toward your army's ground (the order
-          # again every 10 seconds; they see your units). If they land before you've won, defeating them joins the
-          # main objective.
-          - name: launch
-            conditions: [{type: timer, timer: 300}]
+          # Hard: a countdown, then at 5 minutes a Raider ship (theirs, red) appears in the north-east water corner,
+          # sails to the beach near 47,20, drops 2 Slingers and an Axeman and sails back out of sight. Only if the
+          # Raiders aren't defeated yet: they're the main objective's enemy, so you can win before it comes. The
+          # Raiders see the whole map; the landing party attack-moves at your soldiers (aimed at each of your
+          # starting Axemen and Bowmen in turn: the last one alive is the target), the Slingers again every 10
+          # seconds (before, aimed at a spot, they went there and stopped; the user, 2026-11-08).
+          - name: countdown
             effects:
-              - {type: change_object_visibility, select: {group: ship}, target_player: 1, visibility_state: VISIBLE}
-              - {type: enable_unit_attackable, select: {group: ship}}
-              - {type: task_object, select: {group: ship}, location_x: 49, location_y: 20}
-              - {type: display_instructions, display_time: 8, message: "A Raider ship is sailing in from the north-east!"}
+              - {type: display_timer, timer: 0, display_time: 300, message: "A Raider ship lands in %d"}
+              - {type: display_instructions, display_time: 10, message: "Raiders are sailing in from the north-east: they land in 5 minutes."}
+              - {type: modify_resource, source_player: 2, tribute_list: 203, operation: SET, quantity: 2}
+              - {type: activate_trigger, trigger_id: "@launch"}
+          - name: launch
+            conditions:
+              - {type: timer, timer: 300}
+              - {type: variable_value, variable: "RI primary", comparison: EQUAL, quantity: 0}
+            effects:
+              - {type: create_object, source_player: 2, object_list_unit_id: 545, location_x: 69, location_y: 2}
+              - {type: task_object, source_player: 2, object_list_unit_id: 545, area_x1: 64, area_y1: 0, area_x2: 71,
+                 area_y2: 7, location_x: 49, location_y: 20}
+              - {type: display_instructions, display_time: 8, message: "The Raider ship is coming ashore!"}
               - {type: activate_trigger, trigger_id: "@land"}
           - name: land
-            conditions: [{type: objects_in_area, source_player: 3, object_list: 545, area_x1: 47, area_y1: 17,
+            conditions: [{type: objects_in_area, source_player: 2, object_list: 545, area_x1: 47, area_y1: 17,
                           area_x2: 52, area_y2: 23, quantity: 1}]
             effects:
-              - {type: create_object, source_player: 3, object_list_unit_id: 7, location_x: 47, location_y: 19}
-              - {type: create_object, source_player: 3, object_list_unit_id: 7, location_x: 47, location_y: 21}
-              - {type: create_object, source_player: 3, object_list_unit_id: 531, location_x: 47, location_y: 20}
-              - {type: set_player_visibility, source_player: 3, target_player: 1, visibility_state: VISIBLE}
-              - {type: attack_move, source_player: 3, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
-                 object_group: 44, location_x: 21, location_y: 23}
-              - {type: attack_move, source_player: 3, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
-                 object_group: 6, location_x: 21, location_y: 23}
-              - {type: task_object, select: {group: ship}, location_x: 69, location_y: 2}
-              - {type: change_variable, variable: "RI primary gate", operation: SET, quantity: 1}
-              - {type: activate_trigger, trigger_id: "@landed"}
+              - {type: create_object, source_player: 2, object_list_unit_id: 7, location_x: 47, location_y: 19}
+              - {type: create_object, source_player: 2, object_list_unit_id: 7, location_x: 47, location_y: 21}
+              - {type: create_object, source_player: 2, object_list_unit_id: 531, location_x: 47, location_y: 20}
+              - {type: attack_move, source_player: 2, area_x1: 44, area_y1: 16, area_x2: 50, area_y2: 24,
+                 target: {player: 1, unit: [531, 4]}}
+              - {type: task_object, source_player: 2, object_list_unit_id: 545, area_x1: 46, area_y1: 15, area_x2: 53,
+                 area_y2: 25, location_x: 69, location_y: 2}
               - {type: activate_trigger, trigger_id: "@push"}
               - {type: activate_trigger, trigger_id: "@sail away"}
-          - name: landed
-            objective: "Defeat the landing party."
-            conditions:
-              - {type: own_fewer_objects, source_player: 3, object_group: 44, quantity: 0}
-              - {type: own_fewer_objects, source_player: 3, object_group: 6, quantity: 0}
-            effects: [{type: change_variable, variable: "RI primary gate", operation: SET, quantity: 0}]
           - name: push
             conditions: [{type: timer, timer: 10}]
             effects:
-              - {type: attack_move, source_player: 3, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
-                 object_group: 44, location_x: 21, location_y: 23}
-              - {type: attack_move, source_player: 3, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
-                 object_group: 6, location_x: 21, location_y: 23}
+              - {type: attack_move, source_player: 2, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
+                 object_group: 44, target: {player: 1, unit: [531, 4]}}
               - {type: activate_trigger, trigger_id: "@push"}
           - name: sail away
-            conditions: [{type: objects_in_area, source_player: 3, object_list: 545, area_x1: 66, area_y1: 0,
-                          area_x2: 71, area_y2: 5, quantity: 1}]
-            effects: [{type: remove_object, select: {group: ship}}]
+            conditions: [{type: objects_in_area, source_player: 2, object_list: 545, area_x1: 64, area_y1: 0,
+                          area_x2: 71, area_y2: 7, quantity: 1}]
+            effects:
+              - {type: remove_object, source_player: 2, object_list_unit_id: 545, area_x1: 64, area_y1: 0,
+                 area_x2: 71, area_y2: 7}
         rewards: [battle_drill, shield_wall]

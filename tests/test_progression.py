@@ -81,7 +81,7 @@ def test_buttons_are_short_and_the_scouts_page_explains():
     assert "RI Reward bonus2" not in ts                                         # bonus 2 offers no reward
 
 
-def test_winning_unlocks_ending_and_all_done_ends():
+def test_winning_offers_ending_and_all_done_ends():
     plan = [{"name": "P1 Victory", "effects": [{"type": "declare_victory", "source_player": 1, "enabled": True}]},
             {"name": "P2 Victory", "effects": [{"type": "declare_victory", "source_player": 2, "enabled": True}]},
             {"name": "P1 Objective 1", "display_on_screen": True, "description_order": 1}]
@@ -90,12 +90,12 @@ def test_winning_unlocks_ending_and_all_done_ends():
     assert plan[1]["effects"][0]["type"] == "declare_victory"                  # losing still loses
     assert plan[2]["description_order"] == 1 + progression.OBJECTIVE_ORDER_OFFSET
     ts = by_name(progression.triggers(CAMP, FOLDERS, 1))
-    primary = [e["type"] for e in ts["RI Primary complete"]["effects"]]
-    assert "change_technology_location" in primary and "enable_technology_stacking" in primary
-    assert ts["RI End Mission"]["conditions"][0]["type"] == "researching_tech"
+    # Ending is always the decision popup (decisions stack; no End Mission tech any more).
+    assert {"type": "activate_trigger", "trigger_id": "RI End offer"} in ts["RI Primary complete"]["effects"]
+    offer = ts["RI End offer"]["effects"][0]
+    assert offer["type"] == "create_decision" and offer["message_option1"] == "Claim victory"
+    assert not any("technology" in e for e in ts["RI Primary complete"]["effects"])
     assert [c["type"] for c in ts["RI All done"]["conditions"]] == ["compare_variables", "variable_value"]
-    no_tc = by_name(progression.triggers(CAMP, FOLDERS, 1, town_center=False))
-    assert "RI End Mission" not in no_tc and no_tc["RI End offer"]["effects"][0]["type"] == "create_decision"
 
 
 def test_content_errors_are_reported(tmp_path):
@@ -258,3 +258,10 @@ def test_group_conditions_keep_the_attacker_and_use_each_units_full_health():
 def test_lists_of_classes_expand():
     effects = progression.expand([{"type": "modify_attribute_for_class", "object_group2": [6, 0], "quantity": 1}])
     assert [e["object_group2"] for e in effects] == [6, 0]
+
+
+def test_target_aims_an_effect_at_each_placed_unit():
+    ts = [{"name": "t", "effects": [{"type": "attack_move", "source_player": 2,
+                                     "target": {"player": 1, "unit": [531, 4]}}]}]
+    progression.select_objects(ts, {1: [(531, 10), (4, 11), (83, 12)]})
+    assert [e["location_object_reference"] for e in ts[0]["effects"]] == [10, 11]   # not the villager
