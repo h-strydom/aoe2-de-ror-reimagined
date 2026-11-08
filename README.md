@@ -152,6 +152,11 @@ On top of the faithful maps (`src/reimagined/progression.py`, content in `aoe2de
   bonus objectives. Once everything on the difficulty is done, the mission ends by itself.
 - **Upgrades:** each objective can offer a choice of two permanent upgrades. Picks are kept in the campaign bank and
   apply in every mission of the campaign; replaying a mission lets you re-pick an objective's upgrade, never stack it.
+  The upgrade popup shows short names; what each does is on the mission's Scouts page.
+- **A campaign tech tree:** a campaign can start with everything off and unlock buildings, units and techs mission
+  by mission (`unlocks:`); perks bring extras or bring things early. The names come from
+  `aoe2de_ror/reimagined/ror_tech_tree.yaml`, generated from your Return of Rome install:
+  `uv run --with genieutils-py python scripts/gen_tech_tree.py`.
 
 ## Changing a campaign map
 

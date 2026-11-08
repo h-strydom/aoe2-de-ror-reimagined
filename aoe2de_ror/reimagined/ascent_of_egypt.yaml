@@ -4,9 +4,14 @@
 #   the mission's Scouts page with the other choices it offers). Once picked, an upgrade's effects (aoe-agent-editor trigger effects,
 #   for the human player unless they say otherwise) run at the start of every mission of the campaign. An effect
 #   whose object_list_unit_id lists several units runs once per unit.
+# unlocks.<NN_mission>: [name, ...]   the campaign's tech tree: every mission starts with everything off but what
+#   it and earlier missions unlock (names from ror_tech_tree.yaml); perks bring extras or bring things early.
+#   Missions after the last one listed keep the original's settings until they're designed.
 # missions.<NN_mission>:
 #   setup: [...]                  effects on every difficulty (the mission's own rules: what can be built...)
 #   players: [{number, name, civ}]  players the mission adds: enemies of all, no AI, moved by triggers
+#   primary_extra: {text, from, conditions}   a line the main objective gains from a difficulty up (End Mission
+#                                 waits for it too)
 #   units: [{player, unit, x, y, from, group}]   units on the map from the start; `from: moderate|hard` removes
 #                                 them from easier games; `group` names them for `select: {group: name}`
 #   rewards: [upgrade, upgrade]   the choice offered on completing the primary objective
@@ -55,6 +60,14 @@
 #
 # Verified in game (2026-11-07): the Hunting upgrades and setups all work, Animal Decay Prevention (resource 292)
 # included; the forced Fishing Ship research works in the Stone Age. Unverified: villagers at 0 population.
+
+unlocks:
+  01_hunting: [house, villager]
+  02_foraging: [granary, storage_pit, dock, fishing_boat]
+  03_discoveries: []
+  04_the_dawn_of_a_new_age: [tool_age, toolworking, leather_armor_for_infantry, leather_armor_for_archers,
+                             leather_armor_for_cavalry, barracks, clubman]
+  05_skirmish: [archery_range, bowman, axeman]
 
 upgrades:
   # Hunting, primary (quality of life)
@@ -448,33 +461,32 @@ missions:
       - {player: 2, unit: 281, x: 8, y: 39, from: moderate, group: southwest}
       - {player: 2, unit: 448, x: 9, y: 38, from: moderate, group: southwest}
       - {player: 2, unit: 4, x: 9, y: 36, from: hard, group: southwest}
-    setup:
-      # Every difficulty: no Farms or fortifications (walls, towers, gates); the Barracks with Clubmen only (no
-      # Axemen, Swordsmen, Legionaries or Slingers); no Archery Range, Stable, Bowmen or Scouts; no Government
-      # Center, Town Centers, Siege Workshop, or ships but Fishing Boats and Ships; no Bronze Age Storage Pit
-      # upgrades. Perks still win, as upgrades run after this (Early Riders: Stable and Scouts; Free Town Center:
-      # Town Centers from the Bronze Age; Quartermasters: the Storage Pit upgrades).
-      - {type: enable_disable_object, object_list_unit_id: [50, 72, 117, 119, 155, 79, 234, 235, 236], enabled: 0}
-      - {type: enable_disable_object, object_list_unit_id: [487, 488, 490, 491, 665, 666, 673, 674, 792, 796, 800,
-                                                            804], enabled: 0}
-      - {type: enable_disable_object, object_list_unit_id: [87, 10, 14, 101, 86, 153, 4, 448], enabled: 0}
-      - {type: enable_disable_object, object_list_unit_id: [74, 75, 77, 473, 6, 7], enabled: 0}
-      - {type: enable_disable_object, object_list_unit_id: [209, 210, 621, 617, 484, 597, 49, 150], enabled: 0}
-      - {type: enable_disable_object, object_list_unit_id: [8, 11, 17, 21, 37, 114, 136, 420, 442, 527, 528, 529,
-                                                            539, 545, 691, 831, 832, 844], enabled: 0}
-      - {type: enable_disable_object, object_list_unit_id: [12, 498, 132, 20], enabled: 1}
-      - {type: enable_disable_technology, technology: [63, 43, 44, 45, 51], enabled: 0}
+      # More fish (250 food each) in open water near the shores: food ran short after fighting the Raiders.
+      - {player: 0, unit: 457, x: 39, y: 1}
+      - {player: 0, unit: 457, x: 42, y: 9}
+      - {player: 0, unit: 457, x: 34, y: 14}
+      - {player: 0, unit: 457, x: 37, y: 25}
+      - {player: 0, unit: 457, x: 35, y: 36}
+      - {player: 0, unit: 457, x: 33, y: 41}
+      - {player: 0, unit: 457, x: 1, y: 43}
+      - {player: 0, unit: 457, x: 38, y: 43}
+      - {player: 0, unit: 457, x: 43, y: 45}
+    # What can be built comes from the campaign's tech tree (unlocks); the Raiders join the main objective from
+    # Moderate (the user, 2026-11-08: no hiding behind buildings while advancing).
+    primary_extra:
+      text: "Defeat the Raiders."
+      from: moderate
+      conditions:
+        # Their soldiers: Clubmen/Axemen (class 6), Bowmen (0), Scouts (47).
+        - {type: own_fewer_objects, source_player: 2, object_group: 6, quantity: 0}
+        - {type: own_fewer_objects, source_player: 2, object_group: 0, quantity: 0}
+        - {type: own_fewer_objects, source_player: 2, object_group: 47, quantity: 0}
     rewards: [swift_advance, free_town_center]
     bonus:
-      # Defeating the Raiders is part of both bonuses (the user, 2026-11-08: no hiding behind buildings while
-      # advancing). Their soldiers: Clubmen/Axemen (class 6), Bowmen (0), Scouts (47).
-      - text: "Reach a population of 25 with 2 Docks, and defeat the Raiders."
+      - text: "Reach a population of 25 with 2 Docks."
         conditions:
           - {type: accumulate_attribute, attribute: 11, quantity: 25}
           - {type: variable_value, variable: "RI docks", comparison: LARGER_OR_EQUAL, quantity: 2}
-          - &raiders_6 {type: own_fewer_objects, source_player: 2, object_group: 6, quantity: 0}
-          - &raiders_0 {type: own_fewer_objects, source_player: 2, object_group: 0, quantity: 0}
-          - &raiders_47 {type: own_fewer_objects, source_player: 2, object_group: 47, quantity: 0}
         triggers:
           # Docks change unit with each age: count them all.
           - name: count docks
@@ -487,8 +499,8 @@ missions:
               - {type: modify_variable_by_variable, variable: "RI docks", operation: ADD, variable2: "RI docks b"}
               - {type: modify_variable_by_variable, variable: "RI docks", operation: ADD, variable2: "RI docks c"}
         rewards: [master_fishermen, quartermasters]
-      - text: "Reach the Bronze Age and defeat the Raiders."
-        conditions: [{type: accumulate_attribute, attribute: 6, quantity: 2}, *raiders_6, *raiders_0, *raiders_47]
+      - text: "Reach the Bronze Age."
+        conditions: [{type: accumulate_attribute, attribute: 6, quantity: 2}]
         setup:
           # Hard: the Raiders have Axemen and Tool Working, no armour (balance, user 2026-11-08; their extra Bowmen
           # are mission units).
@@ -498,37 +510,50 @@ missions:
           - {type: research_technology, technology: 75, force_research_technology: 1}
         triggers:
           # A minute after the player's first age-up the northern group attacks the Town Center, the south-west group
-          # a minute later; attacking the Raiders before that starts the first wave at once. They have no AI, so
-          # their attack-move order is given again every 10 seconds (after a fight they stood idle), and they see
-          # the player's town.
+          # a minute later. A group that's attacked, or loses a unit, attacks at once (only that group). They have
+          # no AI, so their attack-move order is given again every 10 seconds (after a fight they stood idle), and
+          # they see the player's town. A group attacks once: "RI <group> out" keeps a later cue from sending it
+          # again.
           - name: aged
             conditions: [{type: accumulate_attribute, attribute: 6, quantity: 1}]
             effects: [{type: activate_trigger, trigger_id: "@first wave wait"}]
           - name: first wave wait
             conditions: [{type: timer, timer: 60}]
-            effects: [{type: activate_trigger, trigger_id: "@first wave"}]
-          - name: provoked
-            conditions: [{type: object_attacked, source_player: 2, quantity: 1}]
-            effects: [{type: activate_trigger, trigger_id: "@first wave"}]
-          - name: provoked by losses
-            conditions: [{type: accumulate_attribute, source_player: 2, attribute: 154, quantity: 1}]
-            effects: [{type: activate_trigger, trigger_id: "@first wave"}]
-          - name: first wave
             effects:
-              - {type: deactivate_trigger, trigger_id: "@aged"}
-              - {type: deactivate_trigger, trigger_id: "@first wave wait"}
-              - {type: deactivate_trigger, trigger_id: "@provoked"}
-              - {type: deactivate_trigger, trigger_id: "@provoked by losses"}
+              - {type: activate_trigger, trigger_id: "@north attack"}
+              - {type: activate_trigger, trigger_id: "@second wave wait"}
+          - name: second wave wait
+            conditions: [{type: timer, timer: 60}]
+            effects: [{type: activate_trigger, trigger_id: "@southwest attack"}]
+          - name: north provoked
+            conditions:
+              - {type: object_attacked, select: {group: north}, quantity: 1}
+              - {type: or}
+              - {type: destroy_object, select: {group: north}}
+            effects: [{type: activate_trigger, trigger_id: "@north attack"}]
+          - name: southwest provoked
+            conditions:
+              - {type: object_attacked, select: {group: southwest}, quantity: 1}
+              - {type: or}
+              - {type: destroy_object, select: {group: southwest}}
+            effects: [{type: activate_trigger, trigger_id: "@southwest attack"}]
+          - name: north attack
+            conditions: [{type: variable_value, variable: "RI north out", comparison: EQUAL, quantity: 0}]
+            effects:
+              - {type: change_variable, variable: "RI north out", operation: SET, quantity: 1}
+              - {type: deactivate_trigger, trigger_id: "@north provoked"}
               - {type: set_player_visibility, source_player: 2, target_player: 1, visibility_state: VISIBLE}
               - {type: attack_move, select: {group: north}, location_x: 28, location_y: 26}
               - {type: display_instructions, display_time: 8, message: "Raiders from the north are coming for your Town Center!"}
               - {type: activate_trigger, trigger_id: "@push north"}
-              - {type: activate_trigger, trigger_id: "@second wave"}
-          - name: second wave
-            conditions: [{type: timer, timer: 60}]
+          - name: southwest attack
+            conditions: [{type: variable_value, variable: "RI southwest out", comparison: EQUAL, quantity: 0}]
             effects:
+              - {type: change_variable, variable: "RI southwest out", operation: SET, quantity: 1}
+              - {type: deactivate_trigger, trigger_id: "@southwest provoked"}
+              - {type: set_player_visibility, source_player: 2, target_player: 1, visibility_state: VISIBLE}
               - {type: attack_move, select: {group: southwest}, location_x: 28, location_y: 26}
-              - {type: display_instructions, display_time: 8, message: "More Raiders, from the south-west!"}
+              - {type: display_instructions, display_time: 8, message: "Raiders from the south-west are coming for your Town Center!"}
               - {type: activate_trigger, trigger_id: "@push southwest"}
           - name: push north
             conditions: [{type: timer, timer: 10}]

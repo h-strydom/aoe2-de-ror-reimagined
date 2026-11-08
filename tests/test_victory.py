@@ -115,5 +115,5 @@ def test_added_players_and_mission_units(tmp_path):
     gone = set(ts["RI Units from moderate"].effects[0].selected_object_ids) | set(
         ts["RI Units from hard"].effects[0].selected_object_ids)
     assert gone == guards                                                     # Standard: none of them stay
-    wave = next(e for e in ts["RI Bonus 2 first wave"].effects if e.effect_type == 30)
+    wave = next(e for e in ts["RI Bonus 2 north attack"].effects if e.effect_type == 30)
     assert len(wave.selected_object_ids) == 4 and set(wave.selected_object_ids) <= guards

@@ -30,6 +30,7 @@ Unverified in game.
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from functools import cache
 from pathlib import Path
 
 import yaml
@@ -62,6 +63,16 @@ BONUS_ORDER = 3                  # bonus lines (orders 4, 3)
 class Campaign:
     upgrades: dict[str, dict] = field(default_factory=dict)
     missions: dict[str, dict] = field(default_factory=dict)     # mission folder name -> {rewards, bonus}
+    unlocks: dict[str, list[str]] = field(default_factory=dict)  # mission folder -> tech tree names it adds
+
+
+TECH_TREE = DATA / "ror_tech_tree.yaml"
+
+
+@cache
+def tech_tree() -> dict[str, dict[str, list[int]]]:
+    """Everything a RoR player can build, train or research, by name (scripts/gen_tech_tree.py)."""
+    return yaml.safe_load(TECH_TREE.read_text(encoding="utf-8"))
 
 
 def load(slug: str, root: Path = DATA) -> Campaign:
@@ -69,8 +80,9 @@ def load(slug: str, root: Path = DATA) -> Campaign:
     if not path.is_file():
         return Campaign()
     spec = yaml.safe_load(path.read_text(encoding="utf-8")) or {}
-    camp = Campaign(spec.get("upgrades") or {}, spec.get("missions") or {})
-    problems = []
+    camp = Campaign(spec.get("upgrades") or {}, spec.get("missions") or {}, spec.get("unlocks") or {})
+    problems = [f"{slug} unlocks {folder}: no '{n}' in ror_tech_tree.yaml"
+                for folder, names in camp.unlocks.items() for n in names or [] if n not in tech_tree()]
     for name, m in camp.missions.items():
         offers = [("primary", m.get("rewards"))] + [(f"bonus{k}", b.get("rewards"))
                                                     for k, b in enumerate(m.get("bonus") or [], 1)]
@@ -167,7 +179,17 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     # and an upgrade enabling what the mission disables wins.
     out.append({"name": "RI Objectives", "effects": [
         {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1},
+        *_player(tree_effects(camp, folders, number), player),
         *_player(expand(m.get("setup") or []), player)]})
+    # The main objective's extra line from a difficulty up (`primary_extra`): End Mission waits for it too.
+    extra = m.get("primary_extra")
+    if extra:
+        out.append({"name": "RI Primary extra", "enabled": False, "display_as_objective": True,
+                    "display_on_screen": True, "description": f"+ {extra['text']}",
+                    "short_description": f"+ {extra['text']}", "description_order": OBJECTIVE_ORDER_OFFSET,
+                    "conditions": own(extra["conditions"]), "effects": [
+                        {"type": "change_variable", "variable": "RI primary gate", "operation": "SET",
+                         "quantity": 0}]})
     # Units the mission places (`units`) for a difficulty and up leave easier games at the start. They stand on the
     # map from the first moment, as the original's own units do: Egypt 4's Raiders, created by a trigger instead,
     # were defeated before they appeared (playtest, 2026-11-08).
@@ -179,10 +201,14 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     bonus_triggers = {k: own_triggers(f"RI Bonus {k}", b.get("triggers") or []) for k, b in enumerate(bonus, 1)}
     levels = [("moderate", bonus[:1]), ("hard", bonus[:2])]
     for level, shown in levels:
-        if not shown:
+        if not shown and not extra:
             continue
+        gate = [{"type": "change_variable", "variable": "RI primary gate", "operation": "SET", "quantity": 1},
+                {"type": "activate_trigger", "trigger_id": "RI Primary extra"}] \
+            if extra and (level == "hard" or extra.get("from", "moderate") == "moderate") else []
         out.append({"name": f"RI Difficulty {level}", "conditions": DIFFICULTY[level], "effects": [
             {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1 + len(shown)},
+            *gate,
             *({"type": "activate_trigger", "trigger_id": name} for k, b in enumerate(shown, start=1)
               for name in [f"RI Bonus {k}", *_fail_names(k, b), *bonus_triggers[k]]),
             *_player([e for b in shown for e in expand(b.get("setup") or [])], player)]})
@@ -276,7 +302,8 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
         unlock = [{"type": "activate_trigger", "trigger_id": "RI End offer"}]
     # Several triggers may win (the objectives, conquest...): the first one counts.
     out.append({"name": "RI Primary complete", "enabled": False, "conditions": [
-        {"type": "variable_value", "variable": "RI primary", "comparison": "EQUAL", "quantity": 0}], "effects": [
+        {"type": "variable_value", "variable": "RI primary", "comparison": "EQUAL", "quantity": 0},
+        {"type": "variable_value", "variable": "RI primary gate", "comparison": "EQUAL", "quantity": 0}], "effects": [
         {"type": "change_variable", "variable": "RI primary", "operation": "SET", "quantity": 1},
         {"type": "change_variable", "variable": "RI done", "operation": "ADD", "quantity": 1},
         {"type": "display_instructions", "display_time": 15,
@@ -295,6 +322,11 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
 
 def _fail_names(k: int, b: dict) -> list[str]:
     return [f"RI Bonus {k} fail {i}" for i in range(1, len(b.get("fail") or []) + 1)]
+
+
+# Conditions about one object that take no player (aoe-agent-editor's condition reference).
+_UNIT_ONLY_CONDITIONS = {"destroy_object", "capture_object", "bring_object_to_area", "bring_object_to_object",
+                         "object_hp", "object_visible", "object_not_visible", "object_selected"}
 
 
 # Conditions whose source_player is the human player unless the content says otherwise.
@@ -321,6 +353,21 @@ def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]
     remove_object by unit type over an area left Gaia's forage bushes in place (Egypt 2 playtest, 2026-11-07);
     remove_object on selected objects works (aoe-agent-editor's fog block)."""
     for t in triggers_:
+        conds = []
+        for c in t.get("conditions") or []:
+            sel = c.pop("select", None)
+            if sel is None:
+                conds.append(c)
+                continue
+            # A condition about a group holds for any of its units: one per unit, joined by OR.
+            owner, refs = (groups or {}).get(sel["group"], (0, []))
+            for i, ref in enumerate(refs):
+                one = {**c, "unit_object": ref}
+                if c["type"] not in _UNIT_ONLY_CONDITIONS:
+                    one["source_player"] = owner
+                conds += ([{"type": "or"}] if i else []) + [one]
+        if "conditions" in t:
+            t["conditions"] = conds
         for e in t.get("effects") or []:
             sel = e.pop("select", None)
             if sel is None:
@@ -351,6 +398,24 @@ def scouts_text(camp: Campaign, folder: str) -> str:
         if pair:
             parts.append("\n".join([title, *(f"  {upgrade_line(camp.upgrades[u])}" for u in pair)]))
     return "\n\n".join([SCOUTS_TITLE, *parts]) if parts else ""
+
+
+def tree_effects(camp: Campaign, folders: list[str], number: int) -> list[dict]:
+    """The campaign's tech tree for mission `number`: everything off but what this and earlier missions unlock
+    (`unlocks`). Missions after the last one listed are left as the original has them, until they're designed.
+    Upgrades run later, so perks still bring things early (the user's design, 2026-11-08)."""
+    listed = [i for i, f in enumerate(folders, 1) if f in camp.unlocks]
+    if not listed or number > max(listed):
+        return []
+    on = {n for f in folders[:number] for n in camp.unlocks.get(f) or []}
+    out = []
+    for name, entry in tech_tree().items():
+        flag = int(name in on)
+        out += [{"type": "enable_disable_object", "object_list_unit_id": u, "enabled": flag}
+                for u in entry.get("objects", [])]
+        out += [{"type": "enable_disable_technology", "technology": t, "enabled": flag}
+                for t in entry.get("techs", [])]
+    return out
 
 
 def extra_players(camp: Campaign, folder: str) -> list[dict]:

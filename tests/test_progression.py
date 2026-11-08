@@ -205,3 +205,35 @@ def test_mission_setup_players_units_and_bonus_triggers():
     assert "RI Bonus 1 wave" in started and "RI Bonus 1 later" not in started   # "later" waits for "wave"
     assert not ts["RI Bonus 1 wave"]["enabled"]
     assert ts["RI Bonus 1 wave"]["effects"][1]["trigger_id"] == "RI Bonus 1 later"
+
+
+def test_tech_tree_unlocks_build_up_and_stop_after_the_last_listed_mission(tmp_path):
+    camp = progression.Campaign(upgrades=CAMP.upgrades, missions={},
+                                unlocks={"01_one": ["house", "villager"], "02_two": ["barracks"]})
+    folders = ["01_one", "02_two", "03_three"]
+    on = lambda n: {e.get("object_list_unit_id") or e.get("technology")             # noqa: E731
+                    for e in progression.tree_effects(camp, folders, n) if e["enabled"]}
+    assert on(1) == {70, 463, 464, 465, 83}
+    assert {12, 70, 83} <= on(2) and 281 not in on(2)                             # cumulative; Clubmen still off
+    off = {e["object_list_unit_id"] for e in progression.tree_effects(camp, folders, 2)
+           if e["type"] == "enable_disable_object" and not e["enabled"]}
+    assert {50, 72, 87} <= off                                                    # Farm, walls, Archery Range
+    assert progression.tree_effects(camp, folders, 3) == []                      # not designed yet: as it was
+    (tmp_path / "x.yaml").write_text("unlocks: {01_one: [castle]}\n")
+    with pytest.raises(ValueError, match="no 'castle'"):
+        progression.load("x", tmp_path)
+
+
+def test_primary_extra_gates_ending_from_its_difficulty():
+    camp = progression.Campaign(upgrades=CAMP.upgrades, missions={"01_one": {
+        "rewards": ["a", "b"], "primary_extra": {"text": "Defeat them.", "from": "moderate", "conditions": [
+            {"type": "own_fewer_objects", "source_player": 2, "object_group": 6, "quantity": 0}]}}})
+    ts = by_name(progression.triggers(camp, ["01_one"], 1))
+    extra = ts["RI Primary extra"]
+    assert not extra["enabled"] and extra["short_description"] == "+ Defeat them."
+    for level in ("moderate", "hard"):
+        effects = ts[f"RI Difficulty {level}"]["effects"]
+        assert {"type": "activate_trigger", "trigger_id": "RI Primary extra"} in effects
+        assert any(e.get("variable") == "RI primary gate" and e["quantity"] == 1 for e in effects)
+    assert {"type": "variable_value", "variable": "RI primary gate", "comparison": "EQUAL", "quantity": 0} in \
+        ts["RI Primary complete"]["conditions"]                                 # Standard: the gate stays open
