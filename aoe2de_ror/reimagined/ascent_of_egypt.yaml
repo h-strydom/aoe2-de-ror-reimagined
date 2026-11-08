@@ -68,7 +68,8 @@ unlocks:
   04_the_dawn_of_a_new_age: [tool_age, toolworking, leather_armor_for_infantry, leather_armor_for_archers,
                              leather_armor_for_cavalry, barracks, clubman]
   05_skirmish: [archery_range, bowman, axeman]
-  06_farming: [market, domestication, woodworking, gold_mining, stone_mining, slinger, scout_ship, farm]
+  06_farming: [market, domestication, woodworking, gold_mining, stone_mining, slinger, scout_ship, farm, stable,
+               scout]
 
 upgrades:
   # Hunting, primary (quality of life)
@@ -410,6 +411,61 @@ upgrades:
       - {type: modify_attribute_for_class, object_group2: 6, object_attributes: 8, operation: ADD,
          armour_attack_class: 3, armour_attack_quantity: 1}
 
+  # Farming, primary (quality of life)
+  free_farms:
+    label: "Free Farms"
+    text: "Farms cost nothing, but farmers gather at half speed."
+    # Farm 50's wood cost (attribute 104); farmers 259 (male) and 214 (female) work rate (13).
+    effects:
+      - {type: modify_attribute, object_list_unit_id: 50, object_attributes: 104, operation: SET, quantity: 0}
+      - {type: modify_attribute, object_list_unit_id: [259, 214], object_attributes: 13, operation: MULTIPLY,
+         quantity: 0.5}
+  market_day:
+    label: "Market Day"
+    text: "Every Market upgrade finishes in 1 second (it still costs the same)."
+    # The techs researched at the Market (84) in RoR's data (read with genieutils, 2026-11-08): Wheel 28, Coinage 30,
+    # Plow 31, Artisanship 32, Irrigation 80, Domestication 81, Wood Working 107, Gold Mining 108, Stone Mining 109,
+    # Craftsmanship 110, Siege Craft 111. 1 second, not 0 (see swift_advance).
+    effects: [{type: change_technology_research_time, technology: [28, 30, 31, 32, 80, 81, 107, 108, 109, 110, 111],
+               quantity: 1}]
+  # Farming, Moderate bonus (good)
+  slinger_corps:
+    label: "Slinger Corps"
+    text: "Slingers cost no stone and throw 1 tile farther."
+    # Slinger 7 (and 6, the data's other Slinger): stone cost (106), range (12).
+    effects:
+      - {type: modify_attribute, object_list_unit_id: [7, 6], object_attributes: 106, operation: SET, quantity: 0}
+      - {type: modify_attribute, object_list_unit_id: [7, 6], object_attributes: 12, operation: ADD, quantity: 1}
+  builders_tithe:
+    label: "Builder's Tithe"
+    text: "Finishing a building (not Farms or walls) gives 5 stone."
+    # A finished building adds what its storages with store flag 4 hold (Houses give their population that way;
+    # RoR's data, 2026-11-08). Every building's third storage, free in all of them, becomes 5 stone (resource 2)
+    # with flag 4. Unverified in game: whether stone is given like population, and whether it's taken back when the
+    # building is destroyed. Buildings: every building in ror_tech_tree.yaml but walls, gates and Farms, and the
+    # Town Centers 109/71/141/142.
+    effects:
+      - {type: modify_attribute, object_list_unit_id: &buildings [10, 12, 14, 18, 19, 20, 30, 31, 32, 45, 47, 49, 51,
+          68, 70, 79, 84, 86, 87, 101, 103, 104, 105, 116, 129, 130, 131, 132, 133, 137, 150, 153, 209, 210, 234,
+          235, 236, 276, 463, 464, 465, 484, 498, 562, 563, 564, 565, 597, 617, 621, 109, 71, 141, 142],
+         object_attributes: 170, operation: SET, quantity: 2}
+      - {type: modify_attribute, object_list_unit_id: *buildings, object_attributes: 173, operation: SET, quantity: 4}
+      - {type: modify_attribute, object_list_unit_id: *buildings, object_attributes: 27, operation: SET, quantity: 5}
+  # Farming, Hard bonus (great)
+  war_fleet:
+    label: "War Fleet"
+    text: "Warships have 40 more hit points and do 2 more damage."
+    # Warships are class 22; their damage is pierce (class 3).
+    effects:
+      - {type: modify_attribute_for_class, object_group2: 22, object_attributes: 0, operation: ADD, quantity: 40}
+      - {type: modify_attribute_for_class, object_group2: 22, object_attributes: 9, operation: ADD,
+         armour_attack_class: 3, armour_attack_quantity: 2}
+  field_granaries:
+    label: "Field Granaries"
+    text: "Farmers never walk to drop off food: it goes straight to your stockpile."
+    # AoE2's Khmer farmer bonus, resource 96 (No Dropsite Farmers) = 1. Unverified in Return of Rome.
+    effects: [{type: modify_resource, tribute_list: 96, operation: SET, quantity: 1}]
+
 missions:
   01_hunting:
     rewards: [preserved_meat, town_hearth]
@@ -703,18 +759,47 @@ missions:
   06_farming:
     # Mission 6: you (Upper Egypt) start at 32,58 with a Town Center, Barracks, Granary, 3 Villagers and 3 Clubmen;
     # Lower Egypt (red) at 46,14 with a Town Center, Barracks, Dock, 3 Villagers and 4 Axemen. A river winds
-    # across the map with 8 fish; no gold or stone mines (red has its 200 stone). Your objectives: the Ruin at
-    # 10,14 and 800 food.
+    # across the map with 8 fish; no gold or stone mines (red has its 200 stone; the Market trades). Your
+    # objectives: the Ruin at 10,14 and 800 food.
     # Red's original win (2000 food) is gone: it wins only by destroying you (the user, 2026-11-08).
     drop_objectives: [2]
+    setup:
+      # Slingers are yours, not red's (the user, 2026-11-08): the tech tree unlocks them for both.
+      - {type: enable_disable_object, source_player: 2, object_list_unit_id: 7, enabled: 0}
+    rewards: [free_farms, market_day]
+    bonus:
+      - text: "Stockpile 200 stone."
+        conditions: [{type: accumulate_attribute, attribute: 2, quantity: 200}]
+        rewards: [slinger_corps, builders_tithe]
+      - text: "Lose no Villagers or Fishing Boats."
+        # Complete with the main objective, unless one was lost first: every second the count of your villagers
+        # (class 4) and fishing boats (class 21) is compared with the second before. A loss and a new one in the
+        # same second would cancel out.
+        conditions: [{type: variable_value, variable: "RI primary", comparison: EQUAL, quantity: 1}]
+        fail:
+          - {type: compare_variables, variable: "RI civilians", comparison: LESS, variable2: "RI civilians before"}
+        triggers:
+          - name: count
+            conditions: [{type: timer, timer: 1}]
+            effects:
+              - {type: modify_variable_by_variable, variable: "RI civilians before", operation: SET,
+                 variable2: "RI civilians"}
+              - {type: count_units_into_variable, object_group: 4, variable2: "RI civilians"}
+              - {type: count_units_into_variable, object_group: 21, variable2: "RI boats"}
+              - {type: modify_variable_by_variable, variable: "RI civilians", operation: ADD, variable2: "RI boats"}
+              - {type: activate_trigger, trigger_id: "@count"}
+          - name: start counting
+            effects:
+              - {type: activate_trigger, trigger_id: "@count"}
+        rewards: [war_fleet, field_granaries]
     # Red's AI per difficulty (the user's plan, 2026-11-08), written for this mission instead of the original
     # build list. The tech tree holds for red too, so a step it can't take is skipped, not worked around.
     #   Standard: a small economy, 5 Axemen and 3 Bowmen, 1 warship and no other ships; never attacks by itself
     #     (it still fights what comes near).
     #   Moderate: the same ships; upgrades; a 20-unit army; attacks now and then with 5 units, never before 3:00.
     #   Hard: 3 warships kept up, 5 fishing boats that are never replaced (no farming its resources by killing
-    #     them), towards 100 population; raiding parties of 5 at your villagers and massive attacks of 20 or more;
-    #     upgrades as soon as a defence of 8 stands at home.
+    #     them), towards 100 population; raiding parties of 5 Scouts at your villagers and massive attacks of 20 or
+    #     more; upgrades as soon as a defence of 8 stands at home.
     ai:
       2:
         replace: true
@@ -739,9 +824,8 @@ missions:
           normal:
             villagers: 18
             keep:
-              - {train: AXEMAN, count: 8}
-              - {train: BOWMAN, count: 6}
-              - {train: SLINGER, count: 6}
+              - {train: AXEMAN, count: 10}
+              - {train: BOWMAN, count: 10}
               - {train: SCOUT_SHIP, count: 1}
               - {build: FARM, count: 7}
               - {research: TOOLWORKING}
@@ -755,17 +839,19 @@ missions:
             keep:
               - {build: BARRACKS, count: 2}
               - {build: ARCHERY_RANGE, count: 2}
-              - {train: AXEMAN, count: 20}
+              - {build: STABLE}
+              - {train: AXEMAN, count: 22}
               - {train: BOWMAN, count: 20}
-              - {train: SLINGER, count: 10}
+              - {train: SCOUT, count: 8}
               - {train: SCOUT_SHIP, count: 3}
               - {train: FISHING_BOAT, count: 5, lifetime: true}
               - {build: FARM, count: 14}
               - {research: TOOLWORKING, when: {soldiers: 8}}
               - {research: LEATHER_ARMOR_FOR_INFANTRY, when: {soldiers: 8}}
               - {research: LEATHER_ARMOR_FOR_ARCHERS, when: {soldiers: 8}}
+              - {research: LEATHER_ARMOR_FOR_CAVALRY, when: {soldiers: 8}}
               - {research: DOMESTICATION, when: {soldiers: 8}}
               - {research: WOODWORKING, when: {soldiers: 8}}
             raids:
-              - {units: [BOWMAN, AXEMAN], count: 5, first: 360, every: 180, target: villagers}
+              - {units: [SCOUT], count: 5, first: 360, every: 180, target: villagers}
             attack: {first: 720, every: 360, min_group: 20, max_group: 25, percent: 100, naval: true}
