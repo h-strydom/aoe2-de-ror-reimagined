@@ -772,21 +772,20 @@ missions:
         conditions: [{type: accumulate_attribute, attribute: 2, quantity: 200}]
         rewards: [slinger_corps, builders_tithe]
       - text: "Lose no Villagers or Fishing Boats."
-        # Complete with the main objective, unless one was lost first: every second the count of your villagers
-        # (class 4) and fishing boats (class 21) is compared with the second before. A loss and a new one in the
-        # same second would cancel out.
+        # Complete with the main objective, unless the enemy took one first (the user, 2026-11-08: losing one to the
+        # enemy is enough). Villagers: the game's villagers-killed-by-AI-player count (resource 228), unverified in
+        # RoR. Fishing Boats have no such count: theirs (class 21) is compared with the second before, so a boat you
+        # delete yourself counts too.
         conditions: [{type: variable_value, variable: "RI primary", comparison: EQUAL, quantity: 1}]
         fail:
-          - {type: compare_variables, variable: "RI civilians", comparison: LESS, variable2: "RI civilians before"}
+          - {type: accumulate_attribute, attribute: 228, quantity: 1}
+          - {type: compare_variables, variable: "RI boats", comparison: LESS, variable2: "RI boats before"}
         triggers:
           - name: count
             conditions: [{type: timer, timer: 1}]
             effects:
-              - {type: modify_variable_by_variable, variable: "RI civilians before", operation: SET,
-                 variable2: "RI civilians"}
-              - {type: count_units_into_variable, object_group: 4, variable2: "RI civilians"}
+              - {type: modify_variable_by_variable, variable: "RI boats before", operation: SET, variable2: "RI boats"}
               - {type: count_units_into_variable, object_group: 21, variable2: "RI boats"}
-              - {type: modify_variable_by_variable, variable: "RI civilians", operation: ADD, variable2: "RI boats"}
               - {type: activate_trigger, trigger_id: "@count"}
           - name: start counting
             effects:
