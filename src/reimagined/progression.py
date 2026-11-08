@@ -411,11 +411,16 @@ def tree_effects(camp: Campaign, folders: list[str], number: int) -> list[dict]:
         return []
     on = {n for f in folders[:number] for n in camp.unlocks.get(f) or []}
     out = []
+    # Only what's still locked is switched off; what's unlocked is left to the game's own tech tree. Enabling it
+    # by trigger too lost the units a building's tech enables: no Bowman or Scout button at a finished Archery
+    # Range or Stable (Egypt 6 playtest, 2026-11-08; the game enables them with techs 55 and 67 when the
+    # building is finished). Unverified that leaving them alone fixes it.
     for name, entry in tech_tree().items():
-        flag = int(name in on)
-        out += [{"type": "enable_disable_object", "object_list_unit_id": u, "enabled": flag}
+        if name in on:
+            continue
+        out += [{"type": "enable_disable_object", "object_list_unit_id": u, "enabled": 0}
                 for u in entry.get("objects", [])]
-        out += [{"type": "enable_disable_technology", "technology": t, "enabled": flag}
+        out += [{"type": "enable_disable_technology", "technology": t, "enabled": 0}
                 for t in entry.get("techs", [])]
     return out
 

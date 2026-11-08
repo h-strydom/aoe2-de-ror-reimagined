@@ -211,13 +211,12 @@ def test_tech_tree_unlocks_build_up_and_stop_after_the_last_listed_mission(tmp_p
     camp = progression.Campaign(upgrades=CAMP.upgrades, missions={},
                                 unlocks={"01_one": ["house", "villager"], "02_two": ["barracks"]})
     folders = ["01_one", "02_two", "03_three"]
-    on = lambda n: {e.get("object_list_unit_id") or e.get("technology")             # noqa: E731
-                    for e in progression.tree_effects(camp, folders, n) if e["enabled"]}
-    assert on(1) == {70, 463, 464, 465, 83}
-    assert {12, 70, 83} <= on(2) and 281 not in on(2)                             # cumulative; Clubmen still off
-    off = {e["object_list_unit_id"] for e in progression.tree_effects(camp, folders, 2)
-           if e["type"] == "enable_disable_object" and not e["enabled"]}
-    assert {50, 72, 87} <= off                                                    # Farm, walls, Archery Range
+    off = lambda n: {e.get("object_list_unit_id") or e.get("technology")            # noqa: E731
+                     for e in progression.tree_effects(camp, folders, n)}
+    assert all(not e["enabled"] for e in progression.tree_effects(camp, folders, 2))   # only ever switches off
+    assert not {70, 463, 464, 465, 83} & off(1) and 12 in off(1)                 # Houses, Villagers left alone
+    assert not {12, 70, 83} & off(2) and 281 in off(2)                           # cumulative; Clubmen still off
+    assert {50, 72, 87} <= off(2)                                                # Farm, walls, Archery Range
     assert progression.tree_effects(camp, folders, 3) == []                      # not designed yet: as it was
     (tmp_path / "x.yaml").write_text("unlocks: {01_one: [castle]}\n")
     with pytest.raises(ValueError, match="no 'castle'"):
@@ -273,6 +272,7 @@ def test_the_tech_tree_holds_for_computer_players_too():
     tree = [e for e in ts["RI Objectives"]["effects"] if e["type"] == "enable_disable_object"]
     players = {e["source_player"] for e in tree}
     assert players == {1, 2} and len(tree) % 2 == 0
+    assert not [e for e in tree if e["object_list_unit_id"] == 70]               # Houses are unlocked: untouched
     # red's walls are off as well as yours
     assert {(e["source_player"], e["enabled"]) for e in tree if e["object_list_unit_id"] == 72} == {(1, 0), (2, 0)}
 
