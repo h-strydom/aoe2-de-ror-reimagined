@@ -334,7 +334,7 @@ _UNIT_ONLY_CONDITIONS = {"destroy_object", "capture_object", "bring_object_to_ar
 
 # Conditions whose source_player is the human player unless the content says otherwise.
 _PLAYER_CONDITIONS = {"accumulate_attribute", "own_objects", "own_fewer_objects", "objects_in_area",
-                      "research_technology", "researching_tech", "player_defeated"}
+                      "research_technology", "researching_tech", "player_defeated", "technology_state"}
 _PLAYER_EFFECTS = {"enable_disable_technology", "enable_technology_stacking", "change_technology_location",
                    "change_technology_name", "change_technology_description", "change_technology_research_time",
                    "declare_victory", "display_instructions"}

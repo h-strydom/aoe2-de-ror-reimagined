@@ -77,6 +77,8 @@ unlocks:
              scale_armor_for_infantry, scale_armor_for_archers, scale_armor_for_cavalry, short_swordsman,
              broad_swordsman, hoplite, cavalry, chariot, chariot_archer, camel_rider, improved_bow, improved_bowman,
              composite_bowman, stone_thrower, war_galley, fishing_ship, trade_boat, merchant_ship, trade_cart]
+  # The Temple, the Priest and the Bronze Age Temple techs (the user, 2026-11-08); the Iron Age ones stay locked.
+  08_religion: [temple, priest, mysticism, astrology, polytheism]
 
 upgrades:
   # Hunting, primary (quality of life)
@@ -263,9 +265,20 @@ upgrades:
           - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc f"}
           - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc g"}
           - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc h"}
+      # The price comes back the moment a foundation is placed (object_state 0, FOUNDATION): counting only sees
+      # finished buildings, so until the first one finished a second foundation was free too (playtest,
+      # 2026-11-08). Objects in Area without an area is the whole map (unverified).
       - name: done
-        conditions: [{type: compare_variables, variable: "RI tcs", comparison: LARGER_OR_EQUAL,
-                      variable2: "RI tc until"}]
+        conditions:
+          - {type: compare_variables, variable: "RI tcs", comparison: LARGER_OR_EQUAL, variable2: "RI tc until"}
+          - {type: or}
+          - {type: objects_in_area, object_list: 621, object_state: 0, quantity: 1}
+          - {type: or}
+          - {type: objects_in_area, object_list: 617, object_state: 0, quantity: 1}
+          - {type: or}
+          - {type: objects_in_area, object_list: 484, object_state: 0, quantity: 1}
+          - {type: or}
+          - {type: objects_in_area, object_list: 597, object_state: 0, quantity: 1}
         effects:
           - {type: modify_attribute_by_variable, object_list_unit_id: [621, 617, 484, 597], object_attributes: 104,
              operation: SET, variable: "RI tc wood"}
@@ -457,38 +470,56 @@ upgrades:
   # Trade, primary (quality of life)
   town_tithes:
     label: "Town Tithes"
-    text: "Each Town Center gives 2 food, wood, gold and stone every 10 seconds, but you can have only 5."
-    # Every second: count the Town Centers (109/71/141/142, every age's) and their foundations (621/617/484/597).
-    # The Town Centers are the largest of the four counts, not their sum: summed, the cap came at 3 Town Centers
-    # (playtest, 2026-11-08), so a Town Center shows up under two of those ids (which two is unverified).
-    # Foundations count toward the cap, so it locks the moment the 5th is placed (the user, 2026-11-08). At 5 the
-    # foundations are switched off for good. Every 10 seconds: twice the Town Centers of each resource.
+    text: "Each Town Center gives 2 food, wood, gold and stone every 10 seconds, but you get only 5 Town Centers each mission, counting those you start with: one that is lost can't be rebuilt."
+    # The user (2026-11-08): you can build 5; if they get destroyed you never get to build them again.
+    # Town Centers alive (109/71/141/142, every age's): the largest of the four counts, not their sum: summed,
+    # the cap came at 3 Town Centers (playtest, 2026-11-08), so a finished Town Center shows up under two of those
+    # ids (which two is unverified; the largest is right as long as the starting one shares an id with them).
+    # Town Centers placed: the ones at the start, plus every rise in the number of foundations (621/617/484/597 in
+    # object_state 0, FOUNDATION; count_units_into_variable only sees finished buildings, so the "foundations"
+    # ladders count up to 5 of each). At 5 placed the foundations are switched off for good; a foundation
+    # cancelled still uses up its place.
     triggers:
       - name: start
         effects:
+          - {type: count_units_into_variable, object_list_unit_id: 109, variable2: "RI tc a"}
+          - {type: count_units_into_variable, object_list_unit_id: 71, variable2: "RI tc b"}
+          - {type: count_units_into_variable, object_list_unit_id: 141, variable2: "RI tc c"}
+          - {type: count_units_into_variable, object_list_unit_id: 142, variable2: "RI tc d"}
+          - {type: modify_variable_by_variable, variable: "RI tc placed", operation: SET, variable2: "RI tc a"}
+          - {type: modify_variable_by_variable, variable: "RI tc placed", operation: ADD, variable2: "RI tc b"}
+          - {type: modify_variable_by_variable, variable: "RI tc placed", operation: ADD, variable2: "RI tc c"}
+          - {type: modify_variable_by_variable, variable: "RI tc placed", operation: ADD, variable2: "RI tc d"}
           - {type: activate_trigger, trigger_id: "@count"}
           - {type: activate_trigger, trigger_id: "@tithe"}
       - name: count
         conditions: [{type: timer, timer: 1}]
         effects:
-          # last second's result first: the max triggers below have finished with it
+          # last second's results first: the max and foundation triggers below have finished with them
           - {type: modify_variable_by_variable, variable: "RI tc max", operation: SET, variable2: "RI tcs"}
-          - {type: modify_variable_by_variable, variable: "RI tc all", operation: SET, variable2: "RI tcs"}
-          - {type: modify_variable_by_variable, variable: "RI tc all", operation: ADD, variable2: "RI tc f"}
+          - {type: modify_variable_by_variable, variable: "RI tc f", operation: SET, variable2: "RI tf a"}
+          - {type: modify_variable_by_variable, variable: "RI tc f", operation: ADD, variable2: "RI tf b"}
+          - {type: modify_variable_by_variable, variable: "RI tc f", operation: ADD, variable2: "RI tf c"}
+          - {type: modify_variable_by_variable, variable: "RI tc f", operation: ADD, variable2: "RI tf d"}
+          - {type: modify_variable_by_variable, variable: "RI tc new", operation: SET, variable2: "RI tc f"}
+          - {type: modify_variable_by_variable, variable: "RI tc new", operation: SUBTRACT, variable2: "RI tc f last"}
+          - {type: modify_variable_by_variable, variable: "RI tc f last", operation: SET, variable2: "RI tc f"}
+          - {type: change_variable, variable: "RI tf a", operation: SET, quantity: 0}
+          - {type: change_variable, variable: "RI tf b", operation: SET, quantity: 0}
+          - {type: change_variable, variable: "RI tf c", operation: SET, quantity: 0}
+          - {type: change_variable, variable: "RI tf d", operation: SET, quantity: 0}
           - {type: count_units_into_variable, object_list_unit_id: 109, variable2: "RI tc a"}
           - {type: count_units_into_variable, object_list_unit_id: 71, variable2: "RI tc b"}
           - {type: count_units_into_variable, object_list_unit_id: 141, variable2: "RI tc c"}
           - {type: count_units_into_variable, object_list_unit_id: 142, variable2: "RI tc d"}
           - {type: modify_variable_by_variable, variable: "RI tcs", operation: SET, variable2: "RI tc a"}
-          - {type: count_units_into_variable, object_list_unit_id: 621, variable2: "RI tf a"}
-          - {type: count_units_into_variable, object_list_unit_id: 617, variable2: "RI tf b"}
-          - {type: count_units_into_variable, object_list_unit_id: 484, variable2: "RI tf c"}
-          - {type: count_units_into_variable, object_list_unit_id: 597, variable2: "RI tf d"}
-          - {type: modify_variable_by_variable, variable: "RI tc f", operation: SET, variable2: "RI tf a"}
-          - {type: modify_variable_by_variable, variable: "RI tc f", operation: ADD, variable2: "RI tf b"}
-          - {type: modify_variable_by_variable, variable: "RI tc f", operation: ADD, variable2: "RI tf c"}
-          - {type: modify_variable_by_variable, variable: "RI tc f", operation: ADD, variable2: "RI tf d"}
           - {type: activate_trigger, trigger_id: "@count"}
+      - name: placed
+        looping: true
+        conditions: [{type: variable_value, variable: "RI tc new", comparison: LARGER, quantity: 0}]
+        effects:
+          - {type: modify_variable_by_variable, variable: "RI tc placed", operation: ADD, variable2: "RI tc new"}
+          - {type: change_variable, variable: "RI tc new", operation: SET, quantity: 0}
       - name: max b
         looping: true
         conditions: [{type: compare_variables, variable: "RI tc b", comparison: LARGER, variable2: "RI tcs"}]
@@ -501,6 +532,86 @@ upgrades:
         looping: true
         conditions: [{type: compare_variables, variable: "RI tc d", comparison: LARGER, variable2: "RI tcs"}]
         effects: [{type: modify_variable_by_variable, variable: "RI tcs", operation: SET, variable2: "RI tc d"}]
+      - name: foundations 621 1
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 621, object_state: 0, quantity: 1}]
+        effects: [{type: change_variable, variable: "RI tf a", operation: SET, quantity: 1}]
+      - name: foundations 621 2
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 621, object_state: 0, quantity: 2}]
+        effects: [{type: change_variable, variable: "RI tf a", operation: SET, quantity: 2}]
+      - name: foundations 621 3
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 621, object_state: 0, quantity: 3}]
+        effects: [{type: change_variable, variable: "RI tf a", operation: SET, quantity: 3}]
+      - name: foundations 621 4
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 621, object_state: 0, quantity: 4}]
+        effects: [{type: change_variable, variable: "RI tf a", operation: SET, quantity: 4}]
+      - name: foundations 621 5
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 621, object_state: 0, quantity: 5}]
+        effects: [{type: change_variable, variable: "RI tf a", operation: SET, quantity: 5}]
+      - name: foundations 617 1
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 617, object_state: 0, quantity: 1}]
+        effects: [{type: change_variable, variable: "RI tf b", operation: SET, quantity: 1}]
+      - name: foundations 617 2
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 617, object_state: 0, quantity: 2}]
+        effects: [{type: change_variable, variable: "RI tf b", operation: SET, quantity: 2}]
+      - name: foundations 617 3
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 617, object_state: 0, quantity: 3}]
+        effects: [{type: change_variable, variable: "RI tf b", operation: SET, quantity: 3}]
+      - name: foundations 617 4
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 617, object_state: 0, quantity: 4}]
+        effects: [{type: change_variable, variable: "RI tf b", operation: SET, quantity: 4}]
+      - name: foundations 617 5
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 617, object_state: 0, quantity: 5}]
+        effects: [{type: change_variable, variable: "RI tf b", operation: SET, quantity: 5}]
+      - name: foundations 484 1
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 484, object_state: 0, quantity: 1}]
+        effects: [{type: change_variable, variable: "RI tf c", operation: SET, quantity: 1}]
+      - name: foundations 484 2
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 484, object_state: 0, quantity: 2}]
+        effects: [{type: change_variable, variable: "RI tf c", operation: SET, quantity: 2}]
+      - name: foundations 484 3
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 484, object_state: 0, quantity: 3}]
+        effects: [{type: change_variable, variable: "RI tf c", operation: SET, quantity: 3}]
+      - name: foundations 484 4
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 484, object_state: 0, quantity: 4}]
+        effects: [{type: change_variable, variable: "RI tf c", operation: SET, quantity: 4}]
+      - name: foundations 484 5
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 484, object_state: 0, quantity: 5}]
+        effects: [{type: change_variable, variable: "RI tf c", operation: SET, quantity: 5}]
+      - name: foundations 597 1
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 597, object_state: 0, quantity: 1}]
+        effects: [{type: change_variable, variable: "RI tf d", operation: SET, quantity: 1}]
+      - name: foundations 597 2
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 597, object_state: 0, quantity: 2}]
+        effects: [{type: change_variable, variable: "RI tf d", operation: SET, quantity: 2}]
+      - name: foundations 597 3
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 597, object_state: 0, quantity: 3}]
+        effects: [{type: change_variable, variable: "RI tf d", operation: SET, quantity: 3}]
+      - name: foundations 597 4
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 597, object_state: 0, quantity: 4}]
+        effects: [{type: change_variable, variable: "RI tf d", operation: SET, quantity: 4}]
+      - name: foundations 597 5
+        looping: true
+        conditions: [{type: objects_in_area, object_list: 597, object_state: 0, quantity: 5}]
+        effects: [{type: change_variable, variable: "RI tf d", operation: SET, quantity: 5}]
       - name: tithe
         conditions: [{type: timer, timer: 10}]
         effects:
@@ -509,10 +620,10 @@ upgrades:
           - {type: modify_resource_by_variable, tribute_list: [0, 1, 2, 3], operation: ADD, variable: "RI tithe"}
           - {type: activate_trigger, trigger_id: "@tithe"}
       - name: cap
-        conditions: [{type: variable_value, variable: "RI tc all", comparison: LARGER_OR_EQUAL, quantity: 5}]
+        conditions: [{type: variable_value, variable: "RI tc placed", comparison: LARGER_OR_EQUAL, quantity: 5}]
         effects:
           - {type: enable_disable_object, object_list_unit_id: [621, 617, 484, 597], enabled: 0}
-          - {type: display_instructions, display_time: 8, message: "Town Tithes: you have 5 Town Centers, the most you can build."}
+          - {type: display_instructions, display_time: 8, message: "Town Tithes: that was your 5th Town Center, the last one this mission."}
   grain_trade:
     label: "Grain Trade"
     text: "Trade Boats and Merchant Ships bring back half their gold again as food."
@@ -547,6 +658,108 @@ upgrades:
     # The user left this choice open (2026-11-08): a suggestion. Miners 124/220 (stone), 579/581 (gold).
     effects: [{type: modify_attribute, object_list_unit_id: [124, 220, 579, 581], object_attributes: 13,
                operation: MULTIPLY, quantity: 2}]
+
+  # Religion, primary (quality of life)
+  zealots:
+    label: "Zealots"
+    text: "Priests convert instantly, but their faith recharges three times slower."
+    # The user's idea (2026-11-08). RoR's Priest (125, class 18): work rate (13) 1.0, faith recharge (10, "reload")
+    # 2.0 (Fanaticism adds 1); Astrology multiplies the work rate by 1.3 and lowers resources 176/177 (Convert
+    # Min/Max Adjustment, the seconds before a conversion can happen / is forced) by 1 each (RoR's data, read with
+    # genieutils 2026-11-08). Instant: both adjustments far below zero and 10 times the work rate (unverified).
+    effects:
+      - {type: modify_resource, tribute_list: [176, 177], operation: SET, quantity: -20}
+      - {type: modify_attribute, object_list_unit_id: 125, object_attributes: 13, operation: MULTIPLY, quantity: 10}
+      - {type: modify_attribute, object_list_unit_id: 125, object_attributes: 10, operation: DIVIDE, quantity: 3}
+  pilgrims:
+    label: "Pilgrims"
+    text: "Each Temple gives 5 gold every 5 seconds, up to 2 Temples."
+    # Temples 104/30/31/32 (every age's). Every 5 seconds: pay last count's gold, count again; a looping trigger
+    # keeps the count at 2 at most (the user, 2026-11-08). Repeats through the relay like Town Tithes.
+    triggers:
+      - name: start
+        effects: [{type: activate_trigger, trigger_id: "@pay"}]
+      - name: pay
+        conditions: [{type: timer, timer: 5}]
+        effects:
+          - {type: modify_variable_by_variable, variable: "RI pilgrim gold", operation: SET, variable2: "RI temples"}
+          - {type: change_variable, variable: "RI pilgrim gold", operation: MULTIPLY, quantity: 5}
+          - {type: modify_resource_by_variable, tribute_list: 3, operation: ADD, variable: "RI pilgrim gold"}
+          - {type: count_units_into_variable, object_list_unit_id: 104, variable2: "RI temple a"}
+          - {type: count_units_into_variable, object_list_unit_id: 30, variable2: "RI temple b"}
+          - {type: count_units_into_variable, object_list_unit_id: 31, variable2: "RI temple c"}
+          - {type: count_units_into_variable, object_list_unit_id: 32, variable2: "RI temple d"}
+          - {type: modify_variable_by_variable, variable: "RI temples", operation: SET, variable2: "RI temple a"}
+          - {type: modify_variable_by_variable, variable: "RI temples", operation: ADD, variable2: "RI temple b"}
+          - {type: modify_variable_by_variable, variable: "RI temples", operation: ADD, variable2: "RI temple c"}
+          - {type: modify_variable_by_variable, variable: "RI temples", operation: ADD, variable2: "RI temple d"}
+          - {type: activate_trigger, trigger_id: "@pay"}
+      - name: two
+        looping: true
+        conditions: [{type: variable_value, variable: "RI temples", comparison: LARGER, quantity: 2}]
+        effects: [{type: change_variable, variable: "RI temples", operation: SET, quantity: 2}]
+  # Religion, Moderate bonus (good)
+  prophets:
+    label: "Prophets"
+    text: "Priests have 3 more range and line of sight."
+    # Afterlife's effect (Iron Age): +3 range (12) and line of sight (1).
+    effects:
+      - {type: modify_attribute, object_list_unit_id: 125, object_attributes: 12, operation: ADD, quantity: 3}
+      - {type: modify_attribute, object_list_unit_id: 125, object_attributes: 1, operation: ADD, quantity: 3}
+  temple_guard:
+    label: "Temple Guard"
+    text: "Priests have 50 more hit points and 1 more melee and pierce armour."
+    # The Priest has 25 hit points.
+    effects:
+      - {type: modify_attribute, object_list_unit_id: 125, object_attributes: 0, operation: ADD, quantity: 50}
+      - {type: modify_attribute, object_list_unit_id: 125, object_attributes: 8, operation: ADD,
+         armour_attack_class: 4, armour_attack_quantity: 1}
+      - {type: modify_attribute, object_list_unit_id: 125, object_attributes: 8, operation: ADD,
+         armour_attack_class: 3, armour_attack_quantity: 1}
+  # Religion, Hard bonus (great)
+  captured_engineers:
+    label: "Captured Engineers"
+    text: "Stone Throwers cost no gold and have 2 more range."
+    # Stone Thrower 280: gold cost (105) 0, range (12) and line of sight (1) +2.
+    effects:
+      - {type: modify_attribute, object_list_unit_id: 280, object_attributes: 105, operation: SET, quantity: 0}
+      - {type: modify_attribute, object_list_unit_id: 280, object_attributes: 12, operation: ADD, quantity: 2}
+      - {type: modify_attribute, object_list_unit_id: 280, object_attributes: 1, operation: ADD, quantity: 2}
+  divine_mandate:
+    label: "Divine Mandate"
+    text: "Temple upgrades are free and researched for you as soon as you can research them (all but Jihad)."
+    # The user (2026-11-08): the Temple upgrades free and automatically researched. Mysticism 21, Astrology 22,
+    # Polytheism 24 (Bronze), Afterlife 18, Fanaticism 20, Monotheism 114, Medicine 119, Theocracy 120 (Iron);
+    # not Jihad (23: villagers fight but gather worse). Each is researched once its state is 1 (Ready: a Temple,
+    # the age, and the tech tree allows it).
+    effects:
+      - {type: change_technology_cost, technology: [21, 22, 24, 18, 20, 114, 119, 120], resource_1: 0,
+         resource_1_quantity: 0, resource_2: 3, resource_2_quantity: 0}
+    triggers:
+      - name: research 21
+        conditions: [{type: technology_state, technology: 21, quantity: 1}]
+        effects: [{type: research_technology, technology: 21, force_research_technology: 1}]
+      - name: research 22
+        conditions: [{type: technology_state, technology: 22, quantity: 1}]
+        effects: [{type: research_technology, technology: 22, force_research_technology: 1}]
+      - name: research 24
+        conditions: [{type: technology_state, technology: 24, quantity: 1}]
+        effects: [{type: research_technology, technology: 24, force_research_technology: 1}]
+      - name: research 18
+        conditions: [{type: technology_state, technology: 18, quantity: 1}]
+        effects: [{type: research_technology, technology: 18, force_research_technology: 1}]
+      - name: research 20
+        conditions: [{type: technology_state, technology: 20, quantity: 1}]
+        effects: [{type: research_technology, technology: 20, force_research_technology: 1}]
+      - name: research 114
+        conditions: [{type: technology_state, technology: 114, quantity: 1}]
+        effects: [{type: research_technology, technology: 114, force_research_technology: 1}]
+      - name: research 119
+        conditions: [{type: technology_state, technology: 119, quantity: 1}]
+        effects: [{type: research_technology, technology: 119, force_research_technology: 1}]
+      - name: research 120
+        conditions: [{type: technology_state, technology: 120, quantity: 1}]
+        effects: [{type: research_technology, technology: 120, force_research_technology: 1}]
 
 missions:
   01_hunting:
@@ -1153,3 +1366,147 @@ missions:
               - {units: [SCOUT], count: 5, first: 360, every: 180, target: villagers, fallback: {x: 78, y: 18}}
             attack: {first: 300, every: 360, min_group: 20, max_group: 25, percent: 100, target: 1,
                      warm_up: {attacks: 3, min_group: 5, max_group: 8, every: 180}}
+  08_religion:
+    # Mission 8: you start walled in at Heliopolis (Town Center 50,48) with 4 Villagers, 1 Priest (68,42) by the
+    # Temple (70,42), a Barracks, Archery Range, Stable and Market. The Libyans (P2): Town Center 8,44, 7 Bowmen,
+    # 2 Villagers and the Stone Thrower (15,37). Objective: capture the Stone Thrower and bring it to the marked
+    # area by your Town Center (46-52, 44-50), or defeat the Libyans.
+    # The user's design (2026-11-08): the Libyans are passive but military: Bronze Age, never attack, no Siege
+    # Workshop of their own making (and no Stone Throwers). Moderate and Hard: no new Priests, and losing yours
+    # loses the mission; a Stone Thrower is required (defeating the Libyans isn't enough): theirs, or one you train
+    # at their Siege Workshop once you've converted it. You can't build a Siege Workshop yourself.
+    start: {2: {age: bronze_age, food: 1500, wood: 1500, gold: 1000, stone: 300}}
+    setup:
+      - {type: enable_disable_object, source_player: 2, object_list_unit_id: [280, 49, 150], enabled: 0}
+      - {type: enable_disable_object, object_list_unit_id: [49, 150], enabled: 0}
+    primary_extra:
+      text: "Have a Stone Thrower at your Town Center: theirs, or one from their Siege Workshop (convert it)."
+      conditions: [{type: objects_in_area, object_list: 280, area_x1: 46, area_y1: 44, area_x2: 52, area_y2: 50,
+                    quantity: 1}]
+    units:
+      # The Libyans' Siege Workshop (49) between their camp and the Stone Thrower, Moderate and up: convert it
+      # and train your own Stone Thrower (the user, 2026-11-08).
+      - {player: 2, unit: 49, x: 12, y: 40, from: moderate}
+      # Moderate: 5 Composite Bowmen (492) and 5 Short Swordsmen (74) around the Stone Thrower; Hard adds 10
+      # Chariots (1370) and 10 Chariot Archers (5). The AI keeps them up.
+      - {player: 2, unit: 492, x: 17, y: 38, from: moderate}
+      - {player: 2, unit: 492, x: 15, y: 41, from: moderate}
+      - {player: 2, unit: 492, x: 11, y: 36, from: moderate}
+      - {player: 2, unit: 492, x: 16, y: 33, from: moderate}
+      - {player: 2, unit: 492, x: 16, y: 41, from: moderate}
+      - {player: 2, unit: 74, x: 11, y: 35, from: moderate}
+      - {player: 2, unit: 74, x: 17, y: 33, from: moderate}
+      - {player: 2, unit: 74, x: 10, y: 37, from: moderate}
+      - {player: 2, unit: 74, x: 11, y: 34, from: moderate}
+      - {player: 2, unit: 74, x: 18, y: 33, from: moderate}
+      - {player: 2, unit: 1370, x: 10, y: 36, from: hard}
+      - {player: 2, unit: 1370, x: 10, y: 38, from: hard}
+      - {player: 2, unit: 1370, x: 16, y: 42, from: hard}
+      - {player: 2, unit: 1370, x: 10, y: 35, from: hard}
+      - {player: 2, unit: 1370, x: 10, y: 39, from: hard}
+      - {player: 2, unit: 1370, x: 17, y: 42, from: hard}
+      - {player: 2, unit: 1370, x: 11, y: 33, from: hard}
+      - {player: 2, unit: 1370, x: 10, y: 34, from: hard}
+      - {player: 2, unit: 1370, x: 10, y: 40, from: hard}
+      - {player: 2, unit: 1370, x: 9, y: 35, from: hard}
+      - {player: 2, unit: 5, x: 21, y: 39, from: hard}
+      - {player: 2, unit: 5, x: 20, y: 41, from: hard}
+      - {player: 2, unit: 5, x: 9, y: 34, from: hard}
+      - {player: 2, unit: 5, x: 12, y: 43, from: hard}
+      - {player: 2, unit: 5, x: 21, y: 40, from: hard}
+      - {player: 2, unit: 5, x: 22, y: 37, from: hard}
+      - {player: 2, unit: 5, x: 22, y: 36, from: hard}
+      - {player: 2, unit: 5, x: 22, y: 38, from: hard}
+      - {player: 2, unit: 5, x: 22, y: 39, from: hard}
+      - {player: 2, unit: 5, x: 8, y: 34, from: hard}
+    rewards: [zealots, pilgrims]
+    bonus:
+      - text: "Convert 10 enemy units."
+        # Conversions, resource 41 (unverified in RoR).
+        conditions: [{type: accumulate_attribute, attribute: 41, quantity: 10}]
+        # Moderate and Hard rules (this objective shows on both, so its setup and triggers are theirs):
+        setup:
+          # no new Priests
+          - {type: enable_disable_object, object_list_unit_id: 125, enabled: 0}
+          # Priests may convert buildings (the Siege Workshop): in RoR that's Monotheism's resource 28 (RoR's data)
+          - {type: modify_resource, tribute_list: 28, operation: SET, quantity: 1}
+          # the Libyans' army is Moderate's and Hard's own, not the original's 7 Bowmen
+          - {type: remove_object, select: {player: 2, unit: 4}}
+        triggers:
+          # Losing your Priest loses the mission: the Libyans win.
+          - name: priest lost
+            conditions: [{type: own_fewer_objects, object_list: 125, quantity: 0}]
+            effects:
+              - {type: display_instructions, display_time: 10, message: "Your Priest has fallen. Heliopolis is lost."}
+              - {type: declare_victory, source_player: 2, enabled: 1}
+        rewards: [prophets, temple_guard]
+      - text: "Bring home the Libyans' own Stone Thrower, not one you train."
+        # The original's objective as a bonus: the Libyans' Stone Thrower captured and in the marked area.
+        conditions:
+          - {type: capture_object, select: {player: 2, unit: 280}, source_player: 1}
+          - {type: bring_object_to_area, select: {player: 2, unit: 280}, area_x1: 46, area_y1: 44, area_x2: 52,
+             area_y2: 50}
+        rewards: [captured_engineers, divine_mandate]
+    ai:
+      # The Libyans: passive (no attack), military. They fight what comes near and replace their losses.
+      #   Standard: about 10 Bowmen and Axemen, a small economy, no upgrades.
+      #   Moderate: 10 Composite Bowmen and Short Swordsmen, Bronze Age armour and weapon upgrades.
+      #   Hard: Moderate's, plus 10 Chariots and 10 Chariot Archers (Chariots resist conversion), cavalry armour.
+      2:
+        replace: true
+        name: Libyans
+        step_timeout: 120
+        scout: false
+        build_order:
+          - {build: HOUSE}
+          - {build: BARRACKS}
+          - {build: FARM, count: 3}
+          - {research: BATTLE_AXE}
+        levels:
+          easy:
+            villagers: 8
+            keep:
+              - {train: BOWMAN, count: 6}
+              - {train: AXEMAN, count: 4}
+              - {build: FARM, count: 4}
+          normal:
+            villagers: 14
+            keep:
+              - {build: ARCHERY_RANGE}
+              - {research: IMPROVED_BOW}
+              - {research: COMPOSITE_BOW}
+              - {research: SHORT_SWORD}
+              - {train: COMPOSITE_BOWMAN, count: 5}
+              - {train: SHORT_SWORDSMAN, count: 5}
+              - {build: FARM, count: 6}
+              - {research: TOOLWORKING}
+              - {research: METALWORKING}
+              - {research: LEATHER_ARMOR_FOR_INFANTRY}
+              - {research: LEATHER_ARMOR_FOR_ARCHERS}
+              - {research: SCALE_ARMOR_FOR_INFANTRY}
+              - {research: SCALE_ARMOR_FOR_ARCHERS}
+              - {research: BRONZE_SHIELD}
+          hard:
+            villagers: 22
+            keep:
+              - {build: ARCHERY_RANGE, count: 2}
+              - {build: STABLE, count: 2}
+              - {build: MARKET}
+              - {research: IMPROVED_BOW}
+              - {research: COMPOSITE_BOW}
+              - {research: SHORT_SWORD}
+              - {research: WHEEL}
+              - {train: COMPOSITE_BOWMAN, count: 5}
+              - {train: SHORT_SWORDSMAN, count: 5}
+              - {train: CHARIOT, count: 10}
+              - {train: CHARIOT_ARCHER, count: 10}
+              - {build: FARM, count: 10}
+              - {research: TOOLWORKING}
+              - {research: METALWORKING}
+              - {research: LEATHER_ARMOR_FOR_INFANTRY}
+              - {research: LEATHER_ARMOR_FOR_ARCHERS}
+              - {research: LEATHER_ARMOR_FOR_CAVALRY}
+              - {research: SCALE_ARMOR_FOR_INFANTRY}
+              - {research: SCALE_ARMOR_FOR_ARCHERS}
+              - {research: SCALE_ARMOR_FOR_CAVALRY}
+              - {research: BRONZE_SHIELD}
