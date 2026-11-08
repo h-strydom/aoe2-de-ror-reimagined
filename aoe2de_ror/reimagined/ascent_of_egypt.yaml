@@ -12,7 +12,7 @@
 #   players: [{number, name, civ}]  players the mission adds: enemies of all, no AI, moved by triggers
 #   primary_extra: {text, from, conditions}   a line the main objective gains from a difficulty up (End Mission
 #                                 waits for it too)
-#   units: [{player, unit, x, y, from, group}]   units on the map from the start; `from: moderate|hard` removes
+#   units: [{player, unit, x, y, from, group, hp}]   units on the map from the start; `from: moderate|hard` removes
 #                                 them from easier games; `group` names them for `select: {group: name}`
 #   rewards: [upgrade, upgrade]   the choice offered on completing the primary objective
 #   bonus:                        Moderate shows the first, Hard both
@@ -366,6 +366,48 @@ upgrades:
     label: "Nile Arsenal"
     text: "Egypt gains the Catapult, Heavy Catapult, Phalangite and Armored Elephant upgrades (Iron Age)."
     effects: [{type: enable_disable_technology, technology: [54, 36, 73, 125], enabled: 1}]
+  # Skirmish, primary (quality of life)
+  keen_eyes:
+    label: "Keen Eyes"
+    text: "Bowmen shoot 1 tile farther."
+    effects: [{type: modify_attribute, object_list_unit_id: [4, 24, 492], object_attributes: 12, operation: ADD,
+               quantity: 1}]
+  field_dressing:
+    label: "Field Dressing"
+    text: "Soldiers slowly heal (15 hit points a minute)."
+    # Regeneration (attribute 109, hit points per minute) for every soldier class: infantry 6, archers 0, mounted
+    # archers 36, cavalry 12, Scouts 47, Slingers 44, siege 13 and 55.
+    effects: [{type: modify_attribute_for_class, object_group2: [6, 0, 36, 12, 47, 44, 13, 55], object_attributes: 109,
+               operation: SET, quantity: 15}]
+  # Skirmish, Moderate bonus (good)
+  bronze_tipped_arrows:
+    label: "Bronze-tipped Arrows"
+    text: "Everything that shoots arrows does 1 more damage: archers, towers and warships."
+    # The arrow shooters (RoR data, projectile Arrow or Tower Arrow): Bowman 4, Improved Bowman 24, Composite Bowman
+    # 492, Chariot Archer 5, Horse Archer 39, Heavy Horse Archer 474, Elephant Archer 873, War Galley 21, Scout Ship
+    # 539, Watch/Sentry/Guard Tower 79/234/235. All pierce (class 3).
+    effects: [{type: modify_attribute, object_attributes: 9, operation: ADD, armour_attack_class: 3,
+               armour_attack_quantity: 1, object_list_unit_id: [4, 24, 492, 5, 39, 474, 873, 21, 539, 79, 234, 235]}]
+  hardy_warriors:
+    label: "Hardy Warriors"
+    text: "Melee soldiers have 20 more hit points."
+    # Infantry (6), cavalry and elephants (12), Scouts (47).
+    effects: [{type: modify_attribute_for_class, object_group2: [6, 12, 47], object_attributes: 0, operation: ADD,
+               quantity: 20}]
+  # Skirmish, Hard bonus (great)
+  battle_drill:
+    label: "Battle Drill"
+    text: "Soldiers train 50% faster."
+    effects: [{type: modify_attribute_for_class, object_group2: [6, 0, 36, 12, 47, 44, 13, 55, 22], object_attributes: 101,
+               operation: MULTIPLY, quantity: 0.67}]
+  shield_wall:
+    label: "Shield Wall"
+    text: "Infantry have 1 more melee and pierce armour."
+    effects:
+      - {type: modify_attribute_for_class, object_group2: 6, object_attributes: 8, operation: ADD,
+         armour_attack_class: 4, armour_attack_quantity: 1}
+      - {type: modify_attribute_for_class, object_group2: 6, object_attributes: 8, operation: ADD,
+         armour_attack_class: 3, armour_attack_quantity: 1}
 
 missions:
   01_hunting:
@@ -453,14 +495,14 @@ missions:
       # Raiders guarding the elephants: 2 Clubmen and a Bowman in the north, 2 Clubmen and a Scout in the
       # south-west (Moderate and Hard), and a Bowman more at each on Hard. On the map from the start: created by
       # a trigger they were defeated before they appeared (playtest, 2026-11-08).
-      - {player: 2, unit: 281, x: 22, y: 8, from: moderate, group: north}
-      - {player: 2, unit: 281, x: 24, y: 8, from: moderate, group: north}
-      - {player: 2, unit: 4, x: 23, y: 7, from: moderate, group: north}
-      - {player: 2, unit: 4, x: 25, y: 7, from: hard, group: north}
-      - {player: 2, unit: 281, x: 8, y: 37, from: moderate, group: southwest}
-      - {player: 2, unit: 281, x: 8, y: 39, from: moderate, group: southwest}
-      - {player: 2, unit: 448, x: 9, y: 38, from: moderate, group: southwest}
-      - {player: 2, unit: 4, x: 9, y: 36, from: hard, group: southwest}
+      - {player: 2, hp: 40, unit: 281, x: 22, y: 8, from: moderate, group: north}
+      - {player: 2, hp: 40, unit: 281, x: 24, y: 8, from: moderate, group: north}
+      - {player: 2, hp: 35, unit: 4, x: 23, y: 7, from: moderate, group: north}
+      - {player: 2, hp: 35, unit: 4, x: 25, y: 7, from: hard, group: north}
+      - {player: 2, hp: 40, unit: 281, x: 8, y: 37, from: moderate, group: southwest}
+      - {player: 2, hp: 40, unit: 281, x: 8, y: 39, from: moderate, group: southwest}
+      - {player: 2, hp: 60, unit: 448, x: 9, y: 38, from: moderate, group: southwest}
+      - {player: 2, hp: 35, unit: 4, x: 9, y: 36, from: hard, group: southwest}
       # More fish (250 food each) in open water near the shores: food ran short after fighting the Raiders.
       - {player: 0, unit: 457, x: 39, y: 1}
       - {player: 0, unit: 457, x: 42, y: 9}
@@ -527,13 +569,21 @@ missions:
             effects: [{type: activate_trigger, trigger_id: "@southwest attack"}]
           - name: north provoked
             conditions:
-              - {type: object_attacked, select: {group: north}, quantity: 1}
+              # object_attacked's player is most likely the attacker: with the Raiders there it never fired (playtest
+              # 2026-11-08). Backed up by "hurt" (hit points below full) and "killed".
+              - {type: object_attacked, select: {group: north}, source_player: 1, quantity: 1}
+              - {type: or}
+              - {type: object_hp, select: {group: north}, comparison: LESS, quantity: full}
               - {type: or}
               - {type: destroy_object, select: {group: north}}
             effects: [{type: activate_trigger, trigger_id: "@north attack"}]
           - name: southwest provoked
             conditions:
-              - {type: object_attacked, select: {group: southwest}, quantity: 1}
+              # object_attacked's player is most likely the attacker: with the Raiders there it never fired (playtest
+              # 2026-11-08). Backed up by "hurt" (hit points below full) and "killed".
+              - {type: object_attacked, select: {group: southwest}, source_player: 1, quantity: 1}
+              - {type: or}
+              - {type: object_hp, select: {group: southwest}, comparison: LESS, quantity: full}
               - {type: or}
               - {type: destroy_object, select: {group: southwest}}
             effects: [{type: activate_trigger, trigger_id: "@southwest attack"}]
@@ -566,3 +616,82 @@ missions:
               - {type: attack_move, select: {group: southwest}, location_x: 28, location_y: 26}
               - {type: activate_trigger, trigger_id: "@push southwest"}
         rewards: [resource_mastery, nile_arsenal]
+  05_skirmish:
+    # Mission 5: your 4 Axemen and 3 Bowmen around 20,23 against the Egyptian Raiders' 3 Axemen and 3 Bowmen in the
+    # south-east (46,46 to 65,61). No Town Center: the mission ends through the "End the mission now?" popup. Water
+    # fills the north-east corner (x 46+, y 0-28); the beach nearest your army is around 47,20.
+    players:
+      # Hard's landing party: allied to the Raiders but their own player, so you can win before it arrives. Its
+      # ship waits hidden in the water corner from the start (a player with nothing on the map at the start is
+      # defeated at once).
+      - {number: 3, name: "Raider Landing Party", civ: EGYPTIAN, allies: [2]}
+    units:
+      - {player: 3, unit: 545, x: 69, y: 2, group: ship}
+      # Moderate and Hard: the Raiders' chieftain, a Short Swordsman (60 hit points).
+      - {player: 2, unit: 74, x: 58, y: 51, from: moderate, group: chieftain}
+    setup:
+      # The landing ship stays out of sight and out of reach until Hard sends it.
+      - {type: change_object_visibility, select: {group: ship}, target_player: 1, visibility_state: INVISIBLE}
+      - {type: disable_unit_attackable, select: {group: ship}}
+      - {type: disable_object_selection, select: {group: ship}}
+    rewards: [keen_eyes, field_dressing]
+    bonus:
+      - text: "Slay the Raider chieftain."
+        conditions: [{type: destroy_object, select: {group: chieftain}}]
+        setup:
+          - {type: change_object_name, select: {group: chieftain}, message: "Raider Chieftain"}
+        rewards: [bronze_tipped_arrows, hardy_warriors]
+      - text: "Lose no more than 2 units."
+        # Complete with the main objective, unless a third unit was lost first.
+        conditions: [{type: variable_value, variable: "RI primary", comparison: EQUAL, quantity: 1}]
+        fail:
+          - {type: accumulate_attribute, attribute: 154, quantity: 3}
+        triggers:
+          # Hard: 5 minutes in, the landing party's ship sails from the corner to the beach near 47,20, drops 2
+          # Slingers and an Axeman, sails back and goes. They attack-move toward your army's ground (the order
+          # again every 10 seconds; they see your units). If they land before you've won, defeating them joins the
+          # main objective.
+          - name: launch
+            conditions: [{type: timer, timer: 300}]
+            effects:
+              - {type: change_object_visibility, select: {group: ship}, target_player: 1, visibility_state: VISIBLE}
+              - {type: enable_unit_attackable, select: {group: ship}}
+              - {type: task_object, select: {group: ship}, location_x: 49, location_y: 20}
+              - {type: display_instructions, display_time: 8, message: "A Raider ship is sailing in from the north-east!"}
+              - {type: activate_trigger, trigger_id: "@land"}
+          - name: land
+            conditions: [{type: objects_in_area, source_player: 3, object_list: 545, area_x1: 47, area_y1: 17,
+                          area_x2: 52, area_y2: 23, quantity: 1}]
+            effects:
+              - {type: create_object, source_player: 3, object_list_unit_id: 7, location_x: 47, location_y: 19}
+              - {type: create_object, source_player: 3, object_list_unit_id: 7, location_x: 47, location_y: 21}
+              - {type: create_object, source_player: 3, object_list_unit_id: 531, location_x: 47, location_y: 20}
+              - {type: set_player_visibility, source_player: 3, target_player: 1, visibility_state: VISIBLE}
+              - {type: attack_move, source_player: 3, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
+                 object_group: 44, location_x: 21, location_y: 23}
+              - {type: attack_move, source_player: 3, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
+                 object_group: 6, location_x: 21, location_y: 23}
+              - {type: task_object, select: {group: ship}, location_x: 69, location_y: 2}
+              - {type: change_variable, variable: "RI primary gate", operation: SET, quantity: 1}
+              - {type: activate_trigger, trigger_id: "@landed"}
+              - {type: activate_trigger, trigger_id: "@push"}
+              - {type: activate_trigger, trigger_id: "@sail away"}
+          - name: landed
+            objective: "Defeat the landing party."
+            conditions:
+              - {type: own_fewer_objects, source_player: 3, object_group: 44, quantity: 0}
+              - {type: own_fewer_objects, source_player: 3, object_group: 6, quantity: 0}
+            effects: [{type: change_variable, variable: "RI primary gate", operation: SET, quantity: 0}]
+          - name: push
+            conditions: [{type: timer, timer: 10}]
+            effects:
+              - {type: attack_move, source_player: 3, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
+                 object_group: 44, location_x: 21, location_y: 23}
+              - {type: attack_move, source_player: 3, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
+                 object_group: 6, location_x: 21, location_y: 23}
+              - {type: activate_trigger, trigger_id: "@push"}
+          - name: sail away
+            conditions: [{type: objects_in_area, source_player: 3, object_list: 545, area_x1: 66, area_y1: 0,
+                          area_x2: 71, area_y2: 5, quantity: 1}]
+            effects: [{type: remove_object, select: {group: ship}}]
+        rewards: [battle_drill, shield_wall]

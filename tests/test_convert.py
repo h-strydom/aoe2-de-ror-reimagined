@@ -126,3 +126,10 @@ def test_committed_maps_are_up_to_date(c, tmp_path, mission_pool):
         if not committed.is_file() or committed.read_bytes() != f.read_bytes():
             stale.append(str(committed.relative_to(layout.ROOT)))
     assert not stale, f"run `uv run reimagined convert {c.slug}`; out of date: {stale}"
+
+
+@pytest.mark.parametrize("c", CAMPAIGNS, ids=lambda c: c.slug)
+def test_every_committed_scenario_reads_back(c):
+    """A list left in a trigger effect once wrote an unreadable scenario (Ascent of Egypt 5)."""
+    for m in c.missions:
+        AoE2DEScenario.from_file(str(scenario_path(m, layout.AOE2DE_ROR)))

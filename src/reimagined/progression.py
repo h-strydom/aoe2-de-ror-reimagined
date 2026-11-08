@@ -119,7 +119,8 @@ def upgrade_line(up: dict) -> str:
 
 
 def expand(effects: list[dict]) -> list[dict]:
-    """One effect per unit (or tech) when an effect's object_list_unit_id (or technology) lists several."""
+    """One effect per unit (tech, class) when an effect's object_list_unit_id (technology, object_group2) lists
+    several. (A list left in one effect wrote an unreadable scenario.)"""
     out = []
     for e in effects:
         key = next((k for k in LIST_KEYS if isinstance(e.get(k), list)), None)
@@ -127,7 +128,7 @@ def expand(effects: list[dict]) -> list[dict]:
     return out
 
 
-LIST_KEYS = ("object_list_unit_id", "technology")
+LIST_KEYS = ("object_list_unit_id", "technology", "object_group2")
 
 
 def _player(effects: list[dict], player: int) -> list[dict]:
@@ -156,7 +157,8 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
 
     def own_triggers(prefix: str, specs: list[dict]) -> list[str]:
         """Content's own triggers (an upgrade's, a bonus objective's), named "<prefix> <name>", off until the
-        owner turns them on; trigger_id "@<name>" points at a sibling. Returns the names the owner starts: those
+        owner turns them on; trigger_id "@<name>" points at a sibling; `objective: text` shows the trigger as a
+        line of the main objective (checked when it fires). Returns the names the owner starts: those
         no sibling activates (a wave a sibling starts mustn't fire with the owner: Egypt 4's first wave did,
         at the start of the mission, 2026-11-08)."""
         chained = {e["trigger_id"][1:] for t in specs for e in t.get("effects") or []
@@ -164,7 +166,10 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
         names = []
         for t in specs:
             name = f"{prefix} {t['name']}"
-            out.append({"name": name, "enabled": False, "looping": bool(t.get("looping")),
+            line = {"display_as_objective": True, "display_on_screen": True, "description": f"+ {t['objective']}",
+                    "short_description": f"+ {t['objective']}", "description_order": OBJECTIVE_ORDER_OFFSET - 1} \
+                if t.get("objective") else {}
+            out.append({"name": name, "enabled": False, "looping": bool(t.get("looping")), **line,
                         "conditions": own(t.get("conditions") or []),
                         "effects": _player([{**e, "trigger_id": f"{prefix} {e['trigger_id'][1:]}"}
                                             if str(e.get("trigger_id", "")).startswith("@") else e
@@ -345,11 +350,14 @@ def _player_all(triggers_: list[dict], player: int) -> list[dict]:
 
 
 def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]]],
-                   groups: dict[str, tuple[int, list[int]]] | None = None) -> None:
+                   groups: dict[str, tuple[int, list[int]]] | None = None,
+                   unit_hp: dict[int, int] | None = None) -> None:
     """Resolve setup effects' `select: {player, unit}` (unit: an id or a list) into selected_object_ids: the objects
     of those units the map places for that player. `placed` is player -> [(unit id, reference id)].
     `select: {group: name}` is a group of the mission's own units (`groups`: name -> (player, reference ids); each
-    unit's `group`, and "from <level>" for its difficulty).
+    unit's `group`, and "from <level>" for its difficulty). A condition selecting a group holds for any of its units
+    (one per unit, joined by OR); its `quantity: full` is each unit's full hit points (`unit_hp`, from the mission
+    unit's `hp`), for "object_hp less than full": hurt.
     remove_object by unit type over an area left Gaia's forage bushes in place (Egypt 2 playtest, 2026-11-07);
     remove_object on selected objects works (aoe-agent-editor's fog block)."""
     for t in triggers_:
@@ -363,7 +371,9 @@ def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]
             owner, refs = (groups or {}).get(sel["group"], (0, []))
             for i, ref in enumerate(refs):
                 one = {**c, "unit_object": ref}
-                if c["type"] not in _UNIT_ONLY_CONDITIONS:
+                if c.get("quantity") == "full":
+                    one["quantity"] = (unit_hp or {})[ref]
+                if c["type"] not in _UNIT_ONLY_CONDITIONS and "source_player" not in c:
                     one["source_player"] = owner
                 conds += ([{"type": "or"}] if i else []) + [one]
         if "conditions" in t:
@@ -419,8 +429,8 @@ def tree_effects(camp: Campaign, folders: list[str], number: int) -> list[dict]:
 
 
 def extra_players(camp: Campaign, folder: str) -> list[dict]:
-    """Players a mission adds ({number, name, civ}: a RoR civ name), enemies of everyone, without an AI: they act
-    through the mission's triggers. Mission content: `players: [...]`."""
+    """Players a mission adds ({number, name, civ: a RoR civ name, allies: [player]}), enemies of everyone but their
+    allies, without an AI: they act through the mission's triggers. Mission content: `players: [...]`."""
     return list((camp.missions.get(folder) or {}).get("players") or [])
 
 

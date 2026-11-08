@@ -237,3 +237,24 @@ def test_primary_extra_gates_ending_from_its_difficulty():
         assert any(e.get("variable") == "RI primary gate" and e["quantity"] == 1 for e in effects)
     assert {"type": "variable_value", "variable": "RI primary gate", "comparison": "EQUAL", "quantity": 0} in \
         ts["RI Primary complete"]["conditions"]                                 # Standard: the gate stays open
+
+
+def test_group_conditions_keep_the_attacker_and_use_each_units_full_health():
+    ts = [{"name": "t", "conditions": [
+        {"type": "object_attacked", "select": {"group": "g"}, "source_player": 1, "quantity": 1},
+        {"type": "or"},
+        {"type": "object_hp", "select": {"group": "g"}, "comparison": "LESS", "quantity": "full"},
+        {"type": "or"},
+        {"type": "destroy_object", "select": {"group": "g"}}], "effects": []}]
+    progression.select_objects(ts, {}, {"g": (2, [7, 8])}, {7: 40, 8: 35})
+    c = ts[0]["conditions"]
+    assert [x["type"] for x in c] == ["object_attacked", "or", "object_attacked", "or", "object_hp", "or",
+                                      "object_hp", "or", "destroy_object", "or", "destroy_object"]
+    assert c[0]["source_player"] == 1 and c[0]["unit_object"] == 7               # the attacker, as given
+    assert (c[4]["quantity"], c[6]["quantity"]) == (40, 35)                      # each unit's own full health
+    assert "source_player" not in c[8]                                           # destroy_object takes none
+
+
+def test_lists_of_classes_expand():
+    effects = progression.expand([{"type": "modify_attribute_for_class", "object_group2": [6, 0], "quantity": 1}])
+    assert [e["object_group2"] for e in effects] == [6, 0]

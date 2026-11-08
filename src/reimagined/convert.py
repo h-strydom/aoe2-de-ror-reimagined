@@ -251,14 +251,16 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             for q in others:
                 state = DIPLOMACY.get(src.diplomacy[p.number - 1][q.number - 1], "ENEMY")
                 diplomacy_set(o.handle, p.number, [q.number], state, mutual=False)
-        # Players the reimagined mission adds: enemies of all, no AI (their units move by trigger), no stockpile.
+        # Players the reimagined mission adds: enemies of all but their `allies`, no AI (their units move by
+        # trigger), no stockpile.
         for x in extras:
             player_set(o.handle, x["number"], {"civilization": x["civ"], "human": False, "food": 0, "wood": 0,
                                                "gold": 0, "stone": 0, "tribe_name": x["name"]})
             ai_set(o.handle, x["number"], "immobile")
             res.ai[x["number"]] = "immobile (reimagined)"
             for q in [p.number for p in active] + [y["number"] for y in extras if y is not x]:
-                diplomacy_set(o.handle, x["number"], [q], "ENEMY", mutual=True)
+                state = "ALLY" if q in (x.get("allies") or []) else "ENEMY"
+                diplomacy_set(o.handle, x["number"], [q], state, mutual=True)
 
         for k, v in text.items():
             setattr(s.message_manager, k, v)
@@ -278,9 +280,12 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
 
         # The reimagined mission's own units, on the map from the start; groups name them for its triggers.
         groups: dict[str, tuple[int, list[int]]] = {}
+        unit_hp: dict[int, int] = {}
         for mu in progression.mission_units(content, folder):
             ref = s.unit_manager.add_unit(player=mu["player"], unit_const=mu["unit"], x=mu["x"] + 0.5,
                                           y=mu["y"] + 0.5, status=NORMAL_STATUS).reference_id
+            if "hp" in mu:
+                unit_hp[ref] = mu["hp"]
             for g in [mu.get("group"), f"from {mu['from']}" if mu.get("from") else None]:
                 if g:
                     groups.setdefault(g, (mu["player"], []))[1].append(ref)
@@ -291,7 +296,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             # Only a Custom victory keeps the game from ending when an added player is defeated.
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")
         reimagined = reimagined_triggers(src, conv, mission, vp.triggers)
-        progression.select_objects(reimagined, placed, groups)
+        progression.select_objects(reimagined, placed, groups, unit_hp)
         vp.triggers += reimagined
         options_set(o.handle, vp.options())
         if vp.triggers:
