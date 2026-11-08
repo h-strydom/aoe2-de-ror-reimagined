@@ -174,12 +174,13 @@ upgrades:
   # Discoveries, Hard bonus (great)
   founding_families:
     label: "Founding Families"
-    text: "Each mission, your first 10 villagers are free and train instantly."
+    # Balance (user, 2026-11-08): 5, not 10.
+    text: "Each mission, your first 5 villagers are free and train instantly."
     effects:
       # Remember the villager's price and training time (Light Footprint may have changed the price), then
-      # make it free and instant until 10 more villagers are alive than at the start.
+      # make it free and instant until 5 more villagers are alive than at the start.
       - {type: modify_variable_by_resource, tribute_list: 38, operation: SET, variable: "RI free villagers until"}
-      - {type: change_variable, variable: "RI free villagers until", operation: ADD, quantity: 10}
+      - {type: change_variable, variable: "RI free villagers until", operation: ADD, quantity: 5}
       - {type: modify_variable_by_attribute, object_list_unit_id: 83, object_attributes: 103, operation: SET,
          variable: "RI villager food"}
       - {type: modify_variable_by_attribute, object_list_unit_id: 83, object_attributes: 101, operation: SET,
@@ -207,24 +208,38 @@ upgrades:
   swift_advance:
     label: "Swift Advance"
     text: "Advancing to the next age is instant (it still costs the same)."
-    effects: [{type: change_technology_research_time, technology: [101, 102, 103], quantity: 0}]
+    # 1 second: with 0 the game put the player straight into the Bronze Age (Egypt 4 playtest, 2026-11-08);
+    # a 0 research time seemingly lets it complete on its own. Unverified that 1 fixes it.
+    effects: [{type: change_technology_research_time, technology: [101, 102, 103], quantity: 1}]
   free_town_center:
     label: "Free Town Center"
-    text: "Each mission, your first new Town Center costs nothing."
+    text: "Each mission, your first new Town Center costs nothing. Town Centers can be built from the Bronze Age."
+    # Villagers build the RTWC units (621 Stone, 617 Tool, 484 Bronze, 597 Iron), which normally need a Government
+    # Center ("shadow gb->tc", tech 115): the price is theirs. Perks trump the mission: from the Bronze Age this
+    # enables them even where a mission disables them (Egypt 4).
     effects:
-      # Count the Town Centers now (every age's), remember the price, build the next one for free.
+      # Count the Town Centers now (every age's, built and buildable kinds: which one a finished Town Center is
+      # isn't pinned down), remember the price, build the next one for free.
       - {type: count_units_into_variable, object_list_unit_id: 109, variable2: "RI tc a"}
       - {type: count_units_into_variable, object_list_unit_id: 71, variable2: "RI tc b"}
       - {type: count_units_into_variable, object_list_unit_id: 141, variable2: "RI tc c"}
       - {type: count_units_into_variable, object_list_unit_id: 142, variable2: "RI tc d"}
+      - {type: count_units_into_variable, object_list_unit_id: 621, variable2: "RI tc e"}
+      - {type: count_units_into_variable, object_list_unit_id: 617, variable2: "RI tc f"}
+      - {type: count_units_into_variable, object_list_unit_id: 484, variable2: "RI tc g"}
+      - {type: count_units_into_variable, object_list_unit_id: 597, variable2: "RI tc h"}
       - {type: modify_variable_by_variable, variable: "RI tc until", operation: SET, variable2: "RI tc a"}
       - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc b"}
       - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc c"}
       - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc d"}
+      - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc e"}
+      - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc f"}
+      - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc g"}
+      - {type: modify_variable_by_variable, variable: "RI tc until", operation: ADD, variable2: "RI tc h"}
       - {type: change_variable, variable: "RI tc until", operation: ADD, quantity: 1}
-      - {type: modify_variable_by_attribute, object_list_unit_id: 109, object_attributes: 104, operation: SET,
+      - {type: modify_variable_by_attribute, object_list_unit_id: 621, object_attributes: 104, operation: SET,
          variable: "RI tc wood"}
-      - {type: modify_attribute, object_list_unit_id: [109, 71, 141, 142], object_attributes: 104, operation: SET,
+      - {type: modify_attribute, object_list_unit_id: [621, 617, 484, 597], object_attributes: 104, operation: SET,
          quantity: 0}
     triggers:
       - name: count
@@ -234,17 +249,28 @@ upgrades:
           - {type: count_units_into_variable, object_list_unit_id: 71, variable2: "RI tc b"}
           - {type: count_units_into_variable, object_list_unit_id: 141, variable2: "RI tc c"}
           - {type: count_units_into_variable, object_list_unit_id: 142, variable2: "RI tc d"}
+          - {type: count_units_into_variable, object_list_unit_id: 621, variable2: "RI tc e"}
+          - {type: count_units_into_variable, object_list_unit_id: 617, variable2: "RI tc f"}
+          - {type: count_units_into_variable, object_list_unit_id: 484, variable2: "RI tc g"}
+          - {type: count_units_into_variable, object_list_unit_id: 597, variable2: "RI tc h"}
           - {type: modify_variable_by_variable, variable: "RI tcs", operation: SET, variable2: "RI tc a"}
           - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc b"}
           - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc c"}
           - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc d"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc e"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc f"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc g"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc h"}
       - name: done
         conditions: [{type: compare_variables, variable: "RI tcs", comparison: LARGER_OR_EQUAL,
                       variable2: "RI tc until"}]
         effects:
-          - {type: modify_attribute_by_variable, object_list_unit_id: [109, 71, 141, 142], object_attributes: 104,
+          - {type: modify_attribute_by_variable, object_list_unit_id: [621, 617, 484, 597], object_attributes: 104,
              operation: SET, variable: "RI tc wood"}
           - {type: deactivate_trigger, trigger_id: "@count"}
+      - name: bronze age
+        conditions: [{type: accumulate_attribute, attribute: 6, quantity: 2}]
+        effects: [{type: enable_disable_object, object_list_unit_id: [621, 617, 484, 597], enabled: 1}]
   # Dawn of a New Age, Moderate bonus (good)
   master_fishermen:
     # The user's call: four times the load on purpose, fishers travel the farthest.
@@ -259,6 +285,7 @@ upgrades:
     label: "Quartermasters"
     text: "The Storage Pit's Tool and Bronze Age upgrades are free, but take three times as long."
     effects:
+      - {type: enable_disable_technology, technology: [43, 44, 45, 51], enabled: 1}     # perks trump the mission
       - {type: change_technology_cost, technology: [46, 40, 41, 42, 43, 44, 45, 51], resource_1: 0,
          resource_1_quantity: 0, resource_2: 3, resource_2_quantity: 0}
       - {type: change_technology_research_time, technology: 46, quantity: 120}
@@ -422,18 +449,32 @@ missions:
       - {player: 2, unit: 448, x: 9, y: 38, from: moderate, group: southwest}
       - {player: 2, unit: 4, x: 9, y: 36, from: hard, group: southwest}
     setup:
-      # Every difficulty: no Farms or fortifications; the Barracks with Clubmen only (no Axemen), no Archery Range,
-      # Stable, Bowmen or Scouts (Early Riders still brings the Stable and Scouts: upgrades run after this).
+      # Every difficulty: no Farms or fortifications (walls, towers, gates); the Barracks with Clubmen only (no
+      # Axemen, Swordsmen, Legionaries or Slingers); no Archery Range, Stable, Bowmen or Scouts; no Government
+      # Center, Town Centers, Siege Workshop, or ships but Fishing Boats and Ships; no Bronze Age Storage Pit
+      # upgrades. Perks still win, as upgrades run after this (Early Riders: Stable and Scouts; Free Town Center:
+      # Town Centers from the Bronze Age; Quartermasters: the Storage Pit upgrades).
       - {type: enable_disable_object, object_list_unit_id: [50, 72, 117, 119, 155, 79, 234, 235, 236], enabled: 0}
+      - {type: enable_disable_object, object_list_unit_id: [487, 488, 490, 491, 665, 666, 673, 674, 792, 796, 800,
+                                                            804], enabled: 0}
       - {type: enable_disable_object, object_list_unit_id: [87, 10, 14, 101, 86, 153, 4, 448], enabled: 0}
+      - {type: enable_disable_object, object_list_unit_id: [74, 75, 77, 473, 6, 7], enabled: 0}
+      - {type: enable_disable_object, object_list_unit_id: [209, 210, 621, 617, 484, 597, 49, 150], enabled: 0}
+      - {type: enable_disable_object, object_list_unit_id: [8, 11, 17, 21, 37, 114, 136, 420, 442, 527, 528, 529,
+                                                            539, 545, 691, 831, 832, 844], enabled: 0}
       - {type: enable_disable_object, object_list_unit_id: [12, 498, 132, 20], enabled: 1}
-      - {type: enable_disable_technology, technology: 63, enabled: 0}
+      - {type: enable_disable_technology, technology: [63, 43, 44, 45, 51], enabled: 0}
     rewards: [swift_advance, free_town_center]
     bonus:
-      - text: "Reach a population of 25 with 2 Docks."
+      # Defeating the Raiders is part of both bonuses (the user, 2026-11-08: no hiding behind buildings while
+      # advancing). Their soldiers: Clubmen/Axemen (class 6), Bowmen (0), Scouts (47).
+      - text: "Reach a population of 25 with 2 Docks, and defeat the Raiders."
         conditions:
           - {type: accumulate_attribute, attribute: 11, quantity: 25}
           - {type: variable_value, variable: "RI docks", comparison: LARGER_OR_EQUAL, quantity: 2}
+          - &raiders_6 {type: own_fewer_objects, source_player: 2, object_group: 6, quantity: 0}
+          - &raiders_0 {type: own_fewer_objects, source_player: 2, object_group: 0, quantity: 0}
+          - &raiders_47 {type: own_fewer_objects, source_player: 2, object_group: 47, quantity: 0}
         triggers:
           # Docks change unit with each age: count them all.
           - name: count docks
@@ -446,12 +487,13 @@ missions:
               - {type: modify_variable_by_variable, variable: "RI docks", operation: ADD, variable2: "RI docks b"}
               - {type: modify_variable_by_variable, variable: "RI docks", operation: ADD, variable2: "RI docks c"}
         rewards: [master_fishermen, quartermasters]
-      - text: "Reach the Bronze Age."
-        conditions: [{type: accumulate_attribute, attribute: 6, quantity: 2}]
+      - text: "Reach the Bronze Age and defeat the Raiders."
+        conditions: [{type: accumulate_attribute, attribute: 6, quantity: 2}, *raiders_6, *raiders_0, *raiders_47]
         setup:
-          # Hard: the Raiders have Axemen and the first Storage Pit upgrades (their extra Bowmen are mission units).
+          # Hard: the Raiders have Axemen and Tool Working, no armour (balance, user 2026-11-08; their extra Bowmen
+          # are mission units).
           # The Bronze Age opens without its two Tool Age buildings (tech 75 granted); the Whales' gold pays for it.
-          - {type: research_technology, source_player: 2, technology: [63, 46, 40, 41, 42], force_research_technology: 1}
+          - {type: research_technology, source_player: 2, technology: [63, 46], force_research_technology: 1}
           - {type: enable_disable_technology, technology: 102, enabled: 1}
           - {type: research_technology, technology: 75, force_research_technology: 1}
         triggers:
