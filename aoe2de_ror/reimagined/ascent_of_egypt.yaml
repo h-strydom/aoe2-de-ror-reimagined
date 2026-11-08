@@ -196,28 +196,12 @@ upgrades:
   # Discoveries, Hard bonus (great)
   founding_families:
     label: "Founding Families"
-    # Balance (user, 2026-11-08): 5, not 10; instant only, no longer free: how many came free depended on how
-    # fast you clicked (6, then 4, in playtests).
-    text: "Each mission, your first 5 villagers train instantly."
-    effects:
-      # Remember the villager's training time, then make it instant until 5 more villagers are alive than at
-      # the start.
-      - {type: modify_variable_by_resource, tribute_list: 38, operation: SET, variable: "RI free villagers until"}
-      - {type: change_variable, variable: "RI free villagers until", operation: ADD, quantity: 5}
-      - {type: modify_variable_by_attribute, object_list_unit_id: 83, object_attributes: 101, operation: SET,
-         variable: "RI villager time"}
-      - {type: modify_attribute, object_list_unit_id: [83, 293], object_attributes: 101, operation: SET, quantity: 0}
-    triggers:
-      - name: count
-        looping: true
-        effects: [{type: modify_variable_by_resource, tribute_list: 38, operation: SET, variable: "RI villagers"}]
-      - name: done
-        conditions: [{type: compare_variables, variable: "RI villagers", comparison: LARGER_OR_EQUAL,
-                      variable2: "RI free villagers until"}]
-        effects:
-          - {type: modify_attribute_by_variable, object_list_unit_id: [83, 293], object_attributes: 101,
-             operation: SET, variable: "RI villager time"}
-          - {type: deactivate_trigger, trigger_id: "@count"}
+    # Balance (user, 2026-11-08): every villager trains instantly, at the usual price. Before: the first 5 (then
+    # 10) free and instant, but how many came free depended on how fast you clicked.
+    text: "Villagers train instantly."
+    # 1 second, not 0 (see swift_advance). Villagers 83 and 293.
+    effects: [{type: modify_attribute, object_list_unit_id: [83, 293], object_attributes: 101, operation: SET,
+               quantity: 1}]
   seasoned_gear:
     label: "Seasoned Gear"
     text: "Tool Working and the three Leather Armor upgrades are researched at the start of every mission."
