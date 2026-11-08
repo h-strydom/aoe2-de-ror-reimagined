@@ -67,9 +67,8 @@ unlocks:
   03_discoveries: []
   04_the_dawn_of_a_new_age: [tool_age, toolworking, leather_armor_for_infantry, leather_armor_for_archers,
                              leather_armor_for_cavalry, barracks, clubman]
-  05_skirmish: [archery_range, bowman, axeman]
-  06_farming: [market, domestication, woodworking, gold_mining, stone_mining, slinger, scout_ship, farm, stable,
-               scout]
+  05_skirmish: [archery_range, bowman, axeman, stable, scout]
+  06_farming: [market, domestication, woodworking, gold_mining, stone_mining, slinger, scout_ship, farm]
 
 upgrades:
   # Hunting, primary (quality of life)
@@ -195,7 +194,9 @@ upgrades:
       # Remember the villager's price and training time (Light Footprint may have changed the price), then
       # make it free and instant until 5 more villagers are alive than at the start.
       - {type: modify_variable_by_resource, tribute_list: 38, operation: SET, variable: "RI free villagers until"}
-      - {type: change_variable, variable: "RI free villagers until", operation: ADD, quantity: 5}
+      # 4, not 5: the price comes back a moment after the last free one appears, and one more always slipped
+      # through for free (6 in the Egypt 6 playtest, 2026-11-08).
+      - {type: change_variable, variable: "RI free villagers until", operation: ADD, quantity: 4}
       - {type: modify_variable_by_attribute, object_list_unit_id: 83, object_attributes: 103, operation: SET,
          variable: "RI villager food"}
       - {type: modify_variable_by_attribute, object_list_unit_id: 83, object_attributes: 101, operation: SET,
@@ -786,13 +787,16 @@ missions:
     #   Moderate: the same ships; upgrades; a 20-unit army; attacks now and then with 5 units, never before 3:00.
     #   Hard: 3 warships kept up, 5 fishing boats that are never replaced (no farming its resources by killing
     #     them), towards 100 population; raiding parties of 5 Scouts at your villagers and massive attacks of 20 or
-    #     more; upgrades as soon as a defence of 8 stands at home.
+    #     more after 3 warning attacks of 5-8 from 5:00; upgrades as soon as a defence of 8 stands at home.
     ai:
       2:
         replace: true
         name: Lower Egypt
         step_timeout: 120
         scout: false
+        # Villagers don't fish (they walked to the shore fish near you and died, playtest 2026-11-08) and gather
+        # food only near a drop-off.
+        strategic_numbers: {sn-allow-gathering-sea-fish-with-villagers: 0, sn-maximum-food-drop-distance: 12}
         build_order:
           - {build: STORAGE_PIT}
           - {build: GRANARY}
@@ -841,4 +845,7 @@ missions:
               - {research: WOODWORKING, when: {soldiers: 8}}
             raids:
               - {units: [SCOUT], count: 5, first: 360, every: 180, target: villagers}
-            attack: {first: 720, every: 360, min_group: 20, max_group: 25, percent: 100, naval: true}
+            # A few warning attacks first, then the massive waves (the first massive one came at 17:00 and was
+            # loved, but nothing came before it: playtest 2026-11-08).
+            attack: {first: 300, every: 360, min_group: 20, max_group: 25, percent: 100, naval: true,
+                     warm_up: {attacks: 3, min_group: 5, max_group: 8, every: 180}}
