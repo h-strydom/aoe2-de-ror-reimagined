@@ -362,6 +362,8 @@ missions:
   # most of the map (Pyrrhus, Alexander, Alesia, Zenobia, Odaenathus) are left as they were.
   ascent_of_egypt/06_farming:                  # Lower Egypt knows where Upper Egypt is (its attacks)
     show_base: [[22, 48, 44, 68]]
+  ascent_of_egypt/07_trade:                    # the Minoans and Canaanites know where you are
+    show_base: [[64, 0, 95, 30]]
   ascent_of_egypt/08_religion:
     show_base: [[33, 16, 71, 70]]
   ascent_of_egypt/09_the_river_outpost:

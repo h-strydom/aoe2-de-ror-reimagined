@@ -118,7 +118,7 @@ def expand(effects: list[dict]) -> list[dict]:
     return out
 
 
-LIST_KEYS = ("object_list_unit_id", "technology", "object_group2")
+LIST_KEYS = ("object_list_unit_id", "technology", "object_group2", "tribute_list")
 
 
 def _player(effects: list[dict], player: int) -> list[dict]:
@@ -142,6 +142,7 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     out: list[dict] = []
     m = camp.missions.get(folders[number - 1]) or {}
     bonus = m.get("bonus") or []
+    ai_unlocks = {int(k): v for k, v in (m.get("ai_unlocks") or {}).items()}
 
     def own(conds: list[dict]) -> list[dict]:
         """Conditions about a player are the human's unless they say otherwise."""
@@ -177,7 +178,8 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     out.append({"name": "RI Objectives", "effects": [
         {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1},
         *_player(tree_effects(camp, folders, number), player),
-        *(e for c in computers for e in _player(tree_effects(camp, folders, number), c)),
+        *(e for c in computers if ai_unlocks.get(c) != "all"
+          for e in _player(tree_effects(camp, folders, number, extra=ai_unlocks.get(c) or ()), c)),
         *_player(expand(m.get("setup") or []), player)]})
     # The main objective's extra line from a difficulty up (`primary_extra`): ending waits for it too.
     extra = m.get("primary_extra")
@@ -402,14 +404,14 @@ def scouts_text(camp: Campaign, folder: str) -> str:
     return "\n\n".join([SCOUTS_TITLE, *parts]) if parts else ""
 
 
-def tree_effects(camp: Campaign, folders: list[str], number: int) -> list[dict]:
+def tree_effects(camp: Campaign, folders: list[str], number: int, extra=()) -> list[dict]:
     """The campaign's tech tree for mission `number`: everything off but what this and earlier missions unlock
     (`unlocks`). Missions after the last one listed are left as the original has them, until they're designed.
     Upgrades run later, so perks still bring things early (the user's design, 2026-11-08)."""
     listed = [i for i, f in enumerate(folders, 1) if f in camp.unlocks]
     if not listed or number > max(listed):
         return []
-    on = {n for f in folders[:number] for n in camp.unlocks.get(f) or []}
+    on = {n for f in folders[:number] for n in camp.unlocks.get(f) or []} | set(extra)
     out = []
     # Only what's still locked is switched off; what's unlocked is left to the game's own tech tree. Enabling it
     # by trigger too lost the units a building's tech enables: no Bowman or Scout button at a finished Archery
@@ -423,6 +425,20 @@ def tree_effects(camp: Campaign, folders: list[str], number: int) -> list[dict]:
         out += [{"type": "enable_disable_technology", "technology": t, "enabled": 0}
                 for t in entry.get("techs", [])]
     return out
+
+
+def diplomacy(camp: Campaign, folder: str) -> dict[tuple[int, int], str]:
+    """Stances the mission sets, both ways (`diplomacy: [[1, 2, ENEMY], [2, 4, ALLY]]`): {(a, b): stance}."""
+    out = {}
+    for a, b, stance in (camp.missions.get(folder) or {}).get("diplomacy") or []:
+        out[(int(a), int(b))] = out[(int(b), int(a))] = str(stance).upper()
+    return out
+
+
+def disabled(camp: Campaign, folder: str) -> dict[int, list[str]]:
+    """Players' disables the mission sets instead of the original's (`disabled: {1: [temple, iron_age]}`), as the
+    extracted mission names them (temple, siege_workshop, academy, bronze_age, iron_age...)."""
+    return {int(k): list(v or []) for k, v in ((camp.missions.get(folder) or {}).get("disabled") or {}).items()}
 
 
 def mission_ai(camp: Campaign, folder: str) -> dict[int, dict]:

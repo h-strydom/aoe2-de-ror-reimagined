@@ -61,7 +61,9 @@ def test_ai_carries_over(tmp_path):
     assert troy.personality == "TrojanWar2 (AoE1)"                      # its build list, as a RoR script
     assert "; step 1: build TOWN_CENTER x1" in troy.ai_script and "(attack-now)" in troy.ai_script
     trade = _converted(tmp_path, "ascent_of_egypt/07_trade")
-    assert trade[3].personality == "PASSIVE (AoE1)" and "(attack-now)" not in trade[3].ai_script
+    # the Libyans: a passive AoE1 AI never attacks (the Canaanites, P3, now play the reimagined mission's own AI)
+    assert trade[4].personality == "PASSIVE (AoE1)" and "(attack-now)" not in trade[4].ai_script
+    assert trade[3].personality == "Canaanites"
 
 
 def test_ai_translation():

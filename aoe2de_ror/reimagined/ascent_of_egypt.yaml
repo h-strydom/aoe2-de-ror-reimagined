@@ -69,6 +69,14 @@ unlocks:
                              leather_armor_for_cavalry, barracks, clubman]
   05_skirmish: [archery_range, bowman, axeman, stable, scout]
   06_farming: [market, domestication, woodworking, gold_mining, stone_mining, slinger, scout_ship, farm]
+  # A normal Bronze Age without the Temple (the user, 2026-11-08): the rest of the Tool Age, then the Bronze Age's
+  # buildings, units and techs (ages from RoR's data: each tech's required age techs).
+  07_trade: [city_watch, light_transport, watch_tower, small_wall, small_gate, bronze_age, government_center,
+             town_center, siege_workshop, academy, sentry_tower, medium_wall, medium_gate, architecture, artisanship,
+             wheel, plow, writing, urbanization, logistics, nobility, metalworking, bronze_shield,
+             scale_armor_for_infantry, scale_armor_for_archers, scale_armor_for_cavalry, short_swordsman,
+             broad_swordsman, hoplite, cavalry, chariot, chariot_archer, camel_rider, improved_bow, improved_bowman,
+             composite_bowman, stone_thrower, war_galley, fishing_ship, trade_boat, merchant_ship, trade_cart]
 
 upgrades:
   # Hunting, primary (quality of life)
@@ -188,20 +196,16 @@ upgrades:
   # Discoveries, Hard bonus (great)
   founding_families:
     label: "Founding Families"
-    # Balance (user, 2026-11-08): 5, not 10.
-    text: "Each mission, your first 5 villagers are free and train instantly."
+    # Balance (user, 2026-11-08): 5, not 10; instant only, no longer free: how many came free depended on how
+    # fast you clicked (6, then 4, in playtests).
+    text: "Each mission, your first 5 villagers train instantly."
     effects:
-      # Remember the villager's price and training time (Light Footprint may have changed the price), then
-      # make it free and instant until 5 more villagers are alive than at the start.
+      # Remember the villager's training time, then make it instant until 5 more villagers are alive than at
+      # the start.
       - {type: modify_variable_by_resource, tribute_list: 38, operation: SET, variable: "RI free villagers until"}
-      # 4, not 5: the price comes back a moment after the last free one appears, and one more always slipped
-      # through for free (6 in the Egypt 6 playtest, 2026-11-08).
-      - {type: change_variable, variable: "RI free villagers until", operation: ADD, quantity: 4}
-      - {type: modify_variable_by_attribute, object_list_unit_id: 83, object_attributes: 103, operation: SET,
-         variable: "RI villager food"}
+      - {type: change_variable, variable: "RI free villagers until", operation: ADD, quantity: 5}
       - {type: modify_variable_by_attribute, object_list_unit_id: 83, object_attributes: 101, operation: SET,
          variable: "RI villager time"}
-      - {type: modify_attribute, object_list_unit_id: [83, 293], object_attributes: 103, operation: SET, quantity: 0}
       - {type: modify_attribute, object_list_unit_id: [83, 293], object_attributes: 101, operation: SET, quantity: 0}
     triggers:
       - name: count
@@ -211,8 +215,6 @@ upgrades:
         conditions: [{type: compare_variables, variable: "RI villagers", comparison: LARGER_OR_EQUAL,
                       variable2: "RI free villagers until"}]
         effects:
-          - {type: modify_attribute_by_variable, object_list_unit_id: [83, 293], object_attributes: 103,
-             operation: SET, variable: "RI villager food"}
           - {type: modify_attribute_by_variable, object_list_unit_id: [83, 293], object_attributes: 101,
              operation: SET, variable: "RI villager time"}
           - {type: deactivate_trigger, trigger_id: "@count"}
@@ -461,11 +463,76 @@ upgrades:
       - {type: modify_attribute_for_class, object_group2: 22, object_attributes: 0, operation: ADD, quantity: 40}
       - {type: modify_attribute_for_class, object_group2: 22, object_attributes: 9, operation: ADD,
          armour_attack_class: 3, armour_attack_quantity: 2}
-  field_granaries:
-    label: "Field Granaries"
-    text: "Farmers never walk to drop off food: it goes straight to your stockpile."
-    # AoE2's Khmer farmer bonus, resource 96 (No Dropsite Farmers) = 1. Unverified in Return of Rome.
-    effects: [{type: modify_resource, tribute_list: 96, operation: SET, quantity: 1}]
+  master_farmers:
+    label: "Master Farmers"
+    text: "Farmers work 50% faster."
+    # Replaces Field Granaries (the Khmer bonus, resource 96): in Return of Rome farmers still walked to the
+    # Granary, only slower (playtest, 2026-11-08). Farmers 259 (male) and 214 (female), work rate (13).
+    effects: [{type: modify_attribute, object_list_unit_id: [259, 214], object_attributes: 13, operation: MULTIPLY,
+               quantity: 1.5}]
+  # Trade, primary (quality of life)
+  town_tithes:
+    label: "Town Tithes"
+    text: "Each Town Center gives 2 food, wood, gold and stone every 10 seconds, but you can have only 5."
+    # Every 10 seconds: count the Town Centers (109/71/141/142, every age's), add twice that of each resource.
+    # At 5 the Town Center foundations (621/617/484/597) are switched off for good.
+    triggers:
+      - name: start
+        effects: [{type: activate_trigger, trigger_id: "@tithe"}]
+      - name: tithe
+        conditions: [{type: timer, timer: 10}]
+        effects:
+          - {type: count_units_into_variable, object_list_unit_id: 109, variable2: "RI tc a"}
+          - {type: count_units_into_variable, object_list_unit_id: 71, variable2: "RI tc b"}
+          - {type: count_units_into_variable, object_list_unit_id: 141, variable2: "RI tc c"}
+          - {type: count_units_into_variable, object_list_unit_id: 142, variable2: "RI tc d"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: SET, variable2: "RI tc a"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc b"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc c"}
+          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc d"}
+          - {type: modify_variable_by_variable, variable: "RI tithe", operation: SET, variable2: "RI tcs"}
+          - {type: change_variable, variable: "RI tithe", operation: MULTIPLY, quantity: 2}
+          - {type: modify_resource_by_variable, tribute_list: [0, 1, 2, 3], operation: ADD, variable: "RI tithe"}
+          - {type: activate_trigger, trigger_id: "@tithe"}
+      - name: cap
+        conditions: [{type: variable_value, variable: "RI tcs", comparison: LARGER_OR_EQUAL, quantity: 5}]
+        effects:
+          - {type: enable_disable_object, object_list_unit_id: [621, 617, 484, 597], enabled: 0}
+          - {type: display_instructions, display_time: 8, message: "Town Tithes: you have 5 Town Centers, the most you can build."}
+  grain_trade:
+    label: "Grain Trade"
+    text: "Trade Boats and Merchant Ships bring back half their gold again as food."
+    # AoE2's Bengali trade bonus, resource 251 (Trade Food Percent). Unverified in Return of Rome.
+    effects: [{type: modify_resource, tribute_list: 251, operation: SET, quantity: 50}]
+  # Trade, Moderate bonus (good)
+  ballista_crews:
+    label: "Ballista Crews"
+    text: "Ballistas can be built at the Siege Workshop before the Iron Age."
+    # Ballista 279, enabled by trigger: perks trump the tech tree (unverified that an enabled unit shows its
+    # button; see tree_effects).
+    effects: [{type: enable_disable_object, object_list_unit_id: 279, enabled: 1}]
+  elephant_archery:
+    label: "Elephant Archery"
+    text: "Elephant Archers do 5 more damage."
+    # Elephant Archer 873; its damage is pierce (class 3).
+    effects: [{type: modify_attribute, object_list_unit_id: 873, object_attributes: 9, operation: ADD,
+               armour_attack_class: 3, armour_attack_quantity: 5}]
+  # Trade, Hard bonus (great)
+  wooden_towers:
+    label: "Wooden Towers"
+    text: "Towers cost no stone, only 50 more wood."
+    # Watch, Sentry, Guard and Ballista Towers (79, 234, 235, 236): stone cost (106) 0, wood cost (104) +50.
+    effects:
+      - {type: modify_attribute, object_list_unit_id: [79, 234, 235, 236], object_attributes: 106, operation: SET,
+         quantity: 0}
+      - {type: modify_attribute, object_list_unit_id: [79, 234, 235, 236], object_attributes: 104, operation: ADD,
+         quantity: 50}
+  royal_quarries:
+    label: "Royal Quarries"
+    text: "Stone and gold miners work twice as fast."
+    # The user left this choice open (2026-11-08): a suggestion. Miners 124/220 (stone), 579/581 (gold).
+    effects: [{type: modify_attribute, object_list_unit_id: [124, 220, 579, 581], object_attributes: 13,
+               operation: MULTIPLY, quantity: 2}]
 
 missions:
   01_hunting:
@@ -752,6 +819,15 @@ missions:
     # objectives: the Ruin at 10,14 and 800 food.
     # Red's original win (2000 food) is gone: it wins only by destroying you (the user, 2026-11-08).
     drop_objectives: [2]
+    # The original made Lower Egypt neutral; it's your enemy (the user, 2026-11-08). Red may build Watch Towers
+    # (yours stay locked).
+    diplomacy: [[1, 2, ENEMY]]
+    ai_unlocks: {2: [watch_tower]}
+    # Hard: defeating Lower Egypt is part of the main objective.
+    primary_extra:
+      text: "Defeat Lower Egypt."
+      from: hard
+      conditions: [{type: player_defeated, source_player: 2}]
     setup:
       # Slingers are yours, not red's (the user, 2026-11-08): the tech tree unlocks them for both.
       - {type: enable_disable_object, source_player: 2, object_list_unit_id: 7, enabled: 0}
@@ -779,7 +855,7 @@ missions:
           - name: start counting
             effects:
               - {type: activate_trigger, trigger_id: "@count"}
-        rewards: [war_fleet, field_granaries]
+        rewards: [war_fleet, master_farmers]
     # Red's AI per difficulty (the user's plan, 2026-11-08), written for this mission instead of the original
     # build list. The tech tree holds for red too, so a step it can't take is skipped, not worked around.
     #   Standard: a small economy, 5 Axemen and 3 Bowmen, 1 warship and no other ships; never attacks by itself
@@ -814,11 +890,14 @@ missions:
               - {build: FARM, count: 4}
           normal:
             villagers: 18
+            # no stone or gold mines here: it sells food and wood for gold and buys stone for its towers
+            trade: {buy: {stone: 200}, sell: {food: 700, wood: 600}}
             keep:
               - {train: AXEMAN, count: 10}
               - {train: BOWMAN, count: 10}
               - {train: SCOUT_SHIP, count: 1}
               - {build: FARM, count: 7}
+              - {build: WATCH_TOWER, count: 2}
               - {research: TOOLWORKING}
               - {research: LEATHER_ARMOR_FOR_INFANTRY}
               - {research: LEATHER_ARMOR_FOR_ARCHERS}
@@ -827,10 +906,14 @@ missions:
             attack: {first: 180, every: 300, min_group: 5, max_group: 5, percent: 100}
           hard:
             villagers: 40
+            # It stockpiled with 2 of each (playtest, 2026-11-08): more production, and the Market turns the
+            # surplus into stone for towers.
+            trade: {buy: {stone: 400}, sell: {food: 900, wood: 800}}
             keep:
-              - {build: BARRACKS, count: 2}
-              - {build: ARCHERY_RANGE, count: 2}
-              - {build: STABLE}
+              - {build: BARRACKS, count: 3}
+              - {build: ARCHERY_RANGE, count: 3}
+              - {build: STABLE, count: 2}
+              - {build: WATCH_TOWER, count: 4}
               - {train: AXEMAN, count: 22}
               - {train: BOWMAN, count: 20}
               - {train: SCOUT, count: 8}
@@ -844,8 +927,159 @@ missions:
               - {research: DOMESTICATION, when: {soldiers: 8}}
               - {research: WOODWORKING, when: {soldiers: 8}}
             raids:
-              - {units: [SCOUT], count: 5, first: 360, every: 180, target: villagers}
+              - {units: [SCOUT], count: 5, first: 360, every: 180, target: villagers, fallback: {x: 32, y: 58}}
             # A few warning attacks first, then the massive waves (the first massive one came at 17:00 and was
             # loved, but nothing came before it: playtest 2026-11-08).
             attack: {first: 300, every: 360, min_group: 20, max_group: 25, percent: 100, naval: true,
+                     warm_up: {attacks: 3, min_group: 5, max_group: 8, every: 180}}
+  07_trade:
+    # Mission 7: you (Kingdom of Egypt) start in the north-east (Town Center 78,18, Dock 64,24) in the Tool Age.
+    # Red, the Minoans (P2, Bronze Age), in the south-west (Town Center 26,88, Docks 31-32,78-82, a Market); green,
+    # the Canaanites (P3, Stone Age), in the north-west (Town Center 6,8, Dock 8,14, Barracks); yellow, the Libyans
+    # (P4), only a Dock at 6,44 with 5 Scout Ships, 2 Stone Throwers and 2 Bowmen. Stone: 3 piles by yellow (1-10,
+    # 35-39), 9 in the east desert (81-90, 55-62). Objective: 500 stone and 500 gold.
+    # The user's design (2026-11-08): red and green are your enemies, yellow neutral to you and green; red and
+    # yellow allies (red's trade fleet trades with yellow's Dock; RoR's AIs trade only with allies). Green and red
+    # aren't allies (neutral). You get a normal Bronze Age without the Temple; green its civ's full Tool Age, red
+    # its full Bronze Age (the campaign tree doesn't hold for them).
+    diplomacy: [[1, 2, ENEMY], [1, 3, ENEMY], [1, 4, NEUTRAL], [2, 3, NEUTRAL], [2, 4, ALLY], [3, 4, NEUTRAL]]
+    disabled: {1: [temple, iron_age], 2: [iron_age], 3: [bronze_age, iron_age]}
+    ai_unlocks: {2: all, 3: all, 4: all}
+    rewards: [town_tithes, grain_trade]
+    bonus:
+      - text: "Defeat the Minoans and the Canaanites."
+        conditions:
+          - {type: player_defeated, source_player: 2}
+          - {type: player_defeated, source_player: 3}
+        rewards: [ballista_crews, elephant_archery]
+      - text: "Mine every stone pile on the map."
+        # Gaia's Stone Mines (102) are gone once mined out.
+        conditions: [{type: own_fewer_objects, source_player: 0, object_list: 102, quantity: 0}]
+        rewards: [wooden_towers, royal_quarries]
+    ai:
+      # Red, the Minoans: the water. Favours Improved and Composite Bowmen, then mixes in Cavalry (Moderate) or
+      # Stone Throwers too (Hard).
+      #   Standard: prowls the water with 3 War Galleys, no landings (its land soldiers never attack: the land
+      #     attack needs more soldiers than it keeps).
+      #   Moderate: fights for the water (6 War Galleys, naval attacks every 3 minutes), an occasional landing.
+      #   Hard: pushes you off the water (10 War Galleys every 2 minutes), then a fleet of up to 50 Trade Boats
+      #     trading with yellow; constant landings.
+      2:
+        replace: true
+        name: Minoans
+        step_timeout: 120
+        build_order:
+          - {build: GRANARY}
+          - {build: BARRACKS}
+          - {build: ARCHERY_RANGE}
+          - {research: MEDIUM_WAR_SHIP}
+          - {research: IMPROVED_BOW}
+        levels:
+          easy:
+            villagers: 12
+            keep:
+              - {train: WAR_GALLEY, count: 3}
+              - {train: IMPROVED_BOWMAN, count: 4}
+              - {build: FARM, count: 4}
+            attack: {first: 300, every: 240, min_group: 999, max_group: 999, naval: true}
+          normal:
+            villagers: 22
+            transports: 1
+            keep:
+              - {build: DOCK, count: 2}
+              - {train: WAR_GALLEY, count: 6}
+              - {research: COMPOSITE_BOW}
+              - {train: COMPOSITE_BOWMAN, count: 8}
+              - {train: IMPROVED_BOWMAN, count: 4}
+              - {build: STABLE}
+              - {train: CAVALRY, count: 4}
+              - {build: FARM, count: 8}
+              - {research: SCALE_ARMOR_FOR_ARCHERS}
+              - {research: WHEEL}
+            attack: {first: 240, every: 180, min_group: 5, max_group: 8, naval: true}
+          hard:
+            villagers: 35
+            transports: 2
+            keep:
+              - {build: DOCK, count: 3}
+              - {train: WAR_GALLEY, count: 10}
+              - {research: COMPOSITE_BOW}
+              - {build: ARCHERY_RANGE, count: 3}
+              - {train: COMPOSITE_BOWMAN, count: 20}
+              - {train: IMPROVED_BOWMAN, count: 10}
+              - {build: STABLE}
+              - {train: CAVALRY, count: 6}
+              - {build: SIEGE_WORKSHOP}
+              - {train: STONE_THROWER, count: 4}
+              - {build: FARM, count: 12}
+              - {research: SCALE_ARMOR_FOR_ARCHERS}
+              - {research: SCALE_ARMOR_FOR_CAVALRY}
+              - {research: WHEEL}
+              - {research: ARTISANSHIP}
+              - {research: PLOW}
+              # the trade fleet once a defence stands
+              - {train: TRADE_BOAT, count: 50, when: {soldiers: 12}}
+            attack: {first: 240, every: 120, min_group: 8, max_group: 12, naval: true}
+      # Green, the Canaanites: the land, up to the Tool Age.
+      #   Standard: never attacks; at most 5 soldiers and a few villagers; no fishing.
+      #   Moderate: your land enemy, basic attacks of 6-8.
+      #   Hard: Egypt 6's Hard red: towards 100 population, 3 warning attacks then massive waves, Scout raids.
+      3:
+        replace: true
+        name: Canaanites
+        step_timeout: 120
+        scout: false
+        strategic_numbers: {sn-allow-gathering-sea-fish-with-villagers: 0, sn-maximum-food-drop-distance: 12}
+        build_order:
+          - {build: GRANARY}
+          - {build: STORAGE_PIT}
+          - {research: TOOL_AGE}
+          - {build: MARKET}
+          - {build: FARM, count: 3}
+          - {build: ARCHERY_RANGE}
+        levels:
+          easy:
+            villagers: 8
+            keep:
+              - {train: AXEMAN, count: 3}
+              - {train: BOWMAN, count: 2}
+              - {build: FARM, count: 3}
+          normal:
+            villagers: 18
+            keep:
+              - {research: BATTLE_AXE}
+              - {train: AXEMAN, count: 8}
+              - {train: BOWMAN, count: 6}
+              - {train: SLINGER, count: 4}
+              - {build: FARM, count: 7}
+              - {build: WATCH_TOWER, count: 2}
+              - {research: TOOLWORKING}
+              - {research: LEATHER_ARMOR_FOR_INFANTRY}
+              - {research: LEATHER_ARMOR_FOR_ARCHERS}
+            attack: {first: 420, every: 300, min_group: 6, max_group: 8, percent: 100}
+          hard:
+            villagers: 40
+            keep:
+              - {research: BATTLE_AXE}
+              - {build: BARRACKS, count: 3}
+              - {build: ARCHERY_RANGE, count: 3}
+              - {build: STABLE, count: 2}
+              - {build: WATCH_TOWER, count: 4}
+              - {train: AXEMAN, count: 20}
+              - {train: BOWMAN, count: 16}
+              - {train: SLINGER, count: 6}
+              - {train: SCOUT, count: 8}
+              - {train: SCOUT_SHIP, count: 2}
+              - {train: FISHING_BOAT, count: 5, lifetime: true}
+              - {build: FARM, count: 14}
+              - {research: TOOLWORKING, when: {soldiers: 8}}
+              - {research: LEATHER_ARMOR_FOR_INFANTRY, when: {soldiers: 8}}
+              - {research: LEATHER_ARMOR_FOR_ARCHERS, when: {soldiers: 8}}
+              - {research: LEATHER_ARMOR_FOR_CAVALRY, when: {soldiers: 8}}
+              - {research: DOMESTICATION, when: {soldiers: 8}}
+              - {research: WOODWORKING, when: {soldiers: 8}}
+              - {research: STONE_MINING, when: {soldiers: 8}}
+            raids:
+              - {units: [SCOUT], count: 5, first: 360, every: 180, target: villagers, fallback: {x: 78, y: 18}}
+            attack: {first: 300, every: 360, min_group: 20, max_group: 25, percent: 100,
                      warm_up: {attacks: 3, min_group: 5, max_group: 8, every: 180}}

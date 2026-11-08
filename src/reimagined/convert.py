@@ -9,6 +9,7 @@ or owned by an inactive player) are counted in the result, so nothing disappears
 from __future__ import annotations
 
 import contextlib
+import dataclasses
 import functools
 from collections import Counter
 from concurrent.futures import Executor
@@ -213,6 +214,14 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             tile.elevation = src.elevation[i]
 
         content, folder = mission_content(mission)
+        # The mission's own disables and diplomacy, where it sets them (progression.disabled / diplomacy).
+        own_disabled = progression.disabled(content, folder)
+        active = [dataclasses.replace(p, disabled=own_disabled[p.number]) if p.number in own_disabled else p
+                  for p in active]
+        stances = progression.diplomacy(content, folder)
+
+        def stance(a: int, b: int) -> str:
+            return stances.get((a, b)) or DIPLOMACY.get(src.diplomacy[a - 1][b - 1], "ENEMY")
         extras = progression.extra_players(content, folder)
         custom_ai = progression.mission_ai(content, folder)
         s.player_manager.active_players = len(active) + len(extras)
@@ -256,8 +265,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         for p in active:
             others = [q for q in active if q.number != p.number]
             for q in others:
-                state = DIPLOMACY.get(src.diplomacy[p.number - 1][q.number - 1], "ENEMY")
-                diplomacy_set(o.handle, p.number, [q.number], state, mutual=False)
+                diplomacy_set(o.handle, p.number, [q.number], stance(p.number, q.number), mutual=False)
         # Players the reimagined mission adds: enemies of all but their `allies`, no AI (their units move by
         # trigger), no stockpile.
         for x in extras:
@@ -312,7 +320,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         if conv.reveal or conv.show_base or claim:
             ctx = blocks.Ctx(s)
             enemies = [p.number for p in active if not p.human and p.ai is not None
-                       and DIPLOMACY.get(src.diplomacy[p.number - 1][0], "ENEMY") == "ENEMY"]
+                       and stance(p.number, 1) == "ENEMY"]
             with games.use("ror"):
                 for area in conv.reveal:
                     blocks.reveal(ctx, area=area, player=1)
