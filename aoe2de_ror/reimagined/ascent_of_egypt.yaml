@@ -680,11 +680,6 @@ missions:
     units:
       # Moderate and Hard: the Raiders' chieftain, a Short Swordsman (60 hit points).
       - {player: 2, unit: 74, x: 58, y: 51, from: moderate, group: chieftain}
-    ai:
-      # Red's AI sends the landing party (Hard): the units the ship drops near 47,20, hunted at your closest unit
-      # and re-ordered every 10 seconds while one lives (the trigger "land" sends AI Script Goal 7).
-      2:
-        raids: [{units: [SLINGER, AXEMAN], count: 3, min: 1, start: {trigger: 7}, near: {x: 47, y: 20, radius: 5}}]
     rewards: [keen_eyes, field_dressing]
     bonus:
       - text: "Slay the Raider chieftain."
@@ -698,32 +693,21 @@ missions:
         fail:
           - {type: accumulate_attribute, attribute: 154, quantity: 3}
         triggers:
-          # Hard: a countdown line in the objectives, then at 3:30 a Raider ship (theirs, red) appears in the
+          # Hard: a warning, then at 3:30 a Raider ship (theirs, red) appears in the
           # north-east water corner, sails to the beach near 47,20 (about 1:30), drops 2 Slingers and an Axeman and
           # sails back out of sight. Only if the Raiders aren't defeated yet: they're the main objective's enemy,
           # so you can win before it comes. The Raiders see the whole map.
-          # The countdown counts in trigger time, which keeps game time at any speed: the game's Display Timer
-          # doesn't (at high speed it still showed 222 s when the ship landed at 6:34, the user, 2026-11-08).
-          # The landing party is sent by red's own AI (a raid, `ai` below): ordered by triggers, red's AI took the
-          # units back ("they move left a bit and then give up", 2026-11-08). The trigger order stays as a start.
+          # Only on-screen messages, no timer: the game's Display Timer doesn't keep game time (at high speed it
+          # still showed 222 s when the ship landed at 6:34), and an objective line isn't needed (the user,
+          # 2026-11-08). Trigger timers do keep game time.
+          # The landing party attack-moves toward the chieftain's camp (58,51), the Slingers re-ordered every 10
+          # seconds (the user, 2026-11-08). Aimed at your units, they "moved left a bit and gave up"; sent by red's
+          # AI as a raid (aoe-agent-editor raids), they stood completely idle.
           - name: countdown
             effects:
-              - {type: change_variable, variable: "RI landing", operation: SET, quantity: 300}
               - {type: display_instructions, display_time: 10, message: "Raiders are sailing in from the north-east: they land in 5 minutes."}
               - {type: modify_resource, source_player: 2, tribute_list: 203, operation: SET, quantity: 2}
-              - {type: activate_trigger, trigger_id: "@tick"}
-              - {type: activate_trigger, trigger_id: "@ashore"}
               - {type: activate_trigger, trigger_id: "@launch"}
-          - name: tick
-            conditions:
-              - {type: timer, timer: 5}
-              - {type: variable_value, variable: "RI landing", comparison: LARGER, quantity: 0}
-            effects:
-              - {type: change_variable, variable: "RI landing", operation: SUBTRACT, quantity: 5}
-              - {type: activate_trigger, trigger_id: "@tick"}
-          - name: ashore
-            objective: "A Raider ship lands in about <RI landing> seconds."
-            conditions: [{type: variable_value, variable: "RI landing", comparison: EQUAL, quantity: 0}]
           - name: launch
             conditions:
               - {type: timer, timer: 210}
@@ -742,13 +726,17 @@ missions:
               - {type: create_object, source_player: 2, object_list_unit_id: 7, location_x: 47, location_y: 21}
               - {type: create_object, source_player: 2, object_list_unit_id: 531, location_x: 47, location_y: 20}
               - {type: attack_move, source_player: 2, area_x1: 44, area_y1: 16, area_x2: 50, area_y2: 24,
-                 target: {player: 1, unit: [531, 4]}}
-              # red's AI takes the landing party (raid on AI Script Goal 7) and hunts your units with it
-              - {type: ai_script_goal, ai_script_goal: 7}
-              - {type: change_variable, variable: "RI landing", operation: SET, quantity: 0}
+                 location_x: 58, location_y: 51}
               - {type: task_object, source_player: 2, object_list_unit_id: 545, area_x1: 46, area_y1: 15, area_x2: 53,
                  area_y2: 25, location_x: 69, location_y: 2}
               - {type: activate_trigger, trigger_id: "@sail away"}
+              - {type: activate_trigger, trigger_id: "@push"}
+          - name: push
+            conditions: [{type: timer, timer: 10}]
+            effects:
+              - {type: attack_move, source_player: 2, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 45,
+                 object_group: 44, location_x: 58, location_y: 51}
+              - {type: activate_trigger, trigger_id: "@push"}
           - name: sail away
             conditions: [{type: objects_in_area, source_player: 2, object_list: 545, area_x1: 64, area_y1: 0,
                           area_x2: 71, area_y2: 7, quantity: 1}]
