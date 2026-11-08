@@ -177,25 +177,31 @@ def test_a_slot_applies_one_upgrade_per_mission():
     assert two[-1] == {"type": "deactivate_trigger", "trigger_id": "RI Upgrade m01_primary 1"}
 
 
-def test_mission_setup_players_keep_alive_and_bonus_triggers():
+def test_mission_setup_players_units_and_bonus_triggers():
     camp = progression.Campaign(upgrades=CAMP.upgrades, missions={"01_one": {
-        "players": [{"number": 2, "name": "Raiders", "civ": "EGYPTIAN"}], "keep_alive": [2],
+        "players": [{"number": 2, "name": "Raiders", "civ": "EGYPTIAN"}],
+        "units": [{"player": 2, "unit": 281, "x": 1, "y": 1, "from": "moderate", "group": "north"},
+                  {"player": 2, "unit": 4, "x": 2, "y": 1, "from": "hard", "group": "north"}],
         "setup": [{"type": "enable_disable_object", "object_list_unit_id": [50, 72], "enabled": 0}],
         "rewards": ["a", "b"], "bonus": [{"text": "Rise.", "conditions": [], "triggers": [
-            {"name": "wave", "effects": [{"type": "attack_move", "source_player": 2},
+            {"name": "wave", "effects": [{"type": "attack_move", "select": {"group": "north"}},
                                          {"type": "activate_trigger", "trigger_id": "@later"}]},
             {"name": "later", "conditions": [{"type": "timer", "timer": 60}], "effects": []}]}]}})
     assert progression.extra_players(camp, "01_one")[0]["name"] == "Raiders"
-    assert progression.keep_alive(camp, "01_one") == [2] and progression.keep_alive(camp, "02") == []
+    assert [u["unit"] for u in progression.mission_units(camp, "01_one")] == [281, 4]
     ts = progression.triggers(camp, ["01_one"], 1)
-    progression.select_objects(ts, {}, {2: 99})
+    groups = {"north": (2, [7, 8]), "from moderate": (2, [7]), "from hard": (2, [8])}
+    progression.select_objects(ts, {}, groups)
     ts = by_name(ts)
     setup = [e["object_list_unit_id"] for e in ts["RI Objectives"]["effects"] if "object_list_unit_id" in e]
     assert setup == [50, 72]                                                  # every difficulty, before upgrades
-    keep = ts["RI Keep P2"]["effects"]
-    assert all(e["selected_object_ids"] == [99] and e["source_player"] == 2 for e in keep)
-    assert keep[-1]["target_player"] == 1 and keep[-1]["visibility_state"] == "INVISIBLE"
+    # Units leave easier games: Moderate's on Standard or easier, Hard's on Moderate or easier.
+    assert ts["RI Units from moderate"]["conditions"] == [{"type": "difficulty_level", "quantity": 3}]
+    assert ts["RI Units from moderate"]["effects"][0]["selected_object_ids"] == [7]
+    assert ts["RI Units from hard"]["conditions"] == [{"type": "difficulty_level", "quantity": 2}]
+    wave = ts["RI Bonus 1 wave"]["effects"][0]
+    assert wave["selected_object_ids"] == [7, 8] and wave["source_player"] == 2   # the group's owner, not the human
+    started = {e.get("trigger_id") for e in ts["RI Difficulty moderate"]["effects"]}
+    assert "RI Bonus 1 wave" in started and "RI Bonus 1 later" not in started   # "later" waits for "wave"
     assert not ts["RI Bonus 1 wave"]["enabled"]
     assert ts["RI Bonus 1 wave"]["effects"][1]["trigger_id"] == "RI Bonus 1 later"
-    assert {"RI Bonus 1 wave", "RI Bonus 1 later"} <= {e.get("trigger_id")
-                                                       for e in ts["RI Difficulty moderate"]["effects"]}

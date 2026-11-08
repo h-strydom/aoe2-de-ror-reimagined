@@ -104,11 +104,16 @@ def test_custom_victory_leaves_winning_to_the_triggers(tmp_path):
     assert {c.attribute for c in ts["P1 Victory"].conditions} == {14}
 
 
-def test_added_players_and_keep_alive_markers(tmp_path):
-    """Egypt 4 adds the Raiders (no AI, enemies), who keep a hidden House: with no units on Standard they'd
-    show as defeated at the start."""
+def test_added_players_and_mission_units(tmp_path):
+    """Egypt 4 adds the Raiders (no AI, enemies), whose guards stand on the map from the start and leave easier
+    games by trigger; the waves order them by group."""
     _, s, ts = _convert(tmp_path, "ascent_of_egypt", "04_the_dawn_of_a_new_age")
     assert s.player_manager.active_players == 2 and s.player_manager.players[2].tribe_name == "Raiders"
     assert s.sections["GlobalVictory"].conquest_required == 0
-    marker = [u for u in s.unit_manager.units[2] if u.unit_const == 70]
-    assert len(marker) == 1 and ts["RI Keep P2"].effects[0].selected_object_ids == [marker[0].reference_id]
+    guards = {u.reference_id for u in s.unit_manager.units[2]}
+    assert len(guards) == 8
+    gone = set(ts["RI Units from moderate"].effects[0].selected_object_ids) | set(
+        ts["RI Units from hard"].effects[0].selected_object_ids)
+    assert gone == guards                                                     # Standard: none of them stay
+    wave = next(e for e in ts["RI Bonus 2 first wave"].effects if e.effect_type == 30)
+    assert len(wave.selected_object_ids) == 4 and set(wave.selected_object_ids) <= guards

@@ -42,6 +42,9 @@ END_TECH, END_LOCATION, END_BUTTON, END_SECONDS = 153, 109, 10, 5
 # Hardest 0, Extreme -1). One trigger per level 1, 0 and -1 all fired on Hard: the Libyans' Leather Armor was
 # applied three times (6 melee armour on Axemen; Ascent of Egypt 3 playtest, 2026-11-08). So Moderate is "Moderate
 # or easier" and not "Standard or easier"; Hard and harder are not "Moderate or easier".
+# Mission units marked `from: <level>` go when the game is easier than that level.
+UNIT_DIFFICULTY = {"moderate": {"type": "difficulty_level", "quantity": 3},       # Standard or easier
+                   "hard": {"type": "difficulty_level", "quantity": 2}}           # Moderate or easier
 DIFFICULTY = {"moderate": [{"type": "difficulty_level", "quantity": 2},
                            {"type": "difficulty_level", "quantity": 3, "inverted": True}],
               "hard": [{"type": "difficulty_level", "quantity": 2, "inverted": True}]}
@@ -141,7 +144,11 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
 
     def own_triggers(prefix: str, specs: list[dict]) -> list[str]:
         """Content's own triggers (an upgrade's, a bonus objective's), named "<prefix> <name>", off until the
-        owner turns them on; trigger_id "@<name>" points at a sibling. Returns their names."""
+        owner turns them on; trigger_id "@<name>" points at a sibling. Returns the names the owner starts: those
+        no sibling activates (a wave a sibling starts mustn't fire with the owner: Egypt 4's first wave did,
+        at the start of the mission, 2026-11-08)."""
+        chained = {e["trigger_id"][1:] for t in specs for e in t.get("effects") or []
+                   if e["type"] == "activate_trigger" and str(e.get("trigger_id", "")).startswith("@")}
         names = []
         for t in specs:
             name = f"{prefix} {t['name']}"
@@ -150,7 +157,8 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
                         "effects": _player([{**e, "trigger_id": f"{prefix} {e['trigger_id'][1:]}"}
                                             if str(e.get("trigger_id", "")).startswith("@") else e
                                             for e in expand(t.get("effects") or [])], player)})
-            names.append(name)
+            if t["name"] not in chained:
+                names.append(name)
         return names
 
     # The mission's own settings on every difficulty (`setup`), how many objectives this difficulty has (primary +
@@ -160,14 +168,14 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     out.append({"name": "RI Objectives", "effects": [
         {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1},
         *_player(expand(m.get("setup") or []), player)]})
-    for p_ in m.get("keep_alive") or []:
-        # A hidden marker the converter places keeps the player in the game, e.g. an added player with no units
-        # on Standard. (Winning on the last enemy's defeat is the victory options' business: victory.py.)
-        marker = {"select": {"marker": p_}}
-        out.append({"name": f"RI Keep P{p_}", "effects": [
-            {"type": "disable_unit_attackable", **marker}, {"type": "disable_object_selection", **marker},
-            {"type": "change_object_visibility", "target_player": player, "visibility_state": "INVISIBLE",
-             **marker}]})
+    # Units the mission places (`units`) for a difficulty and up leave easier games at the start. They stand on the
+    # map from the first moment, as the original's own units do: Egypt 4's Raiders, created by a trigger instead,
+    # were defeated before they appeared (playtest, 2026-11-08).
+    placed_from = {u.get("from") for u in m.get("units") or []}
+    for level, easier in UNIT_DIFFICULTY.items():
+        if level in placed_from:
+            out.append({"name": f"RI Units from {level}", "conditions": [easier], "effects": [
+                {"type": "remove_object", "select": {"group": f"from {level}"}}]})
     bonus_triggers = {k: own_triggers(f"RI Bonus {k}", b.get("triggers") or []) for k, b in enumerate(bonus, 1)}
     levels = [("moderate", bonus[:1]), ("hard", bonus[:2])]
     for level, shown in levels:
@@ -305,10 +313,11 @@ def _player_all(triggers_: list[dict], player: int) -> list[dict]:
 
 
 def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]]],
-                   markers: dict[int, int] | None = None) -> None:
+                   groups: dict[str, tuple[int, list[int]]] | None = None) -> None:
     """Resolve setup effects' `select: {player, unit}` (unit: an id or a list) into selected_object_ids: the objects
     of those units the map places for that player. `placed` is player -> [(unit id, reference id)].
-    `select: {marker: player}` is that player's keep-alive marker (`markers`: player -> reference id).
+    `select: {group: name}` is a group of the mission's own units (`groups`: name -> (player, reference ids); each
+    unit's `group`, and "from <level>" for its difficulty).
     remove_object by unit type over an area left Gaia's forage bushes in place (Egypt 2 playtest, 2026-11-07);
     remove_object on selected objects works (aoe-agent-editor's fog block)."""
     for t in triggers_:
@@ -316,9 +325,10 @@ def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]
             sel = e.pop("select", None)
             if sel is None:
                 continue
-            if "marker" in sel:
-                e["selected_object_ids"] = [(markers or {})[sel["marker"]]]
-                e["source_player"] = sel["marker"]
+            if "group" in sel:
+                owner, refs = (groups or {}).get(sel["group"], (0, []))
+                e["selected_object_ids"] = list(refs)
+                e["source_player"] = owner
                 continue
             units = sel["unit"] if isinstance(sel["unit"], list) else [sel["unit"]]
             e["selected_object_ids"] = [ref for unit, ref in placed.get(sel.get("player", 0), []) if unit in units]
@@ -349,9 +359,10 @@ def extra_players(camp: Campaign, folder: str) -> list[dict]:
     return list((camp.missions.get(folder) or {}).get("players") or [])
 
 
-def keep_alive(camp: Campaign, folder: str) -> list[int]:
-    """Players that keep a hidden marker so they're never defeated outright (`keep_alive: [player]`)."""
-    return list((camp.missions.get(folder) or {}).get("keep_alive") or [])
+def mission_units(camp: Campaign, folder: str) -> list[dict]:
+    """Units the mission places ({player, unit, x, y, from?: moderate|hard, group?}); the converter adds them to
+    the map and resolves `select: {group}` to them."""
+    return list((camp.missions.get(folder) or {}).get("units") or [])
 
 
 def hand_over(plan_triggers: list[dict], player: int) -> list[str]:

@@ -7,7 +7,8 @@
 # missions.<NN_mission>:
 #   setup: [...]                  effects on every difficulty (the mission's own rules: what can be built...)
 #   players: [{number, name, civ}]  players the mission adds: enemies of all, no AI, moved by triggers
-#   keep_alive: [player]          a hidden, invulnerable House keeps the player in the game (not defeated)
+#   units: [{player, unit, x, y, from, group}]   units on the map from the start; `from: moderate|hard` removes
+#                                 them from easier games; `group` names them for `select: {group: name}`
 #   rewards: [upgrade, upgrade]   the choice offered on completing the primary objective
 #   bonus:                        Moderate shows the first, Hard both
 #     - text: ...                 the to-do line (shown as optional)
@@ -344,14 +345,14 @@ missions:
       - text: "Hunt the elephant."
         conditions: [{type: own_fewer_objects, source_player: 0, object_list: 1301, quantity: 0}]
         setup:
-          # Hard: the island's one elephant (at 32,1) gets 120 hit points instead of 45, and 1 melee and 2 pierce
-          # armour, so the hunters' 4-damage spears do 3.
+          # Hard: the island's one elephant (at 32,1) gets 120 hit points instead of 45, and 5 melee and 5 pierce
+          # armour (balance, user 2026-11-08): the hunters' 4-damage spears do the game's minimum.
           - {type: modify_attribute, source_player: 0, object_list_unit_id: 1301, object_attributes: 0,
              operation: ADD, quantity: 75}
           - {type: modify_attribute, source_player: 0, object_list_unit_id: 1301, object_attributes: 8,
-             operation: ADD, armour_attack_class: 4, armour_attack_quantity: 1}
+             operation: ADD, armour_attack_class: 4, armour_attack_quantity: 5}
           - {type: modify_attribute, source_player: 0, object_list_unit_id: 1301, object_attributes: 8,
-             operation: ADD, armour_attack_class: 3, armour_attack_quantity: 2}
+             operation: ADD, armour_attack_class: 3, armour_attack_quantity: 5}
         rewards: [hardened_hunters, swift_hunters]
   02_foraging:
     rewards: [cheap_housing, quick_builders]
@@ -408,7 +409,18 @@ missions:
         rewards: [founding_families, seasoned_gear]
   04_the_dawn_of_a_new_age:
     players: [{number: 2, name: "Raiders", civ: EGYPTIAN}]
-    keep_alive: [2]          # on Standard they have no units: without it they'd show as defeated at the start
+    units:
+      # Raiders guarding the elephants: 2 Clubmen and a Bowman in the north, 2 Clubmen and a Scout in the
+      # south-west (Moderate and Hard), and a Bowman more at each on Hard. On the map from the start: created by
+      # a trigger they were defeated before they appeared (playtest, 2026-11-08).
+      - {player: 2, unit: 281, x: 22, y: 8, from: moderate, group: north}
+      - {player: 2, unit: 281, x: 24, y: 8, from: moderate, group: north}
+      - {player: 2, unit: 4, x: 23, y: 7, from: moderate, group: north}
+      - {player: 2, unit: 4, x: 25, y: 7, from: hard, group: north}
+      - {player: 2, unit: 281, x: 8, y: 37, from: moderate, group: southwest}
+      - {player: 2, unit: 281, x: 8, y: 39, from: moderate, group: southwest}
+      - {player: 2, unit: 448, x: 9, y: 38, from: moderate, group: southwest}
+      - {player: 2, unit: 4, x: 9, y: 36, from: hard, group: southwest}
     setup:
       # Every difficulty: no Farms or fortifications; the Barracks with Clubmen only (no Axemen), no Archery Range,
       # Stable, Bowmen or Scouts (Early Riders still brings the Stable and Scouts: upgrades run after this).
@@ -433,39 +445,57 @@ missions:
               - {type: modify_variable_by_variable, variable: "RI docks", operation: SET, variable2: "RI docks a"}
               - {type: modify_variable_by_variable, variable: "RI docks", operation: ADD, variable2: "RI docks b"}
               - {type: modify_variable_by_variable, variable: "RI docks", operation: ADD, variable2: "RI docks c"}
-        setup:
-          # Moderate and Hard: Raiders guard both elephants: 2 Clubmen and a Bowman in the north, 2 Clubmen and a
-          # Scout in the south-west.
-          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 22, location_y: 8}
-          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 24, location_y: 8}
-          - {type: create_object, source_player: 2, object_list_unit_id: 4, location_x: 23, location_y: 7}
-          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 8, location_y: 37}
-          - {type: create_object, source_player: 2, object_list_unit_id: 281, location_x: 8, location_y: 39}
-          - {type: create_object, source_player: 2, object_list_unit_id: 448, location_x: 9, location_y: 38}
         rewards: [master_fishermen, quartermasters]
       - text: "Reach the Bronze Age."
         conditions: [{type: accumulate_attribute, attribute: 6, quantity: 2}]
         setup:
-          # Hard: the Raiders have Axemen and the first Storage Pit upgrades, and a Bowman more at each elephant.
+          # Hard: the Raiders have Axemen and the first Storage Pit upgrades (their extra Bowmen are mission units).
           # The Bronze Age opens without its two Tool Age buildings (tech 75 granted); the Whales' gold pays for it.
           - {type: research_technology, source_player: 2, technology: [63, 46, 40, 41, 42], force_research_technology: 1}
-          - {type: create_object, source_player: 2, object_list_unit_id: 4, location_x: 25, location_y: 7}
-          - {type: create_object, source_player: 2, object_list_unit_id: 4, location_x: 9, location_y: 36}
           - {type: enable_disable_technology, technology: 102, enabled: 1}
           - {type: research_technology, technology: 75, force_research_technology: 1}
         triggers:
-          # Reaching the Tool Age brings the northern group down on the Town Center, the other a minute later.
-          - name: first wave
+          # A minute after the player's first age-up the northern group attacks the Town Center, the south-west group
+          # a minute later; attacking the Raiders before that starts the first wave at once. They have no AI, so
+          # their attack-move order is given again every 10 seconds (after a fight they stood idle), and they see
+          # the player's town.
+          - name: aged
             conditions: [{type: accumulate_attribute, attribute: 6, quantity: 1}]
+            effects: [{type: activate_trigger, trigger_id: "@first wave wait"}]
+          - name: first wave wait
+            conditions: [{type: timer, timer: 60}]
+            effects: [{type: activate_trigger, trigger_id: "@first wave"}]
+          - name: provoked
+            conditions: [{type: object_attacked, source_player: 2, quantity: 1}]
+            effects: [{type: activate_trigger, trigger_id: "@first wave"}]
+          - name: provoked by losses
+            conditions: [{type: accumulate_attribute, source_player: 2, attribute: 154, quantity: 1}]
+            effects: [{type: activate_trigger, trigger_id: "@first wave"}]
+          - name: first wave
             effects:
-              - {type: attack_move, source_player: 2, area_x1: 19, area_y1: 4, area_x2: 28, area_y2: 14,
-                 location_x: 28, location_y: 26}
+              - {type: deactivate_trigger, trigger_id: "@aged"}
+              - {type: deactivate_trigger, trigger_id: "@first wave wait"}
+              - {type: deactivate_trigger, trigger_id: "@provoked"}
+              - {type: deactivate_trigger, trigger_id: "@provoked by losses"}
+              - {type: set_player_visibility, source_player: 2, target_player: 1, visibility_state: VISIBLE}
+              - {type: attack_move, select: {group: north}, location_x: 28, location_y: 26}
               - {type: display_instructions, display_time: 8, message: "Raiders from the north are coming for your Town Center!"}
+              - {type: activate_trigger, trigger_id: "@push north"}
               - {type: activate_trigger, trigger_id: "@second wave"}
           - name: second wave
             conditions: [{type: timer, timer: 60}]
             effects:
-              - {type: attack_move, source_player: 2, area_x1: 1, area_y1: 32, area_x2: 12, area_y2: 44,
-                 location_x: 28, location_y: 26}
+              - {type: attack_move, select: {group: southwest}, location_x: 28, location_y: 26}
               - {type: display_instructions, display_time: 8, message: "More Raiders, from the south-west!"}
+              - {type: activate_trigger, trigger_id: "@push southwest"}
+          - name: push north
+            conditions: [{type: timer, timer: 10}]
+            effects:
+              - {type: attack_move, select: {group: north}, location_x: 28, location_y: 26}
+              - {type: activate_trigger, trigger_id: "@push north"}
+          - name: push southwest
+            conditions: [{type: timer, timer: 10}]
+            effects:
+              - {type: attack_move, select: {group: southwest}, location_x: 28, location_y: 26}
+              - {type: activate_trigger, trigger_id: "@push southwest"}
         rewards: [resource_mastery, nile_arsenal]

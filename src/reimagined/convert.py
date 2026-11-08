@@ -22,7 +22,6 @@ from aoe2ed.session import SESSIONS
 from aoe2ed.tools.ai import ai_set
 from aoe2ed.tools.logic import triggers_add
 from aoe2ed.tools.world import diplomacy_set, options_set, player_set
-from AoE2ScenarioParser.datasets.terrains import TerrainId
 
 from . import ai, layout, missions, objectives, progression, victory
 from .aoede import strings
@@ -192,21 +191,6 @@ def mission_content(mission: str) -> tuple[progression.Campaign, str]:
     return (progression.load(slug), folder) if folder else (progression.Campaign(), "")
 
 
-MARKER = 70          # a House: a building keeps its owner in the game, and the player can't use it for anything
-WATER = frozenset(int(t) for t in TerrainId.water_terrains())
-
-
-def marker_tile(terrain: list[int], width: int, taken: set[tuple[int, int]]) -> tuple[int, int]:
-    """A land tile in a map corner for a keep-alive marker: the first free one walking in from the corners."""
-    corners = [(0, 0), (width - 1, 0), (0, width - 1), (width - 1, width - 1)]
-    for ring in range(width // 2):
-        for cx, cy in corners:
-            x, y = abs(cx - ring), abs(cy - ring)
-            if terrain[y * width + x] not in WATER and (x, y) not in taken:
-                return x, y
-    raise ValueError("no land tile for a keep-alive marker")
-
-
 @contextlib.contextmanager
 def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: dict[int, str] | None = None,
                    ai_debug: bool = False):
@@ -292,20 +276,22 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             placed.setdefault(owner, []).append((ror_id, unit.reference_id))
             res.placed += 1
 
-        markers: dict[int, int] = {}
-        taken = {(int(u.x), int(u.y)) for us in s.unit_manager.units for u in us}
-        for kp in progression.keep_alive(content, folder):
-            x, y = marker_tile(terrain, src.width, taken)
-            taken.add((x, y))
-            markers[kp] = s.unit_manager.add_unit(player=kp, unit_const=MARKER, x=x + 0.5, y=y + 0.5,
-                                                  status=NORMAL_STATUS).reference_id
+        # The reimagined mission's own units, on the map from the start; groups name them for its triggers.
+        groups: dict[str, tuple[int, list[int]]] = {}
+        for mu in progression.mission_units(content, folder):
+            ref = s.unit_manager.add_unit(player=mu["player"], unit_const=mu["unit"], x=mu["x"] + 0.5,
+                                          y=mu["y"] + 0.5, status=NORMAL_STATUS).reference_id
+            for g in [mu.get("group"), f"from {mu['from']}" if mu.get("from") else None]:
+                if g:
+                    groups.setdefault(g, (mu["player"], []))[1].append(ref)
+            res.placed += 1
 
         vp = victory.plan(src, conv, refs, objective_texts)
         if extras and vp.mode != "CUSTOM":
             # Only a Custom victory keeps the game from ending when an added player is defeated.
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")
         reimagined = reimagined_triggers(src, conv, mission, vp.triggers)
-        progression.select_objects(reimagined, placed, markers)
+        progression.select_objects(reimagined, placed, groups)
         vp.triggers += reimagined
         options_set(o.handle, vp.options())
         if vp.triggers:
