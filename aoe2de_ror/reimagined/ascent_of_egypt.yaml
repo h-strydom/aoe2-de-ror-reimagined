@@ -83,11 +83,14 @@ upgrades:
   # Hunting, Hard bonus (great)
   hardened_hunters:
     label: "Hardened Hunters"
-    text: "Villagers have 30 more hit points and 3 more attack."
+    # Balance (user, 2026-11-08): armour instead of +3 attack.
+    text: "Villagers have 30 more hit points and 1 more melee and pierce armour."
     effects:
       - {type: modify_attribute_for_class, object_group2: 4, object_attributes: 0, operation: ADD, quantity: 30}
-      - {type: modify_attribute_for_class, object_group2: 4, object_attributes: 9, operation: ADD,
-         armour_attack_class: 4, armour_attack_quantity: 3}
+      - {type: modify_attribute_for_class, object_group2: 4, object_attributes: 8, operation: ADD,
+         armour_attack_class: 4, armour_attack_quantity: 1}
+      - {type: modify_attribute_for_class, object_group2: 4, object_attributes: 8, operation: ADD,
+         armour_attack_class: 3, armour_attack_quantity: 1}
   swift_hunters:
     label: "Swift Hunters"
     text: "Hunters gather food twice as fast."
@@ -151,9 +154,9 @@ upgrades:
   watchful_homes:
     # Replaces All-Seeing (Reveal Map 2): in game that showed everything, too strong for the quality-of-life pick.
     label: "Watchful Homes"
-    text: "Houses see 5 tiles farther."
+    text: "Houses see 20 tiles."
     effects: [{type: modify_attribute, object_list_unit_id: [70, 463, 464, 465], object_attributes: 1,
-               operation: ADD, quantity: 5}]
+               operation: SET, quantity: 20}]
   # Discoveries, Moderate bonus (good)
   early_riders:
     label: "Early Riders"
@@ -400,8 +403,8 @@ missions:
           - {type: accumulate_attribute, attribute: 226, quantity: 1}
           - {type: accumulate_attribute, attribute: 227, quantity: 1}
         setup:
-          # Hard: the Libyans have Axemen and Leather Armor.
-          - {type: research_technology, source_player: 2, technology: [63, 40, 41, 42], force_research_technology: 1}
+          # Hard: the Libyans have Axemen (no Storage Pit upgrades: balance, user 2026-11-08).
+          - {type: research_technology, source_player: 2, technology: 63, force_research_technology: 1}
         rewards: [founding_families, seasoned_gear]
   04_the_dawn_of_a_new_age:
     players: [{number: 2, name: "Raiders", civ: EGYPTIAN}]
