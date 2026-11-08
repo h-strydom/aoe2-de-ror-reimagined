@@ -181,7 +181,9 @@ def reimagined_triggers(src: Scenario, conv: Conversion, mission: str, plan_trig
         return []
     folders = [m.folder.name for m in camp.missions]
     progression.hand_over(plan_triggers, human.number)
-    return progression.triggers(progression.load(slug), folders, folders.index(folder) + 1, player=human.number)
+    computers = tuple(p.number for p in src.active_players if not p.human and p.ai is not None)
+    return progression.triggers(progression.load(slug), folders, folders.index(folder) + 1, player=human.number,
+                                computers=computers)
 
 
 def mission_content(mission: str) -> tuple[progression.Campaign, str]:
@@ -212,6 +214,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
 
         content, folder = mission_content(mission)
         extras = progression.extra_players(content, folder)
+        custom_ai = progression.mission_ai(content, folder)
         s.player_manager.active_players = len(active) + len(extras)
         res.players = len(active) + len(extras)
         population = conv.population if conv.population and can_build(src, conv) else None
@@ -235,10 +238,15 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                 ai_set(o.handle, p.number, "immobile")
                 res.ai[p.number] = "immobile"
             elif plan is not None:
-                if conv.ai_levels:
-                    plan.spec["levels"] = conv.ai_levels
-                if population:
-                    plan.spec["grow"] = {"to": population["cap"], "minutes": population["grow_minutes"]}
+                change = custom_ai.get(p.number) or {}
+                if not change.get("replace"):
+                    if conv.ai_levels:
+                        plan.spec["levels"] = conv.ai_levels
+                    if population:
+                        plan.spec["grow"] = {"to": population["cap"], "minutes": population["grow_minutes"]}
+                if change:
+                    plan.spec = progression.apply_ai(plan.spec, change)
+                    plan.skipped = [] if change.get("replace") else plan.skipped
                 if claim and claim["start_ai"]:
                     plan.spec["start"] = {"trigger": AI_START_SIGNAL}
                 done = ai_set(o.handle, p.number, plan.spec)
@@ -290,7 +298,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                     groups.setdefault(g, (mu["player"], []))[1].append(ref)
             res.placed += 1
 
-        vp = victory.plan(src, conv, refs, objective_texts)
+        vp = victory.plan(src, conv, refs, objective_texts, drop=progression.dropped_objectives(content, folder))
         if extras and vp.mode != "CUSTOM":
             # Only a Custom victory keeps the game from ending when an added player is defeated.
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")

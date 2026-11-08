@@ -265,3 +265,24 @@ def test_target_aims_an_effect_at_each_placed_unit():
                                      "target": {"player": 1, "unit": [531, 4]}}]}]
     progression.select_objects(ts, {1: [(531, 10), (4, 11), (83, 12)]})
     assert [e["location_object_reference"] for e in ts[0]["effects"]] == [10, 11]   # not the villager
+
+
+def test_the_tech_tree_holds_for_computer_players_too():
+    camp = progression.Campaign(upgrades=CAMP.upgrades, missions={}, unlocks={"01_one": ["house"]})
+    ts = by_name(progression.triggers(camp, ["01_one"], 1, computers=(2,)))
+    tree = [e for e in ts["RI Objectives"]["effects"] if e["type"] == "enable_disable_object"]
+    players = {e["source_player"] for e in tree}
+    assert players == {1, 2} and len(tree) % 2 == 0
+    # red's walls are off as well as yours
+    assert {(e["source_player"], e["enabled"]) for e in tree if e["object_list_unit_id"] == 72} == {(1, 0), (2, 0)}
+
+
+def test_mission_ai_changes_or_replaces_the_translated_plan():
+    spec = {"name": "Default (AoE1)", "villagers": 25, "army": {"civ": "EGYPTIAN"}, "keep": [{"train": "CLUBMAN"}]}
+    changed = progression.apply_ai(spec, {"raids": [{"units": ["SLINGER"]}], "army": None})
+    assert changed["raids"] and changed["villagers"] == 25 and "army" not in changed
+    replaced = progression.apply_ai(spec, {"replace": True, "name": "Lower Egypt", "villagers": 10})
+    assert replaced == {"name": "Lower Egypt", "villagers": 10}
+    camp = progression.Campaign(missions={"06": {"ai": {2: {"replace": True}}, "drop_objectives": [2]}})
+    assert progression.mission_ai(camp, "06") == {2: {"replace": True}}
+    assert progression.dropped_objectives(camp, "06") == {2}

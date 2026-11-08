@@ -132,10 +132,13 @@ _NO_PLAYER = {"change_variable", "activate_trigger", "deactivate_trigger", "crea
               "clear_instructions", "change_color_mood", "script_call", "ai_script_goal"}
 
 
-def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1) -> list[dict]:
+def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1,
+             computers: tuple[int, ...] = ()) -> list[dict]:
     """The progression triggers for mission `number` (1-based) of a campaign whose missions are `folders`. The
     human player's victory triggers must activate "RI Primary complete" instead of winning (hand_over).
-    Upgrades trump the mission's own settings (an upgrade enabling the Stable enables it where a mission doesn't)."""
+    Upgrades trump the mission's own settings (an upgrade enabling the Stable enables it where a mission doesn't).
+    The campaign's tech tree also holds for the `computers`: an AI that tries something locked away fails that step
+    and moves on, instead of doing something the mission shouldn't have (the user, 2026-11-08)."""
     out: list[dict] = []
     m = camp.missions.get(folders[number - 1]) or {}
     bonus = m.get("bonus") or []
@@ -174,6 +177,7 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     out.append({"name": "RI Objectives", "effects": [
         {"type": "change_variable", "variable": "RI objectives", "operation": "SET", "quantity": 1},
         *_player(tree_effects(camp, folders, number), player),
+        *(e for c in computers for e in _player(tree_effects(camp, folders, number), c)),
         *_player(expand(m.get("setup") or []), player)]})
     # The main objective's extra line from a difficulty up (`primary_extra`): ending waits for it too.
     extra = m.get("primary_extra")
@@ -414,6 +418,28 @@ def tree_effects(camp: Campaign, folders: list[str], number: int) -> list[dict]:
         out += [{"type": "enable_disable_technology", "technology": t, "enabled": flag}
                 for t in entry.get("techs", [])]
     return out
+
+
+def mission_ai(camp: Campaign, folder: str) -> dict[int, dict]:
+    """Computer players' AI specs by player number (mission content `ai: {2: {...}}`, aoe-agent-editor AI spec keys).
+    `replace: true` is the whole plan, played as written on each difficulty (its own `levels`); otherwise the keys
+    change the plan translated from the original AoE1 AI, and a key set to null removes it."""
+    return {int(k): dict(v) for k, v in ((camp.missions.get(folder) or {}).get("ai") or {}).items()}
+
+
+def dropped_objectives(camp: Campaign, folder: str) -> set[int]:
+    """Players whose own victory conditions the mission drops (`drop_objectives: [2]`): they win only by defeating
+    the player, as any enemy does (Egypt 6's Lower Egypt won at 2000 food, the user, 2026-11-08)."""
+    return {int(p) for p in (camp.missions.get(folder) or {}).get("drop_objectives") or []}
+
+
+def apply_ai(spec: dict, change: dict) -> dict:
+    """A translated AI spec with a mission's `ai` change applied (mission_ai)."""
+    change = dict(change)
+    if change.pop("replace", False):
+        return {"name": spec.get("name", "AI"), **change}
+    out = {**spec, **change}
+    return {k: v for k, v in out.items() if v is not None}
 
 
 def extra_players(camp: Campaign, folder: str) -> list[dict]:

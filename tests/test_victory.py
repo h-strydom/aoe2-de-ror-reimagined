@@ -117,3 +117,18 @@ def test_added_players_and_mission_units(tmp_path):
     assert gone == guards                                                     # Standard: none of them stay
     wave = next(e for e in ts["RI Bonus 2 north attack"].effects if e.effect_type == 30)
     assert len(wave.selected_object_ids) == 4 and set(wave.selected_object_ids) <= guards
+
+
+def test_mission_ai_and_dropped_objectives(tmp_path):
+    """Egypt 6: Lower Egypt plays the mission's own AI per difficulty and wins only by defeating you; the tech
+    tree holds for it too. Egypt 5: red's AI sends the landing party (a raid on AI Script Goal 7)."""
+    res, _, ts = _convert(tmp_path, "ascent_of_egypt", "06_farming")
+    assert "P2 Victory" not in ts and "P1 Victory" in ts
+    spec = res.specs[2]
+    assert spec["name"] == "Lower Egypt" and set(spec["levels"]) == {"easy", "normal", "hard"}
+    assert "grow" not in spec and spec["levels"]["hard"]["raids"]
+    assert "Lower Egypt" in res.ai[2] and not [s for s in res.ai_skipped if s.startswith("P2")]
+    tree = [e for e in ts["RI Objectives"].effects if e.effect_type == 38 and e.source_player == 2]
+    assert tree                                                                   # red's tech tree too
+    res5, _, _ = _convert(tmp_path, "ascent_of_egypt", "05_skirmish")
+    assert res5.specs[2]["raids"][0]["start"] == {"trigger": 7} and res5.specs[2].get("levels")

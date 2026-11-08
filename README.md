@@ -156,7 +156,12 @@ On top of the faithful maps (`src/reimagined/progression.py`, content in `aoe2de
 - **A campaign tech tree:** a campaign can start with everything off and unlock buildings, units and techs mission
   by mission (`unlocks:`); perks bring extras or bring things early. The names come from
   `aoe2de_ror/reimagined/ror_tech_tree.yaml`, generated from your Return of Rome install:
-  `uv run --with genieutils-py python scripts/gen_tech_tree.py`.
+  `uv run --with genieutils-py python scripts/gen_tech_tree.py`. The tree holds for computer players too, so an
+  AI that tries something locked away skips that step.
+- **Computer players' AI:** a mission can give an enemy its own AI per difficulty (`ai: {2: {replace: true, ...}}`,
+  aoe-agent-editor AI spec keys with `levels: {easy, normal, hard}` for Standard, Moderate and Hard), or change the
+  plan translated from the original (`ai: {2: {raids: [...]}}`). `drop_objectives: [2]` leaves out a player's own
+  win conditions, so it wins only by defeating you.
 
 ## Changing a campaign map
 

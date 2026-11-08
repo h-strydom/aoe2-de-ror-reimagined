@@ -156,10 +156,10 @@ def _counter(name: str, conds: list[dict], player: int, armed: bool) -> tuple[in
 
 
 def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
-         objective_texts: dict[int, list[tuple[str, list[int]]]]) -> VictoryPlan:
+         objective_texts: dict[int, list[tuple[str, list[int]]]], drop: set[int] = frozenset()) -> VictoryPlan:
     """Options and triggers for a converted scenario. refs: AoE DE unit id -> RoR unit reference id.
     objective_texts: per player, (line, indexes of the conditions it covers) per to-do line (objectives.lines;
-    shown for human players)."""
+    shown for human players). drop: players whose own victory conditions are left out."""
     gv = src.global_victory
     mode = VICTORY_MODES[gv["mode"]]
     out = VictoryPlan(ROR_VICTORY[mode])
@@ -175,7 +175,7 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
 
     for p in active:
         conds, arms, ticks, armed_ix = [], [], {}, set()
-        for i, c in enumerate(p.victory):
+        for i, c in enumerate([] if p.number in drop else p.victory):
             cond, problem = _condition(c, p.number, src, conv, refs, start_counts)
             if problem:
                 out.skipped.append(f"player {p.number} {c.type}: {problem}")

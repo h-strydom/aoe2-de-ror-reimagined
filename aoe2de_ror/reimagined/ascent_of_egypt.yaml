@@ -68,6 +68,7 @@ unlocks:
   04_the_dawn_of_a_new_age: [tool_age, toolworking, leather_armor_for_infantry, leather_armor_for_archers,
                              leather_armor_for_cavalry, barracks, clubman]
   05_skirmish: [archery_range, bowman, axeman]
+  06_farming: [market, domestication, woodworking, gold_mining, stone_mining, slinger, scout_ship, farm]
 
 upgrades:
   # Hunting, primary (quality of life)
@@ -623,6 +624,11 @@ missions:
     units:
       # Moderate and Hard: the Raiders' chieftain, a Short Swordsman (60 hit points).
       - {player: 2, unit: 74, x: 58, y: 51, from: moderate, group: chieftain}
+    ai:
+      # Red's AI sends the landing party (Hard): the units the ship drops near 47,20, hunted at your closest unit
+      # and re-ordered every 10 seconds while one lives (the trigger "land" sends AI Script Goal 7).
+      2:
+        raids: [{units: [SLINGER, AXEMAN], count: 3, min: 1, start: {trigger: 7}, near: {x: 47, y: 20, radius: 5}}]
     rewards: [keen_eyes, field_dressing]
     bonus:
       - text: "Slay the Raider chieftain."
@@ -636,27 +642,41 @@ missions:
         fail:
           - {type: accumulate_attribute, attribute: 154, quantity: 3}
         triggers:
-          # Hard: a countdown, then at 5 minutes a Raider ship (theirs, red) appears in the north-east water corner,
-          # sails to the beach near 47,20, drops 2 Slingers and an Axeman and sails back out of sight. Only if the
-          # Raiders aren't defeated yet: they're the main objective's enemy, so you can win before it comes. The
-          # Raiders see the whole map; the landing party attack-moves at your soldiers (aimed at each of your
-          # starting Axemen and Bowmen in turn: the last one alive is the target), the Slingers again every 10
-          # seconds (before, aimed at a spot, they went there and stopped; the user, 2026-11-08).
+          # Hard: a countdown line in the objectives, then at 3:30 a Raider ship (theirs, red) appears in the
+          # north-east water corner, sails to the beach near 47,20 (about 1:30), drops 2 Slingers and an Axeman and
+          # sails back out of sight. Only if the Raiders aren't defeated yet: they're the main objective's enemy,
+          # so you can win before it comes. The Raiders see the whole map.
+          # The countdown counts in trigger time, which keeps game time at any speed: the game's Display Timer
+          # doesn't (at high speed it still showed 222 s when the ship landed at 6:34, the user, 2026-11-08).
+          # The landing party is sent by red's own AI (a raid, `ai` below): ordered by triggers, red's AI took the
+          # units back ("they move left a bit and then give up", 2026-11-08). The trigger order stays as a start.
           - name: countdown
             effects:
-              - {type: display_timer, timer: 0, display_time: 300, message: "A Raider ship lands in %d"}
+              - {type: change_variable, variable: "RI landing", operation: SET, quantity: 300}
               - {type: display_instructions, display_time: 10, message: "Raiders are sailing in from the north-east: they land in 5 minutes."}
               - {type: modify_resource, source_player: 2, tribute_list: 203, operation: SET, quantity: 2}
+              - {type: activate_trigger, trigger_id: "@tick"}
+              - {type: activate_trigger, trigger_id: "@ashore"}
               - {type: activate_trigger, trigger_id: "@launch"}
+          - name: tick
+            conditions:
+              - {type: timer, timer: 5}
+              - {type: variable_value, variable: "RI landing", comparison: LARGER, quantity: 0}
+            effects:
+              - {type: change_variable, variable: "RI landing", operation: SUBTRACT, quantity: 5}
+              - {type: activate_trigger, trigger_id: "@tick"}
+          - name: ashore
+            objective: "A Raider ship lands in about <RI landing> seconds."
+            conditions: [{type: variable_value, variable: "RI landing", comparison: EQUAL, quantity: 0}]
           - name: launch
             conditions:
-              - {type: timer, timer: 300}
+              - {type: timer, timer: 210}
               - {type: variable_value, variable: "RI primary", comparison: EQUAL, quantity: 0}
             effects:
               - {type: create_object, source_player: 2, object_list_unit_id: 545, location_x: 69, location_y: 2}
               - {type: task_object, source_player: 2, object_list_unit_id: 545, area_x1: 64, area_y1: 0, area_x2: 71,
                  area_y2: 7, location_x: 49, location_y: 20}
-              - {type: display_instructions, display_time: 8, message: "The Raider ship is coming ashore!"}
+              - {type: display_instructions, display_time: 8, message: "A Raider ship is heading for the shore!"}
               - {type: activate_trigger, trigger_id: "@land"}
           - name: land
             conditions: [{type: objects_in_area, source_player: 2, object_list: 545, area_x1: 47, area_y1: 17,
@@ -667,16 +687,12 @@ missions:
               - {type: create_object, source_player: 2, object_list_unit_id: 531, location_x: 47, location_y: 20}
               - {type: attack_move, source_player: 2, area_x1: 44, area_y1: 16, area_x2: 50, area_y2: 24,
                  target: {player: 1, unit: [531, 4]}}
+              # red's AI takes the landing party (raid on AI Script Goal 7) and hunts your units with it
+              - {type: ai_script_goal, ai_script_goal: 7}
+              - {type: change_variable, variable: "RI landing", operation: SET, quantity: 0}
               - {type: task_object, source_player: 2, object_list_unit_id: 545, area_x1: 46, area_y1: 15, area_x2: 53,
                  area_y2: 25, location_x: 69, location_y: 2}
-              - {type: activate_trigger, trigger_id: "@push"}
               - {type: activate_trigger, trigger_id: "@sail away"}
-          - name: push
-            conditions: [{type: timer, timer: 10}]
-            effects:
-              - {type: attack_move, source_player: 2, area_x1: 0, area_y1: 0, area_x2: 71, area_y2: 71,
-                 object_group: 44, target: {player: 1, unit: [531, 4]}}
-              - {type: activate_trigger, trigger_id: "@push"}
           - name: sail away
             conditions: [{type: objects_in_area, source_player: 2, object_list: 545, area_x1: 64, area_y1: 0,
                           area_x2: 71, area_y2: 7, quantity: 1}]
@@ -684,3 +700,72 @@ missions:
               - {type: remove_object, source_player: 2, object_list_unit_id: 545, area_x1: 64, area_y1: 0,
                  area_x2: 71, area_y2: 7}
         rewards: [battle_drill, shield_wall]
+  06_farming:
+    # Mission 6: you (Upper Egypt) start at 32,58 with a Town Center, Barracks, Granary, 3 Villagers and 3 Clubmen;
+    # Lower Egypt (red) at 46,14 with a Town Center, Barracks, Dock, 3 Villagers and 4 Axemen. A river winds
+    # across the map with 8 fish; no gold or stone mines (red has its 200 stone). Your objectives: the Ruin at
+    # 10,14 and 800 food.
+    # Red's original win (2000 food) is gone: it wins only by destroying you (the user, 2026-11-08).
+    drop_objectives: [2]
+    # Red's AI per difficulty (the user's plan, 2026-11-08), written for this mission instead of the original
+    # build list. The tech tree holds for red too, so a step it can't take is skipped, not worked around.
+    #   Standard: a small economy, 5 Axemen and 3 Bowmen, 1 warship and no other ships; never attacks by itself
+    #     (it still fights what comes near).
+    #   Moderate: the same ships; upgrades; a 20-unit army; attacks now and then with 5 units, never before 3:00.
+    #   Hard: 3 warships kept up, 5 fishing boats that are never replaced (no farming its resources by killing
+    #     them), towards 100 population; raiding parties of 5 at your villagers and massive attacks of 20 or more;
+    #     upgrades as soon as a defence of 8 stands at home.
+    ai:
+      2:
+        replace: true
+        name: Lower Egypt
+        step_timeout: 120
+        scout: false
+        build_order:
+          - {build: STORAGE_PIT}
+          - {build: GRANARY}
+          - {build: MARKET}
+          - {build: FARM, count: 3}
+          - {research: BATTLE_AXE}
+          - {build: ARCHERY_RANGE}
+        levels:
+          easy:
+            villagers: 10
+            keep:
+              - {train: AXEMAN, count: 5}
+              - {train: BOWMAN, count: 3}
+              - {train: SCOUT_SHIP, count: 1}
+              - {build: FARM, count: 4}
+          normal:
+            villagers: 18
+            keep:
+              - {train: AXEMAN, count: 8}
+              - {train: BOWMAN, count: 6}
+              - {train: SLINGER, count: 6}
+              - {train: SCOUT_SHIP, count: 1}
+              - {build: FARM, count: 7}
+              - {research: TOOLWORKING}
+              - {research: LEATHER_ARMOR_FOR_INFANTRY}
+              - {research: LEATHER_ARMOR_FOR_ARCHERS}
+              - {research: DOMESTICATION}
+              - {research: WOODWORKING}
+            attack: {first: 180, every: 300, min_group: 5, max_group: 5, percent: 100}
+          hard:
+            villagers: 40
+            keep:
+              - {build: BARRACKS, count: 2}
+              - {build: ARCHERY_RANGE, count: 2}
+              - {train: AXEMAN, count: 20}
+              - {train: BOWMAN, count: 20}
+              - {train: SLINGER, count: 10}
+              - {train: SCOUT_SHIP, count: 3}
+              - {train: FISHING_BOAT, count: 5, lifetime: true}
+              - {build: FARM, count: 14}
+              - {research: TOOLWORKING, when: {soldiers: 8}}
+              - {research: LEATHER_ARMOR_FOR_INFANTRY, when: {soldiers: 8}}
+              - {research: LEATHER_ARMOR_FOR_ARCHERS, when: {soldiers: 8}}
+              - {research: DOMESTICATION, when: {soldiers: 8}}
+              - {research: WOODWORKING, when: {soldiers: 8}}
+            raids:
+              - {units: [BOWMAN, AXEMAN], count: 5, first: 360, every: 180, target: villagers}
+            attack: {first: 720, every: 360, min_group: 20, max_group: 25, percent: 100, naval: true}

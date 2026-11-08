@@ -360,6 +360,8 @@ missions:
   # with that town and 8 tiles around it explored, so their first attacks know where to go instead of waiting to
   # stumble on it. Only that area: no other map knowledge. Tutorials, town-less starts and starts spread over
   # most of the map (Pyrrhus, Alexander, Alesia, Zenobia, Odaenathus) are left as they were.
+  ascent_of_egypt/06_farming:                  # Lower Egypt knows where Upper Egypt is (its attacks)
+    show_base: [[22, 48, 44, 68]]
   ascent_of_egypt/08_religion:
     show_base: [[33, 16, 71, 70]]
   ascent_of_egypt/09_the_river_outpost:
