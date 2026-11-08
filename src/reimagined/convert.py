@@ -172,7 +172,8 @@ def can_build(src: Scenario, conv: Conversion) -> bool:
     return any(object_name(u.type).startswith(BUILDERS) for u in src.players[0].units)
 
 
-def reimagined_triggers(src: Scenario, conv: Conversion, mission: str, plan_triggers: list[dict]) -> list[dict]:
+def reimagined_triggers(src: Scenario, conv: Conversion, mission: str, plan_triggers: list[dict],
+                        all_perks: bool = False) -> list[dict]:
     """The reimagined layer (progression.py) for a campaign mission: winning unlocks ending it, bonus objectives
     by difficulty, upgrades. Changes the human player's victory triggers in `plan_triggers` in place."""
     slug, _, folder = mission.partition("/")
@@ -184,7 +185,7 @@ def reimagined_triggers(src: Scenario, conv: Conversion, mission: str, plan_trig
     progression.hand_over(plan_triggers, human.number)
     computers = tuple(p.number for p in src.active_players if not p.human and p.ai is not None)
     return progression.triggers(progression.load(slug), folders, folders.index(folder) + 1, player=human.number,
-                                computers=computers)
+                                computers=computers, all_perks=all_perks)
 
 
 def mission_content(mission: str) -> tuple[progression.Campaign, str]:
@@ -195,7 +196,7 @@ def mission_content(mission: str) -> tuple[progression.Campaign, str]:
 
 @contextlib.contextmanager
 def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: dict[int, str] | None = None,
-                   ai_debug: bool = False):
+                   ai_debug: bool = False, all_perks: bool = False):
     """Yield (AoE2ScenarioParser scenario flagged for RoR, ConvertResult). The scenario lives in an
     aoe-agent-editor session that closes on exit, so write or inspect it inside the block."""
     res = ConvertResult(mission or src.filename, Path())
@@ -316,7 +317,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         if extras and vp.mode != "CUSTOM":
             # Only a Custom victory keeps the game from ending when an added player is defeated.
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")
-        reimagined = reimagined_triggers(src, conv, mission, vp.triggers)
+        reimagined = reimagined_triggers(src, conv, mission, vp.triggers, all_perks)
         progression.select_objects(reimagined, placed, groups, unit_hp)
         vp.triggers += reimagined
         options_set(o.handle, vp.options())
@@ -362,8 +363,9 @@ def probe_mission(m: layout.Mission, conv: Conversion, out_root: Path, *, minute
 
     camp, mission = m.key.split("/")
     out = out_root / f"probe_{camp}_{mission}.aoe2scenario"
+    # Every perk of the campaign applies in a probe, so the user can try them while the AIs are recorded.
     with build_scenario(load_scenario(m.scenario_path), conv.for_mission(m.key), m.key, strings.load(),
-                        ai_debug) as (s, res):
+                        ai_debug, all_perks=True) as (s, res):
         return probe(s, out, specs=res.specs, game="ror", stop_after=minutes * 60)
 
 

@@ -133,12 +133,14 @@ _NO_PLAYER = {"change_variable", "activate_trigger", "deactivate_trigger", "crea
 
 
 def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1,
-             computers: tuple[int, ...] = ()) -> list[dict]:
+             computers: tuple[int, ...] = (), all_perks: bool = False) -> list[dict]:
     """The progression triggers for mission `number` (1-based) of a campaign whose missions are `folders`. The
     human player's victory triggers must activate "RI Primary complete" instead of winning (hand_over).
     Upgrades trump the mission's own settings (an upgrade enabling the Stable enables it where a mission doesn't).
     The campaign's tech tree also holds for the `computers`: an AI that tries something locked away fails that step
-    and moves on, instead of doing something the mission shouldn't have (the user, 2026-11-08)."""
+    and moves on, instead of doing something the mission shouldn't have (the user, 2026-11-08).
+    all_perks: every upgrade of the campaign applies from the start, both options of every slot (AI probes, so the
+    user can try the perks while the AIs are recorded)."""
     out: list[dict] = []
     m = camp.missions.get(folders[number - 1]) or {}
     bonus = m.get("bonus") or []
@@ -223,14 +225,15 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
         for key, pair in slots:
             for opt, up in enumerate(pair, start=1):
                 name = f"RI Upgrade {key} {opt}"
-                apply = {"name": name, "conditions": [
+                apply = {"name": name, "conditions": [] if all_perks else [
                     {"type": "variable_value", "variable": f"RI {key}", "comparison": "EQUAL", "quantity": opt}]}
                 out.append(apply)
                 # An upgrade's own triggers (e.g. watching for when a bonus runs out) start with it.
                 extra = own_triggers(name, camp.upgrades[up].get("triggers") or [])
                 apply["effects"] = (_player(expand(camp.upgrades[up].get("effects") or []), player)
                                     + [{"type": "activate_trigger", "trigger_id": t} for t in extra]
-                                    + [{"type": "deactivate_trigger", "trigger_id": f"RI Upgrade {key} {3 - opt}"}])
+                                    + ([] if all_perks else
+                                       [{"type": "deactivate_trigger", "trigger_id": f"RI Upgrade {key} {3 - opt}"}]))
 
     def reward(slot: str, pair: list[str] | None, decision: int) -> list[dict]:
         """Effects that offer slot's choice, and the triggers behind it. The choice counts as pending in the same

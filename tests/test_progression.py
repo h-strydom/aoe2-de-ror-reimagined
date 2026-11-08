@@ -293,3 +293,10 @@ def test_a_condition_on_every_placed_unit_of_a_type():
     progression.select_objects(ts, {0: [(102, 7), (66, 8), (102, 9)]})
     assert ts[0]["conditions"] == [{"type": "destroy_object", "unit_object": 7},
                                    {"type": "destroy_object", "unit_object": 9}]               # both, no OR
+
+
+def test_all_perks_apply_every_upgrade_from_the_start():
+    ts = by_name(progression.triggers(CAMP, FOLDERS, 2, all_perks=True))
+    applies = [t for n, t in ts.items() if n.startswith("RI Upgrade ") and n[-1] in "12" and "conditions" in t]
+    assert applies and all(t["conditions"] == [] for t in applies)                 # no bank pick needed
+    assert not [e for t in applies for e in t["effects"] if e["type"] == "deactivate_trigger"]   # both options

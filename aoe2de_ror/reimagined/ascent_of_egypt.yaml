@@ -926,13 +926,19 @@ missions:
     # yellow allies (red's trade fleet trades with yellow's Dock; RoR's AIs trade only with allies). Green and red
     # aren't allies (neutral). You get a normal Bronze Age without the Temple; green its civ's full Tool Age, red
     # its full Bronze Age (the campaign tree doesn't hold for them).
-    diplomacy: [[1, 2, ENEMY], [1, 3, ENEMY], [1, 4, NEUTRAL], [2, 3, NEUTRAL], [2, 4, ALLY], [3, 4, NEUTRAL]]
+    # Red and green are enemies, not neutral: red's trade boats traded with green's Dock (probe, 2026-11-08).
+    # Both AIs attack you, never each other on purpose (attack.target: 1).
+    diplomacy: [[1, 2, ENEMY], [1, 3, ENEMY], [1, 4, NEUTRAL], [2, 3, ENEMY], [2, 4, ALLY], [3, 4, NEUTRAL]]
     disabled: {1: [temple, iron_age], 2: [iron_age], 3: [bronze_age, iron_age]}
     ai_unlocks: {2: all, 3: all, 4: all}
     # Green starts in the Tool Age with food and wood for a Market and Farms: from the Stone Age its hunters
     # roamed through your base and it was still short of the Tool Age at 20:00 (probe, 2026-11-08). RoR's Farms
     # need a Market, which needs the Tool Age.
     start: {3: {age: tool_age, food: 300, wood: 400}}
+    setup:
+      # Red's trade also brings back wood, as much as the gold (the user, 2026-11-08: half gold, half wood).
+      # Resource 252, Trade Wood Percent; unverified in Return of Rome.
+      - {type: modify_resource, source_player: 2, tribute_list: 252, operation: SET, quantity: 100}
     units:
       # Red starts with Trade Boats by its Docks: 2 on Moderate, 5 on Hard (the user, 2026-11-08).
       - {player: 2, unit: 17, x: 32, y: 76, from: moderate}
@@ -966,8 +972,10 @@ missions:
         step_timeout: 120
         # No gold mine on its land: it gathered none on a 54% gold split (probe, 2026-11-08). Its gold comes from
         # selling food and wood at its Market (and from trade boats).
-        gatherers: {food: 55, wood: 45, gold: 0, stone: 0}
-        trade: {sell: {food: 400, wood: 400}, every: 4}
+        # It starved for wood (no Granary, Barracks or Archery Range by 20:00) while 5000 gold piled up (probe):
+        # more on wood, and the Market buys wood and food with spare gold.
+        gatherers: {food: 45, wood: 55, gold: 0, stone: 0}
+        trade: {buy: {wood: 400, food: 300}, sell: {food: 400, wood: 400}, every: 4}
         build_order:
           - {build: GRANARY}
           - {build: BARRACKS}
@@ -978,16 +986,22 @@ missions:
           easy:
             villagers: 12
             keep:
+              - {build: GRANARY}
+              - {build: BARRACKS}
+              - {build: ARCHERY_RANGE}
               - {train: WAR_GALLEY, count: 3}
               - {train: IMPROVED_BOWMAN, count: 4}
               - {build: FARM, count: 4}
-            attack: {first: 300, every: 240, min_group: 999, max_group: 999, naval: true}
+            attack: {first: 300, every: 240, min_group: 999, max_group: 999, naval: true, target: 1}
           normal:
             villagers: 22
             # Landings: the land attack, ferried by the engine in red's transports (no landings by 22:00 with 1
             # transport and 5+ idle soldiers needed, playtest 2026-11-08).
             transports: 2
             keep:
+              - {build: GRANARY}
+              - {build: BARRACKS}
+              - {build: ARCHERY_RANGE}
               - {build: DOCK, count: 2}
               - {train: WAR_GALLEY, count: 6}
               - {research: COMPOSITE_BOW}
@@ -998,11 +1012,13 @@ missions:
               - {build: FARM, count: 8}
               - {research: SCALE_ARMOR_FOR_ARCHERS}
               - {research: WHEEL}
-            attack: {first: 240, every: 180, min_group: 4, max_group: 8, percent: 100, naval: true}
+            attack: {first: 240, every: 180, min_group: 4, max_group: 8, percent: 100, naval: true, target: 1}
           hard:
             villagers: 35
             transports: 3
             keep:
+              - {build: GRANARY}
+              - {build: BARRACKS}
               - {build: DOCK, count: 3}
               - {train: WAR_GALLEY, count: 10}
               - {research: COMPOSITE_BOW}
@@ -1019,9 +1035,10 @@ missions:
               - {research: WHEEL}
               - {research: ARTISANSHIP}
               - {research: PLOW}
-              # the trade fleet, from the start (waiting for 12 soldiers it never came: they cost gold)
-              - {train: TRADE_BOAT, count: 50}
-            attack: {first: 240, every: 120, min_group: 6, max_group: 12, percent: 100, naval: true}
+              # the trade fleet once it rules the water: 8 War Galleys (from the start it took all the wood and
+              # red had no army, probe 2026-11-08; its 5 starting boats bring the gold until then)
+              - {train: TRADE_BOAT, count: 50, when: {units: {WAR_GALLEY: 8}}}
+            attack: {first: 240, every: 120, min_group: 6, max_group: 12, percent: 100, naval: true, target: 1}
       # Green, the Canaanites: the land, up to the Tool Age.
       #   Standard: never attacks; at most 5 soldiers and a few villagers; 2 fishing boats.
       #   Moderate: your land enemy, basic attacks of 6-8.
@@ -1049,6 +1066,9 @@ missions:
           easy:
             villagers: 8
             keep:
+              # the Market again whenever it's missing: the plan skipped it at 10:15 while the Granary it needs
+              # was still unfinished, and it never farmed (probe, 2026-11-08)
+              - {build: MARKET}
               - {train: FISHING_BOAT, count: 2}
               - {train: AXEMAN, count: 3}
               - {train: BOWMAN, count: 2}
@@ -1056,6 +1076,7 @@ missions:
           normal:
             villagers: 18
             keep:
+              - {build: MARKET}
               - {train: FISHING_BOAT, count: 4}
               # Clubmen from the start (nothing attacked by 13:00, playtest)
               - {train: CLUBMAN, count: 6}
@@ -1066,10 +1087,11 @@ missions:
               - {research: TOOLWORKING}
               - {research: LEATHER_ARMOR_FOR_INFANTRY}
               - {research: LEATHER_ARMOR_FOR_ARCHERS}
-            attack: {first: 420, every: 300, min_group: 6, max_group: 8, percent: 100}
+            attack: {first: 420, every: 300, min_group: 6, max_group: 8, percent: 100, target: 1}
           hard:
             villagers: 40
             keep:
+              - {build: MARKET}
               - {train: CLUBMAN, count: 8}
               - {research: BATTLE_AXE}
               - {build: BARRACKS, count: 3}
@@ -1089,5 +1111,5 @@ missions:
               - {research: WOODWORKING, when: {soldiers: 8}}
             raids:
               - {units: [SCOUT], count: 5, first: 360, every: 180, target: villagers, fallback: {x: 78, y: 18}}
-            attack: {first: 300, every: 360, min_group: 20, max_group: 25, percent: 100,
+            attack: {first: 300, every: 360, min_group: 20, max_group: 25, percent: 100, target: 1,
                      warm_up: {attacks: 3, min_group: 5, max_group: 8, every: 180}}
