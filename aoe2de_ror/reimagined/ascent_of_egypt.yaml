@@ -929,6 +929,17 @@ missions:
     diplomacy: [[1, 2, ENEMY], [1, 3, ENEMY], [1, 4, NEUTRAL], [2, 3, NEUTRAL], [2, 4, ALLY], [3, 4, NEUTRAL]]
     disabled: {1: [temple, iron_age], 2: [iron_age], 3: [bronze_age, iron_age]}
     ai_unlocks: {2: all, 3: all, 4: all}
+    # Green starts in the Tool Age with food and wood for a Market and Farms: from the Stone Age its hunters
+    # roamed through your base and it was still short of the Tool Age at 20:00 (probe, 2026-11-08). RoR's Farms
+    # need a Market, which needs the Tool Age.
+    start: {3: {age: tool_age, food: 300, wood: 400}}
+    units:
+      # Red starts with Trade Boats by its Docks: 2 on Moderate, 5 on Hard (the user, 2026-11-08).
+      - {player: 2, unit: 17, x: 32, y: 76, from: moderate}
+      - {player: 2, unit: 17, x: 34, y: 76, from: moderate}
+      - {player: 2, unit: 17, x: 35, y: 78, from: hard}
+      - {player: 2, unit: 17, x: 33, y: 75, from: hard}
+      - {player: 2, unit: 17, x: 35, y: 80, from: hard}
     rewards: [town_tithes, grain_trade]
     bonus:
       - text: "Defeat the Minoans and the Canaanites."
@@ -953,6 +964,10 @@ missions:
         replace: true
         name: Minoans
         step_timeout: 120
+        # No gold mine on its land: it gathered none on a 54% gold split (probe, 2026-11-08). Its gold comes from
+        # selling food and wood at its Market (and from trade boats).
+        gatherers: {food: 55, wood: 45, gold: 0, stone: 0}
+        trade: {sell: {food: 400, wood: 400}, every: 4}
         build_order:
           - {build: GRANARY}
           - {build: BARRACKS}
@@ -1004,11 +1019,11 @@ missions:
               - {research: WHEEL}
               - {research: ARTISANSHIP}
               - {research: PLOW}
-              # the trade fleet once a defence stands
-              - {train: TRADE_BOAT, count: 50, when: {soldiers: 12}}
+              # the trade fleet, from the start (waiting for 12 soldiers it never came: they cost gold)
+              - {train: TRADE_BOAT, count: 50}
             attack: {first: 240, every: 120, min_group: 6, max_group: 12, percent: 100, naval: true}
       # Green, the Canaanites: the land, up to the Tool Age.
-      #   Standard: never attacks; at most 5 soldiers and a few villagers; no fishing.
+      #   Standard: never attacks; at most 5 soldiers and a few villagers; 2 fishing boats.
       #   Moderate: your land enemy, basic attacks of 6-8.
       #   Hard: Egypt 6's Hard red: towards 100 population, 3 warning attacks then massive waves, Scout raids.
       3:
@@ -1019,25 +1034,30 @@ missions:
         # No stone or gold: the reachable stone is the east desert, through your base, and its miners walked to
         # their death there (playtest, 2026-11-08). So no Slingers or towers either.
         gatherers: {food: 60, wood: 40, gold: 0, stone: 0}
-        strategic_numbers: {sn-allow-gathering-sea-fish-with-villagers: 0, sn-maximum-food-drop-distance: 12}
+        # Everything close to home: it put a Granary in your base and sent hunters through it (2026-11-08).
+        # Drop-off buildings within 12 tiles of its Town Center, hunting and foraging within 8 of a drop-off.
+        # Fishing on every difficulty, by boat (the user, 2026-11-08: food held it back).
+        strategic_numbers: {sn-allow-gathering-sea-fish-with-villagers: 0, sn-maximum-food-drop-distance: 8,
+                            sn-maximum-hunt-drop-distance: 8, sn-mill-max-distance: 12, sn-camp-max-distance: 12}
         build_order:
           - {build: GRANARY}
-          - {build: STORAGE_PIT}
-          - {research: TOOL_AGE}
           - {build: MARKET}
-          - {build: FARM, count: 3}
+          - {build: FARM, count: 4}
+          - {build: STORAGE_PIT}
           - {build: ARCHERY_RANGE}
         levels:
           easy:
             villagers: 8
             keep:
+              - {train: FISHING_BOAT, count: 2}
               - {train: AXEMAN, count: 3}
               - {train: BOWMAN, count: 2}
               - {build: FARM, count: 3}
           normal:
             villagers: 18
             keep:
-              # Clubmen from the start (it starts in the Stone Age; nothing attacked by 13:00, playtest)
+              - {train: FISHING_BOAT, count: 4}
+              # Clubmen from the start (nothing attacked by 13:00, playtest)
               - {train: CLUBMAN, count: 6}
               - {research: BATTLE_AXE}
               - {train: AXEMAN, count: 8}

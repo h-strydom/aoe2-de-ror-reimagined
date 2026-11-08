@@ -218,6 +218,10 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         own_disabled = progression.disabled(content, folder)
         active = [dataclasses.replace(p, disabled=own_disabled[p.number]) if p.number in own_disabled else p
                   for p in active]
+        own_start = progression.starts(content, folder)
+        active = [dataclasses.replace(p, starting_age=own_start[p.number].get("starting_age", p.starting_age),
+                                      resources={**p.resources, **own_start[p.number].get("resources", {})})
+                  if p.number in own_start else p for p in active]
         stances = progression.diplomacy(content, folder)
 
         def stance(a: int, b: int) -> str:

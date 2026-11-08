@@ -445,6 +445,24 @@ def diplomacy(camp: Campaign, folder: str) -> dict[tuple[int, int], str]:
     return out
 
 
+AGES = {"stone_age": 0, "tool_age": 1, "bronze_age": 2, "iron_age": 3}
+
+
+def starts(camp: Campaign, folder: str) -> dict[int, dict]:
+    """Players' starting age and stockpile the mission sets (`start: {3: {age: tool_age, food: 500}}`):
+    {player: {"starting_age": index, "resources": {...}}} for the keys given."""
+    out = {}
+    for k, v in ((camp.missions.get(folder) or {}).get("start") or {}).items():
+        one = {}
+        if "age" in v:
+            one["starting_age"] = AGES[v["age"]]
+        res = {r: float(v[r]) for r in ("food", "wood", "gold", "stone") if r in v}
+        if res:
+            one["resources"] = res
+        out[int(k)] = one
+    return out
+
+
 def disabled(camp: Campaign, folder: str) -> dict[int, list[str]]:
     """Players' disables the mission sets instead of the original's (`disabled: {1: [temple, iron_age]}`), as the
     extracted mission names them (temple, siege_workshop, academy, bronze_age, iron_age...)."""
