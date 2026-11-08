@@ -1,7 +1,7 @@
 # Ascent of Egypt, reimagined: bonus objectives by difficulty and the upgrades they unlock (progression.py).
 #
-# upgrades: this campaign's permanent upgrades: label (short, the popup button), text (what it does, shown in the
-#   objectives list while the choice is up). Once picked, an upgrade's effects (aoe-agent-editor trigger effects,
+# upgrades: this campaign's permanent upgrades: label (short, the popup button), text (what it does, listed on
+#   the mission's Scouts page with the other choices it offers). Once picked, an upgrade's effects (aoe-agent-editor trigger effects,
 #   for the human player unless they say otherwise) run at the start of every mission of the campaign. An effect
 #   whose object_list_unit_id lists several units runs once per unit.
 # missions.<NN_mission>:
@@ -36,7 +36,7 @@
 # food); fish 455-458 (250 food). The Foraging map's river runs across rows 21-37 with shallow crossings at x 14-25
 # and 33-41 (terrain 4); the Town Center is at 22,18.
 #
-# Mission 3: Reveal Map is a player resource (203: 1 explored, 2 all visible). The Libyans (player 2, red) start
+# Mission 3: Reveal Map is a player resource (203: 1 explored, 2 everything visible; verified in game). The Libyans (player 2, red) start
 # with 2 Clubmen (281, class 6) at 15,33 and 13,31 and a Scout (448, class 47) at 39,4, and no buildings. Axe (tech
 # 63) turns Clubmen into Axemen; the Storage Pit's first upgrades are Tool Working (46) and Leather Armor for
 # soldiers, archers and mounted units (40, 41, 42), all Tool Age. Stable is 101, Bowman 4 (40 food, 20 wood).
@@ -148,10 +148,12 @@ upgrades:
     label: "Charted Lands"
     text: "Every mission starts with the whole map explored."
     effects: [{type: modify_resource, tribute_list: 203, operation: SET, quantity: 1}]
-  all_seeing:
-    label: "All-Seeing"
-    text: "Every mission starts with the whole map visible, no fog of war."
-    effects: [{type: modify_resource, tribute_list: 203, operation: SET, quantity: 2}]
+  watchful_homes:
+    # Replaces All-Seeing (Reveal Map 2): in game that showed everything, too strong for the quality-of-life pick.
+    label: "Watchful Homes"
+    text: "Houses see 5 tiles farther."
+    effects: [{type: modify_attribute, object_list_unit_id: [70, 463, 464, 465], object_attributes: 1,
+               operation: ADD, quantity: 5}]
   # Discoveries, Moderate bonus (good)
   early_riders:
     label: "Early Riders"
@@ -377,7 +379,7 @@ missions:
           - {type: modify_resource, tribute_list: 3, operation: SET, quantity: 0}
         rewards: [light_footprint, swift_woodcutters]
   03_discoveries:
-    rewards: [charted_lands, all_seeing]
+    rewards: [charted_lands, watchful_homes]
     bonus:
       - text: "Defeat the Libyans."
         conditions:

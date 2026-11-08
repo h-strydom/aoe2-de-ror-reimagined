@@ -50,10 +50,9 @@ REOFFER_SECONDS = 300
 PRIMARY_TEXT = ("Primary objective complete! Research End Mission at your Town Center to claim victory whenever you "
                 "like, or keep playing for the bonus objectives.")
 PRIMARY_TEXT_NO_TC = "Primary objective complete! You can end the mission now, or keep playing for the bonus objectives."
-CHOOSE = "Choose a permanent upgrade for this campaign (details in your objectives):"
+CHOOSE = "Choose a permanent upgrade for this campaign (what each does is on the Scouts page):"
 OBJECTIVE_ORDER_OFFSET = 10      # primary lines above the bonus lines (higher display order shows higher)
-BONUS_ORDER = 3                  # bonus lines (orders 4, 3), then a pending choice's two options (2, 1)
-CHOICE_ORDER = 1
+BONUS_ORDER = 3                  # bonus lines (orders 4, 3)
 
 
 @dataclass
@@ -202,31 +201,22 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
     def reward(slot: str, pair: list[str] | None, decision: int) -> list[dict]:
         """Effects that offer slot's choice, and the triggers behind it. The choice counts as pending in the same
         trigger that completes the objective, so "RI All done" can't end the mission before it's picked. The popup's
-        buttons carry the short labels; while it's up, each option's full text shows in the objectives list."""
+        buttons carry the short labels; what each does is on the mission's Scouts page (scouts_text)."""
         if not pair:
             return []
         key = slot_key(number, slot)
         offer = f"RI Reward {slot}"
-        infos = [f"{offer} option {opt}" for opt in (1, 2)]
         out.append({"name": offer, "enabled": False, "effects": [
             {"type": "create_decision", "decision_id": decision, "message": CHOOSE,
              "message_option1": camp.upgrades[pair[0]]["label"], "message_option2": camp.upgrades[pair[1]]["label"]}]})
-        for opt, (up, info) in enumerate(zip(pair, infos, strict=True), start=1):
-            line = upgrade_line(camp.upgrades[up])
-            out.append({"name": info, "enabled": False, "display_as_objective": True, "display_on_screen": True,
-                        "description": line, "short_description": line, "description_order": CHOICE_ORDER + 2 - opt,
-                        "conditions": [{"type": "variable_value", "variable": "RI never", "comparison": "EQUAL",
-                                        "quantity": 1}]})
         for opt in (1, 2):
             out.append({"name": f"{offer} pick {opt}", "conditions": [
                 {"type": "decision_triggered", "decision_id": decision, "decision_option": opt}], "effects": [
                 {"type": "change_variable", "variable": f"RI {key}", "operation": "SET", "quantity": opt},
                 {"type": "store_key_value", "variable": f"RI {key}", "message": key},
-                *({"type": "deactivate_trigger", "trigger_id": info} for info in infos),
                 {"type": "change_variable", "variable": "RI pending", "operation": "SUBTRACT", "quantity": 1}]})
         return [{"type": "change_variable", "variable": "RI pending", "operation": "ADD", "quantity": 1},
-                {"type": "activate_trigger", "trigger_id": offer},
-                *({"type": "activate_trigger", "trigger_id": info} for info in infos)]
+                {"type": "activate_trigger", "trigger_id": offer}]
 
     # Bonus objectives: optional lines, off until the difficulty shows them. A bonus with `fail` conditions (each
     # one alone fails it) can be lost: its line goes, a message says so, and it no longer counts toward ending.
@@ -333,6 +323,24 @@ def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]
             units = sel["unit"] if isinstance(sel["unit"], list) else [sel["unit"]]
             e["selected_object_ids"] = [ref for unit, ref in placed.get(sel.get("player", 0), []) if unit in units]
             e["source_player"] = sel.get("player", 0)        # the objects' owner, over the human default
+
+
+SCOUTS_TITLE = "UPGRADE CHOICES"
+SCOUTS_BONUS = ("Moderate and Hard", "Hard")
+
+
+def scouts_text(camp: Campaign, folder: str) -> str:
+    """The mission's upgrade choices for its Scouts page: per objective, both options and what they do. The popup
+    only has room for the labels (the user asked for the details here, 2026-11-08)."""
+    m = camp.missions.get(folder) or {}
+    parts = []
+    offers = [("Main objective", m.get("rewards"))] + [
+        (f"Bonus objective ({SCOUTS_BONUS[k]}): {b['text']}", b.get("rewards"))
+        for k, b in enumerate((m.get("bonus") or [])[:2])]
+    for title, pair in offers:
+        if pair:
+            parts.append("\n".join([title, *(f"  {upgrade_line(camp.upgrades[u])}" for u in pair)]))
+    return "\n\n".join([SCOUTS_TITLE, *parts]) if parts else ""
 
 
 def extra_players(camp: Campaign, folder: str) -> list[dict]:

@@ -278,6 +278,10 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
 
         for k, v in text.items():
             setattr(s.message_manager, k, v)
+        choices = progression.scouts_text(content, folder)
+        if choices:
+            # The upgrade choices go on the Scouts page, after anything the original has there.
+            s.message_manager.scouts = "\n\n".join(t for t in (text.get("scouts", ""), choices) if t)
 
         refs = {}
         placed: dict[int, list[tuple[int, int]]] = {}
