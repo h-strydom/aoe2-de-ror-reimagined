@@ -963,9 +963,10 @@ missions:
       # Stone Throwers too (Hard).
       #   Standard: prowls the water with 3 War Galleys, no landings (its land soldiers never attack: the land
       #     attack needs more soldiers than it keeps).
-      #   Moderate: fights for the water (6 War Galleys, naval attacks every 3 minutes), an occasional landing.
-      #   Hard: pushes you off the water (10 War Galleys every 2 minutes), then a fleet of up to 50 Trade Boats
-      #     trading with yellow; constant landings.
+      #   Moderate: fights for the water (Scout Ships, then 6 War Galleys, naval attacks every 4 minutes), landings
+      #     growing from 2 warnings of 4-6 to waves of 6-12.
+      #   Hard: pushes you off the water (Scout Ships, then 10 War Galleys, every 2:30 from 2:30), then a fleet of
+      #     up to 50 Trade Boats trading with yellow; constant landings: 3 warnings of 4-6, then waves of 10-20.
       2:
         replace: true
         name: Minoans
@@ -976,11 +977,12 @@ missions:
         # more on wood, and the Market buys wood and food with spare gold.
         gatherers: {food: 45, wood: 55, gold: 0, stone: 0}
         trade: {buy: {wood: 400, food: 300}, sell: {food: 400, wood: 400}, every: 4}
+        # War Galleys first: it joined the naval fight late, only once it had them (playtest, 2026-11-08).
         build_order:
+          - {research: MEDIUM_WAR_SHIP}
           - {build: GRANARY}
           - {build: BARRACKS}
           - {build: ARCHERY_RANGE}
-          - {research: MEDIUM_WAR_SHIP}
           - {research: IMPROVED_BOW}
         levels:
           easy:
@@ -1003,6 +1005,7 @@ missions:
               - {build: BARRACKS}
               - {build: ARCHERY_RANGE}
               - {build: DOCK, count: 2}
+              - {train: SCOUT_SHIP, count: 4}
               - {train: WAR_GALLEY, count: 6}
               - {research: COMPOSITE_BOW}
               - {train: COMPOSITE_BOWMAN, count: 8}
@@ -1012,14 +1015,19 @@ missions:
               - {build: FARM, count: 8}
               - {research: SCALE_ARMOR_FOR_ARCHERS}
               - {research: WHEEL}
-            attack: {first: 240, every: 180, min_group: 4, max_group: 8, percent: 100, naval: true, target: 1}
+            # Landings: 2 warnings of 4-6, then waves of 6-12 (the user, 2026-11-08: the warnings were good, then
+            # they should scale up).
+            attack: {first: 180, every: 240, min_group: 6, max_group: 12, percent: 100, naval: true, target: 1,
+                     warm_up: {attacks: 2, min_group: 4, max_group: 6, every: 240}}
           hard:
             villagers: 35
-            transports: 3
+            # light transports carry 5: 4 of them land a wave of 20
+            transports: 4
             keep:
               - {build: GRANARY}
               - {build: BARRACKS}
               - {build: DOCK, count: 3}
+              - {train: SCOUT_SHIP, count: 6}
               - {train: WAR_GALLEY, count: 10}
               - {research: COMPOSITE_BOW}
               - {build: ARCHERY_RANGE, count: 3}
@@ -1038,7 +1046,9 @@ missions:
               # the trade fleet once it rules the water: 8 War Galleys (from the start it took all the wood and
               # red had no army, probe 2026-11-08; its 5 starting boats bring the gold until then)
               - {train: TRADE_BOAT, count: 50, when: {units: {WAR_GALLEY: 8}}}
-            attack: {first: 240, every: 120, min_group: 6, max_group: 12, percent: 100, naval: true, target: 1}
+            # 3 warning landings of 4-6, then waves of 10-20; the fleet attacks from 2:30, every 2:30.
+            attack: {first: 150, every: 150, min_group: 10, max_group: 20, percent: 100, naval: true, target: 1,
+                     warm_up: {attacks: 3, min_group: 4, max_group: 6, every: 150}}
       # Green, the Canaanites: the land, up to the Tool Age.
       #   Standard: never attacks; at most 5 soldiers and a few villagers; 2 fishing boats.
       #   Moderate: your land enemy, basic attacks of 6-8.

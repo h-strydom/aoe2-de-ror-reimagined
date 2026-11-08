@@ -300,3 +300,19 @@ def test_all_perks_apply_every_upgrade_from_the_start():
     applies = [t for n, t in ts.items() if n.startswith("RI Upgrade ") and n[-1] in "12" and "conditions" in t]
     assert applies and all(t["conditions"] == [] for t in applies)                 # no bank pick needed
     assert not [e for t in applies for e in t["effects"] if e["type"] == "deactivate_trigger"]   # both options
+
+
+def test_a_trigger_that_repeats_itself_goes_through_a_relay():
+    camp = progression.Campaign(upgrades={**CAMP.upgrades, "e": {"label": "E", "triggers": [
+        {"name": "tick", "conditions": [{"type": "timer", "timer": 10}],
+         "effects": [{"type": "activate_trigger", "trigger_id": "@tick"}]},
+        {"name": "start", "effects": [{"type": "activate_trigger", "trigger_id": "@tick"}]}]}},
+        missions={"01_one": {"rewards": ["e", "b"]}})
+    ts = by_name(progression.triggers(camp, ["01_one"], 1))
+    tick = ts["RI Upgrade m01_primary 1 tick"]
+    relay = ts["RI Upgrade m01_primary 1 tick relay"]
+    assert tick["effects"][-1]["trigger_id"] == "RI Upgrade m01_primary 1 tick relay"
+    assert relay["effects"][-1]["trigger_id"] == "RI Upgrade m01_primary 1 tick" and not relay["enabled"]
+    apply = ts["RI Upgrade m01_primary 1"]
+    started = {e["trigger_id"] for e in apply["effects"] if e["type"] == "activate_trigger"}
+    assert started == {"RI Upgrade m01_primary 1 start"}                 # the loop starts only through "start"

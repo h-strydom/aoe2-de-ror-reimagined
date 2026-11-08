@@ -155,7 +155,22 @@ def triggers(camp: Campaign, folders: list[str], number: int, *, player: int = 1
         owner turns them on; trigger_id "@<name>" points at a sibling; `objective: text` shows the trigger as a
         line of the main objective (checked when it fires). Returns the names the owner starts: those
         no sibling activates (a wave a sibling starts mustn't fire with the owner: Egypt 4's first wave did,
-        at the start of the mission, 2026-11-08)."""
+        at the start of the mission, 2026-11-08).
+        A trigger that activates itself (a repeating timer) goes through a relay: a trigger switches itself off
+        once its effects have run, which undid its own re-activation, so Town Tithes paid out once and stopped
+        (probe, 2026-11-08). The relay, a sibling with no conditions, turns it back on on the next check."""
+        relayed = []
+        for t in specs:
+            me = f"@{t['name']}"
+            if any(e["type"] == "activate_trigger" and e.get("trigger_id") == me for e in t.get("effects") or []):
+                t = {**t, "effects": [{**e, "trigger_id": f"@{t['name']} relay"}
+                                      if e["type"] == "activate_trigger" and e.get("trigger_id") == me else e
+                                      for e in t["effects"]]}
+                relayed += [t, {"name": f"{t['name']} relay", "effects": [{"type": "activate_trigger",
+                                                                            "trigger_id": me}]}]
+            else:
+                relayed.append(t)
+        specs = relayed
         chained = {e["trigger_id"][1:] for t in specs for e in t.get("effects") or []
                    if e["type"] == "activate_trigger" and str(e.get("trigger_id", "")).startswith("@")}
         names = []
