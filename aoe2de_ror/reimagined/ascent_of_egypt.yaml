@@ -458,28 +458,58 @@ upgrades:
   town_tithes:
     label: "Town Tithes"
     text: "Each Town Center gives 2 food, wood, gold and stone every 10 seconds, but you can have only 5."
-    # Every 10 seconds: count the Town Centers (109/71/141/142, every age's), add twice that of each resource.
-    # At 5 the Town Center foundations (621/617/484/597) are switched off for good.
+    # Every second: count the Town Centers (109/71/141/142, every age's) and their foundations (621/617/484/597).
+    # The Town Centers are the largest of the four counts, not their sum: summed, the cap came at 3 Town Centers
+    # (playtest, 2026-11-08), so a Town Center shows up under two of those ids (which two is unverified).
+    # Foundations count toward the cap, so it locks the moment the 5th is placed (the user, 2026-11-08). At 5 the
+    # foundations are switched off for good. Every 10 seconds: twice the Town Centers of each resource.
     triggers:
       - name: start
-        effects: [{type: activate_trigger, trigger_id: "@tithe"}]
-      - name: tithe
-        conditions: [{type: timer, timer: 10}]
         effects:
+          - {type: activate_trigger, trigger_id: "@count"}
+          - {type: activate_trigger, trigger_id: "@tithe"}
+      - name: count
+        conditions: [{type: timer, timer: 1}]
+        effects:
+          # last second's result first: the max triggers below have finished with it
+          - {type: modify_variable_by_variable, variable: "RI tc max", operation: SET, variable2: "RI tcs"}
+          - {type: modify_variable_by_variable, variable: "RI tc all", operation: SET, variable2: "RI tcs"}
+          - {type: modify_variable_by_variable, variable: "RI tc all", operation: ADD, variable2: "RI tc f"}
           - {type: count_units_into_variable, object_list_unit_id: 109, variable2: "RI tc a"}
           - {type: count_units_into_variable, object_list_unit_id: 71, variable2: "RI tc b"}
           - {type: count_units_into_variable, object_list_unit_id: 141, variable2: "RI tc c"}
           - {type: count_units_into_variable, object_list_unit_id: 142, variable2: "RI tc d"}
           - {type: modify_variable_by_variable, variable: "RI tcs", operation: SET, variable2: "RI tc a"}
-          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc b"}
-          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc c"}
-          - {type: modify_variable_by_variable, variable: "RI tcs", operation: ADD, variable2: "RI tc d"}
-          - {type: modify_variable_by_variable, variable: "RI tithe", operation: SET, variable2: "RI tcs"}
+          - {type: count_units_into_variable, object_list_unit_id: 621, variable2: "RI tf a"}
+          - {type: count_units_into_variable, object_list_unit_id: 617, variable2: "RI tf b"}
+          - {type: count_units_into_variable, object_list_unit_id: 484, variable2: "RI tf c"}
+          - {type: count_units_into_variable, object_list_unit_id: 597, variable2: "RI tf d"}
+          - {type: modify_variable_by_variable, variable: "RI tc f", operation: SET, variable2: "RI tf a"}
+          - {type: modify_variable_by_variable, variable: "RI tc f", operation: ADD, variable2: "RI tf b"}
+          - {type: modify_variable_by_variable, variable: "RI tc f", operation: ADD, variable2: "RI tf c"}
+          - {type: modify_variable_by_variable, variable: "RI tc f", operation: ADD, variable2: "RI tf d"}
+          - {type: activate_trigger, trigger_id: "@count"}
+      - name: max b
+        looping: true
+        conditions: [{type: compare_variables, variable: "RI tc b", comparison: LARGER, variable2: "RI tcs"}]
+        effects: [{type: modify_variable_by_variable, variable: "RI tcs", operation: SET, variable2: "RI tc b"}]
+      - name: max c
+        looping: true
+        conditions: [{type: compare_variables, variable: "RI tc c", comparison: LARGER, variable2: "RI tcs"}]
+        effects: [{type: modify_variable_by_variable, variable: "RI tcs", operation: SET, variable2: "RI tc c"}]
+      - name: max d
+        looping: true
+        conditions: [{type: compare_variables, variable: "RI tc d", comparison: LARGER, variable2: "RI tcs"}]
+        effects: [{type: modify_variable_by_variable, variable: "RI tcs", operation: SET, variable2: "RI tc d"}]
+      - name: tithe
+        conditions: [{type: timer, timer: 10}]
+        effects:
+          - {type: modify_variable_by_variable, variable: "RI tithe", operation: SET, variable2: "RI tc max"}
           - {type: change_variable, variable: "RI tithe", operation: MULTIPLY, quantity: 2}
           - {type: modify_resource_by_variable, tribute_list: [0, 1, 2, 3], operation: ADD, variable: "RI tithe"}
           - {type: activate_trigger, trigger_id: "@tithe"}
       - name: cap
-        conditions: [{type: variable_value, variable: "RI tcs", comparison: LARGER_OR_EQUAL, quantity: 5}]
+        conditions: [{type: variable_value, variable: "RI tc all", comparison: LARGER_OR_EQUAL, quantity: 5}]
         effects:
           - {type: enable_disable_object, object_list_unit_id: [621, 617, 484, 597], enabled: 0}
           - {type: display_instructions, display_time: 8, message: "Town Tithes: you have 5 Town Centers, the most you can build."}
