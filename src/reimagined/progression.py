@@ -348,9 +348,19 @@ def select_objects(triggers_: list[dict], placed: dict[int, list[tuple[int, int]
             if sel is None:
                 conds.append(c)
                 continue
-            # A condition about a group holds for any of its units: one per unit, joined by OR.
-            owner, refs = (groups or {}).get(sel["group"], (0, []))
+            # A condition about a group holds for any of its units: one per unit, joined by OR. `select: {player,
+            # unit}` takes the map's own units of that type instead; `all: true` needs it for every one (AND):
+            # Egypt 7's "mine every stone pile" is every placed Stone Mine destroyed (Gaia "owning fewer" Stone
+            # Mines held from the start, playtest 2026-11-08).
+            if "group" in sel:
+                owner, refs = (groups or {}).get(sel["group"], (0, []))
+            else:
+                units = sel["unit"] if isinstance(sel["unit"], list) else [sel["unit"]]
+                owner = sel.get("player", 0)
+                refs = [ref for unit, ref in placed.get(owner, []) if unit in units]
             for i, ref in enumerate(refs):
+                if sel.get("all"):
+                    i = 0
                 one = {**c, "unit_object": ref}
                 if c.get("quantity") == "full":
                     one["quantity"] = (unit_hp or {})[ref]

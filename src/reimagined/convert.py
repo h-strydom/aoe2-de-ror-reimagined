@@ -255,6 +255,8 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                         plan.spec["grow"] = {"to": population["cap"], "minutes": population["grow_minutes"]}
                 if change:
                     plan.spec = progression.apply_ai(plan.spec, change)
+                    if ai_debug:
+                        plan.spec["debug"] = True
                     plan.skipped = [] if change.get("replace") else plan.skipped
                 if claim and claim["start_ai"]:
                     plan.spec["start"] = {"trigger": AI_START_SIGNAL}

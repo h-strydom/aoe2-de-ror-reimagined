@@ -286,3 +286,10 @@ def test_mission_ai_changes_or_replaces_the_translated_plan():
     camp = progression.Campaign(missions={"06": {"ai": {2: {"replace": True}}, "drop_objectives": [2]}})
     assert progression.mission_ai(camp, "06") == {2: {"replace": True}}
     assert progression.dropped_objectives(camp, "06") == {2}
+
+
+def test_a_condition_on_every_placed_unit_of_a_type():
+    ts = [{"name": "t", "conditions": [{"type": "destroy_object", "select": {"player": 0, "unit": 102, "all": True}}]}]
+    progression.select_objects(ts, {0: [(102, 7), (66, 8), (102, 9)]})
+    assert ts[0]["conditions"] == [{"type": "destroy_object", "unit_object": 7},
+                                   {"type": "destroy_object", "unit_object": 9}]               # both, no OR

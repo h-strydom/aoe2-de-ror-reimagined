@@ -937,8 +937,9 @@ missions:
           - {type: player_defeated, source_player: 3}
         rewards: [ballista_crews, elephant_archery]
       - text: "Mine every stone pile on the map."
-        # Gaia's Stone Mines (102) are gone once mined out.
-        conditions: [{type: own_fewer_objects, source_player: 0, object_list: 102, quantity: 0}]
+        # Every Stone Mine the map places (102, Gaia's) destroyed, i.e. mined out. "Gaia owns fewer than 1" held
+        # from the start (playtest, 2026-11-08).
+        conditions: [{type: destroy_object, select: {player: 0, unit: 102, all: true}}]
         rewards: [wooden_towers, royal_quarries]
     ai:
       # Red, the Minoans: the water. Favours Improved and Composite Bowmen, then mixes in Cavalry (Moderate) or
@@ -968,7 +969,9 @@ missions:
             attack: {first: 300, every: 240, min_group: 999, max_group: 999, naval: true}
           normal:
             villagers: 22
-            transports: 1
+            # Landings: the land attack, ferried by the engine in red's transports (no landings by 22:00 with 1
+            # transport and 5+ idle soldiers needed, playtest 2026-11-08).
+            transports: 2
             keep:
               - {build: DOCK, count: 2}
               - {train: WAR_GALLEY, count: 6}
@@ -980,10 +983,10 @@ missions:
               - {build: FARM, count: 8}
               - {research: SCALE_ARMOR_FOR_ARCHERS}
               - {research: WHEEL}
-            attack: {first: 240, every: 180, min_group: 5, max_group: 8, naval: true}
+            attack: {first: 240, every: 180, min_group: 4, max_group: 8, percent: 100, naval: true}
           hard:
             villagers: 35
-            transports: 2
+            transports: 3
             keep:
               - {build: DOCK, count: 3}
               - {train: WAR_GALLEY, count: 10}
@@ -1003,7 +1006,7 @@ missions:
               - {research: PLOW}
               # the trade fleet once a defence stands
               - {train: TRADE_BOAT, count: 50, when: {soldiers: 12}}
-            attack: {first: 240, every: 120, min_group: 8, max_group: 12, naval: true}
+            attack: {first: 240, every: 120, min_group: 6, max_group: 12, percent: 100, naval: true}
       # Green, the Canaanites: the land, up to the Tool Age.
       #   Standard: never attacks; at most 5 soldiers and a few villagers; no fishing.
       #   Moderate: your land enemy, basic attacks of 6-8.
@@ -1013,6 +1016,9 @@ missions:
         name: Canaanites
         step_timeout: 120
         scout: false
+        # No stone or gold: the reachable stone is the east desert, through your base, and its miners walked to
+        # their death there (playtest, 2026-11-08). So no Slingers or towers either.
+        gatherers: {food: 60, wood: 40, gold: 0, stone: 0}
         strategic_numbers: {sn-allow-gathering-sea-fish-with-villagers: 0, sn-maximum-food-drop-distance: 12}
         build_order:
           - {build: GRANARY}
@@ -1031,12 +1037,12 @@ missions:
           normal:
             villagers: 18
             keep:
+              # Clubmen from the start (it starts in the Stone Age; nothing attacked by 13:00, playtest)
+              - {train: CLUBMAN, count: 6}
               - {research: BATTLE_AXE}
               - {train: AXEMAN, count: 8}
-              - {train: BOWMAN, count: 6}
-              - {train: SLINGER, count: 4}
+              - {train: BOWMAN, count: 10}
               - {build: FARM, count: 7}
-              - {build: WATCH_TOWER, count: 2}
               - {research: TOOLWORKING}
               - {research: LEATHER_ARMOR_FOR_INFANTRY}
               - {research: LEATHER_ARMOR_FOR_ARCHERS}
@@ -1044,14 +1050,13 @@ missions:
           hard:
             villagers: 40
             keep:
+              - {train: CLUBMAN, count: 8}
               - {research: BATTLE_AXE}
               - {build: BARRACKS, count: 3}
               - {build: ARCHERY_RANGE, count: 3}
               - {build: STABLE, count: 2}
-              - {build: WATCH_TOWER, count: 4}
-              - {train: AXEMAN, count: 20}
-              - {train: BOWMAN, count: 16}
-              - {train: SLINGER, count: 6}
+              - {train: AXEMAN, count: 22}
+              - {train: BOWMAN, count: 20}
               - {train: SCOUT, count: 8}
               - {train: SCOUT_SHIP, count: 2}
               - {train: FISHING_BOAT, count: 5, lifetime: true}
@@ -1062,7 +1067,6 @@ missions:
               - {research: LEATHER_ARMOR_FOR_CAVALRY, when: {soldiers: 8}}
               - {research: DOMESTICATION, when: {soldiers: 8}}
               - {research: WOODWORKING, when: {soldiers: 8}}
-              - {research: STONE_MINING, when: {soldiers: 8}}
             raids:
               - {units: [SCOUT], count: 5, first: 360, every: 180, target: villagers, fallback: {x: 78, y: 18}}
             attack: {first: 300, every: 360, min_group: 20, max_group: 25, percent: 100,
