@@ -50,8 +50,8 @@ BUILDERS = ("Villager", "Town Center")            # AoE DE names: player 1 ownin
 # Computer players that build (they start with a villager or town center, and aren't passive) play RoR's standard
 # skirmish AI, a level harder than the game's difficulty: Standard plays Standard, Moderate plays Hard, Hard plays
 # Hardest (the user, 2026-11-12: "standard skirmish AIs of that difficulty"). It never resigns. Army-only, passive
-# and waiting AIs keep their translated AoE1 build list, as do racing ones (their own victory is a resource goal:
-# the standard AI stockpiles, so Lower Egypt reached Farming's 2000 food at 24 minutes, the user, 2026-11-12).
+# and waiting AIs keep their translated AoE1 build list. Players racing you to a resource goal play it too (the
+# user, 2026-11-12, after Farming's Lower Egypt stalled on its AoE1 plan): their goal shows as a line to prevent.
 # Its first attack waits as long as the AoE1 AI's did (SNInitialAttackDelay; Hard and Hardest attack at once).
 STANDARD_AI = {"name": "Standard AI", "standard": {"plays": {"moderate": "hard", "hard": "hardest",
                                                              "hardest": "extreme"}}}
@@ -165,8 +165,6 @@ def builds(p) -> bool:
 def standard_ai(p, plan, conv: Conversion) -> dict | None:
     """RoR's standard skirmish AI (STANDARD_AI) for a computer player instead of its translated plan, or None."""
     if not isinstance(plan, ai.Translation) or not builds(p):
-        return None
-    if any(c.type == "attribute" for c in p.victory):
         return None
     names = f"{p.ai.strategy} {p.ai.personality}".lower()
     passive = "passive" in names and "aggressive" not in names

@@ -201,8 +201,7 @@ sprite pins in that player colour. Pins that would overlap are nudged apart and 
   Moderate plays Hard, Hard plays Hardest), never resigning and never attacking sooner than the AoE1 AI did, with
   the map's AI map type set (Small Islands where a computer player can't walk to you, so it builds boats and
   transports; Highland otherwise, a land map: Continental made it build a navy on a river). Every other AoE1 AI
-  (armies, passive towns, players waiting for you, players racing you to a resource goal, since the standard AI
-  stockpiles) is translated into a RoR AI script embedded in the map. It works through the original build list in order (buildings, units, research and
+  (armies, passive towns, players waiting for you) is translated into a RoR AI script embedded in the map. It works through the original build list in order (buildings, units, research and
   ages, with the original counts), keeps its army topped up afterwards, carries the personality's strategic
   numbers over where RoR has the same setting, and attacks on the personality's timing and group sizes.
   Passive personalities build but never attack, immobile-unit AIs get RoR's immobile AI, and none of them

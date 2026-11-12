@@ -16,9 +16,7 @@ not published yet.
 - Computer players that build play RoR's standard skirmish AI, one level harder than the game's difficulty
   (Standard plays Standard, Moderate plays Hard, Hard plays Hardest):
   - they never resign, and never attack sooner than the original AI did;
-  - players racing you to a resource goal keep their translated AoE1 plan, because the standard AI stockpiles
-    resources;
-  - armies, passive towns and players waiting for you also keep their AoE1 plan;
+  - armies, passive towns and players waiting for you keep their AoE1 plan;
   - needs aoe-agent-editor v0.18.1.
 - AI map type: Small Islands where a computer player can't walk to you, so it builds boats and transports, and
   Highland otherwise. Continental made the AI build a navy on Farming's river.
