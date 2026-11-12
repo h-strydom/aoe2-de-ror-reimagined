@@ -1,6 +1,60 @@
 # Changelog
 
+Releases are the mod uploads. A release's section holds the Change List text published with it on the mod site,
+which is the source of truth; everything since the last upload goes under Unreleased until the next one.
+
 ## Unreleased
+
+### RoR-RI (every campaign)
+- Computer players that build play RoR's standard skirmish AI, one level harder than the game's difficulty
+  (Standard plays Standard, Moderate plays Hard, Hard plays Hardest). They never resign and never attack sooner
+  than the original AI did. Players racing you to a resource goal keep their translated AoE1 plan, because the
+  standard AI stockpiles resources.
+- AI map type: Small Islands where a computer player can't walk to you, so it builds boats and transports, and
+  Highland otherwise. Continental had the AI build a navy on Farming's river.
+- The camera starts over your Town Center or your largest group of units.
+- The Scouts page links the project and its issue tracker.
+- An enemy's own victory shows as an objective to prevent, with a count. Example: Farming's "Don't let Lower Egypt
+  gather 2000 food", which used to end the mission with no warning.
+- If you start neutral toward a player that is at war with you, you are at war with them too: RoR's neutral units
+  don't fight back. Affects Farming, The Trojan War, Xenophon's March and The Assassins.
+
+### RoR-RIX (Xtreme), not yet published
+- A new edition with the reimagined campaigns, installed beside RoR-RI as "<campaign> Xtreme". RoR-RI stays the
+  faithful rebuild.
+- Ascent of Egypt missions 1 to 8 reimagined:
+  - bonus objectives by difficulty;
+  - upgrade choices banked across the campaign (Scouts page);
+  - an End Mission choice once the mission is won;
+  - each mission's own enemies and AI per difficulty;
+  - a campaign tech tree;
+  - Town Tithes and Free Town Center count foundations;
+  - Religion gets Temples and Priests, and needs a captured Stone Thrower on Moderate and Hard.
+
+## 2026-11-12
+Mod site Change List: "Fixed issues with loading save files. Added original sound recordings to the intro slide.
+Objective now corretly display."
+- Saved missions load again (the scenario header).
+- The intro slide plays AoE DE's voice lines.
+- Objective lines show properly.
+- The reimagined missions moved out to RoR-RIX. RoR-RI is won as the original is won.
+
+## 2026-11-07
+Mod site Change List: "Fixed Objective display issues."
+- Objectives show on screen as the game's to-do list, read naturally, with checkboxes and progress counters.
+
+## 2026-11-07
+Mod site Change List: "Mission intros are now narrated with the original Age of Empires Definitive Edition
+voice-overs. The proper campaign name now shows up in the custom campaign list."
+
+## 2026-11-07
+Mod site Change List: "Population cap increased to 200 on build missions. Computer players now grow towards 200
+population. Growth speed is affected by difficulty."
+
+## 2026-11-06: first upload
+Every campaign published as its own [RoR-RI] mod.
+
+## Before the first upload
 - `reimagined package`: one mod per campaign for the official mod site, titled `[RoR-RI] <campaign>`, as a zip to
   upload (mod files at the root, info.json, thumbnail) and a folder to test locally.
 - Repository set up: README, license, contributing guide, changelog, agent guidance, ignore rules.
