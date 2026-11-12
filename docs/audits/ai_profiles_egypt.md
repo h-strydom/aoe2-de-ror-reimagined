@@ -6,12 +6,13 @@ are far too strong, others do nothing; Farming's should fish lightly, defend, at
 the last Egypt missions rush you once with everything, then never attack or defend again.
 
 Each line is what `conversion.yaml` would say for that player. Difficulty is written as Moderate and scales by the
-toolbox's table.
+toolbox's table. Builders grow toward the default population targets (Standard about 50, Moderate about 100, Hard
+150 or more) unless the line says otherwise. Each mission's full spec, with army composition, upgrades and trade,
+goes in its own doc under `docs/missions/` (Farming first).
 
 | # | Player | Today | Proposed profile | Why |
 |---|---|---|---|---|
 | 3 | Libyans (2 Clubmen, a Scout) | AoE1 plan | `army`, `offense: light`, `goal: {explore: discoveries}` | They race you to 5 Discoveries. Only a light threat. |
-| 4 | Raiders (RIX only) | immobile | (RIX's own) | |
 | 5 | Egyptian Raiders (army) | AoE1 plan | `army`, `defense: home`, `offense: light`, `retreat: outnumbered` | "Defeat the Raiders": they should hold their camp, probe you, and pull back when beaten. |
 | 6 | Lower Egypt (town) | standard | `town`, `water: light`, `defense: home`, `offense: light`, `goal: {stockpile: {food: 2000}}` | Your example: light fishing, base defense, light offense, plays for its food goal. |
 | 7 | Minoans (ally) | standard | `ally`, `water: normal` (trade boats) | Your trade partner. Should look alive and not hoard. |
@@ -27,5 +28,3 @@ toolbox's table.
 Notes:
 - The `standard` kind stays available where a town should just play well. With `attack-percent` overrides it can
   send half its army instead of all of it.
-- RIX keeps its own mission AIs (Egypt 6 to 8), which already work per difficulty. The toolbox would let them shrink
-  to profiles too.

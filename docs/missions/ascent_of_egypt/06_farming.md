@@ -1,19 +1,14 @@
 # Ascent of Egypt 6: Farming
 
-Status: playtested 2026-11-12 (RoR-RI, Hard). AI intentions are drafted and not built yet. · Editions: RoR-RI and RoR-RIX
+Status: playtested 2026-11-12 (Hard). AI intentions are drafted and not built yet.
 
 ## 1. Story and objectives
 - Narmer of Upper Egypt unites the kingdoms: control the stone circle of Nabta Playa and build up a food surplus.
   The mission teaches the Market and Farms, then upgrades and research.
 - **Win:** "Capture the Ruins." and "Gather 800 food."
 - **Lose:**
-  - RoR-RI: Lower Egypt gathers 2000 food first. It shows as "Don't let Lower Egypt gather 2000 food (x/2000)".
+  - Lower Egypt gathers 2000 food first. It shows as "Don't let Lower Egypt gather 2000 food (x/2000)".
   - Losing everything.
-- **RoR-RIX:**
-  - Lower Egypt's 2000-food win is dropped, so it wins only by destroying you.
-  - On Hard, defeating Lower Egypt is part of the main objective.
-  - Bonuses: "Stockpile 200 stone." and "Lose no Villagers or Fishing Boats."
-  - Rewards: Free Farms / Market Day, then Slinger Corps / Builder's Tithe.
 
 ## 2. Map and layout
 - 72×72 tiles. A river winds across the map with 8 fish (5 shore fish and 3 tuna), too few for the standard AI's
@@ -33,28 +28,43 @@ Status: playtested 2026-11-12 (RoR-RI, Hard). AI intentions are drafted and not 
 ## 4. Tech (generated)
 - **You:** Granary walls and towers are off (Small Wall, Small Gate, Watch Tower). They open with Trade.
 - **Lower Egypt:** everything in its ages.
-- **RoR-RIX, for you:** everything is open except Bronze Age, Light Transport, the walls and towers, and a second
-  Town Center. Lower Egypt may build Watch Towers. Slingers are yours only.
 
 ## 5. Mission functions
-- In both editions, Lower Egypt knows where your base is from the start, so its attacks know where to go.
-- RoR-RI: you start at war with Lower Egypt. The original had you neutral.
-- RoR-RIX: rewards, bonus tracking, and the Hard objective to defeat Lower Egypt.
+- Lower Egypt knows where your base is from the start, so its attacks know where to go.
+- You start at war with Lower Egypt. The original had you neutral.
 
 ## 6. AI intentions
 
 ### P2 Lower Egypt: a rival farming kingdom racing you for food
 - **Plays like:** a rival who pesters you and defends its own fields, but whose real game is the food race.
-- **Economy:** grows to about 20 villagers on Moderate. Farms heavily once the Market is up, and keeps farming as
-  fields run out.
+- **Population:**
+  - Standard about 50, Moderate about 100, Hard 150 or more.
+  - Mostly villagers early. The army grows from a handful to about a third of its population by 30 minutes.
+- **Economy:**
+  - Food first, then wood for farms and houses.
+  - Farms heavily once the Market is up, and keeps farming as fields run out.
+  - Villagers stay on its side of the river.
+- **Army:** Tool Age Egyptians, no gold needed.
+  - The core is Axemen, with Bowmen behind them.
+  - A few Scouts hunt your villagers and fishing boats.
+  - It answers your Bowmen with Scouts and your Axemen with Bowmen.
+- **Upgrades:** economy first.
+  - Domestication and Woodworking early, then Toolworking.
+  - Leather Armor once its army passes about 10.
+- **Trade:**
+  - Little needed: its units cost no gold, and the map has no mines.
+  - Sells surplus wood or stone for gold only when an upgrade it wants needs gold.
 - **Water:** light. At most 2 to 3 fishing boats, plus one warship to guard its Dock.
-- **Defense:** always keeps a home guard, about a third of its army. Soldiers near its town answer any attack on
-  its fields or villagers. Villagers flee to the Town Center.
-- **Offense:** light. It first probes you at about 15 minutes with a small group of 3 to 6. After that it sends a
-  wave every 6 minutes with about half its army. It favours your villagers and farms over your army, and pulls a
-  beaten wave home.
-- **Goal (RoR-RI):** plays for 2000 food. Once past about 1200 food it stops spending food on units and keeps
-  farming, which makes its count climb.
+- **Defense:**
+  - Always keeps a home guard of about a third of its army.
+  - Soldiers near its town answer any attack on its fields or villagers.
+  - Villagers flee to the Town Center.
+- **Offense:** light.
+  - It first probes you at about 15 minutes with a small group of 3 to 6.
+  - After that it sends a wave every 6 minutes with about half its army.
+  - It favours your villagers and farms over your army, and pulls a beaten wave home.
+- **Goal:** plays for 2000 food. Once past about 1200 food it stops spending food on units and keeps farming, which
+  makes its count climb.
 - **Events:** none.
 - **Never:**
   - builds a fleet;
@@ -62,17 +72,19 @@ Status: playtested 2026-11-12 (RoR-RI, Hard). AI intentions are drafted and not 
   - leaves its fields undefended;
   - stops farming.
 - **By difficulty:**
-  - Standard: fewer villagers (about 14), a first probe at 20 minutes, waves every 8 minutes.
-  - Hard: about 26 villagers, a first probe at 10 minutes, waves every 4 minutes with bigger groups.
-- **Profile:** `town`, `water: light`, `defense: home`, `offense: light`, `goal: {stockpile: {food: 2000}}`
+  - Standard: a first probe at 20 minutes, waves every 8 minutes.
+  - Hard: a first probe at 10 minutes, waves every 4 minutes with bigger groups.
+- **Profile:**
+  `town, pop: default, army: {core: AXEMAN, support: BOWMAN, raiders: SCOUT}, upgrades: economy, water: light, defense: home, offense: light, goal: {stockpile: {food: 2000}}`
 - **Check:**
   - at most 3 fishing boats all game;
+  - population near its target for the difficulty;
   - its food count rises steadily;
   - a raid on its farms is answered;
   - waves arrive roughly on time and come home when beaten.
 
 ## 7. Playtest log
-| Date | Edition | Difficulty | Seen | Follow-up |
-|---|---|---|---|---|
-| 2026-11-12 | RoR-RI | Hard | Standard AI on Continental: attacked early, then built a big fleet; defeat at 24:00 from its 2000 food with no warning; you were neutral to it | Highland map type, at war, objective line (74936a0) |
-| 2026-11-12 | RoR-RI | Hard | Highland: no fleet. On its AoE1 plan it stalled, stopped farming, lost villagers and didn't attack | Back to the standard AI (8be4ed5); toolbox profile proposed |
+| Date | Difficulty | Seen | Follow-up |
+|---|---|---|---|
+| 2026-11-12 | Hard | Standard AI on Continental: attacked early, then built a big fleet; defeat at 24:00 from its 2000 food with no warning; you were neutral to it | Highland map type, at war, objective line (74936a0) |
+| 2026-11-12 | Hard | Highland: no fleet. On its AoE1 plan it stalled, stopped farming, lost villagers and didn't attack | Back to the standard AI (8be4ed5); toolbox profile proposed |
