@@ -10,7 +10,7 @@ from aoe2ed.campaign import Campaign as RorCampaign
 from aoe2ed.screens import game_campaign_dir
 from AoE2ScenarioParser.scenarios.aoe2_de_scenario import AoE2DEScenario
 
-from reimagined import layout
+from reimagined import editions, layout
 from reimagined.aoede.scenario import load_scenario
 from reimagined.conversion import load
 from reimagined.convert import (
@@ -114,22 +114,37 @@ def test_campaigns_without_ror_art_get_our_own_screen(c):
     assert lay["UserMaterials"][0]["FileName"] == f"{c.slug}_map.dds"
 
 
+EDITIONS = [(c, e) for c in CAMPAIGNS for e in editions.of(c)]
+
+
 @needs_ror
-@pytest.mark.parametrize("c", CAMPAIGNS, ids=lambda c: c.slug)
-def test_committed_maps_are_up_to_date(c, tmp_path, mission_pool):
-    """aoe2de_ror/ must be what `reimagined convert` builds from conversion.yaml today."""
-    paths, results = convert_campaign(c, load(), tmp_path, pool=mission_pool)
+@pytest.mark.parametrize("c,edition", EDITIONS, ids=lambda x: getattr(x, "slug", None) or x.key)
+def test_committed_maps_are_up_to_date(c, edition, tmp_path, mission_pool):
+    """aoe2de_ror/ (and aoe2de_ror_x/) must be what `reimagined convert` builds from conversion.yaml today."""
+    paths, results = convert_campaign(c, load(), tmp_path, pool=mission_pool, edition=edition)
     assert not [r.skipped for r in results if r.skipped], f"{c.slug}: victory conditions not converted"
     stale = []
     for f in paths + [scenario_path(m, tmp_path) for m in c.missions]:
-        committed = layout.AOE2DE_ROR / f.relative_to(tmp_path)
+        committed = edition.out / f.relative_to(tmp_path)
         if not committed.is_file() or committed.read_bytes() != f.read_bytes():
             stale.append(str(committed.relative_to(layout.ROOT)))
     assert not stale, f"run `uv run reimagined convert {c.slug}`; out of date: {stale}"
 
 
-@pytest.mark.parametrize("c", CAMPAIGNS, ids=lambda c: c.slug)
-def test_every_committed_scenario_reads_back(c):
+@pytest.mark.parametrize("c,edition", EDITIONS, ids=lambda x: getattr(x, "slug", None) or x.key)
+def test_every_committed_scenario_reads_back(c, edition):
     """A list left in a trigger effect once wrote an unreadable scenario (Ascent of Egypt 5)."""
     for m in c.missions:
-        AoE2DEScenario.from_file(str(scenario_path(m, layout.AOE2DE_ROR)))
+        AoE2DEScenario.from_file(str(scenario_path(m, edition.out)))
+
+
+@needs_setup
+def test_the_faithful_edition_has_no_reimagined_layer(tmp_path):
+    """RoR-RI wins as the original does; the reimagined Ascent of Egypt is RoR-RIX's (the user, 2026-11-12)."""
+    m = CAMPAIGNS[0].missions[7]                             # Egypt 8: reimagined content, a mission AI
+    names = {t.name for t in AoE2DEScenario.from_file(
+        str(convert_mission(m, load(), tmp_path, reimagined=False).out)).trigger_manager.triggers}
+    assert names and not [n for n in names if n.startswith("RI ")]
+    x = {t.name for t in AoE2DEScenario.from_file(
+        str(convert_mission(m, load(), tmp_path / "x", reimagined=True).out)).trigger_manager.triggers}
+    assert "RI Bonus 1" in x and "RI End offer" in x

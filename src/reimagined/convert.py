@@ -24,11 +24,12 @@ from aoe2ed.tools.ai import ai_set
 from aoe2ed.tools.logic import triggers_add
 from aoe2ed.tools.world import diplomacy_set, options_set, player_set
 
-from . import ai, layout, missions, objectives, progression, victory
+from . import ai, editions, layout, missions, objectives, progression, victory
 from .aoede import strings
 from .aoede.names import object_name
 from .aoede.scenario import Scenario, load_scenario
 from .conversion import Conversion, load
+from .editions import Edition
 from .missions import mission_data
 from .screens import dumps, screens
 from .terrain import clean_terrain
@@ -44,7 +45,6 @@ DIPLOMACY = {0: "ALLY", 1: "NEUTRAL", 3: "ENEMY"}
 MAX_ROR_PLAYERS = 8
 NORMAL_STATUS = 2
 AI_START_SIGNAL = 1               # AI Script Goal a mission's claim_base sends to computer players set to wait for it
-CAMPAIGN_TITLE = "AoE1 {title}"   # keeps them apart from RoR's own campaigns of the same name
 BUILDERS = ("Villager", "Town Center")            # AoE DE names: player 1 owning one can build (rules.population)
 
 
@@ -70,10 +70,6 @@ def scenario_path(m: layout.Mission, out_root: Path = layout.AOE2DE_ROR) -> Path
 
 def campaign_path(c: layout.CampaignInfo, out_root: Path = layout.AOE2DE_ROR) -> Path:
     return out_root / c.slug / f"{c.slug}.aoe2campaign"
-
-
-def campaign_title(c: layout.CampaignInfo) -> str:
-    return CAMPAIGN_TITLE.format(title=c.title)
 
 
 def ror_terrain(src: Scenario, conv: Conversion) -> list[int]:
@@ -196,9 +192,10 @@ def mission_content(mission: str) -> tuple[progression.Campaign, str]:
 
 @contextlib.contextmanager
 def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: dict[int, str] | None = None,
-                   ai_debug: bool = False, all_perks: bool = False):
+                   ai_debug: bool = False, all_perks: bool = False, reimagined: bool = True):
     """Yield (AoE2ScenarioParser scenario flagged for RoR, ConvertResult). The scenario lives in an
-    aoe-agent-editor session that closes on exit, so write or inspect it inside the block."""
+    aoe-agent-editor session that closes on exit, so write or inspect it inside the block. `reimagined`: the
+    reimagined layer on top (the RoR-RIX edition); without it the mission is the faithful one (RoR-RI)."""
     res = ConvertResult(mission or src.filename, Path())
     if src.width != src.height:
         raise ValueError(f"{src.filename}: map {src.width}x{src.height} can't become a square RoR map")
@@ -214,7 +211,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             tile.terrain_id = terrain[i]
             tile.elevation = src.elevation[i]
 
-        content, folder = mission_content(mission)
+        content, folder = mission_content(mission) if reimagined else (progression.Campaign(), "")
         # The mission's own disables and diplomacy, where it sets them (progression.disabled / diplomacy).
         own_disabled = progression.disabled(content, folder)
         active = [dataclasses.replace(p, disabled=own_disabled[p.number]) if p.number in own_disabled else p
@@ -317,9 +314,9 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         if extras and vp.mode != "CUSTOM":
             # Only a Custom victory keeps the game from ending when an added player is defeated.
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")
-        reimagined = reimagined_triggers(src, conv, mission, vp.triggers, all_perks)
-        progression.select_objects(reimagined, placed, groups, unit_hp)
-        vp.triggers += reimagined
+        layer = reimagined_triggers(src, conv, mission, vp.triggers, all_perks) if reimagined else []
+        progression.select_objects(layer, placed, groups, unit_hp)
+        vp.triggers += layer
         options_set(o.handle, vp.options())
         if vp.triggers:
             triggers_add(o.handle, vp.triggers)
@@ -345,11 +342,11 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
 
 
 def convert_mission(m: layout.Mission, conv: Conversion, out_root: Path = layout.AOE2DE_ROR,
-                    *, ai_debug: bool = False) -> ConvertResult:
+                    *, ai_debug: bool = False, reimagined: bool = True) -> ConvertResult:
     out = scenario_path(m, out_root)
     out.parent.mkdir(parents=True, exist_ok=True)
     with build_scenario(load_scenario(m.scenario_path), conv.for_mission(m.key), m.key, strings.load(),
-                        ai_debug) as (s, res):
+                        ai_debug, reimagined=reimagined) as (s, res):
         s.write_to_file(str(out))
     res.out = out
     return res
@@ -369,27 +366,31 @@ def probe_mission(m: layout.Mission, conv: Conversion, out_root: Path, *, minute
         return probe(s, out, specs=res.specs, game="ror", stop_after=minutes * 60)
 
 
-def convert_campaign(c: layout.CampaignInfo, conv: Conversion | None = None, out_root: Path = layout.AOE2DE_ROR,
-                     *, ai_debug: bool = False, pool: Executor | None = None
+def convert_campaign(c: layout.CampaignInfo, conv: Conversion | None = None, out_root: Path | None = None,
+                     *, ai_debug: bool = False, pool: Executor | None = None, edition: Edition = editions.RI
                      ) -> tuple[list[Path], list[ConvertResult]]:
-    """Convert every mission of a campaign and bundle them into its .aoe2campaign, plus the campaign
-    screen (`<slug>_layout.json`, `<slug>.json`) when RoR has one for it. The campaign's internal name
-    is its slug, which the game needs to find the screen. With a process `pool`, missions convert side by side."""
+    """Convert every mission of a campaign in one edition (into its folder, or `out_root`) and bundle them into its
+    .aoe2campaign, plus the campaign screen (`<slug>_layout.json`, `<slug>.json`) when RoR has one for it. The
+    campaign's internal name is its slug (installing renames it). With a process `pool`, missions convert side by
+    side."""
     conv = conv or load()
-    convert = functools.partial(convert_mission, conv=conv, out_root=out_root, ai_debug=ai_debug)
+    out_root = out_root or edition.out
+    convert = functools.partial(convert_mission, conv=conv, out_root=out_root, ai_debug=ai_debug,
+                                reimagined=edition.reimagined)
     results = list(pool.map(convert, c.missions) if pool else map(convert, c.missions))
-    return bundle_campaign(c, results, out_root), results
+    return bundle_campaign(c, results, out_root, edition), results
 
 
 def bundle_campaign(c: layout.CampaignInfo, results: list[ConvertResult],
-                    out_root: Path = layout.AOE2DE_ROR) -> list[Path]:
-    """Bundle a campaign's converted missions into its .aoe2campaign and write its screen files."""
+                    out_root: Path = layout.AOE2DE_ROR, edition: Edition = editions.RI) -> list[Path]:
+    """Bundle a campaign's converted missions into its .aoe2campaign and write its screen files (titled as the
+    edition titles it)."""
     bundle = RorCampaign(c.slug)
     for m, r in zip(c.missions, results, strict=True):
         bundle.scenarios.append(CampaignScenario(m.title, r.out.name, r.out.read_bytes()))
     path = bundle.write(campaign_path(c, out_root))
     paths = [path]
-    for suffix, data in screens(c, campaign_title(c)).items():
+    for suffix, data in screens(c, edition.campaign_title(c)).items():
         f = path.with_name(f"{c.slug}{suffix}")
         f.write_text(dumps(data), encoding="utf-8", newline="\n")
         paths.append(f)

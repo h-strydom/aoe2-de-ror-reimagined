@@ -4,7 +4,19 @@ Bring the **Age of Empires: Definitive Edition** campaigns to **Age of Empires I
 Rome**: every campaign map converted tile for tile, then the campaigns reimagined on top of them.
 
 > **Status:** the faithful rebuild is done: all 10 campaigns are converted, playable and published on the
-> official mod site as **[RoR-RI] &lt;campaign&gt;**. Reimagining them comes next (see To do).
+> official mod site as **[RoR-RI] &lt;campaign&gt;**. The reimagined campaigns are a separate edition,
+> **[RoR-RIX] &lt;campaign&gt;** (Xtreme), starting with Ascent of Egypt.
+
+## Two editions
+
+- **RoR-RI**, the faithful rebuild: every campaign, tile for tile, won as the original is won. Output in `aoe2de_ror/`.
+- **RoR-RIX (Xtreme)**, the reimagined campaigns: difficulty with bonus objectives, banked upgrades, a campaign tech
+  tree and computer players with their own AI (see [Reimagined](#reimagined-difficulty-bonus-objectives-and-upgrades)).
+  Only campaigns with content in `aoe2de_ror/reimagined/<campaign>.yaml`. Output in `aoe2de_ror_x/`.
+
+`convert`, `--install` and `package` build both editions (`--edition ri|rix` for one). Each edition is its own mod
+with its own name in the Custom Campaign list ("Ascent of Egypt" and "Ascent of Egypt Xtreme"), so both can be
+installed at once.
 
 ## To do
 
@@ -131,8 +143,8 @@ The conversion writes:
 uv run reimagined package ascent_of_egypt --to "<folder>"
 ```
 
-Builds one mod per campaign (or all, with no names), titled `[RoR-RI] <campaign>` so the series is easy to find
-on the mod site:
+Builds one mod per campaign and edition (or all, with no names), titled `[RoR-RI] <campaign>` or
+`[RoR-RIX] <campaign>` so each series is easy to find on the mod site:
 - `<folder>/[RoR-RI] <campaign>/`, the mod itself (`convert --install` puts the same mod into `mods/local/`).
 - `<folder>/[RoR-RI] <campaign>.zip`, to upload: the mod's files at the zip's root (`info.json`,
   `thumbnail.jpg`, `modes/...`), which the mod site requires. Upload it signed in at ageofempires.com/mods,
@@ -144,7 +156,7 @@ Beside each zip, for the mod page form: `[RoR-RI] <campaign>.png`, the campaign 
 
 ## Reimagined: difficulty, bonus objectives and upgrades
 
-On top of the faithful maps (`src/reimagined/progression.py`, content in `aoe2de_ror/reimagined/<campaign>.yaml`):
+The RoR-RIX edition. On top of the faithful maps (`src/reimagined/progression.py`, content in `aoe2de_ror/reimagined/<campaign>.yaml`):
 - **Difficulty:** Standard has the mission's primary objective; Moderate adds a bonus objective; Hard is brutal and
   adds a second. Bonus objectives show as optional lines.
 - **No ending on the primary objective:** completing it brings up a "Claim victory / Keep playing" choice (again five

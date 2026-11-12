@@ -1,4 +1,5 @@
-"""Campaigns as mods, one per campaign titled "[RoR-RI] <campaign>": installed into your profile's mods/local (where
+"""Campaigns as mods, one per campaign and edition, titled "[RoR-RI] <campaign>" or "[RoR-RIX] <campaign>"
+(editions.py): installed into your profile's mods/local (where
 the game's mod manager can publish and update them), or packaged as zips for the official mod site.
 
 A campaign's mod holds its .aoe2campaign, its campaign screen (`<slug>_layout.json`, our own map and pins) and
@@ -6,7 +7,7 @@ its mission intros (`<slug>.json` and the slide images). The game reads campaign
 
 Publishing (ageofempires.com/mods, signed in, or the in-game mod manager): upload the zip, which holds the mod's
 files at its root (info.json, thumbnail.jpg, modes/...), not a folder. Every published campaign is titled
-"[RoR-RI] <campaign>" so they're easy to find together.
+"<edition prefix> <campaign>" so each series is easy to find together.
 """
 from __future__ import annotations
 
@@ -15,18 +16,18 @@ import tempfile
 import zipfile
 from pathlib import Path
 
-from . import campaign_maps, intros, layout, voices
+from . import campaign_maps, editions, intros, layout, voices
 from .convert import campaign_path
+from .editions import Edition
 
-PREFIX = "[RoR-RI]"
 AUTHOR = "aoe2-de-ror-reimagined"
 THUMBNAIL = (1280, 720)                  # the campaign screen, 16:9
 PAGE_IMAGE = (1920, 1080)                # the image for the mod page, beside the zip
 BUILD = layout.ROOT / "out"
 
 
-def mod_title(c: layout.CampaignInfo) -> str:
-    return f"{PREFIX} {c.title}"
+def mod_title(c: layout.CampaignInfo, edition: Edition = editions.RI) -> str:
+    return edition.mod_title(c)
 
 
 def _demojibake(text: str) -> str:
@@ -49,7 +50,7 @@ def description(c: layout.CampaignInfo) -> str:
 
 
 def campaign_files(c: layout.CampaignInfo, root: Path = layout.AOE2DE_ROR) -> tuple[Path, dict]:
-    """The converted campaign and its screen and intro data, as committed in aoe2de_ror/."""
+    """The converted campaign and its screen and intro data, as committed in `root` (an edition's folder)."""
     from aoe2ed import screens as ed_screens
     camp = campaign_path(c, root)
     data = {suffix: ed_screens.read_json(p) for suffix in ("_layout.json", ".json")
@@ -60,7 +61,7 @@ def campaign_files(c: layout.CampaignInfo, root: Path = layout.AOE2DE_ROR) -> tu
 
 
 def install(c: layout.CampaignInfo, campaign: Path, data: dict, mod: str, *, profile: Path | None = None,
-            description_text: str = "", warn=print) -> dict:
+            description_text: str = "", warn=print, edition: Edition = editions.RI) -> dict:
     """Install one campaign with its screen and intros into the local mod `mod` (under `profile`'s mods/local)."""
     from aoe2ed import screens as ed_screens
 
@@ -83,11 +84,13 @@ def install(c: layout.CampaignInfo, campaign: Path, data: dict, mod: str, *, pro
     sounds = voices.sound_files(voices.mission_voices(c.slug, mission_specs(c)), BUILD / "sounds")
     if not sounds:
         warn("  (no AoE DE voice-over copied: intros install silent; run `reimagined setup`)")
-    # Installed under its title, which the Custom Campaign list shows (the intro file names its images by slug).
+    # Installed under the edition's name for it, which the Custom Campaign list shows and which is the installed
+    # campaign's internal name: both editions installed side by side keep their own screen and intros (the intro
+    # file names its images by slug: the same images in both).
     return ed_screens.install_campaign_mod(campaign, mod, layout=data.get("_layout.json"), intro=data.get(".json"),
                                            files=map_files, widget_files=widget_files, game="ror",
                                            description=description_text, author=AUTHOR, profile=profile,
-                                           name=c.title, sound_files=sounds)
+                                           name=edition.campaign_name(c), sound_files=sounds)
 
 
 def campaign_view(c: layout.CampaignInfo, lay: dict):
@@ -125,33 +128,36 @@ def thumbnail(c: layout.CampaignInfo, dest: Path, lay: dict | None, size: tuple[
     return dest
 
 
-def build_mod(c: layout.CampaignInfo, folder: Path, campaign: Path, data: dict, warn=print) -> dict:
+def build_mod(c: layout.CampaignInfo, folder: Path, campaign: Path, data: dict, warn=print,
+              edition: Edition = editions.RI) -> dict:
     """The campaign's mod in `folder` (replaced): its files, info.json and thumbnail."""
     if folder.exists():
         shutil.rmtree(folder)
     with tempfile.TemporaryDirectory() as tmp:
-        res = install(c, campaign, data, mod_title(c), profile=Path(tmp), description_text=description(c), warn=warn)
+        res = install(c, campaign, data, mod_title(c, edition), profile=Path(tmp), description_text=description(c),
+                      warn=warn, edition=edition)
         shutil.copytree(res["mod"], folder)
     thumb = thumbnail(c, folder / "thumbnail.jpg", data.get("_layout.json"))
     return {"folder": folder, "thumbnail": thumb}
 
 
 def install_local(c: layout.CampaignInfo, campaign: Path, data: dict, *, profile: Path | None = None,
-                  warn=print) -> dict:
-    """Install the campaign's mod into the profile's mods/local/[RoR-RI] <campaign>, as it's published: the game's
-    mod manager publishes and updates it from there. Enable it once in Mods > Installed Mods and restart."""
+                  warn=print, edition: Edition = editions.RI) -> dict:
+    """Install the campaign's mod into the profile's mods/local/<edition prefix> <campaign>, as it's published: the
+    game's mod manager publishes and updates it from there. Enable it once in Mods > Installed Mods and restart."""
     from aoe2ed import screens as ed_screens
-    title = mod_title(c)
-    res = build_mod(c, ed_screens.mod_dir(title, "ror", profile), campaign, data, warn)
+    title = mod_title(c, edition)
+    res = build_mod(c, ed_screens.mod_dir(title, "ror", profile), campaign, data, warn, edition)
     enabled = ed_screens.mod_enabled(title, profile)
     return {**res, "title": title, "enabled": enabled,
             "next": None if enabled else "enable it in Mods > Installed Mods, then restart the game"}
 
 
-def page_files(c: layout.CampaignInfo, out_dir: Path, lay: dict | None) -> tuple[Path | None, Path]:
-    """For the mod page form, in `out_dir`: `[RoR-RI] <campaign>.png`, the campaign screen as the game shows it
+def page_files(c: layout.CampaignInfo, out_dir: Path, lay: dict | None,
+               edition: Edition = editions.RI) -> tuple[Path | None, Path]:
+    """For the mod page form, in `out_dir`: `<mod title>.png`, the campaign screen as the game shows it
     (1920 x 1080; None without the campaign's map art), and `.txt`, the title and description to paste."""
-    title = mod_title(c)
+    title = mod_title(c, edition)
     out_dir.mkdir(parents=True, exist_ok=True)
     own = campaign_maps.load()
     if c.slug in own and intros.has_art():                    # the drawn pins the image shows, current
@@ -162,14 +168,14 @@ def page_files(c: layout.CampaignInfo, out_dir: Path, lay: dict | None) -> tuple
     return image, page
 
 
-def package(c: layout.CampaignInfo, out_dir: Path, warn=print) -> dict:
+def package(c: layout.CampaignInfo, out_dir: Path, warn=print, edition: Edition = editions.RI) -> dict:
     """`out_dir/<title>/` (the mod, to drop into mods/local for a test) and `out_dir/<title>.zip` (to upload)."""
-    title = mod_title(c)
-    campaign, data = campaign_files(c)
+    title = mod_title(c, edition)
+    campaign, data = campaign_files(c, edition.out)
     out_dir.mkdir(parents=True, exist_ok=True)
     folder = out_dir / title
-    thumb = build_mod(c, folder, campaign, data, warn)["thumbnail"]
-    image, page = page_files(c, out_dir, data.get("_layout.json"))
+    thumb = build_mod(c, folder, campaign, data, warn, edition)["thumbnail"]
+    image, page = page_files(c, out_dir, data.get("_layout.json"), edition)
     zip_path = out_dir / f"{title}.zip"
     with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as z:
         for f in sorted(folder.rglob("*")):

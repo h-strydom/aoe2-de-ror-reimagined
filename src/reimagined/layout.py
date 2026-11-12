@@ -17,6 +17,9 @@ aoe2de_ror/
     <campaign>.aoe2campaign       the converted campaign (_part2... when RoR's map can't show every mission)
     NN_<mission>/
       <campaign>_NN_<mission>.aoe2scenario   the converted scenario
+  reimagined/<campaign>.yaml      the campaign reimagined: bonus objectives, upgrades, tech tree, AI
+
+aoe2de_ror_x/<campaign>/          the RoR-RIX edition of a reimagined campaign, laid out like aoe2de_ror/
 """
 from __future__ import annotations
 
@@ -28,6 +31,8 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 AOE1DE = ROOT / "aoe1de"
 AOE2DE_ROR = ROOT / "aoe2de_ror"
+AOE2DE_ROR_X = ROOT / "aoe2de_ror_x"     # the RoR-RIX (Xtreme) edition: the reimagined campaigns (editions.py)
+REIMAGINED = AOE2DE_ROR / "reimagined"   # reimagined content, one file per campaign
 
 
 @dataclass

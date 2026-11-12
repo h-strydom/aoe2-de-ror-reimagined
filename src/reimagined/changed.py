@@ -2,7 +2,7 @@
 
 The change is everything not yet pushed: uncommitted edits, new files, and commits ahead of the upstream branch
 (HEAD when there's none). A campaign is touched by its own files: its aoe1de/ campaign file and mission folders,
-its converted files in aoe2de_ror/, and its reimagined content (aoe2de_ror/reimagined/<campaign>.yaml). Docs
+its converted files in aoe2de_ror/ (and aoe2de_ror_x/, the RoR-RIX edition), and its reimagined content (aoe2de_ror/reimagined/<campaign>.yaml). Docs
 don't touch any. Anything else (the converter's code, conversion.yaml, the dependencies, the tests) may change
 every campaign, so then all of them count.
 """
@@ -36,7 +36,7 @@ def campaigns_of(files: list[str], slugs: list[str]) -> list[str] | None:
         if p.suffix in IGNORED_SUFFIXES or p.parts[0] in IGNORED_DIRS:
             continue
         slug = None
-        if p.parts[0] in ("aoe1de", "aoe2de_ror") and len(p.parts) >= 2:
+        if p.parts[0] in ("aoe1de", "aoe2de_ror", "aoe2de_ror_x") and len(p.parts) >= 2:
             first = p.parts[1]
             if p.parts[0] == "aoe2de_ror" and first == "reimagined" and len(p.parts) == 3:
                 first = p.stem

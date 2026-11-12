@@ -4,6 +4,8 @@ from __future__ import annotations
 import argparse
 import sys
 
+from . import editions
+
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="reimagined", description=__doc__)
@@ -16,8 +18,9 @@ def main(argv: list[str] | None = None) -> int:
     p_conv = sub.add_parser("convert", help="convert campaigns to Return of Rome into aoe2de_ror/ (needs setup)")
     p_conv.add_argument("campaigns", nargs="*", help="campaign folder names (default: all)")
     p_conv.add_argument("--install", action="store_true",
-                        help="also install each campaign into your profile as the local mod '[RoR-RI] <campaign>', "
-                             "where the game's mod manager can publish and update it")
+                        help="also install each campaign into your profile as the local mod '[RoR-RI] <campaign>' "
+                             "(and '[RoR-RIX] <campaign>' for a reimagined one), where the game's mod manager can "
+                             "publish and update it")
     p_conv.add_argument("--images-to", metavar="FOLDER",
                         help="also write each campaign's mod page image ('[RoR-RI] <campaign>.png', the campaign "
                              "screen at 1920 x 1080) and its title and description (.txt) into FOLDER")
@@ -26,6 +29,9 @@ def main(argv: list[str] | None = None) -> int:
                              "code or settings changed); see `reimagined changed`")
     p_conv.add_argument("-j", "--jobs", type=int, default=0,
                         help="missions converted at once (default: one per CPU core)")
+    p_conv.add_argument("--edition", choices=[e.key for e in editions.EDITIONS],
+                        help="only this edition: ri (faithful, every campaign) or rix (Xtreme: the reimagined "
+                             "campaigns); default both")
     p_conv.add_argument("--ai-debug", action="store_true",
                         help="computer players announce their build steps and attacks in chat (built into out/debug, "
                              "not aoe2de_ror/; use with --install for playtests)")
@@ -37,10 +43,12 @@ def main(argv: list[str] | None = None) -> int:
     p_probe.add_argument("--ai-debug", action="store_true", help="AIs also announce build steps in chat")
     p_probe.add_argument("--install", action="store_true", help="copy the probe into your RoR scenario folder")
     p_pack = sub.add_parser("package", help="package converted campaigns as mods for the official mod site, one per "
-                                            "campaign, titled '[RoR-RI] <campaign>' (a zip to upload, plus the mod "
-                                            "folder to test in mods/local)")
+                                            "campaign and edition, titled '[RoR-RI] <campaign>' or '[RoR-RIX] "
+                                            "<campaign>' (a zip to upload, plus the mod folder to test in "
+                                            "mods/local)")
     p_pack.add_argument("campaigns", nargs="*", help="campaign folder names (default: all)")
     p_pack.add_argument("--to", help="output folder (default: out/mods)")
+    p_pack.add_argument("--edition", choices=[e.key for e in editions.EDITIONS], help="only this edition")
     args = parser.parse_args(argv)
 
     if args.command == "setup":
@@ -78,17 +86,17 @@ def main(argv: list[str] | None = None) -> int:
                 print("no campaign changed")
                 return 0
             names = names + (slugs or [])
-        return _convert(names, args.install, args.ai_debug, args.images_to, args.jobs)
+        return _convert(names, args.install, args.ai_debug, args.images_to, args.jobs, args.edition)
     if args.command == "probe":
         return _probe(args.campaign, args.mission, args.minutes, args.ai_debug, args.install)
     if args.command == "package":
-        return _package(args.campaigns, args.to)
+        return _package(args.campaigns, args.to, args.edition)
     parser.print_help()
     return 0
 
 
 def _convert(names: list[str], install: bool = False, ai_debug: bool = False, images_to: str | None = None,
-             jobs: int = 0) -> int:
+             jobs: int = 0, edition: str | None = None) -> int:
     import os
     from concurrent.futures import ProcessPoolExecutor
 
@@ -113,28 +121,33 @@ def _convert(names: list[str], install: bool = False, ai_debug: bool = False, im
             print(f"error: {c.slug}: no source scenario in {', '.join(missing)}; run `reimagined setup`",
                   file=sys.stderr)
             return 1
-    # Missions are independent: convert them all side by side, then bundle and report each campaign in order.
+    # Missions are independent: convert them all side by side, in every edition each campaign comes in, then bundle
+    # and report each campaign in order.
     from .convert import bundle_campaign, convert_mission
 
-    out_root = layout.ROOT / "out" / "debug" if ai_debug else layout.AOE2DE_ROR
+    todo = [(c, e) for c in chosen for e in editions.of(c) if not edition or e.key == edition]
+
+    def out_root(e):
+        return layout.ROOT / "out" / "debug" / e.key if ai_debug else e.out
     with ProcessPoolExecutor(jobs or os.cpu_count() or 1) as pool:
-        futures = {c.slug: [pool.submit(convert_mission, m, conv, out_root, ai_debug=ai_debug) for m in c.missions]
-                   for c in chosen}
-        for c in chosen:
-            results = [f.result() for f in futures[c.slug]]
-            _report(c, bundle_campaign(c, results, out_root), results, install, images_to)
+        futures = {(c.slug, e.key): [pool.submit(convert_mission, m, conv, out_root(e), ai_debug=ai_debug,
+                                                 reimagined=e.reimagined) for m in c.missions]
+                   for c, e in todo}
+        for c, e in todo:
+            results = [f.result() for f in futures[c.slug, e.key]]
+            _report(c, bundle_campaign(c, results, out_root(e), e), results, install, images_to, e)
     return 0
 
 
-def _report(c, paths, results, install: bool, images_to: str | None) -> None:
-    print(f"{c.title}: {', '.join(p.name for p in paths)}")
+def _report(c, paths, results, install: bool, images_to: str | None, edition=editions.RI) -> None:
+    print(f"{edition.mod_title(c)}: {', '.join(p.name for p in paths)}")
     if install:
         from aoe2ed import screens as ed_screens
 
         from . import package
 
         data = {p.name[len(c.slug):]: ed_screens.read_json(p) for p in paths[1:]}
-        res = package.install_local(c, paths[0], data)
+        res = package.install_local(c, paths[0], data, edition=edition)
         print(f"  installed as the local mod {res['title']!r}" + (f" ({res['next']})" if res["next"] else ""))
     if images_to:
         from pathlib import Path
@@ -144,14 +157,14 @@ def _report(c, paths, results, install: bool, images_to: str | None) -> None:
         from . import package
 
         lay = ed_screens.read_json(paths[0].with_name(f"{c.slug}_layout.json"))
-        image, page = package.page_files(c, Path(images_to), lay)
+        image, page = package.page_files(c, Path(images_to), lay, edition)
         print(f"  mod page: {image or '(no image: run `reimagined setup` for the map art)'}, {page.name}")
     for r in results:
         dropped = sum(r.dropped.values())
         print(f"  {r.mission}: {r.players} players, {r.placed} objects placed, {dropped} dropped")
 
 
-def _package(names: list[str], to: str | None) -> int:
+def _package(names: list[str], to: str | None, edition: str | None = None) -> int:
     from pathlib import Path
 
     from . import layout, package
@@ -162,11 +175,11 @@ def _package(names: list[str], to: str | None) -> int:
               file=sys.stderr)
         return 1
     out = Path(to) if to else layout.ROOT / "out" / "mods"
-    for c in camps:
-        if names and c.slug not in names:
+    for c, ed in [(c, e) for c in camps for e in editions.of(c)]:
+        if names and c.slug not in names or edition and ed.key != edition:
             continue
         try:
-            res = package.package(c, out)
+            res = package.package(c, out, edition=ed)
         except FileNotFoundError as e:
             print(f"error: {e}", file=sys.stderr)
             return 1

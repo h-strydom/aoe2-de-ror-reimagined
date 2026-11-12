@@ -1,4 +1,4 @@
-"""Campaign mods: one per campaign, titled [RoR-RI] <campaign>, zipped with the mod's files at the root."""
+"""Campaign mods: one per campaign and edition, titled [RoR-RI] or [RoR-RIX] <campaign>, zipped with the mod's files at the root."""
 from __future__ import annotations
 
 import json
@@ -63,3 +63,20 @@ def test_page_files_write_the_mod_page_image_and_text(tmp_path):
     image, page = package.page_files(EGYPT, tmp_path / "pages", data["_layout.json"])
     assert image == tmp_path / "pages" / "[RoR-RI] Ascent of Egypt.png" and Image.open(image).size == (1920, 1080)
     assert package.description(EGYPT) in page.read_text(encoding="utf-8")
+
+
+@pytest.mark.skipif(not intros.has_art() or not package.campaign_path(EGYPT, layout.AOE2DE_ROR_X).is_file(),
+                    reason="needs `reimagined setup` art and the converted campaign")
+def test_the_xtreme_edition_installs_beside_the_faithful_one(tmp_path):
+    from reimagined import editions
+    assert editions.of(EGYPT) == [editions.RI, editions.RIX]
+    campaign, data = package.campaign_files(EGYPT, editions.RIX.out)
+    package.install_local(EGYPT, campaign, data, profile=tmp_path, warn=lambda *_: None, edition=editions.RIX)
+    folder = tmp_path / "mods" / "local" / "[RoR-RIX] Ascent of Egypt"
+    camp = folder / "modes/Pompeii/resources/_common/campaign"
+    assert (camp / "Ascent of Egypt Xtreme.aoe2campaign").is_file()           # its own name: its own screen
+    assert (camp / "Ascent of Egypt Xtreme_layout.json").is_file() and (camp / "Ascent of Egypt Xtreme.json").is_file()
+    info = json.loads((folder / "info.json").read_text(encoding="utf-8"))
+    assert info["Title"] == "[RoR-RIX] Ascent of Egypt"
+    lay = json.loads((camp / "Ascent of Egypt Xtreme_layout.json").read_text(encoding="utf-8"))
+    assert "AoE1 Ascent of Egypt Xtreme" in json.dumps(lay)
