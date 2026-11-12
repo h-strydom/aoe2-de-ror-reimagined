@@ -9,37 +9,32 @@ not published yet.
 
 ## Unreleased
 
-### RoR-RI
-- The camera starts over your Town Center or your largest group of units. AoE DE's start views mostly point at
-  the map's centre.
-- The Scouts page links the project and its issue tracker.
+### RoR-RI, the other campaigns
+Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:
 - Computer players that build play RoR's standard skirmish AI, one level harder than the game's difficulty
-  (Standard plays Standard, Moderate plays Hard, Hard plays Hardest):
-  - they never resign, and never attack sooner than the original AI did;
-  - armies, passive towns and players waiting for you keep their AoE1 plan;
-  - needs aoe-agent-editor v0.18.1.
+  (Standard plays Standard, Moderate plays Hard, Hard plays Hardest). They never resign, and never attack sooner
+  than the original AI did. Armies, passive towns and players waiting for you keep their AoE1 plan.
 - AI map type: Small Islands where a computer player can't walk to you, so it builds boats and transports, and
-  Highland otherwise. Continental made the AI build a navy on Farming's river.
-- An enemy's own victory shows as an objective to prevent, with a count. Example: Farming's "Don't let Lower
-  Egypt gather 2000 food", which used to end the mission without warning.
+  Highland otherwise.
+- The camera starts over your Town Center or your largest group of units.
+- The Scouts page links the project and its issue tracker.
+- An enemy's own victory shows as an objective to prevent, with a count.
 - If you start neutral toward a player that is at war with you, you're at war with them too, because RoR's neutral
-  units don't fight back. Affects Farming, The Trojan War, Xenophon's March and The Assassins.
-- Ascent of Egypt, from the tech and AI audit (docs/audits/ascent_of_egypt.md):
-  - no Granary walls or towers in The Dawn of a New Age and Farming: they open with Trade;
-  - Skirmish: you and the Egyptian Raiders are at war, so they fight;
-  - Trade: the Libyan raiders are enemies from the start and hunt with their Scout Ships, and the Canaanites turn
-    on you at 20 minutes with a warning. The Minoans stay your ally.
+  units don't fight back. Affects The Trojan War, Xenophon's March and The Assassins.
+- Conquest victories no longer count you among your own enemies (a stance the scenarios store for yourself).
+
+New for the other campaigns only:
 - Neutral players, from the audit of missions that start you neutral (RoR's neutral players never fight, while
   AoE1's turned on whoever attacked them):
   - I Shall Return and The Canyon of Death: the Elamite army and the Mononobe are at war with you;
   - Holy Man, The Great Hunt and The Siege of Athens: the Sumerians and Akkadians, the Elamite river town and the
     Thebans stay neutral until you attack them, then go to war with a message.
-- Losing the unit an objective needs is a defeat, with a message: Religion's Stone Thrower, Hannibal and his
-  Armored Elephants (Crossing the Alps), Scipio (Zama) and the War Chests (Raid on Babylon, Kadesh, Mylae, Capture).
-  Before, the mission just couldn't be won any more.
-- Conquest victories no longer count you among your own enemies (a stance the scenarios store for yourself).
+- Losing the unit an objective needs is a defeat, with a message: Hannibal and his Armored Elephants (Crossing the
+  Alps), Scipio (Zama) and the War Chests (Raid on Babylon, Kadesh, Mylae, Capture).
+
+### In the repository
 - The mission breakdown (docs/audits/missions.md): every mission's players, civs, stances, AI and tech.
-- In the repository: the tests run before every push (pre-push hook in `.githooks/`).
+- The tests run before every push (pre-push hook in `.githooks/`).
 - This changelog follows the mod uploads.
 
 ### RoR-RIX (Xtreme), not published yet
@@ -66,6 +61,30 @@ not published yet.
 - Perks: Founding Families (villagers train instantly), Hardened Hunters, Watchful Homes, Free Town Center and
   Town Tithes. Free Town Center and Town Tithes count a foundation as soon as it's placed, and Town Tithes caps you
   at 5 Town Centers per mission.
+
+
+## 2026-11-12: RoR-RI, Ascent of Egypt only (second update that day)
+Released 2026-11-12. Change List (the draft given for it; the text on the mod site is the source of truth):
+"Computer players that build now play the standard skirmish AI one level above your difficulty, and no longer build
+navies on land maps. The camera starts over your town. An enemy's win condition now shows as an objective, with a
+count. Skirmish and Trade enemies now fight: Trade's Libyan raiders hunt your boats and the Canaanites turn on you
+after 20 minutes. Walls and towers open with Trade. Losing the unit an objective needs now ends the mission. The
+Scouts page links the project and its issue tracker."
+- Computer players that build play RoR's standard skirmish AI, one level harder than the game's difficulty, never
+  resigning and never attacking sooner than the original AI did: Lower Egypt (Farming), the Minoans and Canaanites
+  (Trade), the Libyan Raiders (Naval Warfare) and the Canaanites (Siege in Canaan). Needs aoe-agent-editor v0.18.2.
+- AI map type: Small Islands where a computer player can't walk to you (Trade, Naval Warfare, A Wonder of the
+  World), Highland otherwise. Continental had Lower Egypt build a navy on Farming's river.
+- Farming: you're at war with Lower Egypt, not neutral, and its own win shows as "Don't let Lower Egypt gather 2000
+  food", with a count. It used to end the mission without warning.
+- Skirmish: you and the Egyptian Raiders are at war, so they fight.
+- Trade: the Libyan raiders are enemies from the start and hunt with their Scout Ships; the Canaanites turn on you
+  at 20 minutes with a warning. The Minoans stay your ally.
+- Religion: the Stone Thrower destroyed is a defeat, with a message. Before, the mission just couldn't be won.
+- Conquest victories work in Skirmish, Trade and Religion: the converter had counted you as your own enemy.
+- No Granary walls or towers in The Dawn of a New Age and Farming: they open with Trade.
+- The camera starts over your Town Center or your largest group of units.
+- The Scouts page links the project and its issue tracker.
 
 ## 2026-11-12: RoR-RI, every campaign
 Released 2026-11-12. Change List: "Fixed issues with loading save files. Added original sound recordings to the
