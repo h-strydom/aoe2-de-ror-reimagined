@@ -221,7 +221,7 @@ RoR-RIX tech tree for you, within your ages: everything open but iron age.
 | Player | Civ | Stance | AI (RoR-RI) | Ages | Off |
 |---|---|---|---|---|---|
 | P1 Babylonians (you) | Babylonian |  | you | Iron | nothing |
-| P2 Elamites | Assyrian | neutral / neutral | standard skirmish AI, a level harder | Iron | nothing |
+| P2 Elamites | Assyrian | enemy / enemy | standard skirmish AI, a level harder | Iron | nothing |
 
 ### 5. The Great Hunt: no-build mission
 
@@ -300,7 +300,7 @@ RoR-RIX tech tree for you, within your ages: everything open but iron age.
 | Player | Civ | Stance | AI (RoR-RI) | Ages | Off |
 |---|---|---|---|---|---|
 | P1 Prince Shotoku (you) | Yamato |  | you | Iron | nothing |
-| P2 Mononobe | Yamato | neutral / neutral | AoE1 plan (translated) | Bronze to Iron | nothing |
+| P2 Mononobe | Yamato | enemy / enemy | AoE1 plan (translated) | Bronze to Iron | nothing |
 
 ### 6. Coup: build mission
 

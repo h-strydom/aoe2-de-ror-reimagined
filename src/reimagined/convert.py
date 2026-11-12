@@ -45,6 +45,7 @@ ROR_AGES = ("DARK", "FEUDAL", "CASTLE", "IMPERIAL", "POST_IMPERIAL")
 DIPLOMACY = {0: "ALLY", 1: "NEUTRAL", 3: "ENEMY"}
 MAX_ROR_PLAYERS = 8
 NORMAL_STATUS = 2
+PROVOKED_SIGNAL = 100            # + player: the AI Signal a provoked computer player sends when it turns hostile
 AI_START_SIGNAL = 1               # AI Script Goal a mission's claim_base sends to computer players set to wait for it
 BUILDERS = ("Villager", "Town Center")            # AoE DE names: player 1 owning one can build (rules.population)
 # Computer players that build (they start with a villager or town center, and aren't passive) play RoR's standard
@@ -250,6 +251,26 @@ def turn_hostile(conv: Conversion, humans: list[int], stances: dict) -> list[dic
     return out
 
 
+def provoked_by(n: int, active) -> dict:
+    """The AI's `provoked` setting: the human players, and the signal it sends when it turns on them."""
+    return {"players": [q.number for q in active if q.human], "signal": PROVOKED_SIGNAL + n}
+
+
+def answer_provoked(conv: Conversion, humans: list[int]) -> list[dict]:
+    """Triggers for provoked players (conversion.yaml `provoked: {2: message}`): when the AI signals it has turned
+    hostile (its town attacked), the human players are at war with it too, with the message. AoE1's AIs turned on
+    whoever attacked them; RoR's keep their stance (the audit of neutral missions, 2026-11-12). Unverified in game."""
+    out = []
+    for n, message in conv.provoked.items():
+        effects = [{"type": "change_diplomacy", "source_player": x, "target_player": y, "diplomacy": 3}
+                   for h in humans for x, y in ((n, h), (h, n))]
+        if message:
+            effects.append({"type": "display_instructions", "display_time": 10, "message": message})
+        out.append({"name": f"P{n} provoked", "conditions": [{"type": "ai_signal", "ai_signal": PROVOKED_SIGNAL + n}],
+                    "effects": effects})
+    return out
+
+
 def player_settings(p, disable: list[str] = ()) -> dict:
     """player_set fields for a player's disables (the original's, plus `disable`: ror_tech_tree.yaml names) and
     starting view."""
@@ -377,6 +398,8 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                 ai_set(o.handle, p.number, "immobile")
                 res.ai[p.number] = "immobile"
             elif not change and (std := standard_ai(p, plan, conv)):
+                if p.number in conv.provoked:
+                    std = {**std, "standard": {**std["standard"], "provoked": provoked_by(p.number, active)}}
                 ai_set(o.handle, p.number, std)
                 res.ai[p.number] = "standard (a level harder)"
             elif plan is not None:
@@ -392,6 +415,8 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                     plan.skipped = [] if change.get("replace") else plan.skipped
                 if claim and claim["start_ai"]:
                     plan.spec["start"] = {"trigger": AI_START_SIGNAL}
+                if p.number in conv.provoked:
+                    plan.spec["provoked"] = provoked_by(p.number, active)
                 done = ai_set(o.handle, p.number, plan.spec)
                 res.specs[p.number] = plan.spec
                 res.ai[p.number] = f"{done['ai']}: {done['rules']} rules"
@@ -445,6 +470,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             # Only a Custom victory keeps the game from ending when an added player is defeated.
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")
         vp.triggers += turn_hostile(conv, [p.number for p in active if p.human], stances)
+        vp.triggers += answer_provoked(conv, [p.number for p in active if p.human])
         layer = reimagined_triggers(src, conv, mission, vp.triggers, all_perks) if reimagined else []
         progression.select_objects(layer, placed, groups, unit_hp)
         vp.triggers += layer

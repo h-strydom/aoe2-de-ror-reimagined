@@ -175,3 +175,19 @@ def test_map_type_and_scouts_links(c):
     assert (you.diplomacy[1], you.diplomacy[2], you.diplomacy[3]) == (0, 1, 3)    # Minoans, Canaanites, Libyans
     hostile = next(t for t in trade.trigger_manager.triggers if t.name == "P3 turns hostile")
     assert hostile.conditions[0].timer == 1200 and len(hostile.effects) == 3
+
+
+def test_neutral_players_fight_or_answer_attacks():
+    """The neutral-missions audit (2026-11-12): RoR's neutral players never fight. Armies marching on you are at war
+    with you; neutral towns turn on you once you attack them (provoked), and a trigger answers their signal.
+    Reads the committed build."""
+    def scn(key):
+        m = {x.key: x for c in layout.campaigns() for x in c.missions}[key]
+        return AoE2DEScenario.from_file(str(scenario_path(m, layout.AOE2DE_ROR)))
+    for key in ("voices_of_babylon/04_i_shall_return", "yamato_empire_of_the_rising_sun/05_the_canyon_of_death"):
+        assert scn(key).player_manager.players[1].diplomacy[1] == 3
+    holy = scn("voices_of_babylon/01_holy_man")
+    assert holy.player_manager.players[1].diplomacy[1] == 1                     # neutral until provoked
+    assert "(set-stance 1 enemy)" in holy.player_manager.players[2].ai_script
+    signals = {t.name: t.conditions[0].ai_signal for t in holy.trigger_manager.triggers if "provoked" in t.name}
+    assert signals == {"P2 provoked": 102, "P3 provoked": 103}

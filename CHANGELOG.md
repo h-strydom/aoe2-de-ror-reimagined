@@ -29,6 +29,12 @@ not published yet.
   - Skirmish: you and the Egyptian Raiders are at war, so they fight;
   - Trade: the Libyan raiders are enemies from the start and hunt with their Scout Ships, and the Canaanites turn
     on you at 20 minutes with a warning. The Minoans stay your ally.
+- Neutral players, from the audit of missions that start you neutral (RoR's neutral players never fight, while
+  AoE1's turned on whoever attacked them):
+  - I Shall Return and The Canyon of Death: the Elamite army and the Mononobe are at war with you;
+  - Holy Man, The Great Hunt and The Siege of Athens: the Sumerians and Akkadians, the Elamite river town and the
+    Thebans stay neutral until you attack them, then go to war with a message.
+- The mission breakdown (docs/audits/missions.md): every mission's players, civs, stances, AI and tech.
 - This changelog follows the mod uploads.
 
 ### RoR-RIX (Xtreme), not published yet

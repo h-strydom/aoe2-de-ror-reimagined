@@ -8,7 +8,8 @@
 #   missions: per-mission overrides, same shape as terrain/objects; they win over the global entries. Also, where
 #     RoR plays AoE1's settings differently: diplomacy ([[a, b, ALLY|NEUTRAL|ENEMY]], both ways), disable
 #     ({player: [ror_tech_tree.yaml names]}) and attacks ({player: {hostile_at: seconds, message: text}}: a passive
-#     AoE1 AI attacks; with hostile_at it turns on the human players then). See docs/audits/.
+#     AoE1 AI attacks; with hostile_at it turns on the human players then) and provoked ({player: message}: neutral
+#     until you attack its town, then at war both ways, with the message). See docs/audits/.
 #
 # Every terrain and object the 61 campaign maps use is listed, with its AoE DE name and how often it
 # appears. Names on the right are RoR names (aoe-agent-editor's RoR tables; `lookup("...", game="ror")`
@@ -398,10 +399,14 @@ missions:
     show_base: [[0, 0, 52, 51]]
   glory_of_greece/05_colonization_of_ionia:
     show_base: [[22, 9, 54, 43]]
+  # The Thebans are neutral toward you (you're at war with them) until you attack them (the neutral-missions audit).
   glory_of_greece/06_the_siege_of_athens:
     show_base: [[21, 0, 104, 76]]
+    provoked: {4: "The Thebans have joined the Spartans against Athens!"}
+  # The Elamite army marching on Babylon is at war with you, not neutral (the neutral-missions audit).
   voices_of_babylon/04_i_shall_return:
     show_base: [[0, 22, 32, 93]]
+    diplomacy: [[1, 2, ENEMY]]
   voices_of_babylon/07_lord_of_the_euphrates:
     show_base: [[53, 58, 88, 90]]
   voices_of_babylon/08_the_conquest_of_nineveh:
@@ -436,3 +441,15 @@ missions:
     show_base: [[19, 59, 65, 98]]
   the_first_punic_war/03_the_battle_of_tunis:
     show_base: [[64, 150, 122, 199]]
+  # Neutral players (the neutral-missions audit, 2026-11-12). RoR's neutral players never fight, and AoE1's turned on
+  # whoever attacked them. Holy Man: the Sumerians and Akkadians wait for your Priest's persuasion and fight once
+  # you attack. The Great Hunt: the Elamite town on your road lets you pass until you attack it. The Canyon of
+  # Death: the Mononobe you must defeat are at war with you.
+  voices_of_babylon/01_holy_man:
+    provoked:
+      2: "The Sumerians take up arms against Babylon!"
+      3: "The Akkadians take up arms against Babylon!"
+  voices_of_babylon/05_the_great_hunt:
+    provoked: {2: "The Elamites of the river town take up arms against you!"}
+  yamato_empire_of_the_rising_sun/05_the_canyon_of_death:
+    diplomacy: [[1, 2, ENEMY]]
