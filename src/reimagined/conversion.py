@@ -23,7 +23,7 @@ TOP_KEYS = {"terrain", "objects", "rules", "missions"}
 RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs", "ai_levels", "population"}
 POPULATION_KEYS = {"cap", "grow_minutes"}
 MISSION_KEYS = {"terrain", "objects", "reveal", "show_base", "claim_base", "diplomacy", "disable", "attacks",
-                "provoked"}
+                "provoked", "ai"}
 STANCES = {"ALLY", "NEUTRAL", "ENEMY"}
 CLAIM_KEYS = {"area", "player", "start_ai"}
 
@@ -58,6 +58,7 @@ class Conversion:
     disable: dict = field(default_factory=dict)     # {player: [ror_tech_tree.yaml names]} switched off
     attacks: dict = field(default_factory=dict)     # {player: {hostile_at, message} or {}}: a passive AI attacks
     provoked: dict = field(default_factory=dict)    # {player: message}: neutral until you attack its town
+    ai: dict = field(default_factory=dict)          # {player: toolbox profile} (aoe-agent-editor ai/profiles.py)
     population: dict | None = None                  # {cap, grow_minutes}: missions where player 1 can build
 
     def for_mission(self, key: str) -> Conversion:
@@ -69,7 +70,7 @@ class Conversion:
                        reveal=ov.get("reveal", ()), show_base=ov.get("show_base", ()),
                        claim_base=ov.get("claim_base"), diplomacy=ov.get("diplomacy", {}),
                        disable=ov.get("disable", {}), attacks=ov.get("attacks", {}),
-                       provoked=ov.get("provoked", {}))
+                       provoked=ov.get("provoked", {}), ai=ov.get("ai", {}))
 
     def place(self, aoede_id: int, ror_terrain: int) -> int | None:
         """The RoR object for an AoE DE object standing on `ror_terrain`, or None if it's dropped.
@@ -189,8 +190,14 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
                 problems.append(f"missions.{key}.attacks.{k}: {{hostile_at: seconds, message: text}}, got {v}")
             attacks[int(k)] = v
         provoked = {int(k): str(v or "") for k, v in (ov.get("provoked") or {}).items()}
+        ai = {}
+        for k, v in (ov.get("ai") or {}).items():
+            if not isinstance(v, dict) or "kind" not in v:
+                problems.append(f"missions.{key}.ai.{k}: a toolbox profile {{kind: town|army, ...}}, got {v!r}")
+                continue
+            ai[int(k)] = v
         missions[key] = {"terrain": t, "objects": o, **areas, "claim_base": claim, "diplomacy": dip,
-                         "disable": disable, "attacks": attacks, "provoked": provoked}
+                         "disable": disable, "attacks": attacks, "provoked": provoked, "ai": ai}
 
     population = rules.get("population")
     if population is not None:

@@ -251,6 +251,28 @@ def turn_hostile(conv: Conversion, humans: list[int], stances: dict) -> list[dic
     return out
 
 
+AGE_STEPS = ("TOOL_AGE", "BRONZE_AGE", "IRON_AGE")      # the age techs after the Stone Age
+
+
+def toolbox_spec(p, profile: dict, name: str, conv: Conversion, active, debug: bool = False) -> dict:
+    """The AI spec for a player conversion.yaml gives a toolbox profile (`ai: {2: {kind: town, ...}}`): the
+    profile, named after the player, researching the ages between its start and its cap (a disabled age), waiting
+    for the mission's start signal and answering provocations like any other AI. The editor's profiles.py expands
+    it (docs/ai-toolbox.md); the playtest notes and intentions are in docs/missions/."""
+    # AGE_CAPS counts ages from 1 (Stone), starting_age from 0: a disabled Bronze Age (cap 2) tops out at the Tool
+    # Age (index 1), so a Tool Age start researches nothing.
+    top = min([3, *(cap - 1 for d, cap in AGE_CAPS.items() if d in p.disabled)])
+    profile = {"name": f"{name} (toolbox)", "ages": list(AGE_STEPS[p.starting_age:top]), **profile}
+    spec: dict = {"profile": profile, "name": profile["name"]}
+    if conv.claim_base and conv.claim_base.get("start_ai"):
+        spec["start"] = {"trigger": AI_START_SIGNAL}
+    if p.number in conv.provoked:
+        spec["provoked"] = provoked_by(p.number, active)
+    if debug:
+        spec["debug"] = True
+    return spec
+
+
 def provoked_by(n: int, active) -> dict:
     """The AI's `provoked` setting: the human players, and the signal it sends when it turns on them."""
     return {"players": [q.number for q in active if q.human], "signal": PROVOKED_SIGNAL + n}
@@ -394,7 +416,12 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         for p in active:
             plan = ror_ai(p, conv, ai_debug)
             change = custom_ai.get(p.number) or {}
-            if plan == "immobile":
+            if p.number in conv.ai and not change:
+                spec = toolbox_spec(p, conv.ai[p.number], names.get(p.number, p.name), conv, active, ai_debug)
+                done = ai_set(o.handle, p.number, spec)
+                res.specs[p.number] = spec
+                res.ai[p.number] = f"toolbox {conv.ai[p.number]['kind']}: {done['rules']} rules"
+            elif plan == "immobile":
                 ai_set(o.handle, p.number, "immobile")
                 res.ai[p.number] = "immobile"
             elif not change and (std := standard_ai(p, plan, conv)):

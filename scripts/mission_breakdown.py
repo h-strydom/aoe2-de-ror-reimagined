@@ -147,6 +147,8 @@ def age_span(start: int, cap: int) -> str:
 def ai_label(a: str) -> str:
     if a in ("you", "no AI"):
         return a
+    if a.startswith("toolbox"):
+        return f"AI toolbox: {a.split(':')[0].split()[-1]} profile"
     if a.startswith("standard"):
         return "standard skirmish AI, a level harder"
     if a.startswith("immobile"):

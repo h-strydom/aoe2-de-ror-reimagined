@@ -62,7 +62,7 @@ RoR-RIX tech tree for you, within your ages: everything open but town center.
 | Player | Civ | Stance | AI (RoR-RI) | AI (RoR-RIX) | Ages | Off |
 |---|---|---|---|---|---|---|
 | P1 Upper Egypt (you) | Egyptian |  | you | you | Tool (no Bronze, Iron) | Small Gate, Small Wall, Watch Tower |
-| P2 Lower Egypt | Egyptian | enemy / enemy | standard skirmish AI, a level harder | mission's own (Lower Egypt) | Tool (no Bronze, Iron) | nothing |
+| P2 Lower Egypt | Egyptian | enemy / enemy | AI toolbox: town profile | mission's own (Lower Egypt) | Tool (no Bronze, Iron) | nothing |
 
 RoR-RIX tech tree for you, within your ages: everything open but bronze age, light transport, small gate, small wall, town center, watch tower.
 

@@ -9,6 +9,15 @@ not published yet.
 
 ## Unreleased
 
+### RoR-RI, Ascent of Egypt
+- Farming: Lower Egypt plays an AI built from the new AI toolbox, to the mission's spec
+  (docs/missions/ascent_of_egypt/06_farming.md):
+  - it grows toward 50, 100 or 150 population by difficulty;
+  - its army is Axemen, Bowmen and Scouts;
+  - it fishes lightly, keeps a home guard and attacks in waves that retreat when beaten;
+  - it researches economy upgrades first and holds its food for the 2000-food race.
+  Needs aoe-agent-editor v0.19.0.
+
 ### RoR-RI, the other campaigns
 Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:
 - Computer players that build play RoR's standard skirmish AI, one level harder than the game's difficulty

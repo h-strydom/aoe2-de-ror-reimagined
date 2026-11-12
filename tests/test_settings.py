@@ -67,9 +67,13 @@ def test_ai_carries_over(tmp_path):
     # its first attack waits as long as the AoE1 AI's did, though Hard plays Hardest (0)
     j = troy[2].ai_script.index("#load-if-defined DIFFICULTY-HARD\n")
     assert "(defconst min-attack-time 0)" not in troy[2].ai_script[j:j + 400]
-    # Farming's Lower Egypt races you to 2000 food and still plays the standard AI (the user, 2026-11-12)
+    # Farming's Lower Egypt plays the AI toolbox's town profile from conversion.yaml (2026-11-12): Axemen by line,
+    # light fishing, a home guard, and it holds its food past 1200 for its 2000-food goal
     ri = convert_mission(MISSIONS["ascent_of_egypt/06_farming"], load(), tmp_path, reimagined=False).out
-    assert AoE2DEScenario.from_file(str(ri)).player_manager.players[2].personality == "Standard AI"
+    red = AoE2DEScenario.from_file(str(ri)).player_manager.players[2]
+    assert red.personality == "Lower Egypt (toolbox)"
+    for part in ("(train my-line266)", "water: fishing up to 3", "(food-amount < 1200)", "(up-retreat-now)"):
+        assert part in red.ai_script
     # the Greek army (P3, no villagers or town center) keeps its translated AoE1 plan
     assert troy[3].personality.endswith("(AoE1)")
     trade = _converted(tmp_path, "ascent_of_egypt/07_trade")

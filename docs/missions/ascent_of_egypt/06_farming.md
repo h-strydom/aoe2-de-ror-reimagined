@@ -1,6 +1,6 @@
 # Ascent of Egypt 6: Farming
 
-Status: playtested 2026-11-12 (Hard). AI intentions are drafted and not built yet.
+Status: playtested 2026-11-12 (Hard). Lower Egypt is built on the AI toolbox (aoe-agent-editor v0.19.0) and not yet playtested.
 
 ## 1. Story and objectives
 - Narmer of Upper Egypt unites the kingdoms: control the stone circle of Nabta Playa and build up a food surplus.
@@ -74,8 +74,19 @@ Status: playtested 2026-11-12 (Hard). AI intentions are drafted and not built ye
 - **By difficulty:**
   - Standard: a first probe at 20 minutes, waves every 8 minutes.
   - Hard: a first probe at 10 minutes, waves every 4 minutes with bigger groups.
-- **Profile:**
-  `town, pop: default, army: {core: AXEMAN, support: BOWMAN, raiders: SCOUT}, upgrades: economy, water: light, defense: home, offense: light, goal: {stockpile: {food: 2000}}`
+- **Profile** (conversion.yaml):
+  `{kind: town, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]}, upgrades: economy, water: light, defense: home, offense: light, goal: {stockpile: {food: 2000, hold_from: 1200}}}`
+- **Built, 2026-11-12:**
+  - population targets of 50, 100 and 150;
+  - the army grows from 6 to 40% of the target, as Axemen (by line, so Clubmen until the Axe upgrade), Bowmen and
+    Scouts, with a Barracks, an Archery Range and a Stable;
+  - farming that keeps going;
+  - up to 3 fishing boats and 1 warship;
+  - waves from 15 minutes (21 on Standard, about 10 on Hard), every 6 minutes, sending 70% of the army;
+  - a beaten wave retreats, and a wave is recalled if its town is attacked;
+  - economy upgrades first, military ones from 10 soldiers;
+  - no food spent on units past 1200 food.
+  - Not built yet: counters to your army, and the Market selling surplus.
 - **Check:**
   - at most 3 fishing boats all game;
   - population near its target for the difficulty;
@@ -88,3 +99,4 @@ Status: playtested 2026-11-12 (Hard). AI intentions are drafted and not built ye
 |---|---|---|---|
 | 2026-11-12 | Hard | Standard AI on Continental: attacked early, then built a big fleet; defeat at 24:00 from its 2000 food with no warning; you were neutral to it | Highland map type, at war, objective line (74936a0) |
 | 2026-11-12 | Hard | Highland: no fleet. On its AoE1 plan it stalled, stopped farming, lost villagers and didn't attack | Back to the standard AI (8be4ed5); toolbox profile proposed |
+| | | Lower Egypt on the toolbox town profile | to playtest |
