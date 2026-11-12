@@ -190,10 +190,14 @@ sprite pins in that player colour. Pins that would overlap are nudged apart and 
 
 `aoe2de_ror/` aims to be a 100% faithful rebuild. What carries over:
 - the map: terrain, elevation and every object, at the same position, rotation and owner
-- the players: name, civ, starting age, resources, diplomacy, allied victory, start view, and the
-  buildings and ages the original disabled for them
-- the computer players' AI: each AoE1 AI (build list, personality) is translated into a RoR AI script
-  embedded in the map. It works through the original build list in order (buildings, units, research and
+- the players: name, civ, starting age, resources, diplomacy, allied victory, and the buildings and ages the
+  original disabled for them. The camera starts over your Town Center (or your largest group of units): AoE DE's
+  start views mostly point at the map's centre
+- the computer players' AI: a computer player that builds (it starts with a villager or town center and isn't
+  passive) plays RoR's standard skirmish AI, a level harder than the game's difficulty (Standard plays Standard,
+  Moderate plays Hard, Hard plays Hardest), never resigning, with the map's AI map type set (Small Islands where a
+  computer player can't walk to you, so it builds boats and transports; Continental otherwise). Every other AoE1 AI
+  (armies, passive towns, players waiting for you) is translated into a RoR AI script embedded in the map. It works through the original build list in order (buildings, units, research and
   ages, with the original counts), keeps its army topped up afterwards, carries the personality's strategic
   numbers over where RoR has the same setting, and attacks on the personality's timing and group sizes.
   Passive personalities build but never attack, immobile-unit AIs get RoR's immobile AI, and none of them

@@ -30,8 +30,8 @@ wheels = [
 
 [[package]]
 name = "aoe-agent-editor"
-version = "0.17.0"
-source = { git = "https://github.com/h-strydom/aoe-agent-editor?rev=v0.17.0#8170bd99cbd747df61011398390987b3c821cd2e" }
+version = "0.18.0"
+source = { git = "https://github.com/h-strydom/aoe-agent-editor?rev=v0.18.0#640711791ab53ff1eeab47827eaa416753b5d30a" }
 dependencies = [
     { name = "aoe2scenarioparser" },
     { name = "mcp" },
@@ -61,7 +61,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "aoe-agent-editor", git = "https://github.com/h-strydom/aoe-agent-editor?rev=v0.17.0" },
+    { name = "aoe-agent-editor", git = "https://github.com/h-strydom/aoe-agent-editor?rev=v0.18.0" },
     { name = "lz4", specifier = ">=4.4.5" },
     { name = "opencv-python-headless", specifier = ">=5.0.0.93" },
     { name = "pillow", specifier = ">=13.0.0" },

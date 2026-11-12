@@ -148,3 +148,15 @@ def test_the_faithful_edition_has_no_reimagined_layer(tmp_path):
     x = {t.name for t in AoE2DEScenario.from_file(
         str(convert_mission(m, load(), tmp_path / "x", reimagined=True).out)).trigger_manager.triggers}
     assert "RI Bonus 1" in x and "RI End offer" in x
+
+
+@pytest.mark.parametrize("c", CAMPAIGNS[:1], ids=lambda c: c.slug)
+def test_map_type_and_scouts_links(c):
+    """The standard AI plays islands where it can't walk to you; the Scouts page links the project and its issues
+    (the user, 2026-11-12). Reads the committed build."""
+    def scn(n):
+        return AoE2DEScenario.from_file(str(scenario_path(c.missions[n - 1], layout.AOE2DE_ROR)))
+    assert scn(2).sections["Options"].ai_map_type == 144                      # Continental
+    trade = scn(7)
+    assert trade.sections["Options"].ai_map_type == 166                       # Small Islands: across the sea
+    assert "github.com/h-strydom/aoe2-de-ror-reimagined/issues" in trade.message_manager.scouts

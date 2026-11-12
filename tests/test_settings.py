@@ -51,15 +51,21 @@ def test_disables_and_view_reach_the_ror_map(tmp_path):
     p1 = _converted(tmp_path, "ascent_of_egypt/02_foraging")[1]
     assert set(p1.disabled_techs) == {101, 102, 103}                    # Tool, Bronze, Iron Age
     assert 12 in p1.disabled_buildings and 68 not in p1.disabled_buildings   # barracks off, granary allowed
-    assert (p1.initial_player_view_x, p1.initial_player_view_y) == (24, 24)
+    # the camera starts over the Town Center (22,18), not AoE DE's view, the map's centre (24,24)
+    assert (p1.initial_player_view_x, p1.initial_player_view_y) == (22, 18)
 
 
 def test_ai_carries_over(tmp_path):
     assassins = _converted(tmp_path, "yamato_empire_of_the_rising_sun/01_the_assassins")
     assert assassins[2].personality == "Immobile AI"                    # AoE1 "ImmobileUnitsAII"
-    troy = _converted(tmp_path, "glory_of_greece/04_the_trojan_war")[2]
-    assert troy.personality == "TrojanWar2 (AoE1)"                      # its build list, as a RoR script
-    assert "; step 1: build TOWN_CENTER x1" in troy.ai_script and "(attack-now)" in troy.ai_script
+    troy = _converted(tmp_path, "glory_of_greece/04_the_trojan_war")
+    # Troy builds: RoR's standard skirmish AI, a level harder (Moderate plays Hard), never resigning
+    assert troy[2].personality == "Standard AI"
+    assert r'(load "default\init")' in troy[2].ai_script and r'(load "default\resign")' not in troy[2].ai_script
+    i = troy[2].ai_script.index("#load-if-defined DIFFICULTY-MODERATE")
+    assert "(defconst diff 4)" in troy[2].ai_script[i:i + 80]
+    # the Greek army (P3, no villagers or town center) keeps its translated AoE1 plan
+    assert troy[3].personality.endswith("(AoE1)")
     trade = _converted(tmp_path, "ascent_of_egypt/07_trade")
     # the Libyans: a passive AoE1 AI never attacks (the Canaanites, P3, now play the reimagined mission's own AI)
     assert trade[4].personality == "PASSIVE (AoE1)" and "(attack-now)" not in trade[4].ai_script
@@ -103,7 +109,8 @@ def test_population_200_where_player_1_can_build(tmp_path):
     from aoe2ed.ai import per
     troy = _converted(tmp_path, "glory_of_greece/04_the_trojan_war")
     assert {pl.population_cap for pl in _active(troy, "glory_of_greece/04_the_trojan_war")} == {200}   # human and AI
-    script = troy[2].ai_script
+    # a passive builder keeps its translated plan, which grows toward the cap
+    script = _converted(tmp_path, "ascent_of_egypt/09_the_river_outpost")[2].ai_script
     assert "grow stage 8/8: villagers" in script
     assert [d for d in per.check(script) if d.severity == "error"] == []
     # Moderate grows over an hour in 8 stages; Standard 3x slower, Hard 2x faster (one copy of the rules per level)

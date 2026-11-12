@@ -23,6 +23,7 @@ from aoe2ed.session import SESSIONS
 from aoe2ed.tools.ai import ai_set
 from aoe2ed.tools.logic import triggers_add
 from aoe2ed.tools.world import diplomacy_set, options_set, player_set
+from AoE2ScenarioParser.datasets.terrains import TerrainId
 
 from . import ai, editions, layout, missions, objectives, progression, victory
 from .aoede import strings
@@ -46,6 +47,21 @@ MAX_ROR_PLAYERS = 8
 NORMAL_STATUS = 2
 AI_START_SIGNAL = 1               # AI Script Goal a mission's claim_base sends to computer players set to wait for it
 BUILDERS = ("Villager", "Town Center")            # AoE DE names: player 1 owning one can build (rules.population)
+# Computer players that build (they start with a villager or town center, and aren't passive) play RoR's standard
+# skirmish AI, a level harder than the game's difficulty: Standard plays Standard, Moderate plays Hard, Hard plays
+# Hardest (the user, 2026-11-12: "standard skirmish AIs of that difficulty"). It never resigns. Army-only, passive
+# and waiting AIs keep their translated AoE1 build list.
+STANDARD_AI = {"name": "Standard AI", "standard": {"plays": {"moderate": "hard", "hard": "hardest",
+                                                             "hardest": "extreme"}}}
+# The standard AI's map type (Options > AI Map Type, RoR map ids read from maps the user saved, 2026-11-12):
+# islands when a computer player can't walk to the human player, which teaches it boats and transports.
+AI_MAP_TYPES = {"islands": "small_islands", "land": "continental"}
+WATER = frozenset(t.value for t in TerrainId.water_terrains())   # RoR terrains no land unit crosses (shallows do)
+# Scouts page: where the project lives and where to report a problem (the user, 2026-11-12).
+REPO = "https://github.com/h-strydom/aoe2-de-ror-reimagined"
+LINKS = (f"RoR-RI is open source: {REPO}\n"
+         f"Found a bug or have an idea? Report it at {REPO}/issues")
+VIEW_RADIUS = 8                   # tiles: the start camera goes to the player's densest group of units
 
 
 @dataclass
@@ -137,14 +153,78 @@ def ror_ai(p, conv: Conversion, debug: bool = False) -> str | ai.Translation | N
     return tr
 
 
+def builds(p) -> bool:
+    """The player starts with a villager or town center."""
+    return any(object_name(u.type).startswith(BUILDERS) for u in p.units)
+
+
+def standard_ai(p, plan, conv: Conversion) -> bool:
+    """Whether a computer player plays RoR's standard skirmish AI (STANDARD_AI) instead of its translated plan."""
+    if not isinstance(plan, ai.Translation) or not builds(p):
+        return False
+    names = f"{p.ai.strategy} {p.ai.personality}".lower()
+    passive = "passive" in names and "aggressive" not in names
+    waits = bool(conv.claim_base and conv.claim_base.get("start_ai"))
+    return not passive and not waits
+
+
+def land_reach(terrain: list[int], width: int, starts: list[tuple[float, float]]) -> set[int]:
+    """Tiles reachable on foot from any of `starts` (8-connected, water blocks)."""
+    seen: set[int] = set()
+    stack = []
+    for x, y in starts:
+        i = min(width - 1, max(0, int(y))) * width + min(width - 1, max(0, int(x)))
+        if i not in seen:
+            seen.add(i)
+            stack.append(i)
+    while stack:
+        i = stack.pop()
+        x, y = i % width, i // width
+        for dx in (-1, 0, 1):
+            for dy in (-1, 0, 1):
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < width and 0 <= ny < width:
+                    j = ny * width + nx
+                    if j not in seen and terrain[j] not in WATER:
+                        seen.add(j)
+                        stack.append(j)
+    return seen
+
+
+def ai_map_type(terrain: list[int], width: int, human, computers) -> str:
+    """Islands when a computer player's units can't walk to the human player's, else land (AI_MAP_TYPES)."""
+    if human is None or not human.units:
+        return AI_MAP_TYPES["land"]
+    reach = land_reach(terrain, width, [(u.x, u.y) for u in human.units])
+    for p in computers:
+        tiles = [min(width - 1, max(0, int(u.y))) * width + min(width - 1, max(0, int(u.x))) for u in p.units]
+        if tiles and not any(t in reach for t in tiles):
+            return AI_MAP_TYPES["islands"]
+    return AI_MAP_TYPES["land"]
+
+
+def start_view(p) -> tuple[int, int] | None:
+    """Where a player's camera starts: over its Town Center (the busiest one), else over its densest group of units.
+    AoE DE's start views are mostly the map's centre, far from the player (the user, 2026-11-12)."""
+    if not p.units:
+        return None
+
+    def crowd(u) -> int:
+        return sum((v.x - u.x) ** 2 + (v.y - u.y) ** 2 <= VIEW_RADIUS ** 2 for v in p.units)
+    tcs = [u for u in p.units if object_name(u.type).startswith("Town Center")]
+    best = max(tcs or p.units, key=crowd)
+    return int(best.x), int(best.y)
+
+
 def player_settings(p) -> dict:
     """player_set fields for a player's disables and starting view."""
     out: dict = {}
     if p.disabled:
         out["disabled_buildings"] = [DISABLE_BUILDINGS[d] for d in p.disabled if d in DISABLE_BUILDINGS]
         out["disabled_techs"] = [DISABLE_TECHS[d] for d in p.disabled if d in DISABLE_TECHS]
-    if p.view:
-        out["initial_player_view_x"], out["initial_player_view_y"] = p.view
+    view = start_view(p) or p.view
+    if view:
+        out["initial_player_view_x"], out["initial_player_view_y"] = view
     return out
 
 
@@ -245,11 +325,14 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         claim = conv.claim_base
         for p in active:
             plan = ror_ai(p, conv, ai_debug)
+            change = custom_ai.get(p.number) or {}
             if plan == "immobile":
                 ai_set(o.handle, p.number, "immobile")
                 res.ai[p.number] = "immobile"
+            elif not change and standard_ai(p, plan, conv):
+                ai_set(o.handle, p.number, STANDARD_AI)
+                res.ai[p.number] = "standard (a level harder)"
             elif plan is not None:
-                change = custom_ai.get(p.number) or {}
                 if not change.get("replace"):
                     if conv.ai_levels:
                         plan.spec["levels"] = conv.ai_levels
@@ -283,10 +366,9 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
 
         for k, v in text.items():
             setattr(s.message_manager, k, v)
+        # The Scouts page: anything the original has there, the upgrade choices (RoR-RIX), and the project's links.
         choices = progression.scouts_text(content, folder)
-        if choices:
-            # The upgrade choices go on the Scouts page, after anything the original has there.
-            s.message_manager.scouts = "\n\n".join(t for t in (text.get("scouts", ""), choices) if t)
+        s.message_manager.scouts = "\n\n".join(t for t in (text.get("scouts", ""), choices, LINKS) if t)
 
         refs = {}
         placed: dict[int, list[tuple[int, int]]] = {}
@@ -317,7 +399,9 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         layer = reimagined_triggers(src, conv, mission, vp.triggers, all_perks) if reimagined else []
         progression.select_objects(layer, placed, groups, unit_hp)
         vp.triggers += layer
-        options_set(o.handle, vp.options())
+        human = next((p for p in active if p.human), None)
+        computers = [p for p in active if not p.human and p.ai is not None]
+        options_set(o.handle, {**vp.options(), "ai_map_type": ai_map_type(terrain, src.width, human, computers)})
         if vp.triggers:
             triggers_add(o.handle, vp.triggers)
         res.victory, res.triggers, res.skipped = vp.mode, len(vp.triggers), vp.skipped
