@@ -465,7 +465,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             res.placed += 1
 
         vp = victory.plan(src, conv, refs, objective_texts, drop=progression.dropped_objectives(content, folder),
-                          names=names)
+                          names=names, lose_needed=not reimagined)
         if extras and vp.mode != "CUSTOM":
             # Only a Custom victory keeps the game from ending when an added player is defeated.
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")

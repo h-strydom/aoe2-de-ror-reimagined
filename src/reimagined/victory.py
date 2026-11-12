@@ -8,6 +8,8 @@ player's individual victory conditions (aoede.scenario.VictoryCondition). AoE2/R
     once -> declare victory for that player. An enemy's conditions (Caesar must die) so become a loss;
   - the human player's conditions also show as objective lines, on screen (the game's to-do list) and in the
     objectives panel, that tick off when met;
+  - an objective that needs one unit (capture it, bring it somewhere) is lost with it: its death defeats the player
+    (Ascent of Egypt 8's Stone Thrower destroyed left the mission unwinnable, playtest 2026-11-12);
   - an enemy's own conditions, a loss, show as well: "Don't let Lower Egypt gather 2000 food." with its count
     (Ascent of Egypt 6: Lower Egypt winning at 2000 food was shown nowhere, the user, 2026-11-12);
   - in custom mode, the global settings (conquest, artifacts, ruins, discoveries, exploration, gold)
@@ -158,6 +160,23 @@ def _counter(name: str, conds: list[dict], player: int, armed: bool) -> tuple[in
     return None
 
 
+UNDYING = ("Artifact", "Ruins", "Flag", "Discovery")    # objects no attack destroys: nothing to lose
+
+
+def _lost(player: int, needed: list[tuple[int, str]], enemies: list[int]) -> list[dict]:
+    """Defeat when a unit an objective needs is destroyed: an enemy wins (the player is defeated with it), or with
+    none, the player's own Declare Victory unchecked (a defeat; unverified in RoR)."""
+    out = []
+    for ref, name in needed:
+        lose = ([{"type": "declare_victory", "source_player": enemies[0], "enabled": True}] if enemies
+                else [{"type": "declare_victory", "source_player": player, "enabled": False}])
+        out.append({"name": f"P{player} Loss: the {name} is destroyed",
+                    "conditions": [{"type": "destroy_object", "unit_object": ref}],
+                    "effects": [{"type": "display_instructions", "display_time": 10,
+                                 "message": f"The {name} has been destroyed. The mission is lost."}, *lose]})
+    return out
+
+
 def _threats(player: int, name: str, groups: list[tuple[str, list[int]]],
              conds: dict[int, dict]) -> list[dict]:
     """An enemy's own victory conditions as the human player's objective lines, below their own: "Don't let Lower
@@ -183,11 +202,12 @@ def _threats(player: int, name: str, groups: list[tuple[str, list[int]]],
 
 def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
          objective_texts: dict[int, list[tuple[str, list[int]]]], drop: set[int] = frozenset(),
-         names: dict[int, str] | None = None) -> VictoryPlan:
+         names: dict[int, str] | None = None, lose_needed: bool = True) -> VictoryPlan:
     """Options and triggers for a converted scenario. refs: AoE DE unit id -> RoR unit reference id.
     objective_texts: per player, (line, indexes of the conditions it covers) per to-do line (objectives.lines;
     shown for human players; an enemy's as a loss). drop: players whose own victory conditions are left out.
-    names: player names the game shows (for an enemy's lines)."""
+    names: player names the game shows (for an enemy's lines). lose_needed: an objective's unit destroyed is a
+    defeat (_lost); RoR-RIX leaves it to its own design (Egypt 8 lets you train another Stone Thrower)."""
     gv = src.global_victory
     mode = VICTORY_MODES[gv["mode"]]
     out = VictoryPlan(ROR_VICTORY[mode])
@@ -202,8 +222,9 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
         return [{"type": "declare_victory", "source_player": p, "enabled": True}]
 
     humans = [q.number for q in active if q.human]
+    types = {u.id: u.type for u in [*src.gaia_units, *(u for q in src.players for u in q.units)]}
     for p in active:
-        conds, arms, ticks, armed_ix, plain = [], [], {}, set(), {}
+        conds, arms, ticks, armed_ix, plain, needed = [], [], {}, set(), {}, []
         for i, c in enumerate([] if p.number in drop else p.victory):
             cond, problem = _condition(c, p.number, src, conv, refs, start_counts)
             if problem:
@@ -214,6 +235,11 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
             else:
                 arm = None
             conds.append(cond)
+            uid = c.target if c.type == "capture" else c.source if c.type in ("bring_to_area", "bring_to_object") else -1
+            name = object_name(types.get(uid, -1)) if uid >= 0 else ""
+            if p.human and uid >= 0 and refs.get(uid) is not None and not name.startswith(UNDYING) \
+                    and refs[uid] not in [r for r, _ in needed]:
+                needed.append((refs[uid], name))
             if not arm:
                 plain[i] = cond
             met = f"P{p.number} Objective {i + 1} met"
@@ -250,7 +276,10 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
                                for h in humans):
             out.triggers += _threats(p.number, (names or {}).get(p.number) or p.name,
                                      objective_texts.get(p.number) or [], plain)
-        enemies = [q.number for q in active if src.diplomacy[p.number - 1][q.number - 1] == ENEMY]
+        # Not the player itself: the scenario's own row holds a filler stance (3 in many missions).
+        enemies = [q.number for q in active
+                   if q.number != p.number and src.diplomacy[p.number - 1][q.number - 1] == ENEMY]
+        out.triggers += _lost(p.number, needed, enemies) if lose_needed else []
         conquest = [{"type": "player_defeated", "source_player": q} for q in enemies]
         mine = [dict(g, source_player=p.number) for g in globals_]
         if custom and all_custom:

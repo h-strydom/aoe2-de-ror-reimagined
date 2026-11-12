@@ -191,3 +191,15 @@ def test_neutral_players_fight_or_answer_attacks():
     assert "(set-stance 1 enemy)" in holy.player_manager.players[2].ai_script
     signals = {t.name: t.conditions[0].ai_signal for t in holy.trigger_manager.triggers if "provoked" in t.name}
     assert signals == {"P2 provoked": 102, "P3 provoked": 103}
+
+
+def test_losing_the_unit_an_objective_needs_is_a_defeat():
+    """Religion's Stone Thrower destroyed left the mission unwinnable (playtest 2026-11-12): in RoR-RI its death
+    makes the Libyans win. RoR-RIX lets you train another, so it has no such loss. Reads the committed build."""
+    m = {x.key: x for c in layout.campaigns() for x in c.missions}["ascent_of_egypt/08_religion"]
+    ri = AoE2DEScenario.from_file(str(scenario_path(m, layout.AOE2DE_ROR)))
+    loss = next(t for t in ri.trigger_manager.triggers if t.name == "P1 Loss: the Stone Thrower is destroyed")
+    win = loss.effects[-1]
+    assert (win.source_player, win.enabled) == (2, 1)                      # the Libyans win, never you
+    rix = AoE2DEScenario.from_file(str(scenario_path(m, layout.AOE2DE_ROR_X)))
+    assert not any("Loss: the" in t.name for t in rix.trigger_manager.triggers)

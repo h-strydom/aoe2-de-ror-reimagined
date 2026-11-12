@@ -34,6 +34,10 @@ not published yet.
   - I Shall Return and The Canyon of Death: the Elamite army and the Mononobe are at war with you;
   - Holy Man, The Great Hunt and The Siege of Athens: the Sumerians and Akkadians, the Elamite river town and the
     Thebans stay neutral until you attack them, then go to war with a message.
+- Losing the unit an objective needs is a defeat, with a message: Religion's Stone Thrower, Hannibal and his
+  Armored Elephants (Crossing the Alps), Scipio (Zama) and the War Chests (Raid on Babylon, Kadesh, Mylae, Capture).
+  Before, the mission just couldn't be won any more.
+- Conquest victories no longer count you among your own enemies (a stance the scenarios store for yourself).
 - The mission breakdown (docs/audits/missions.md): every mission's players, civs, stances, AI and tech.
 - This changelog follows the mod uploads.
 
