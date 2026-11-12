@@ -1,6 +1,6 @@
 # Ascent of Egypt audit: tech and AI per mission
 
-Written 2026-11-12, against the build in commit 8be4ed5.
+Written 2026-11-12, against the build in commit 8be4ed5. Applied the same day: walls and towers off in RI 4 and 6, Skirmish at war, Trade's Libyans at war and its Canaanites turning hostile at 20 minutes (conversion.yaml).
 
 How this was established:
 - Your techs: the converted scenarios' own disable lists (what the game gets), checked against RoR's Egyptian tech

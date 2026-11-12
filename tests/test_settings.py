@@ -73,8 +73,10 @@ def test_ai_carries_over(tmp_path):
     # the Greek army (P3, no villagers or town center) keeps its translated AoE1 plan
     assert troy[3].personality.endswith("(AoE1)")
     trade = _converted(tmp_path, "ascent_of_egypt/07_trade")
-    # the Libyans: a passive AoE1 AI never attacks (the Canaanites, P3, now play the reimagined mission's own AI)
-    assert trade[4].personality == "PASSIVE (AoE1)" and "(attack-now)" not in trade[4].ai_script
+    # a passive AoE1 AI never attacks unless conversion.yaml says so (the Canaanites, P3, now play the reimagined mission's own AI)
+    assert trade[4].personality == "PASSIVE (AoE1)" and "(attack-now)" in trade[4].ai_script   # told to (audit)
+    nubians = _converted(tmp_path, "ascent_of_egypt/09_the_river_outpost")[2]
+    assert nubians.personality == "PASSIVE (AoE1)" and "(attack-now)" not in nubians.ai_script
     assert trade[3].personality == "Canaanites"
 
 

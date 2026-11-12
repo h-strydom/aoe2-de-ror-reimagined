@@ -5,7 +5,10 @@
 #   objects:  AoE DE object id  -> RoR object name, or `drop` to leave it out
 #             {ror: NAME, forest: true} marks a forest tree (see rules.forest_terrains)
 #   rules:    behaviour that isn't a one-to-one swap
-#   missions: per-mission overrides, same shape as terrain/objects; they win over the global entries
+#   missions: per-mission overrides, same shape as terrain/objects; they win over the global entries. Also, where
+#     RoR plays AoE1's settings differently: diplomacy ([[a, b, ALLY|NEUTRAL|ENEMY]], both ways), disable
+#     ({player: [ror_tech_tree.yaml names]}) and attacks ({player: {hostile_at: seconds, message: text}}: a passive
+#     AoE1 AI attacks; with hostile_at it turns on the human players then). See docs/audits/.
 #
 # Every terrain and object the 61 campaign maps use is listed, with its AoE DE name and how often it
 # appears. Names on the right are RoR names (aoe-agent-editor's RoR tables; `lookup("...", game="ror")`
@@ -360,10 +363,25 @@ missions:
   # with that town and 8 tiles around it explored, so their first attacks know where to go instead of waiting to
   # stumble on it. Only that area: no other map knowledge. Tutorials, town-less starts and starts spread over
   # most of the map (Pyrrhus, Alexander, Alesia, Zenobia, Odaenathus) are left as they were.
+  # Walls and towers (the Granary's Small Wall and Watch Tower) wait for Trade, as in RoR-RIX (the user, 2026-11-12).
+  ascent_of_egypt/04_the_dawn_of_a_new_age:
+    disable: {1: [small_wall, small_gate, watch_tower]}
+  # Skirmish: you and the Raiders start neutral, and RoR's neutral players never fight: "Defeat the Egyptian
+  # Raiders" had no battle (the Egypt audit, 2026-11-12).
+  ascent_of_egypt/05_skirmish:
+    diplomacy: [[1, 2, ENEMY]]
   ascent_of_egypt/06_farming:                  # Lower Egypt knows where Upper Egypt is (its attacks)
     show_base: [[22, 48, 44, 68]]
+    disable: {1: [small_wall, small_gate, watch_tower]}
+  # Trade: your partners "could become jealous ... and attack" (the instructions). AoE1's AIs changed stance in game;
+  # in RoR the neutral, passive Libyans and Canaanites sat still. The Libyan raiders (5 Scout Ships) are enemies
+  # from the start, as the hints' raiders; the Canaanites turn on you at 20 minutes. The Minoans stay your ally.
   ascent_of_egypt/07_trade:                    # the Minoans and Canaanites know where you are
     show_base: [[64, 0, 95, 30]]
+    diplomacy: [[1, 4, ENEMY]]
+    attacks:
+      3: {hostile_at: 1200, message: "The Canaanites have grown jealous of Egypt's trade. They have closed their Dock to you and declared war!"}
+      4: {}
   ascent_of_egypt/08_religion:
     show_base: [[33, 16, 71, 70]]
   ascent_of_egypt/09_the_river_outpost:

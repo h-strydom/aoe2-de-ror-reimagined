@@ -24,6 +24,11 @@ not published yet.
   Egypt gather 2000 food", which used to end the mission without warning.
 - If you start neutral toward a player that is at war with you, you're at war with them too, because RoR's neutral
   units don't fight back. Affects Farming, The Trojan War, Xenophon's March and The Assassins.
+- Ascent of Egypt, from the tech and AI audit (docs/audits/ascent_of_egypt.md):
+  - no Granary walls or towers in The Dawn of a New Age and Farming: they open with Trade;
+  - Skirmish: you and the Egyptian Raiders are at war, so they fight;
+  - Trade: the Libyan raiders are enemies from the start and hunt with their Scout Ships, and the Canaanites turn
+    on you at 20 minutes with a warning. The Minoans stay your ally.
 - This changelog follows the mod uploads.
 
 ### RoR-RIX (Xtreme), not published yet

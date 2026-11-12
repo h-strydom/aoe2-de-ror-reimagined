@@ -165,3 +165,13 @@ def test_map_type_and_scouts_links(c):
     lines = [t.short_description for t in farming.trigger_manager.triggers if t.display_as_objective]
     assert "- Don't let Lower Egypt gather 2000 food (<P2 Threat 1>/2000)." in lines
     assert farming.player_manager.players[1].diplomacy[1] == 3
+    # the Egypt audit (2026-11-12): no Granary walls or towers before Trade; Skirmish's Raiders and Trade's Libyan
+    # raiders are enemies, and Trade's Canaanites turn on you at 20 minutes
+    for n in (4, 6):
+        assert {11, 16} <= set(scn(n).player_manager.players[1].disabled_techs)
+    assert 16 not in scn(7).player_manager.players[1].disabled_techs
+    assert scn(5).player_manager.players[1].diplomacy[1] == 3
+    you = trade.player_manager.players[1]
+    assert (you.diplomacy[1], you.diplomacy[2], you.diplomacy[3]) == (0, 1, 3)    # Minoans, Canaanites, Libyans
+    hostile = next(t for t in trade.trigger_manager.triggers if t.name == "P3 turns hostile")
+    assert hostile.conditions[0].timer == 1200 and len(hostile.effects) == 3

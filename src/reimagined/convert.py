@@ -149,8 +149,18 @@ def ror_ai(p, conv: Conversion, debug: bool = False) -> str | ai.Translation | N
     sns = missions.personality(p.ai.personality_text) if p.ai.personality_text else missions.default_personality()
     label = p.ai.strategy or p.ai.personality or "Default"
     tr = ai.translate(p.ai, sns, conv, f"{label} (AoE1)")
-    if "passive" in names and "aggressive" not in names:
+    if "passive" in names and "aggressive" not in names and p.number not in conv.attacks:
         tr.spec.pop("attack", None)
+    if p.number in conv.attacks and "attack" not in tr.spec:
+        # A personality without attack groups (AoE1's PASSIVE) told to attack: its own timing, and its boats too.
+        tr.spec["attack"] = {"first": max(sns.get("SNInitialAttackDelay", ai.DEFAULT_FIRST_ATTACK), 1),
+                             "every": max(sns.get("SNAttackSeparationTime", ai.DEFAULT_ATTACK_EVERY), 1),
+                             "min_group": 2, "max_group": 12,
+                             "naval": sns.get("SNNumberBoatAttackGroups", 0) > 0}
+    if p.number in conv.attacks:
+        # Small groups: Trade's Libyan raiders have 5 Scout Ships against their personality's boat groups of 6.
+        tr.spec["attack"]["min_group"] = 2
+        tr.spec.setdefault("strategic_numbers", {})["sn-minimum-boat-attack-group-size"] = 2
     tr.spec["army"] = civ_army(p, tr.spec)
     if debug:
         tr.spec["debug"] = True
@@ -167,7 +177,7 @@ def standard_ai(p, plan, conv: Conversion) -> dict | None:
     if not isinstance(plan, ai.Translation) or not builds(p):
         return None
     names = f"{p.ai.strategy} {p.ai.personality}".lower()
-    passive = "passive" in names and "aggressive" not in names
+    passive = "passive" in names and "aggressive" not in names and p.number not in conv.attacks
     waits = bool(conv.claim_base and conv.claim_base.get("start_ai"))
     if passive or waits:
         return None
@@ -223,12 +233,34 @@ def start_view(p) -> tuple[int, int] | None:
     return int(best.x), int(best.y)
 
 
-def player_settings(p) -> dict:
-    """player_set fields for a player's disables and starting view."""
+def turn_hostile(conv: Conversion, humans: list[int], stances: dict) -> list[dict]:
+    """Triggers for players that turn on you (conversion.yaml `attacks: {3: {hostile_at: 1200, message: ...}}`):
+    AoE1's AIs change their stance in game (Trade's partners "could become jealous ... and attack"), RoR's scripts
+    can't, so a timer makes them enemies of the human players. Not where the mission's own stances say otherwise."""
+    out = []
+    for n, a in conv.attacks.items():
+        if not a.get("hostile_at") or any((n, h) in stances and (n, h) not in conv.diplomacy for h in humans):
+            continue
+        effects = [{"type": "change_diplomacy", "source_player": x, "target_player": y, "diplomacy": 3}
+                   for h in humans for x, y in ((n, h), (h, n))]
+        if a.get("message"):
+            effects.append({"type": "display_instructions", "display_time": 10, "message": a["message"]})
+        out.append({"name": f"P{n} turns hostile", "conditions": [{"type": "timer", "timer": int(a["hostile_at"])}],
+                    "effects": effects})
+    return out
+
+
+def player_settings(p, disable: list[str] = ()) -> dict:
+    """player_set fields for a player's disables (the original's, plus `disable`: ror_tech_tree.yaml names) and
+    starting view."""
     out: dict = {}
-    if p.disabled:
+    if p.disabled or disable:
+        tree = progression.tech_tree()
         out["disabled_buildings"] = [DISABLE_BUILDINGS[d] for d in p.disabled if d in DISABLE_BUILDINGS]
         out["disabled_techs"] = [DISABLE_TECHS[d] for d in p.disabled if d in DISABLE_TECHS]
+        for name in disable:
+            out["disabled_buildings"] += tree[name].get("objects", [])
+            out["disabled_techs"] += tree[name].get("techs", [])
     view = start_view(p) or p.view
     if view:
         out["initial_player_view_x"], out["initial_player_view_y"] = view
@@ -307,7 +339,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         active = [dataclasses.replace(p, starting_age=own_start[p.number].get("starting_age", p.starting_age),
                                       resources={**p.resources, **own_start[p.number].get("resources", {})})
                   if p.number in own_start else p for p in active]
-        stances = progression.diplomacy(content, folder)
+        stances = {**conv.diplomacy, **progression.diplomacy(content, folder)}
 
         humans = {p.number for p in active if p.human}
 
@@ -335,7 +367,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                 "population_cap": population["cap"] if population else int(r["pop_cap"]),
                 "tribe_name": names.get(p.number, p.name),
                 "allied_victory": p.allied_victory,
-                **player_settings(p),
+                **player_settings(p, conv.disable.get(p.number, [])),
             })
         claim = conv.claim_base
         for p in active:
@@ -412,6 +444,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         if extras and vp.mode != "CUSTOM":
             # Only a Custom victory keeps the game from ending when an added player is defeated.
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")
+        vp.triggers += turn_hostile(conv, [p.number for p in active if p.human], stances)
         layer = reimagined_triggers(src, conv, mission, vp.triggers, all_perks) if reimagined else []
         progression.select_objects(layer, placed, groups, unit_hp)
         vp.triggers += layer

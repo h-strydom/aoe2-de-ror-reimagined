@@ -22,7 +22,8 @@ DROP = "drop"
 TOP_KEYS = {"terrain", "objects", "rules", "missions"}
 RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs", "ai_levels", "population"}
 POPULATION_KEYS = {"cap", "grow_minutes"}
-MISSION_KEYS = {"terrain", "objects", "reveal", "show_base", "claim_base"}
+MISSION_KEYS = {"terrain", "objects", "reveal", "show_base", "claim_base", "diplomacy", "disable", "attacks"}
+STANCES = {"ALLY", "NEUTRAL", "ENEMY"}
 CLAIM_KEYS = {"area", "player", "start_ai"}
 
 
@@ -51,6 +52,10 @@ class Conversion:
     reveal: tuple[tuple[int, int, int, int], ...] = ()    # this mission: areas player 1 starts with explored
     show_base: tuple[tuple[int, int, int, int], ...] = ()  # this mission: areas player 1's enemies start knowing
     claim_base: dict | None = None                  # this mission: {area, player, start_ai}
+    # This mission's fixes where RoR plays AoE1's settings differently (the Egypt audit, 2026-11-12):
+    diplomacy: dict = field(default_factory=dict)   # {(a, b): stance}, both ways
+    disable: dict = field(default_factory=dict)     # {player: [ror_tech_tree.yaml names]} switched off
+    attacks: dict = field(default_factory=dict)     # {player: {hostile_at, message} or {}}: a passive AI attacks
     population: dict | None = None                  # {cap, grow_minutes}: missions where player 1 can build
 
     def for_mission(self, key: str) -> Conversion:
@@ -60,7 +65,8 @@ class Conversion:
             return self
         return replace(self, terrain={**self.terrain, **ov["terrain"]}, objects={**self.objects, **ov["objects"]},
                        reveal=ov.get("reveal", ()), show_base=ov.get("show_base", ()),
-                       claim_base=ov.get("claim_base"))
+                       claim_base=ov.get("claim_base"), diplomacy=ov.get("diplomacy", {}),
+                       disable=ov.get("disable", {}), attacks=ov.get("attacks", {}))
 
     def place(self, aoede_id: int, ror_terrain: int) -> int | None:
         """The RoR object for an AoE DE object standing on `ror_terrain`, or None if it's dropped.
@@ -166,7 +172,21 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
                          "start_ai": bool(claim.get("start_ai", False))}
             else:
                 claim = None
-        missions[key] = {"terrain": t, "objects": o, **areas, "claim_base": claim}
+        dip = {}
+        for i, d in enumerate(ov.get("diplomacy") or []):
+            if not (isinstance(d, list) and len(d) == 3 and str(d[2]).upper() in STANCES):
+                problems.append(f"missions.{key}.diplomacy[{i}]: [a, b, ALLY|NEUTRAL|ENEMY], got {d}")
+                continue
+            dip[(int(d[0]), int(d[1]))] = dip[(int(d[1]), int(d[0]))] = str(d[2]).upper()
+        disable = {int(k): list(v) for k, v in (ov.get("disable") or {}).items()}
+        attacks = {}
+        for k, v in (ov.get("attacks") or {}).items():
+            v = v or {}
+            if set(v) - {"hostile_at", "message"}:
+                problems.append(f"missions.{key}.attacks.{k}: {{hostile_at: seconds, message: text}}, got {v}")
+            attacks[int(k)] = v
+        missions[key] = {"terrain": t, "objects": o, **areas, "claim_base": claim, "diplomacy": dip,
+                         "disable": disable, "attacks": attacks}
 
     population = rules.get("population")
     if population is not None:
