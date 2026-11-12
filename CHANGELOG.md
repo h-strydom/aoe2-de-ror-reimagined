@@ -39,6 +39,7 @@ not published yet.
   Before, the mission just couldn't be won any more.
 - Conquest victories no longer count you among your own enemies (a stance the scenarios store for yourself).
 - The mission breakdown (docs/audits/missions.md): every mission's players, civs, stances, AI and tech.
+- In the repository: the tests run before every push (pre-push hook in `.githooks/`).
 - This changelog follows the mod uploads.
 
 ### RoR-RIX (Xtreme), not published yet

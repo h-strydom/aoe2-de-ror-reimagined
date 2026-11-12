@@ -10,6 +10,10 @@
 - **Fix the toolkit, not the output.** If aoe-agent-editor can't do something this project needs, the
   fix goes into aoe-agent-editor, not into a workaround here.
 
+## Tests
+- **The tests run before every push**, from the pre-push hook in `.githooks/`; a failing suite stops the push.
+  Enable it once per clone: `git config core.hooksPath .githooks`.
+
 ## Game files
 - **Original AoE DE files are never committed:** campaign files, scenarios, data files, string tables.
   `reimagined setup` copies them into `aoe1de/` from each person's own install, and `.gitignore`
