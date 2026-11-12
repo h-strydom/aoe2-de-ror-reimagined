@@ -64,6 +64,12 @@ def test_ai_carries_over(tmp_path):
     assert r'(load "default\init")' in troy[2].ai_script and r'(load "default\resign")' not in troy[2].ai_script
     i = troy[2].ai_script.index("#load-if-defined DIFFICULTY-MODERATE")
     assert "(defconst diff 4)" in troy[2].ai_script[i:i + 80]
+    # its first attack waits as long as the AoE1 AI's did, though Hard plays Hardest (0)
+    j = troy[2].ai_script.index("#load-if-defined DIFFICULTY-HARD\n")
+    assert "(defconst min-attack-time 0)" not in troy[2].ai_script[j:j + 400]
+    # Farming's Lower Egypt races you to 2000 food: it keeps its AoE1 plan (the standard AI stockpiles)
+    ri = convert_mission(MISSIONS["ascent_of_egypt/06_farming"], load(), tmp_path, reimagined=False).out
+    assert AoE2DEScenario.from_file(str(ri)).player_manager.players[2].personality.endswith("(AoE1)")
     # the Greek army (P3, no villagers or town center) keeps its translated AoE1 plan
     assert troy[3].personality.endswith("(AoE1)")
     trade = _converted(tmp_path, "ascent_of_egypt/07_trade")

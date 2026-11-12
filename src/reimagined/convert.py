@@ -50,12 +50,16 @@ BUILDERS = ("Villager", "Town Center")            # AoE DE names: player 1 ownin
 # Computer players that build (they start with a villager or town center, and aren't passive) play RoR's standard
 # skirmish AI, a level harder than the game's difficulty: Standard plays Standard, Moderate plays Hard, Hard plays
 # Hardest (the user, 2026-11-12: "standard skirmish AIs of that difficulty"). It never resigns. Army-only, passive
-# and waiting AIs keep their translated AoE1 build list.
+# and waiting AIs keep their translated AoE1 build list, as do racing ones (their own victory is a resource goal:
+# the standard AI stockpiles, so Lower Egypt reached Farming's 2000 food at 24 minutes, the user, 2026-11-12).
+# Its first attack waits as long as the AoE1 AI's did (SNInitialAttackDelay; Hard and Hardest attack at once).
 STANDARD_AI = {"name": "Standard AI", "standard": {"plays": {"moderate": "hard", "hard": "hardest",
                                                              "hardest": "extreme"}}}
-# The standard AI's map type (Options > AI Map Type, RoR map ids read from maps the user saved, 2026-11-12):
-# islands when a computer player can't walk to the human player, which teaches it boats and transports.
-AI_MAP_TYPES = {"islands": "small_islands", "land": "continental"}
+# The standard AI's map type (Options > AI Map Type): islands when a computer player can't walk to the human player,
+# which teaches it boats and transports; else Highland, a land map. Continental told it to use the water: it built a
+# Dock and galley-rushed Farming's river (the user, 2026-11-12; ai/default/init.per). On Highland only many fish
+# (over 5 ocean or 25 shore fish) still do, which is then right.
+AI_MAP_TYPES = {"islands": "small_islands", "land": "highland"}
 WATER = frozenset(t.value for t in TerrainId.water_terrains())   # RoR terrains no land unit crosses (shallows do)
 # Scouts page: where the project lives and where to report a problem (the user, 2026-11-12).
 REPO = "https://github.com/h-strydom/aoe2-de-ror-reimagined"
@@ -158,14 +162,19 @@ def builds(p) -> bool:
     return any(object_name(u.type).startswith(BUILDERS) for u in p.units)
 
 
-def standard_ai(p, plan, conv: Conversion) -> bool:
-    """Whether a computer player plays RoR's standard skirmish AI (STANDARD_AI) instead of its translated plan."""
+def standard_ai(p, plan, conv: Conversion) -> dict | None:
+    """RoR's standard skirmish AI (STANDARD_AI) for a computer player instead of its translated plan, or None."""
     if not isinstance(plan, ai.Translation) or not builds(p):
-        return False
+        return None
+    if any(c.type == "attribute" for c in p.victory):
+        return None
     names = f"{p.ai.strategy} {p.ai.personality}".lower()
     passive = "passive" in names and "aggressive" not in names
     waits = bool(conv.claim_base and conv.claim_base.get("start_ai"))
-    return not passive and not waits
+    if passive or waits:
+        return None
+    first = (plan.spec.get("attack") or {}).get("first", 0)
+    return {**STANDARD_AI, "standard": {**STANDARD_AI["standard"], "attack_after": int(first)}}
 
 
 def land_reach(terrain: list[int], width: int, starts: list[tuple[float, float]]) -> set[int]:
@@ -302,8 +311,16 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                   if p.number in own_start else p for p in active]
         stances = progression.diplomacy(content, folder)
 
+        humans = {p.number for p in active if p.human}
+
         def stance(a: int, b: int) -> str:
-            return stances.get((a, b)) or DIPLOMACY.get(src.diplomacy[a - 1][b - 1], "ENEMY")
+            own = stances.get((a, b)) or DIPLOMACY.get(src.diplomacy[a - 1][b - 1], "ENEMY")
+            back = stances.get((b, a)) or DIPLOMACY.get(src.diplomacy[b - 1][a - 1], "ENEMY")
+            # A human neutral toward a player at war with them is at war too: RoR's neutral units don't fight back on
+            # their own (Ascent of Egypt 6, Lower Egypt attacking a neutral you; the user, 2026-11-12).
+            if a in humans and own == "NEUTRAL" and back == "ENEMY":
+                return "ENEMY"
+            return own
         extras = progression.extra_players(content, folder)
         custom_ai = progression.mission_ai(content, folder)
         s.player_manager.active_players = len(active) + len(extras)
@@ -329,8 +346,8 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             if plan == "immobile":
                 ai_set(o.handle, p.number, "immobile")
                 res.ai[p.number] = "immobile"
-            elif not change and standard_ai(p, plan, conv):
-                ai_set(o.handle, p.number, STANDARD_AI)
+            elif not change and (std := standard_ai(p, plan, conv)):
+                ai_set(o.handle, p.number, std)
                 res.ai[p.number] = "standard (a level harder)"
             elif plan is not None:
                 if not change.get("replace"):
@@ -392,7 +409,8 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
                     groups.setdefault(g, (mu["player"], []))[1].append(ref)
             res.placed += 1
 
-        vp = victory.plan(src, conv, refs, objective_texts, drop=progression.dropped_objectives(content, folder))
+        vp = victory.plan(src, conv, refs, objective_texts, drop=progression.dropped_objectives(content, folder),
+                          names=names)
         if extras and vp.mode != "CUSTOM":
             # Only a Custom victory keeps the game from ending when an added player is defeated.
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")

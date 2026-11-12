@@ -156,7 +156,12 @@ def test_map_type_and_scouts_links(c):
     (the user, 2026-11-12). Reads the committed build."""
     def scn(n):
         return AoE2DEScenario.from_file(str(scenario_path(c.missions[n - 1], layout.AOE2DE_ROR)))
-    assert scn(2).sections["Options"].ai_map_type == 144                      # Continental
+    assert scn(2).sections["Options"].ai_map_type == 148                      # Highland: no navy on a land map
     trade = scn(7)
     assert trade.sections["Options"].ai_map_type == 166                       # Small Islands: across the sea
     assert "github.com/h-strydom/aoe2-de-ror-reimagined/issues" in trade.message_manager.scouts
+    # Farming: Lower Egypt wins at 2000 food, shown as a line with its count; you're at war with them, not neutral
+    farming = scn(6)
+    lines = [t.short_description for t in farming.trigger_manager.triggers if t.display_as_objective]
+    assert "- Don't let Lower Egypt gather 2000 food (<P2 Threat 1>/2000)." in lines
+    assert farming.player_manager.players[1].diplomacy[1] == 3

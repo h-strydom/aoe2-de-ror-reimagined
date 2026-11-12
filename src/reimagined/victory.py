@@ -8,6 +8,8 @@ player's individual victory conditions (aoede.scenario.VictoryCondition). AoE2/R
     once -> declare victory for that player. An enemy's conditions (Caesar must die) so become a loss;
   - the human player's conditions also show as objective lines, on screen (the game's to-do list) and in the
     objectives panel, that tick off when met;
+  - an enemy's own conditions, a loss, show as well: "Don't let Lower Egypt gather 2000 food." with its count
+    (Ascent of Egypt 6: Lower Egypt winning at 2000 food was shown nowhere, the user, 2026-11-12);
   - in custom mode, the global settings (conquest, artifacts, ruins, discoveries, exploration, gold)
     are extra ways to win; with "all custom conditions required" they join the victory trigger instead.
 
@@ -28,6 +30,7 @@ from dataclasses import dataclass, field
 from .aoede.names import object_name
 from .aoede.scenario import VICTORY_MODES, Scenario, VictoryCondition
 from .conversion import Conversion
+from .objectives import the
 
 ROR_VICTORY = {"standard": "STANDARD", "conquest": "CONQUEST", "score": "SCORE", "time": "TIME_LIMIT",
                "custom": "CUSTOM"}
@@ -155,11 +158,36 @@ def _counter(name: str, conds: list[dict], player: int, armed: bool) -> tuple[in
     return None
 
 
+def _threats(player: int, name: str, groups: list[tuple[str, list[int]]],
+             conds: dict[int, dict]) -> list[dict]:
+    """An enemy's own victory conditions as the human player's objective lines, below their own: "Don't let Lower
+    Egypt gather 2000 food (<P2 Threat 1>/2000)." Only lines with a plain condition each (armed ones wait unseen)."""
+    out = []
+    for order, (text, indexes) in enumerate(groups):
+        tick = [conds[i] for i in indexes if i in conds]
+        if not tick or len(tick) < len(indexes):
+            continue
+        line = f"Don't let {the(name)} {text[0].lower()}{text[1:]}"
+        tname = f"P{player} Threat {order + 1}"
+        counter = _counter(tname, tick, player, armed=False)
+        short = line
+        if counter:
+            total, triggers = counter
+            out += triggers
+            short = f"{line.removesuffix('.')} (<{tname}>/{total})."
+        out.append({"name": tname, "display_as_objective": True, "display_on_screen": True,
+                    "description": f"- {line}", "short_description": f"- {short}", "description_order": 0,
+                    "conditions": tick})
+    return out
+
+
 def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
-         objective_texts: dict[int, list[tuple[str, list[int]]]], drop: set[int] = frozenset()) -> VictoryPlan:
+         objective_texts: dict[int, list[tuple[str, list[int]]]], drop: set[int] = frozenset(),
+         names: dict[int, str] | None = None) -> VictoryPlan:
     """Options and triggers for a converted scenario. refs: AoE DE unit id -> RoR unit reference id.
     objective_texts: per player, (line, indexes of the conditions it covers) per to-do line (objectives.lines;
-    shown for human players). drop: players whose own victory conditions are left out."""
+    shown for human players; an enemy's as a loss). drop: players whose own victory conditions are left out.
+    names: player names the game shows (for an enemy's lines)."""
     gv = src.global_victory
     mode = VICTORY_MODES[gv["mode"]]
     out = VictoryPlan(ROR_VICTORY[mode])
@@ -173,8 +201,9 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
     def win(p: int) -> list[dict]:
         return [{"type": "declare_victory", "source_player": p, "enabled": True}]
 
+    humans = [q.number for q in active if q.human]
     for p in active:
-        conds, arms, ticks, armed_ix = [], [], {}, set()
+        conds, arms, ticks, armed_ix, plain = [], [], {}, set(), {}
         for i, c in enumerate([] if p.number in drop else p.victory):
             cond, problem = _condition(c, p.number, src, conv, refs, start_counts)
             if problem:
@@ -185,6 +214,8 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
             else:
                 arm = None
             conds.append(cond)
+            if not arm:
+                plain[i] = cond
             met = f"P{p.number} Objective {i + 1} met"
             if arm:
                 arms.append((arm, met if p.human else None))
@@ -215,6 +246,10 @@ def plan(src: Scenario, conv: Conversion, refs: dict[int, int],
             out.triggers.append({"name": name, "display_as_objective": True, "display_on_screen": True,
                                  "description": f"+ {text}", "short_description": f"+ {short}",
                                  "description_order": len(shown) - order, "conditions": tick})
+        if not p.human and any(ENEMY in (src.diplomacy[h - 1][p.number - 1], src.diplomacy[p.number - 1][h - 1])
+                               for h in humans):
+            out.triggers += _threats(p.number, (names or {}).get(p.number) or p.name,
+                                     objective_texts.get(p.number) or [], plain)
         enemies = [q.number for q in active if src.diplomacy[p.number - 1][q.number - 1] == ENEMY]
         conquest = [{"type": "player_defeated", "source_player": q} for q in enemies]
         mine = [dict(g, source_player=p.number) for g in globals_]
