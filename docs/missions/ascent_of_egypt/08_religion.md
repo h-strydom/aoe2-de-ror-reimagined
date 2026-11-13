@@ -25,8 +25,9 @@ See `docs/audits/missions.md`, Ascent of Egypt 8.
 - Libyans: everything in their ages.
 
 ## 5. Mission functions
-- The Libyans' Stone Thrower can't move (speed 0 for their Stone Throwers), so it stays at their base and never
-  joins an attack. Once you convert it, it's yours and moves normally.
+- The Libyans' Stone Thrower can't move: speed 0 on that one unit (conversion.yaml `freeze`). It stays at their base
+  and never joins an attack. When you capture it, a trigger gives it its speed back (0.66, from RoR's data), so you
+  can walk it home.
 - Losing the Stone Thrower is a defeat (the converter's rule for units an objective needs).
 
 ## 6. AI intentions
@@ -35,10 +36,11 @@ See `docs/audits/missions.md`, Ascent of Egypt 8.
 - **Plays like:** a steady neighbour that builds up normally and pokes at you, while its Stone Thrower anchors its
   base.
 - **Population:** Standard 50, Moderate 100, Hard 150.
-- **Economy:** a normal build-up: farms, wood, some gold.
-- **Army:** Short Swordsmen at the core, with Bowmen and a few Chariots (Egyptian chariots get bonus hit points).
-  The Stone Thrower stays home.
-- **Upgrades:** balanced.
+- **Economy:** a normal build-up on food and wood: there's very little gold on the map (50% food, 42% wood, 3% gold,
+  5% stone).
+- **Army:** units that cost no gold: Axemen at the core, with Bowmen and a few Scouts. The Stone Thrower stays
+  home.
+- **Upgrades:** economy first.
 - **Trade:** none.
 - **Water:** none.
 - **Defense:** home guard. The Stone Thrower, the Town Center and the guard defend the base.
@@ -49,7 +51,7 @@ See `docs/audits/missions.md`, Ascent of Egypt 8.
 - **Never:** moves the Stone Thrower; makes big all-in attacks.
 - **By difficulty:** Standard first attack about 21 minutes and rarer, Hard about 10.5 minutes and more often.
 - **Profile:**
-  `{kind: town, army: {core: [SHORT_SWORDSMAN], support: [BOWMAN], raiders: [CHARIOT]}, upgrades: balanced, defense: home, offense: {first: 900, every: 300, min_group: 4}}`
+  `{kind: town, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]}, upgrades: economy, defense: home, offense: {first: 900, every: 300, min_group: 4}, spec: {gatherers: {food: 50, wood: 42, gold: 3, stone: 5}}}`
 - **Check:**
   - the Stone Thrower never leaves its spot;
   - the Libyans grow normally;
@@ -60,3 +62,4 @@ See `docs/audits/missions.md`, Ascent of Egypt 8.
 | Date | Difficulty | Seen | Follow-up |
 |---|---|---|---|
 | 2026-11-13 | ? | The Stone Thrower should stay at base | Speed 0 for the Libyans' Stone Throwers; toolbox town profile |
+| 2026-11-13 | ? | The Stone Thrower stayed stuck after conversion; the Libyans' economy was very small (gold units on a map with little gold) | Freeze that one unit, give its speed back on capture; Axemen, Bowmen and Scouts, food and wood economy |

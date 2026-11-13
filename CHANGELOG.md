@@ -38,8 +38,10 @@ not published yet.
     - green rushes the Tool Age;
     - computer villagers no longer explore or fight.
 
-- Religion: the Libyans' Stone Thrower stays at their base and never joins an attack; the Libyans build up normally
-  and make small attacks, the first a little later than usual (docs/missions/ascent_of_egypt/08_religion.md).
+- Religion: the Libyans' Stone Thrower stays at their base and never joins an attack, and moves for you once you
+  convert it. The Libyans build up on food and wood, field Axemen, Bowmen and Scouts (no gold units on a map with
+  little gold), and make small attacks, the first a little later than usual
+  (docs/missions/ascent_of_egypt/08_religion.md).
 
 ### RoR-RI, the other campaigns
 Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:

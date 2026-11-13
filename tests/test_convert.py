@@ -231,11 +231,15 @@ def test_religion_keeps_its_stone_thrower_home():
     toolbox town whose first attack comes at 15 minutes. Reads the committed build."""
     m = {x.key: x for c in layout.campaigns() for x in c.missions}["ascent_of_egypt/08_religion"]
     s = AoE2DEScenario.from_file(str(scenario_path(m, layout.AOE2DE_ROR)))
-    setup = next(t for t in s.trigger_manager.triggers if t.name == "Mission setup")
-    e = setup.effects[0]
-    # Speed is a float attribute: it's written as quantity_float 0.0, which AoE2ScenarioParser reads back as the int
+    triggers = s.trigger_manager.triggers
+    freeze = next(t for t in triggers if t.name.startswith("Freeze unit")).effects[0]
+    unfreeze = next(t for t in triggers if t.name.startswith("Unfreeze unit"))
+    # Speed is a float attribute: 0.0 is written as quantity_float, which AoE2ScenarioParser reads back as the int
     # field's -1 (its `_quantity_float or quantity` treats 0.0 as unset); the game reads the float.
-    assert (e.source_player, e.object_list_unit_id, e.object_attributes, e.operation) == (2, 280, 5, 1)
-    assert e.quantity in (0, -1)
+    assert (freeze.source_player, freeze.object_list_unit_id, freeze.object_attributes) == (2, 280, 5)
+    assert freeze.quantity in (0, -1) and len(freeze.selected_object_ids) == 1   # that one unit, not the type
+    assert unfreeze.conditions[0].unit_object == freeze.selected_object_ids[0]
+    assert abs(unfreeze.effects[0].quantity - 0.66) < 0.01 and unfreeze.effects[0].source_player == 1
     libyans = s.player_manager.players[2]
     assert libyans.personality == "Libyan Raiders (toolbox)" and "(enable-timer 2 900)" in libyans.ai_script
+    assert "short" not in libyans.ai_script.lower() and "chariot" not in libyans.ai_script.lower()   # no gold units

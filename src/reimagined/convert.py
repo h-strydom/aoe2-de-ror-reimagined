@@ -297,6 +297,35 @@ def toolbox_spec(p, profile: dict, name: str, conv: Conversion, active, debug: b
 REVEAL_ENEMY, REVEAL_MAP = 183, 203
 
 
+SPEED = 5                                                # object attribute: movement speed (a float)
+
+
+def frozen(conv: Conversion, refs: dict[int, int], src: Scenario, humans: list[int]) -> list[dict]:
+    """Triggers for conversion.yaml `freeze: [{unit: 1412, speed: 0.66}]`: that one unit can't move (speed 0, set on
+    the object, not its type) until a human player captures it, which gives it `speed` back. Religion's Stone
+    Thrower stays at the Libyans' base and never joins an attack, and moves once converted (the user, 2026-11-13:
+    a type-wide speed 0 stayed with it after conversion)."""
+    owners = {u.id: (p.number, u.type) for p in src.players for u in p.units}
+    out = []
+    for f in conv.freeze:
+        uid = int(f["unit"])
+        ref = refs.get(uid)
+        if ref is None or uid not in owners:
+            raise ValueError(f"freeze: unit #{uid} isn't on the converted map")
+        owner, aoede_type = owners[uid]
+        ror = conv.objects[aoede_type].ror_id
+        out.append({"name": f"Freeze unit {ref}", "effects": [
+            {"type": "modify_object_attribute", "selected_object_ids": [ref], "source_player": owner,
+             "object_list_unit_id": ror, "object_attributes": SPEED, "operation": "SET", "quantity": 0.0}]})
+        for h in humans:
+            out.append({"name": f"Unfreeze unit {ref}: P{h} has it",
+                        "conditions": [{"type": "capture_object", "unit_object": ref, "source_player": h}],
+                        "effects": [{"type": "modify_object_attribute", "selected_object_ids": [ref],
+                                     "source_player": h, "object_list_unit_id": ror, "object_attributes": SPEED,
+                                     "operation": "SET", "quantity": float(f["speed"])}]})
+    return out
+
+
 def full_vision(conv: Conversion) -> list[dict]:
     """A trigger giving `vision` players the whole map and every enemy unit in sight from the start: a cheat, so a
     computer player knows where you are and what you field (the user, 2026-11-13: the information matters more)."""
@@ -539,6 +568,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         vp.triggers += turn_hostile(conv, [p.number for p in active if p.human], stances)
         vp.triggers += answer_provoked(conv, [p.number for p in active if p.human])
         vp.triggers += full_vision(conv)
+        vp.triggers += frozen(conv, refs, src, [p.number for p in active if p.human])
         if conv.setup:                                  # conversion.yaml `setup`: the mission's own start rules
             vp.triggers.append({"name": "Mission setup", "effects": [dict(e) for e in conv.setup]})
         layer = reimagined_triggers(src, conv, mission, vp.triggers, all_perks) if reimagined else []
