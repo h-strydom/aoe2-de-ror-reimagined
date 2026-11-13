@@ -273,6 +273,21 @@ def toolbox_spec(p, profile: dict, name: str, conv: Conversion, active, debug: b
     return spec
 
 
+# Player resources (AoE2ScenarioParser Attribute): 183 Reveal Enemy, what Spies sets (enemy units in sight), and 203
+# Reveal Map. Unverified in RoR's AoE1 mode.
+REVEAL_ENEMY, REVEAL_MAP = 183, 203
+
+
+def full_vision(conv: Conversion) -> list[dict]:
+    """A trigger giving `vision` players the whole map and every enemy unit in sight from the start: a cheat, so a
+    computer player knows where you are and what you field (the user, 2026-11-13: the information matters more)."""
+    if not conv.vision:
+        return []
+    effects = [{"type": "modify_resource", "tribute_list": res, "source_player": n, "operation": "SET",
+                "quantity": 1} for n in conv.vision for res in (REVEAL_ENEMY, REVEAL_MAP)]
+    return [{"name": "Full vision", "effects": effects}]
+
+
 def provoked_by(n: int, active) -> dict:
     """The AI's `provoked` setting: the human players, and the signal it sends when it turns on them."""
     return {"players": [q.number for q in active if q.human], "signal": PROVOKED_SIGNAL + n}
@@ -498,6 +513,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             raise ValueError(f"{mission}: added players need a Custom victory, this mission is {vp.mode}")
         vp.triggers += turn_hostile(conv, [p.number for p in active if p.human], stances)
         vp.triggers += answer_provoked(conv, [p.number for p in active if p.human])
+        vp.triggers += full_vision(conv)
         layer = reimagined_triggers(src, conv, mission, vp.triggers, all_perks) if reimagined else []
         progression.select_objects(layer, placed, groups, unit_hp)
         vp.triggers += layer

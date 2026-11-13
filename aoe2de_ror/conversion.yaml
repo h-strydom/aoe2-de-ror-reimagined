@@ -9,7 +9,8 @@
 #     RoR plays AoE1's settings differently: diplomacy ([[a, b, ALLY|NEUTRAL|ENEMY]], both ways), disable
 #     ({player: [ror_tech_tree.yaml names]}) and attacks ({player: {hostile_at: seconds, message: text}}: a passive
 #     AoE1 AI attacks; with hostile_at it turns on the human players then) and provoked ({player: message}: neutral
-#     until you attack its town, then at war both ways, with the message). See docs/audits/.
+#     until you attack its town, then at war both ways, with the message), ai ({player: toolbox profile}) and
+#     vision ([players]: see the whole map and every enemy unit, a cheat). See docs/audits/ and docs/missions/.
 #
 # Every terrain and object the 61 campaign maps use is listed, with its AoE DE name and how often it
 # appears. Names on the right are RoR names (aoe-agent-editor's RoR tables; `lookup("...", game="ror")`
@@ -384,6 +385,9 @@ missions:
       2: {kind: town, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]}, upgrades: economy,
           water: light, defense: home, offense: normal, goal: {stockpile: {food: 2000, hold_from: 1200}},
           spec: {gatherers: {food: 55, wood: 45, gold: 0, stone: 0}}}
+    # Full vision for Lower Egypt: a cheat, but knowing where you are and what you field matters more (the user,
+    # 2026-11-13).
+    vision: [2]
   # Trade: your partners "could become jealous ... and attack" (the instructions). AoE1's AIs changed stance in game;
   # in RoR the neutral, passive Libyans and Canaanites sat still. The Libyan raiders (5 Scout Ships) are enemies
   # from the start, as the hints' raiders; the Canaanites turn on you at 20 minutes. The Minoans stay your ally.

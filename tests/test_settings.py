@@ -74,6 +74,9 @@ def test_ai_carries_over(tmp_path):
     assert red.personality == "Lower Egypt (toolbox)"
     for part in ("(train my-line266)", "water: fishing up to 3", "(food-amount < 1200)", "(up-retreat-now)"):
         assert part in red.ai_script
+    # it sees everything (conversion.yaml vision: Reveal Enemy 183 and Reveal Map 203, a deliberate cheat)
+    sees = next(t for t in AoE2DEScenario.from_file(str(ri)).trigger_manager.triggers if t.name == "Full vision")
+    assert {(e.tribute_list, e.source_player, e.quantity) for e in sees.effects} == {(183, 2, 1), (203, 2, 1)}
     # the Greek army (P3, no villagers or town center) keeps its translated AoE1 plan
     assert troy[3].personality.endswith("(AoE1)")
     trade = _converted(tmp_path, "ascent_of_egypt/07_trade")

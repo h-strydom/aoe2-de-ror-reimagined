@@ -33,6 +33,8 @@ Status: playtested 2026-11-12 (Hard). Lower Egypt is built on the AI toolbox (ao
 ## 5. Mission functions
 - Lower Egypt knows where your base is from the start, so its attacks know where to go.
 - You start at war with Lower Egypt. The original had you neutral.
+- Lower Egypt sees the whole map and every unit of yours (Reveal Map and Reveal Enemy): a cheat, because knowing where
+  you are and what you field matters more (the user, 2026-11-13). Unverified in RoR's AoE1 mode.
 
 ## 6. AI intentions
 
@@ -85,6 +87,9 @@ Status: playtested 2026-11-12 (Hard). Lower Egypt is built on the AI toolbox (ao
   - up to 3 fishing boats and 1 warship;
   - waves from 10 minutes (14 on Standard, 7 on Hard), every 4 minutes, sending 70% of the army;
   - villagers on food and wood only;
+  - each step of army growth waits for 80% of that step's villagers, so its economy grows before each bigger army;
+  - production buildings scale with the units they make (one Stable for its few Scouts);
+  - full vision;
   - a beaten wave retreats, and a wave is recalled if its town is attacked;
   - economy upgrades first, armour from 10 soldiers, the Battle Axe as soon as it can afford it;
   - no food spent on units past 1200 food.
@@ -102,4 +107,5 @@ Status: playtested 2026-11-12 (Hard). Lower Egypt is built on the AI toolbox (ao
 | 2026-11-12 | Hard | Standard AI on Continental: attacked early, then built a big fleet; defeat at 24:00 from its 2000 food with no warning; you were neutral to it | Highland map type, at war, objective line (74936a0) |
 | 2026-11-12 | Hard | Highland: no fleet. On its AoE1 plan it stalled, stopped farming, lost villagers and didn't attack | Back to the standard AI (8be4ed5); toolbox profile proposed |
 | 2026-11-13 | (first toolbox playtest) | A lot better. But too little pressure; no Battle Axe by 25:00; no Bowmen at all (RoR's bowman line doesn't train), so it spent more food than needed; wood economy may have suffered | Normal offense, Bowmen by unit, Battle Axe never waits, food and wood only, no Gold/Stone Mining (editor v0.19.1) |
+| 2026-11-13 | Hard | Attacks a lot better. Built several Stables and looked food-starved; growing the economy a bit before an attack would help | One building per 6 units it makes; army steps wait for their villagers; full vision (editor v0.19.2) |
 | | | | to playtest |
