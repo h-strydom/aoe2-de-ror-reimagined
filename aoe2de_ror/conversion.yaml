@@ -394,13 +394,24 @@ missions:
   # enemy from the start).
   ascent_of_egypt/07_trade:                    # the Minoans and Canaanites know where you are
     show_base: [[64, 0, 95, 30]]
-    diplomacy: [[1, 3, ENEMY], [1, 4, ENEMY]]
+    # Red and yellow are trade partners, as are green and yellow: RoR's AIs trade only with allies (red never
+    # traded with yellow neutral, playtest 2026-11-13).
+    diplomacy: [[1, 3, ENEMY], [1, 4, ENEMY], [2, 4, ALLY], [3, 4, ALLY]]
     attacks:
       2: {hostile_gold: 250, enemy_on: hard, message: "The Minoans have grown jealous of Egypt's wealth. They close their Docks to you and send their warships!"}
-    # Yellow: wood to trade, and gold for its first Trade Boats. Its Scout Ships (539), Trade Boats (17) and
-    # Merchant Ships (11) take no population (attribute 110, as the Light Footprint perk), and Scout Ships cost 60
-    # gold and no wood (attributes 105 and 104): its trade pays for its raids.
-    resources: {4: {wood: 2500, gold: 300}}
+    # Yellow: 3 Trade Boats (17) at its Dock (6.5,43.5), trading wood (their default cargo), and wood to trade, but
+    # no gold: its trade pays for everything (the user, 2026-11-13). Its Scout Ships (539), Trade Boats and
+    # Merchant Ships (11) take no population (attribute 110, as the Light Footprint perk), so it needs no Houses, and
+    # Scout Ships cost 60 gold and no wood (attributes 105 and 104). Lost Trade Boats aren't replaced: sinking them
+    # ends its income.
+    # Red starts with gold and wood for its trade fleet (it had 50 wood and no gold, and the map has only 2 gold
+    # mines: it never traded, playtest 2026-11-13). Red and green sell surplus wood at their Market when their gold
+    # runs low (the toolbox's Market trade), so their Trade Boats can be paid for.
+    resources: {4: {wood: 2500, gold: 0}, 2: {wood: 400, gold: 400}}
+    units:
+      - {player: 4, unit: 17, at: [4.5, 47.5]}
+      - {player: 4, unit: 17, at: [7.5, 47.5]}
+      - {player: 4, unit: 17, at: [10.5, 47.5]}
     setup:
       - {type: modify_attribute, source_player: 4, object_list_unit_id: 539, object_attributes: 110, operation: SET, quantity: 0}
       - {type: modify_attribute, source_player: 4, object_list_unit_id: 17, object_attributes: 110, operation: SET, quantity: 0}
@@ -408,15 +419,15 @@ missions:
       - {type: modify_attribute, source_player: 4, object_list_unit_id: 539, object_attributes: 104, operation: SET, quantity: 0}
       - {type: modify_attribute, source_player: 4, object_list_unit_id: 539, object_attributes: 105, operation: SET, quantity: 60}
     ai:
-      4: {kind: army, army: {core: [SCOUT_SHIP], size: 5}, water: {trade: 3},
+      4: {kind: army, army: {core: [SCOUT_SHIP], size: 5},
           offense: {first: 300, every: 180, min_group: 2}, defense: none, retreat: none,
           by_level: {easy: {army: {core: [SCOUT_SHIP], size: 3}, offense: {first: 300, every: 240, min_group: 2}},
                      hard: {army: {core: [SCOUT_SHIP], size: 7}, offense: {first: 300, every: 150, min_group: 2}}}}
-      3: {kind: town, ages: [TOOL_AGE], army: {core: [AXEMAN], support: [BOWMAN], mix: {core: 80, support: 20}},
+      3: {kind: town, ages: [], rush: TOOL_AGE, army: {core: [AXEMAN], support: [BOWMAN], mix: {core: 80, support: 20}},
           upgrades: economy, water: {fishing: 4, trade: 4}, defense: home, offense: light,
-          by_level: {easy: {water: {fishing: 4}}}}
+          by_level: {easy: {water: {fishing: 4}}}, spec: {trade: {sell: {wood: 300}, every: 10}}}
       2: {kind: town, army: {core: [SCOUT_SHIP], share: 15}, upgrades: balanced, water: {fishing: 4, trade: 6},
-          defense: home, offense: {first: 690, every: 240, min_group: 3}}
+          defense: home, offense: {first: 690, every: 240, min_group: 3}, spec: {trade: {sell: {wood: 300}, every: 10}}}
   ascent_of_egypt/08_religion:
     show_base: [[33, 16, 71, 70]]
   ascent_of_egypt/09_the_river_outpost:

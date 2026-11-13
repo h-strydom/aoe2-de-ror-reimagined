@@ -23,7 +23,7 @@ TOP_KEYS = {"terrain", "objects", "rules", "missions"}
 RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs", "ai_levels", "population"}
 POPULATION_KEYS = {"cap", "grow_minutes"}
 MISSION_KEYS = {"terrain", "objects", "reveal", "show_base", "claim_base", "diplomacy", "disable", "attacks",
-                "provoked", "ai", "vision", "resources", "setup"}
+                "provoked", "ai", "vision", "resources", "setup", "units"}
 ATTACK_KEYS = {"hostile_at", "hostile_gold", "enemy_on", "message"}
 RESOURCES = {"food", "wood", "gold", "stone"}
 STANCES = {"ALLY", "NEUTRAL", "ENEMY"}
@@ -64,6 +64,7 @@ class Conversion:
     vision: tuple[int, ...] = ()                    # players that see the whole map and every enemy unit
     resources: dict = field(default_factory=dict)   # {player: {food, wood, gold, stone}}: starting stockpiles
     setup: tuple = ()                               # trigger effects at the start (mission-specific rules)
+    units: tuple = ()                               # ({player, unit (RoR id), at: [x, y]}, ...) added to the map
     population: dict | None = None                  # {cap, grow_minutes}: missions where player 1 can build
 
     def for_mission(self, key: str) -> Conversion:
@@ -76,7 +77,7 @@ class Conversion:
                        claim_base=ov.get("claim_base"), diplomacy=ov.get("diplomacy", {}),
                        disable=ov.get("disable", {}), attacks=ov.get("attacks", {}),
                        provoked=ov.get("provoked", {}), ai=ov.get("ai", {}), vision=ov.get("vision", ()),
-                       resources=ov.get("resources", {}), setup=ov.get("setup", ()))
+                       resources=ov.get("resources", {}), setup=ov.get("setup", ()), units=ov.get("units", ()))
 
     def place(self, aoede_id: int, ror_terrain: int) -> int | None:
         """The RoR object for an AoE DE object standing on `ror_terrain`, or None if it's dropped.
@@ -208,7 +209,8 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
                          "vision": tuple(int(v) for v in ov.get("vision") or []),
                          "resources": {int(k): {r: int(n) for r, n in v.items() if r in RESOURCES}
                                        for k, v in (ov.get("resources") or {}).items()},
-                         "setup": tuple(ov.get("setup") or ())}
+                         "setup": tuple(ov.get("setup") or ()),
+                         "units": tuple(ov.get("units") or ())}
 
     population = rules.get("population")
     if population is not None:

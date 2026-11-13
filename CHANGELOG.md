@@ -31,7 +31,12 @@ not published yet.
   - the Canaanites are your land rival from the start: they fish, rush the Tool Age, farm, trade on Moderate and
     Hard, and send the occasional Axemen;
   - the Minoans are your trade partner until you have 250 gold, then declare war with their warships (on Hard
-    they're your enemy from the start). Needs aoe-agent-editor v0.20.0.
+    they're your enemy from the start). Needs aoe-agent-editor v0.20.1.
+  - after its first playtest:
+    - red and yellow trade with each other;
+    - yellow starts with 3 Trade Boats and no gold, so everything it builds is paid for by trade;
+    - green rushes the Tool Age;
+    - computer villagers no longer explore or fight.
 
 ### RoR-RI, the other campaigns
 Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:

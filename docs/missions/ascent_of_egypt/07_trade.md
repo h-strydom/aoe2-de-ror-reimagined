@@ -30,8 +30,13 @@ See `docs/audits/missions.md`, Ascent of Egypt 7.
 - The others: everything in their ages.
 
 ## 5. Mission functions
-- Libyans: their ships cost no population and are paid in gold (no wood), so their trade fleet is their economy.
-  They start with wood to trade.
+- Libyans: 3 Trade Boats placed at their Dock, trading wood (they start with 2500 wood and no gold). Their ships cost
+  no population (no Houses needed) and Scout Ships cost 60 gold and no wood, so their trade pays for their raids.
+  Lost Trade Boats aren't replaced.
+- Alliances among the computer players: red and yellow, and green and yellow, are allies. RoR's AIs trade only with
+  allies.
+- Red starts with 400 wood and 400 gold for its trade fleet. Red and green sell surplus wood at their Market when gold
+  runs low.
 - Minoans: your ally until you have 250 gold, then they declare war, with a warning. On Hard they're your enemy
   from the start.
 - Canaanites: your enemy from the start.
@@ -41,10 +46,11 @@ See `docs/audits/missions.md`, Ascent of Egypt 7.
 ### P4 Libyans (yellow): raiders who live off their trade
 - **Plays like:** a nuisance at sea that lasts as long as its trade fleet and its Dock do.
 - **Population:** not a builder: a few Trade Boats and up to 5 Scout Ships.
-- **Economy:** 3 Trade Boats trading wood for gold. That gold pays for its warships. No villagers.
+- **Economy:** 3 Trade Boats, given at the start, trading wood with the Minoans' and Canaanites' Docks (its allies).
+  That gold pays for its warships. No villagers, and lost Trade Boats aren't replaced.
 - **Army:** Scout Ships only (they upgrade with the line). The 2 Stone Throwers and 2 Bowmen guard the Dock.
 - **Upgrades:** none.
-- **Trade:** this is its economy: Trade Boats from its Dock to the Minoans' and Canaanites' Docks.
+- **Trade:** this is its economy.
 - **Water:** its ships are the threat. They cost no population and only gold.
 - **Defense:** none beyond its Dock guard.
 - **Offense:** gives you 5 minutes (on every difficulty), then raids with whatever ships it has, every 3 minutes,
@@ -54,7 +60,7 @@ See `docs/audits/missions.md`, Ascent of Egypt 7.
 - **Never:** attacks before 5:00; builds a land army.
 - **By difficulty:** Standard 3 ships at most, Moderate 5, Hard 7.
 - **Profile:**
-  `{kind: army, army: {core: [SCOUT_SHIP], size: 5}, water: {trade: 3}, offense: {first: 300, every: 180, min_group: 2}, defense: none, retreat: none, by_level: {easy: {army: {core: [SCOUT_SHIP], size: 3}, offense: {first: 300, every: 240, min_group: 2}}, hard: {army: {core: [SCOUT_SHIP], size: 7}, offense: {first: 300, every: 150, min_group: 2}}}}`
+  `{kind: army, army: {core: [SCOUT_SHIP], size: 5}, offense: {first: 300, every: 180, min_group: 2}, defense: none, retreat: none, by_level: {easy: {army: {core: [SCOUT_SHIP], size: 3}, offense: {first: 300, every: 240, min_group: 2}}, hard: {army: {core: [SCOUT_SHIP], size: 7}, offense: {first: 300, every: 150, min_group: 2}}}}`
 - **Check:** no attack before 5:00; raids keep coming while its Trade Boats sail; they stop once its trade or its
   Dock is gone.
 
@@ -63,11 +69,13 @@ See `docs/audits/missions.md`, Ascent of Egypt 7.
 - **Population:** Standard 50, Moderate 100, Hard 150.
 - **Economy:**
   - fishes;
-  - rushes the Tool Age, then farms;
+  - rushes the Tool Age (army and extra villagers wait for it), then farms;
+  - villagers never explore or fight;
   - on Moderate and Hard it also moves over to a trade economy (Trade Boats to the Minoans' Docks).
 - **Army:** mostly Axemen, with the odd Bowman.
 - **Upgrades:** economy first.
-- **Trade:** Moderate and Hard: 4 Trade Boats. Standard: none.
+- **Trade:** Moderate and Hard: 4 Trade Boats to the Libyans' Dock (its ally), paid for by selling wood at its
+  Market. Standard: none.
 - **Water:** fishing boats only. **No warships.**
 - **Defense:** home guard.
 - **Offense:** light: an occasional land attack (first at about 15 minutes, then every 6), retreating when beaten.
@@ -76,7 +84,7 @@ See `docs/audits/missions.md`, Ascent of Egypt 7.
 - **Never:** builds warships; ages past the Tool Age.
 - **By difficulty:** population and attack timing (Standard later and rarer, Hard sooner).
 - **Profile:**
-  `{kind: town, ages: [TOOL_AGE], army: {core: [AXEMAN], support: [BOWMAN], mix: {core: 80, support: 20}}, upgrades: economy, water: {fishing: 4, trade: 4}, defense: home, offense: light, by_level: {easy: {water: {fishing: 4}}}}`
+  `{kind: town, ages: [], rush: TOOL_AGE, army: {core: [AXEMAN], support: [BOWMAN], mix: {core: 80, support: 20}}, upgrades: economy, water: {fishing: 4, trade: 4}, defense: home, offense: light, by_level: {easy: {water: {fishing: 4}}}, spec: {trade: {sell: {wood: 300}, every: 10}}}`
 - **Check:** in the Tool Age early; farms; Axemen raids now and then; Trade Boats on Moderate and Hard; never a
   warship.
 
@@ -86,7 +94,8 @@ See `docs/audits/missions.md`, Ascent of Egypt 7.
 - **Economy:** fishing and farms on its island, and a trade economy (Trade Boats).
 - **Army:** warships (the Scout Ship line, upgraded as it can).
 - **Upgrades:** balanced.
-- **Trade:** 6 Trade Boats.
+- **Trade:** 6 Trade Boats to the Libyans' Dock (its ally). Starts with 400 gold and wood for them, and sells
+  surplus wood at its Market.
 - **Water:** heavy: fishing, trade and warships.
 - **Defense:** home guard on its island.
 - **Offense:** naval waves on your boats, Dock and shore once it's your enemy.
@@ -96,7 +105,7 @@ See `docs/audits/missions.md`, Ascent of Egypt 7.
 - **Never:** attacks you while it's your ally.
 - **By difficulty:** Standard and Moderate turn at 250 gold. Hard is an enemy from the start.
 - **Profile:**
-  `{kind: town, army: {core: [SCOUT_SHIP], share: 15}, upgrades: balanced, water: {fishing: 4, trade: 6}, defense: home, offense: {first: 690, every: 240, min_group: 3}}`
+  `{kind: town, army: {core: [SCOUT_SHIP], share: 15}, upgrades: balanced, water: {fishing: 4, trade: 6}, defense: home, offense: {first: 690, every: 240, min_group: 3}, spec: {trade: {sell: {wood: 300}, every: 10}}}`
 - **Check:** trades with you early; turns at 250 gold; on Hard its warships show up around 8:00.
 
 ## 7. Playtest log
@@ -104,3 +113,4 @@ See `docs/audits/missions.md`, Ascent of Egypt 7.
 |---|---|---|---|
 | 2026-11-12 | ? | Red allied, the others neutral: nobody fights | Libyans at war, Canaanites turning at 20:00 (e587c6c) |
 | 2026-11-13 | ? | Yellow attacks your Dock at once; only yellow puts pressure on you | This design: yellow waits 5 minutes and lives off trade, green is the land rival, red turns at 250 gold (Hard: from the start) |
+| 2026-11-13 | ? | Red never traded; green stalled in the Stone Age and lost its villagers | Red and yellow allies (and green and yellow); yellow given 3 Trade Boats and no gold; red given gold, both sell wood; green rushes the Tool Age; no villager explores or fights (editor v0.20.1) |

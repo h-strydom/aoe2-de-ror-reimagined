@@ -212,7 +212,11 @@ def test_trade_follows_its_mission_doc():
     names = {pm.players[n].personality for n in (2, 3, 4)}
     assert names == {"Minoans (toolbox)", "Canaanites (toolbox)", "Libyans (toolbox)"}
     yellow = pm.players[4]
-    assert (yellow.wood, yellow.gold) == (2500, 300) and "(train my-trade-boat-line)" in yellow.ai_script
+    assert (yellow.wood, yellow.gold) == (2500, 0)                            # trade pays for everything
+    boats = [u for u in s.unit_manager.units[4] if u.unit_const == 17]
+    assert len(boats) == 3 and "(train my-trade-boat-line)" not in yellow.ai_script   # given, never replaced
+    assert pm.players[2].diplomacy[3] == 0 and pm.players[3].diplomacy[3] == 0    # yellow trades with red and green
+    assert "(research-completed my-t-tool-age)" in pm.players[3].ai_script        # green rushes the Tool Age
     assert "(enable-timer 2 300)" in yellow.ai_script                         # five minutes' grace
     assert "naval attack" not in pm.players[3].ai_script                      # green: no warships
     triggers = {t.name: t for t in s.trigger_manager.triggers}

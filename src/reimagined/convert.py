@@ -512,6 +512,12 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
             placed.setdefault(owner, []).append((ror_id, unit.reference_id))
             res.placed += 1
 
+        # Units conversion.yaml adds to the map (`units`), e.g. Trade's Libyan trade fleet.
+        for cu in conv.units:
+            s.unit_manager.add_unit(player=int(cu["player"]), unit_const=int(cu["unit"]), x=float(cu["at"][0]),
+                                    y=float(cu["at"][1]), status=NORMAL_STATUS)
+            res.placed += 1
+
         # The reimagined mission's own units, on the map from the start; groups name them for its triggers.
         groups: dict[str, tuple[int, list[int]]] = {}
         unit_hp: dict[int, int] = {}
