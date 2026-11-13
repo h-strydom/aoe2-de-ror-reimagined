@@ -430,6 +430,14 @@ missions:
           defense: home, offense: {first: 690, every: 240, min_group: 3}, spec: {trade: {sell: {wood: 300}, every: 10}}}
   ascent_of_egypt/08_religion:
     show_base: [[33, 16, 71, 70]]
+    # The Libyans: a normal build-up, small attacks, a bit later than usual; their Stone Thrower (280) stays at their
+    # base: speed 0 for their Stone Throwers (attribute 5), so it never joins an attack. Converted, it moves at your
+    # speed (the user, 2026-11-13; docs/missions/ascent_of_egypt/08_religion.md).
+    setup:
+      - {type: modify_attribute, source_player: 2, object_list_unit_id: 280, object_attributes: 5, operation: SET, quantity: 0}
+    ai:
+      2: {kind: town, army: {core: [SHORT_SWORDSMAN], support: [BOWMAN], raiders: [CHARIOT]}, upgrades: balanced,
+          defense: home, offense: {first: 900, every: 300, min_group: 4}}
   ascent_of_egypt/09_the_river_outpost:
     show_base: [[43, 67, 80, 92]]
   ascent_of_egypt/10_naval_warfare:

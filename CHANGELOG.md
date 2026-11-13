@@ -38,6 +38,9 @@ not published yet.
     - green rushes the Tool Age;
     - computer villagers no longer explore or fight.
 
+- Religion: the Libyans' Stone Thrower stays at their base and never joins an attack; the Libyans build up normally
+  and make small attacks, the first a little later than usual (docs/missions/ascent_of_egypt/08_religion.md).
+
 ### RoR-RI, the other campaigns
 Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:
 - Computer players that build play RoR's standard skirmish AI, one level harder than the game's difficulty

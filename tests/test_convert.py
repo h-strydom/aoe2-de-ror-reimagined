@@ -224,3 +224,18 @@ def test_trade_follows_its_mission_doc():
     assert (gold.attribute, gold.quantity) == (3, 250)
     assert triggers["P2 hostile on Hard"].conditions[0].inverted == 1
     assert len(triggers["Mission setup"].effects) == 5
+
+
+def test_religion_keeps_its_stone_thrower_home():
+    """Religion (docs/missions/ascent_of_egypt/08_religion.md): the Libyans' Stone Thrower can't move, and they play a
+    toolbox town whose first attack comes at 15 minutes. Reads the committed build."""
+    m = {x.key: x for c in layout.campaigns() for x in c.missions}["ascent_of_egypt/08_religion"]
+    s = AoE2DEScenario.from_file(str(scenario_path(m, layout.AOE2DE_ROR)))
+    setup = next(t for t in s.trigger_manager.triggers if t.name == "Mission setup")
+    e = setup.effects[0]
+    # Speed is a float attribute: it's written as quantity_float 0.0, which AoE2ScenarioParser reads back as the int
+    # field's -1 (its `_quantity_float or quantity` treats 0.0 as unset); the game reads the float.
+    assert (e.source_player, e.object_list_unit_id, e.object_attributes, e.operation) == (2, 280, 5, 1)
+    assert e.quantity in (0, -1)
+    libyans = s.player_manager.players[2]
+    assert libyans.personality == "Libyan Raiders (toolbox)" and "(enable-timer 2 900)" in libyans.ai_script

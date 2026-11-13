@@ -82,7 +82,7 @@ RoR-RIX tech tree for you, within your ages: everything open but astrology, iron
 | Player | Civ | Stance | AI (RoR-RI) | AI (RoR-RIX) | Ages | Off |
 |---|---|---|---|---|---|---|
 | P1 Kingdom of Egypt (you) | Egyptian |  | you | you | Bronze (no Iron) | Siege Workshop |
-| P2 Libyan Raiders | Egyptian | enemy / enemy | AoE1 plan (translated) | mission's own (Libyans) | Bronze (no Iron) | nothing |
+| P2 Libyan Raiders | Egyptian | enemy / enemy | AI toolbox: town profile | mission's own (Libyans) | Bronze (no Iron) | nothing |
 
 RoR-RIX tech tree for you, within your ages: everything open but iron age.
 
