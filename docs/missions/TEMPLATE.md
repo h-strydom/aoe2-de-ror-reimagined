@@ -34,6 +34,8 @@ Default population targets, which the army grows toward over the game: **Standar
 Hard 150 or more**. A mission states its own numbers when the map or the role calls for less (an outpost) or more.
 
 ### P<n> <Name>: <role in one line>
+- **Style:** economic, defensive, aggressive or balanced: the preset for boom, army share, research first, home
+  guard and attack pace (aoe-agent-editor `docs/ai-toolbox.md`). The items below say where it differs.
 - **Plays like:** the feel in a sentence, e.g. "a rival farmer who pesters you but mostly races for food".
 - **Population:** the target per difficulty (the defaults above unless stated), and how fast it grows.
 - **Economy:** villager share, what it gathers, farming.

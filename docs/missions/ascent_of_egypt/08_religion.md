@@ -32,26 +32,26 @@ See `docs/audits/missions.md`, Ascent of Egypt 8.
 
 ## 6. AI intentions
 
-### P2 Libyan Raiders: a normal town guarding the prize
-- **Plays like:** a steady neighbour that builds up normally and pokes at you, while its Stone Thrower anchors its
-  base.
+### P2 Libyan Raiders: a booming town guarding the prize
+- **Style:** economic (the user, 2026-11-13: an economic mission).
+- **Plays like:** a neighbour that booms on its berries and pokes at you now and then, while its Stone Thrower
+  anchors its base.
 - **Population:** Standard 50, Moderate 100, Hard 150.
-- **Economy:** a normal build-up on food and wood: there's very little gold on the map (50% food, 42% wood, 3% gold,
-  5% stone).
+- **Economy:** booms at once to 60% of its villagers (42 on Moderate), on food and wood: there's very little gold
+  on the map (50% food, 42% wood, 3% gold, 5% stone).
 - **Army:** units that cost no gold: Axemen at the core, with Bowmen and a few Scouts. The Stone Thrower stays
   home.
 - **Upgrades:** economy first.
 - **Trade:** none.
 - **Water:** none.
 - **Defense:** home guard. The Stone Thrower, the Town Center and the guard defend the base.
-- **Offense:** small attacks, with a bit more time than normal before the first one: about 15 minutes, then every 5,
-  groups of 4 or more.
+- **Offense:** small attacks, later than usual: the first at about 18 minutes, then every 7, groups of 4 or more.
 - **Goal:** none. It doesn't play to protect the Stone Thrower beyond its home guard.
 - **Events:** none.
 - **Never:** moves the Stone Thrower; makes big all-in attacks.
-- **By difficulty:** Standard first attack about 21 minutes and rarer, Hard about 10.5 minutes and more often.
+- **By difficulty:** first attack at about 25 minutes on Standard and 12.5 minutes on Hard.
 - **Profile:**
-  `{kind: town, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]}, upgrades: economy, defense: home, offense: {first: 900, every: 300, min_group: 4}, spec: {gatherers: {food: 50, wood: 42, gold: 3, stone: 5}}}`
+  `{kind: town, style: economic, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]}, spec: {gatherers: {food: 50, wood: 42, gold: 3, stone: 5}}}`
 - **Check:**
   - the Stone Thrower never leaves its spot;
   - the Libyans grow normally;
@@ -63,3 +63,4 @@ See `docs/audits/missions.md`, Ascent of Egypt 8.
 |---|---|---|---|
 | 2026-11-13 | ? | The Stone Thrower should stay at base | Speed 0 for the Libyans' Stone Throwers; toolbox town profile |
 | 2026-11-13 | ? | The Stone Thrower stayed stuck after conversion; the Libyans' economy was very small (gold units on a map with little gold) | Freeze that one unit, give its speed back on capture; Axemen, Bowmen and Scouts, food and wood economy |
+| 2026-11-13 | ? | Only about 5 villagers with berries all around: should boom much harder; an economic mission | Towns boom at once (editor v0.20.2); economic style (v0.21.0) |

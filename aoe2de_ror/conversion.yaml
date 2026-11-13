@@ -434,11 +434,11 @@ missions:
     # docs/missions/ascent_of_egypt/08_religion.md). Their Stone Thrower (#1412) can't move until you capture it, then
     # gets its speed back (0.66, RoR's data): a type-wide speed 0 stayed with it after conversion (playtest).
     freeze: [{unit: 1412, speed: 0.66}]
-    # Little gold on the map: Axemen, Bowmen and Scouts (food and wood), economy upgrades first, few on gold
+    # An economic mission (the user, 2026-11-13): the Libyans boom (berries all around), research economy first and
+    # attack lightly and late. Little gold on the map: Axemen, Bowmen and Scouts (food and wood), few on gold
     # (playtest 2026-11-13: Short Swordsmen and Chariots left it with a very small economy).
     ai:
-      2: {kind: town, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]}, upgrades: economy,
-          defense: home, offense: {first: 900, every: 300, min_group: 4},
+      2: {kind: town, style: economic, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]},
           spec: {gatherers: {food: 50, wood: 42, gold: 3, stone: 5}}}
   ascent_of_egypt/09_the_river_outpost:
     show_base: [[43, 67, 80, 92]]

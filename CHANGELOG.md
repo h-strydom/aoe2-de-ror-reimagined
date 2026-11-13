@@ -39,9 +39,10 @@ not published yet.
     - computer villagers no longer explore or fight.
 
 - Religion: the Libyans' Stone Thrower stays at their base and never joins an attack, and moves for you once you
-  convert it. The Libyans build up on food and wood, field Axemen, Bowmen and Scouts (no gold units on a map with
-  little gold), and make small attacks, the first a little later than usual
-  (docs/missions/ascent_of_egypt/08_religion.md).
+  convert it. The Libyans play an economic style: they boom on food and wood, field Axemen, Bowmen and Scouts (no
+  gold units on a map with little gold), and make small, late attacks (docs/missions/ascent_of_egypt/08_religion.md).
+- Every computer town on the AI toolbox (Farming, Trade, Religion) booms at once to a good share of its villagers,
+  instead of starting from 3. Needs aoe-agent-editor v0.21.0.
 
 ### RoR-RI, the other campaigns
 Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:

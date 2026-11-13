@@ -241,5 +241,7 @@ def test_religion_keeps_its_stone_thrower_home():
     assert unfreeze.conditions[0].unit_object == freeze.selected_object_ids[0]
     assert abs(unfreeze.effects[0].quantity - 0.66) < 0.01 and unfreeze.effects[0].source_player == 1
     libyans = s.player_manager.players[2]
-    assert libyans.personality == "Libyan Raiders (toolbox)" and "(enable-timer 2 900)" in libyans.ai_script
+    # economic style: light attacks 1.2x later (18:00 on Moderate), a boom of 60% of its villagers at once
+    assert libyans.personality == "Libyan Raiders (toolbox)" and "(enable-timer 2 1080)" in libyans.ai_script
+    assert "(civilian-population < 42)" in libyans.ai_script
     assert "short" not in libyans.ai_script.lower() and "chariot" not in libyans.ai_script.lower()   # no gold units
