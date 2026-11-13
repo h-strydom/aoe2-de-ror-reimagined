@@ -240,6 +240,9 @@ def test_religion_keeps_its_stone_thrower_home():
     assert freeze.quantity in (0, -1) and len(freeze.selected_object_ids) == 1   # that one unit, not the type
     assert unfreeze.conditions[0].unit_object == freeze.selected_object_ids[0]
     assert abs(unfreeze.effects[0].quantity - 0.66) < 0.01 and unfreeze.effects[0].source_player == 1
+    free = next(t for t in triggers if t.name == "Starting units take no population").effects
+    assert {e.object_attributes for e in free} == {110} and {e.source_player for e in free} == {2}
+    assert sum(len(e.selected_object_ids) for e in free) >= 8                   # 7 Bowmen, the Stone Thrower, ...
     libyans = s.player_manager.players[2]
     # economic style: light attacks 1.2x later (18:00 on Moderate), a boom of 60% of its villagers at once
     assert libyans.personality == "Libyan Raiders (toolbox)" and "(enable-timer 2 1080)" in libyans.ai_script

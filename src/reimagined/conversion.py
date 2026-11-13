@@ -23,7 +23,7 @@ TOP_KEYS = {"terrain", "objects", "rules", "missions"}
 RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs", "ai_levels", "population"}
 POPULATION_KEYS = {"cap", "grow_minutes"}
 MISSION_KEYS = {"terrain", "objects", "reveal", "show_base", "claim_base", "diplomacy", "disable", "attacks",
-                "provoked", "ai", "vision", "resources", "setup", "units", "freeze"}
+                "provoked", "ai", "vision", "resources", "setup", "units", "freeze", "free_pop"}
 ATTACK_KEYS = {"hostile_at", "hostile_gold", "enemy_on", "message"}
 RESOURCES = {"food", "wood", "gold", "stone"}
 STANCES = {"ALLY", "NEUTRAL", "ENEMY"}
@@ -66,6 +66,7 @@ class Conversion:
     setup: tuple = ()                               # trigger effects at the start (mission-specific rules)
     units: tuple = ()                               # ({player, unit (RoR id), at: [x, y]}, ...) added to the map
     freeze: tuple = ()                              # ({unit: AoE DE unit id, speed}, ...): can't move until captured
+    free_pop: tuple[int, ...] = ()                  # players whose starting units take no population
     population: dict | None = None                  # {cap, grow_minutes}: missions where player 1 can build
 
     def for_mission(self, key: str) -> Conversion:
@@ -79,7 +80,7 @@ class Conversion:
                        disable=ov.get("disable", {}), attacks=ov.get("attacks", {}),
                        provoked=ov.get("provoked", {}), ai=ov.get("ai", {}), vision=ov.get("vision", ()),
                        resources=ov.get("resources", {}), setup=ov.get("setup", ()), units=ov.get("units", ()),
-                       freeze=ov.get("freeze", ()))
+                       freeze=ov.get("freeze", ()), free_pop=ov.get("free_pop", ()))
 
     def place(self, aoede_id: int, ror_terrain: int) -> int | None:
         """The RoR object for an AoE DE object standing on `ror_terrain`, or None if it's dropped.
@@ -213,7 +214,8 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
                                        for k, v in (ov.get("resources") or {}).items()},
                          "setup": tuple(ov.get("setup") or ()),
                          "units": tuple(ov.get("units") or ()),
-                         "freeze": tuple(ov.get("freeze") or ())}
+                         "freeze": tuple(ov.get("freeze") or ()),
+                         "free_pop": tuple(int(v) for v in ov.get("free_pop") or [])}
 
     population = rules.get("population")
     if population is not None:

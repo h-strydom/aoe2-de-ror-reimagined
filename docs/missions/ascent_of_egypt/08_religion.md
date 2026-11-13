@@ -28,6 +28,9 @@ See `docs/audits/missions.md`, Ascent of Egypt 8.
 - The Libyans' Stone Thrower can't move: speed 0 on that one unit (conversion.yaml `freeze`). It stays at their base
   and never joins an attack. When you capture it, a trigger gives it its speed back (0.66, from RoR's data), so you
   can walk it home.
+- The Libyans' starting units (7 Bowmen, 2 Villagers and the Stone Thrower) take no population (conversion.yaml
+  `free_pop`, set on those objects): they filled the Libyans' housing, so they never boomed (playtest 2026-11-13).
+  What they train later costs population as usual, and toolbox towns build their next House with 8 room left.
 - Losing the Stone Thrower is a defeat (the converter's rule for units an objective needs).
 
 ## 6. AI intentions

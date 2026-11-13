@@ -43,6 +43,10 @@ not published yet.
   gold units on a map with little gold), and make small, late attacks (docs/missions/ascent_of_egypt/08_religion.md).
 - Every computer town on the AI toolbox (Farming, Trade, Religion) booms at once to a good share of its villagers,
   instead of starting from 3. Needs aoe-agent-editor v0.21.0.
+- Religion: the Libyans' starting army (7 Bowmen and the Stone Thrower) and Villagers take no population, so they
+  aren't housing capped from the start.
+- Every computer town on the AI toolbox builds its next House a bit earlier (8 housing left, not 4). Needs
+  aoe-agent-editor v0.21.1.
 
 ### RoR-RI, the other campaigns
 Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:

@@ -434,6 +434,9 @@ missions:
     # docs/missions/ascent_of_egypt/08_religion.md). Their Stone Thrower (#1412) can't move until you capture it, then
     # gets its speed back (0.66, RoR's data): a type-wide speed 0 stayed with it after conversion (playtest).
     freeze: [{unit: 1412, speed: 0.66}]
+    # Their starting army (7 Bowmen and the Stone Thrower, on 2 Villagers) takes no population: it filled their
+    # housing, so they never boomed (playtest 2026-11-13).
+    free_pop: [2]
     # An economic mission (the user, 2026-11-13): the Libyans boom (berries all around), research economy first and
     # attack lightly and late. Little gold on the map: Axemen, Bowmen and Scouts (food and wood), few on gold
     # (playtest 2026-11-13: Short Swordsmen and Chariots left it with a very small economy).

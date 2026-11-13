@@ -326,6 +326,31 @@ def frozen(conv: Conversion, refs: dict[int, int], src: Scenario, humans: list[i
     return out
 
 
+POPULATION = 110                                         # object attribute: population taken
+
+
+def free_population(conv: Conversion, refs: dict[int, int], src: Scenario) -> list[dict]:
+    """A trigger for conversion.yaml `free_pop: [2]`: that player's starting units take no population (set on each
+    object, not its type: what it trains later costs as usual). Religion's Libyans started with 7 Bowmen and a Stone
+    Thrower on 2 Villagers, were population capped by them and never boomed (the user, 2026-11-13)."""
+    from aoe2ed import tables
+    effects = []
+    for n in conv.free_pop:
+        player = next((p for p in src.players if p.number == n), None)
+        if player is None:
+            raise ValueError(f"free_pop: player {n} isn't in the scenario")
+        by_type: dict[int, list[int]] = {}
+        for u in player.units:
+            target = conv.objects.get(u.type)
+            info = tables.info(target.ror_id, "ror") if target and target.ror_id is not None else None
+            if u.id in refs and info and info.get("kind") == "unit":
+                by_type.setdefault(target.ror_id, []).append(refs[u.id])
+        effects += [{"type": "modify_object_attribute", "selected_object_ids": ids, "source_player": n,
+                     "object_list_unit_id": ror, "object_attributes": POPULATION, "operation": "SET",
+                     "quantity": 0.0} for ror, ids in sorted(by_type.items())]
+    return [{"name": "Starting units take no population", "effects": effects}] if effects else []
+
+
 def full_vision(conv: Conversion) -> list[dict]:
     """A trigger giving `vision` players the whole map and every enemy unit in sight from the start: a cheat, so a
     computer player knows where you are and what you field (the user, 2026-11-13: the information matters more)."""
@@ -569,6 +594,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         vp.triggers += answer_provoked(conv, [p.number for p in active if p.human])
         vp.triggers += full_vision(conv)
         vp.triggers += frozen(conv, refs, src, [p.number for p in active if p.human])
+        vp.triggers += free_population(conv, refs, src)
         if conv.setup:                                  # conversion.yaml `setup`: the mission's own start rules
             vp.triggers.append({"name": "Mission setup", "effects": [dict(e) for e in conv.setup]})
         layer = reimagined_triggers(src, conv, mission, vp.triggers, all_perks) if reimagined else []
