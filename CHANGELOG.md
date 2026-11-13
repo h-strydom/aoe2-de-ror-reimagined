@@ -47,6 +47,9 @@ not published yet.
   aren't housing capped from the start.
 - Every computer town on the AI toolbox builds its next House a bit earlier (8 housing left, not 4). Needs
   aoe-agent-editor v0.21.1.
+- Every computer town on the AI toolbox builds its army as its villagers grow, not on a timer: a town that booms
+  fields the army that goes with it (Religion's Libyans boomed and then kept only 3 Axemen). Needs aoe-agent-editor
+  v0.21.2.
 
 ### RoR-RI, the other campaigns
 Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:

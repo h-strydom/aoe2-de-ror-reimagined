@@ -43,7 +43,9 @@ See `docs/audits/missions.md`, Ascent of Egypt 8.
 - **Economy:** booms at once to 60% of its villagers (42 on Moderate), on food and wood: there's very little gold
   on the map (50% food, 42% wood, 3% gold, 5% stone).
 - **Army:** units that cost no gold: Axemen at the core, with Bowmen and a few Scouts. The Stone Thrower stays
-  home.
+  home. The army follows the villagers: about 15 soldiers once it has boomed to 42 on Moderate, growing toward 30
+  as its villagers grow (it kept 3 Axemen after booming when the army followed the grow timer, playtest
+  2026-11-13).
 - **Upgrades:** economy first.
 - **Trade:** none.
 - **Water:** none.
