@@ -373,12 +373,17 @@ missions:
     diplomacy: [[1, 2, ENEMY]]
   ascent_of_egypt/06_farming:                  # Lower Egypt knows where Upper Egypt is (its attacks)
     show_base: [[22, 48, 44, 68]]
-    disable: {1: [small_wall, small_gate, watch_tower]}
+    # No gold or stone mines on this map: their upgrades are off for both (the user, 2026-11-13).
+    disable:
+      1: [small_wall, small_gate, watch_tower, gold_mining, stone_mining]
+      2: [gold_mining, stone_mining]
     # Lower Egypt: a rival farming kingdom racing you for food (docs/missions/ascent_of_egypt/06_farming.md, the
-    # first mission on the AI toolbox, 2026-11-12).
+    # first mission on the AI toolbox, 2026-11-12). Playtest 2026-11-13: more pressure (normal offense), and its
+    # villagers gather only food and wood.
     ai:
       2: {kind: town, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]}, upgrades: economy,
-          water: light, defense: home, offense: light, goal: {stockpile: {food: 2000, hold_from: 1200}}}
+          water: light, defense: home, offense: normal, goal: {stockpile: {food: 2000, hold_from: 1200}},
+          spec: {gatherers: {food: 55, wood: 45, gold: 0, stone: 0}}}
   # Trade: your partners "could become jealous ... and attack" (the instructions). AoE1's AIs changed stance in game;
   # in RoR the neutral, passive Libyans and Canaanites sat still. The Libyan raiders (5 Scout Ships) are enemies
   # from the start, as the hints' raiders; the Canaanites turn on you at 20 minutes. The Minoans stay your ally.

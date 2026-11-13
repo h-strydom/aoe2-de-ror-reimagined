@@ -16,7 +16,11 @@ not published yet.
   - its army is Axemen, Bowmen and Scouts;
   - it fishes lightly, keeps a home guard and attacks in waves that retreat when beaten;
   - it researches economy upgrades first and holds its food for the 2000-food race.
-  Needs aoe-agent-editor v0.19.0.
+  Needs aoe-agent-editor v0.19.1.
+- Farming, after its first playtest:
+  - Lower Egypt attacks sooner and more often, trains Bowmen, gets the Battle Axe early, and gathers only food
+    and wood;
+  - Gold Mining and Stone Mining are off for both players, since the map has no mines.
 
 ### RoR-RI, the other campaigns
 Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:

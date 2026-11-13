@@ -26,8 +26,9 @@ Status: playtested 2026-11-12 (Hard). Lower Egypt is built on the AI toolbox (ao
 | P2 Lower Egypt | Egyptian | enemy / enemy | Town Center, Barracks, Dock, 3 Villagers, 4 Axemen, 3 Houses | Tool (no Bronze, Iron) |
 
 ## 4. Tech (generated)
-- **You:** Granary walls and towers are off (Small Wall, Small Gate, Watch Tower). They open with Trade.
-- **Lower Egypt:** everything in its ages.
+- **You:** Granary walls and towers are off (Small Wall, Small Gate, Watch Tower). They open with Trade. Gold Mining and
+  Stone Mining are off: the map has no mines.
+- **Lower Egypt:** everything in its ages except Gold Mining and Stone Mining.
 
 ## 5. Mission functions
 - Lower Egypt knows where your base is from the start, so its attacks know where to go.
@@ -59,9 +60,9 @@ Status: playtested 2026-11-12 (Hard). Lower Egypt is built on the AI toolbox (ao
   - Always keeps a home guard of about a third of its army.
   - Soldiers near its town answer any attack on its fields or villagers.
   - Villagers flee to the Town Center.
-- **Offense:** light.
-  - It first probes you at about 15 minutes with a small group of 3 to 6.
-  - After that it sends a wave every 6 minutes with about half its army.
+- **Offense:** steady pressure (the user, 2026-11-13: light wasn't enough).
+  - First attack at about 10 minutes with a group of 6 or more.
+  - After that a wave every 4 minutes with most of its army, keeping a home guard.
   - It favours your villagers and farms over your army, and pulls a beaten wave home.
 - **Goal:** plays for 2000 food. Once past about 1200 food it stops spending food on units and keeps farming, which
   makes its count climb.
@@ -72,19 +73,20 @@ Status: playtested 2026-11-12 (Hard). Lower Egypt is built on the AI toolbox (ao
   - leaves its fields undefended;
   - stops farming.
 - **By difficulty:**
-  - Standard: a first probe at 20 minutes, waves every 8 minutes.
-  - Hard: a first probe at 10 minutes, waves every 4 minutes with bigger groups.
+  - Standard: first attack at 14 minutes, waves every 5.6 minutes.
+  - Hard: first attack at 7 minutes, waves every 2.8 minutes, with a bigger army.
 - **Profile** (conversion.yaml):
-  `{kind: town, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]}, upgrades: economy, water: light, defense: home, offense: light, goal: {stockpile: {food: 2000, hold_from: 1200}}}`
+  `{kind: town, army: {core: [AXEMAN], support: [BOWMAN], raiders: [SCOUT]}, upgrades: economy, water: light, defense: home, offense: normal, goal: {stockpile: {food: 2000, hold_from: 1200}}, spec: {gatherers: {food: 55, wood: 45, gold: 0, stone: 0}}}`
 - **Built, 2026-11-12:**
   - population targets of 50, 100 and 150;
   - the army grows from 6 to 40% of the target, as Axemen (by line, so Clubmen until the Axe upgrade), Bowmen and
     Scouts, with a Barracks, an Archery Range and a Stable;
   - farming that keeps going;
   - up to 3 fishing boats and 1 warship;
-  - waves from 15 minutes (21 on Standard, about 10 on Hard), every 6 minutes, sending 70% of the army;
+  - waves from 10 minutes (14 on Standard, 7 on Hard), every 4 minutes, sending 70% of the army;
+  - villagers on food and wood only;
   - a beaten wave retreats, and a wave is recalled if its town is attacked;
-  - economy upgrades first, military ones from 10 soldiers;
+  - economy upgrades first, armour from 10 soldiers, the Battle Axe as soon as it can afford it;
   - no food spent on units past 1200 food.
   - Not built yet: counters to your army, and the Market selling surplus.
 - **Check:**
@@ -99,4 +101,5 @@ Status: playtested 2026-11-12 (Hard). Lower Egypt is built on the AI toolbox (ao
 |---|---|---|---|
 | 2026-11-12 | Hard | Standard AI on Continental: attacked early, then built a big fleet; defeat at 24:00 from its 2000 food with no warning; you were neutral to it | Highland map type, at war, objective line (74936a0) |
 | 2026-11-12 | Hard | Highland: no fleet. On its AoE1 plan it stalled, stopped farming, lost villagers and didn't attack | Back to the standard AI (8be4ed5); toolbox profile proposed |
-| | | Lower Egypt on the toolbox town profile | to playtest |
+| 2026-11-13 | (first toolbox playtest) | A lot better. But too little pressure; no Battle Axe by 25:00; no Bowmen at all (RoR's bowman line doesn't train), so it spent more food than needed; wood economy may have suffered | Normal offense, Bowmen by unit, Battle Axe never waits, food and wood only, no Gold/Stone Mining (editor v0.19.1) |
+| | | | to playtest |
