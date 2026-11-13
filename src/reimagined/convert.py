@@ -234,20 +234,39 @@ def start_view(p) -> tuple[int, int] | None:
     return int(best.x), int(best.y)
 
 
+# Difficulty conditions, as progression.py's (difficulty_level: true at that level or easier, inverted for harder).
+MODERATE_OR_EASIER = {"type": "difficulty_level", "quantity": 2}
+HARD_OR_HARDER = {"type": "difficulty_level", "quantity": 2, "inverted": True}
+GOLD = 3                                                 # the gold resource (accumulate_attribute)
+
+
 def turn_hostile(conv: Conversion, humans: list[int], stances: dict) -> list[dict]:
-    """Triggers for players that turn on you (conversion.yaml `attacks: {3: {hostile_at: 1200, message: ...}}`):
-    AoE1's AIs change their stance in game (Trade's partners "could become jealous ... and attack"), RoR's scripts
-    can't, so a timer makes them enemies of the human players. Not where the mission's own stances say otherwise."""
+    """Triggers for players that turn on you (conversion.yaml `attacks`): AoE1's AIs change their stance in game
+    (Trade's partners "could become jealous ... and attack"), RoR's scripts can't, so a trigger makes them enemies of
+    the human players, both ways, with the message:
+    - `hostile_at: 1200`: at that time;
+    - `hostile_gold: 250`: once a human player has that much gold (Trade's Minoans, the user, 2026-11-13);
+    - `enemy_on: hard`: an enemy from the start on Hard and harder (then the other triggers wait for easier levels).
+    Not where the mission's own stances (RoR-RIX) say otherwise."""
     out = []
     for n, a in conv.attacks.items():
-        if not a.get("hostile_at") or any((n, h) in stances and (n, h) not in conv.diplomacy for h in humans):
+        if any((n, h) in stances and (n, h) not in conv.diplomacy for h in humans):
             continue
         effects = [{"type": "change_diplomacy", "source_player": x, "target_player": y, "diplomacy": 3}
                    for h in humans for x, y in ((n, h), (h, n))]
-        if a.get("message"):
-            effects.append({"type": "display_instructions", "display_time": 10, "message": a["message"]})
-        out.append({"name": f"P{n} turns hostile", "conditions": [{"type": "timer", "timer": int(a["hostile_at"])}],
-                    "effects": effects})
+        told = [{"type": "display_instructions", "display_time": 10, "message": a["message"]}] if a.get("message") else []
+        easier = [MODERATE_OR_EASIER] if a.get("enemy_on") == "hard" else []
+        if a.get("hostile_at"):
+            out.append({"name": f"P{n} turns hostile", "conditions": [{"type": "timer", "timer": int(a["hostile_at"])},
+                                                                       *easier], "effects": effects + told})
+        if a.get("hostile_gold"):
+            for h in humans:
+                out.append({"name": f"P{n} turns hostile: P{h}'s gold",
+                            "conditions": [{"type": "accumulate_attribute", "attribute": GOLD,
+                                            "quantity": int(a["hostile_gold"]), "source_player": h}, *easier],
+                            "effects": effects + told})
+        if a.get("enemy_on") == "hard":
+            out.append({"name": f"P{n} hostile on Hard", "conditions": [HARD_OR_HARDER], "effects": effects})
     return out
 
 
@@ -415,7 +434,7 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         res.players = len(active) + len(extras)
         population = conv.population if conv.population and can_build(src, conv) else None
         for p in active:
-            r = p.resources
+            r = {**p.resources, **conv.resources.get(p.number, {})}     # conversion.yaml `resources`
             player_set(o.handle, p.number, {
                 "civilization": ROR_CIVS[p.civ],
                 "starting_age": ROR_AGES[p.starting_age],
@@ -514,6 +533,8 @@ def build_scenario(src: Scenario, conv: Conversion, mission: str = "", table: di
         vp.triggers += turn_hostile(conv, [p.number for p in active if p.human], stances)
         vp.triggers += answer_provoked(conv, [p.number for p in active if p.human])
         vp.triggers += full_vision(conv)
+        if conv.setup:                                  # conversion.yaml `setup`: the mission's own start rules
+            vp.triggers.append({"name": "Mission setup", "effects": [dict(e) for e in conv.setup]})
         layer = reimagined_triggers(src, conv, mission, vp.triggers, all_perks) if reimagined else []
         progression.select_objects(layer, placed, groups, unit_hp)
         vp.triggers += layer

@@ -25,6 +25,14 @@ not published yet.
   - Lower Egypt grows its economy before each bigger army and builds only the Stables it needs;
   - it sees the whole map and your units (a deliberate cheat).
 
+- Trade, redesigned (docs/missions/ascent_of_egypt/07_trade.md):
+  - the Libyans give you 5 minutes, then raid with Scout Ships paid for by their own trade fleet: sink their Trade
+    Boats or raze their Dock to stop them;
+  - the Canaanites are your land rival from the start: they fish, rush the Tool Age, farm, trade on Moderate and
+    Hard, and send the occasional Axemen;
+  - the Minoans are your trade partner until you have 250 gold, then declare war with their warships (on Hard
+    they're your enemy from the start). Needs aoe-agent-editor v0.20.0.
+
 ### RoR-RI, the other campaigns
 Released for Ascent of Egypt on 2026-11-12 (below); the other campaigns don't have these yet:
 - Computer players that build play RoR's standard skirmish AI, one level harder than the game's difficulty

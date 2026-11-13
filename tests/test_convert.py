@@ -203,3 +203,24 @@ def test_losing_the_unit_an_objective_needs_is_a_defeat():
     assert (win.source_player, win.enabled) == (2, 1)                      # the Libyans win, never you
     rix = AoE2DEScenario.from_file(str(scenario_path(m, layout.AOE2DE_ROR_X)))
     assert not any("Loss: the" in t.name for t in rix.trigger_manager.triggers)
+
+
+def test_trade_follows_its_mission_doc():
+    """Trade (docs/missions/ascent_of_egypt/07_trade.md, the user's design 2026-11-13): yellow raids from a trade
+    economy, green is your land rival, red your partner until 250 gold (Hard: an enemy from the start). Reads the
+    committed build."""
+    m = {x.key: x for c in layout.campaigns() for x in c.missions}["ascent_of_egypt/07_trade"]
+    s = AoE2DEScenario.from_file(str(scenario_path(m, layout.AOE2DE_ROR)))
+    pm = s.player_manager
+    assert list(pm.players[1].diplomacy)[1:4] == [0, 3, 3]                    # red ally, green and yellow enemies
+    names = {pm.players[n].personality for n in (2, 3, 4)}
+    assert names == {"Minoans (toolbox)", "Canaanites (toolbox)", "Libyans (toolbox)"}
+    yellow = pm.players[4]
+    assert (yellow.wood, yellow.gold) == (2500, 300) and "(train my-trade-boat-line)" in yellow.ai_script
+    assert "(enable-timer 2 300)" in yellow.ai_script                         # five minutes' grace
+    assert "naval attack" not in pm.players[3].ai_script                      # green: no warships
+    triggers = {t.name: t for t in s.trigger_manager.triggers}
+    gold = triggers["P2 turns hostile: P1's gold"].conditions[0]
+    assert (gold.attribute, gold.quantity) == (3, 250)
+    assert triggers["P2 hostile on Hard"].conditions[0].inverted == 1
+    assert len(triggers["Mission setup"].effects) == 5

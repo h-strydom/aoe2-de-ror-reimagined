@@ -388,15 +388,35 @@ missions:
     # Full vision for Lower Egypt: a cheat, but knowing where you are and what you field matters more (the user,
     # 2026-11-13).
     vision: [2]
-  # Trade: your partners "could become jealous ... and attack" (the instructions). AoE1's AIs changed stance in game;
-  # in RoR the neutral, passive Libyans and Canaanites sat still. The Libyan raiders (5 Scout Ships) are enemies
-  # from the start, as the hints' raiders; the Canaanites turn on you at 20 minutes. The Minoans stay your ally.
+  # Trade: your partners "could become jealous ... and attack" (the instructions). The user's design (2026-11-13,
+  # docs/missions/ascent_of_egypt/07_trade.md): the Libyans (yellow) are raiders living off a trade fleet, the
+  # Canaanites (green) your land rival, and the Minoans (red) your partner until you have 250 gold (on Hard, your
+  # enemy from the start).
   ascent_of_egypt/07_trade:                    # the Minoans and Canaanites know where you are
     show_base: [[64, 0, 95, 30]]
-    diplomacy: [[1, 4, ENEMY]]
+    diplomacy: [[1, 3, ENEMY], [1, 4, ENEMY]]
     attacks:
-      3: {hostile_at: 1200, message: "The Canaanites have grown jealous of Egypt's trade. They have closed their Dock to you and declared war!"}
-      4: {}
+      2: {hostile_gold: 250, enemy_on: hard, message: "The Minoans have grown jealous of Egypt's wealth. They close their Docks to you and send their warships!"}
+    # Yellow: wood to trade, and gold for its first Trade Boats. Its Scout Ships (539), Trade Boats (17) and
+    # Merchant Ships (11) take no population (attribute 110, as the Light Footprint perk), and Scout Ships cost 60
+    # gold and no wood (attributes 105 and 104): its trade pays for its raids.
+    resources: {4: {wood: 2500, gold: 300}}
+    setup:
+      - {type: modify_attribute, source_player: 4, object_list_unit_id: 539, object_attributes: 110, operation: SET, quantity: 0}
+      - {type: modify_attribute, source_player: 4, object_list_unit_id: 17, object_attributes: 110, operation: SET, quantity: 0}
+      - {type: modify_attribute, source_player: 4, object_list_unit_id: 11, object_attributes: 110, operation: SET, quantity: 0}
+      - {type: modify_attribute, source_player: 4, object_list_unit_id: 539, object_attributes: 104, operation: SET, quantity: 0}
+      - {type: modify_attribute, source_player: 4, object_list_unit_id: 539, object_attributes: 105, operation: SET, quantity: 60}
+    ai:
+      4: {kind: army, army: {core: [SCOUT_SHIP], size: 5}, water: {trade: 3},
+          offense: {first: 300, every: 180, min_group: 2}, defense: none, retreat: none,
+          by_level: {easy: {army: {core: [SCOUT_SHIP], size: 3}, offense: {first: 300, every: 240, min_group: 2}},
+                     hard: {army: {core: [SCOUT_SHIP], size: 7}, offense: {first: 300, every: 150, min_group: 2}}}}
+      3: {kind: town, ages: [TOOL_AGE], army: {core: [AXEMAN], support: [BOWMAN], mix: {core: 80, support: 20}},
+          upgrades: economy, water: {fishing: 4, trade: 4}, defense: home, offense: light,
+          by_level: {easy: {water: {fishing: 4}}}}
+      2: {kind: town, army: {core: [SCOUT_SHIP], share: 15}, upgrades: balanced, water: {fishing: 4, trade: 6},
+          defense: home, offense: {first: 690, every: 240, min_group: 3}}
   ascent_of_egypt/08_religion:
     show_base: [[33, 16, 71, 70]]
   ascent_of_egypt/09_the_river_outpost:

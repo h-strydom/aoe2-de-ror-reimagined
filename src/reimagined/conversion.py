@@ -23,7 +23,9 @@ TOP_KEYS = {"terrain", "objects", "rules", "missions"}
 RULE_KEYS = {"forest_terrains", "road_terrains", "min_road_cluster", "civs", "ai_levels", "population"}
 POPULATION_KEYS = {"cap", "grow_minutes"}
 MISSION_KEYS = {"terrain", "objects", "reveal", "show_base", "claim_base", "diplomacy", "disable", "attacks",
-                "provoked", "ai", "vision"}
+                "provoked", "ai", "vision", "resources", "setup"}
+ATTACK_KEYS = {"hostile_at", "hostile_gold", "enemy_on", "message"}
+RESOURCES = {"food", "wood", "gold", "stone"}
 STANCES = {"ALLY", "NEUTRAL", "ENEMY"}
 CLAIM_KEYS = {"area", "player", "start_ai"}
 
@@ -60,6 +62,8 @@ class Conversion:
     provoked: dict = field(default_factory=dict)    # {player: message}: neutral until you attack its town
     ai: dict = field(default_factory=dict)          # {player: toolbox profile} (aoe-agent-editor ai/profiles.py)
     vision: tuple[int, ...] = ()                    # players that see the whole map and every enemy unit
+    resources: dict = field(default_factory=dict)   # {player: {food, wood, gold, stone}}: starting stockpiles
+    setup: tuple = ()                               # trigger effects at the start (mission-specific rules)
     population: dict | None = None                  # {cap, grow_minutes}: missions where player 1 can build
 
     def for_mission(self, key: str) -> Conversion:
@@ -71,7 +75,8 @@ class Conversion:
                        reveal=ov.get("reveal", ()), show_base=ov.get("show_base", ()),
                        claim_base=ov.get("claim_base"), diplomacy=ov.get("diplomacy", {}),
                        disable=ov.get("disable", {}), attacks=ov.get("attacks", {}),
-                       provoked=ov.get("provoked", {}), ai=ov.get("ai", {}), vision=ov.get("vision", ()))
+                       provoked=ov.get("provoked", {}), ai=ov.get("ai", {}), vision=ov.get("vision", ()),
+                       resources=ov.get("resources", {}), setup=ov.get("setup", ()))
 
     def place(self, aoede_id: int, ror_terrain: int) -> int | None:
         """The RoR object for an AoE DE object standing on `ror_terrain`, or None if it's dropped.
@@ -187,8 +192,9 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
         attacks = {}
         for k, v in (ov.get("attacks") or {}).items():
             v = v or {}
-            if set(v) - {"hostile_at", "message"}:
-                problems.append(f"missions.{key}.attacks.{k}: {{hostile_at: seconds, message: text}}, got {v}")
+            if set(v) - ATTACK_KEYS or v.get("enemy_on", "hard") != "hard":
+                problems.append(f"missions.{key}.attacks.{k}: {{hostile_at: seconds | hostile_gold: N, enemy_on: hard, "
+                                f"message: text}}, got {v}")
             attacks[int(k)] = v
         provoked = {int(k): str(v or "") for k, v in (ov.get("provoked") or {}).items()}
         ai = {}
@@ -199,7 +205,10 @@ def load(path: Path = CONVERSION_FILE, aoe1de: Path = layout.AOE1DE) -> Conversi
             ai[int(k)] = v
         missions[key] = {"terrain": t, "objects": o, **areas, "claim_base": claim, "diplomacy": dip,
                          "disable": disable, "attacks": attacks, "provoked": provoked, "ai": ai,
-                         "vision": tuple(int(v) for v in ov.get("vision") or [])}
+                         "vision": tuple(int(v) for v in ov.get("vision") or []),
+                         "resources": {int(k): {r: int(n) for r, n in v.items() if r in RESOURCES}
+                                       for k, v in (ov.get("resources") or {}).items()},
+                         "setup": tuple(ov.get("setup") or ())}
 
     population = rules.get("population")
     if population is not None:

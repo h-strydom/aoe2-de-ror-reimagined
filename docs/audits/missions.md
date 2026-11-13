@@ -61,8 +61,8 @@ RoR-RIX tech tree for you, within your ages: everything open but town center.
 
 | Player | Civ | Stance | AI (RoR-RI) | AI (RoR-RIX) | Ages | Off |
 |---|---|---|---|---|---|---|
-| P1 Upper Egypt (you) | Egyptian |  | you | you | Tool (no Bronze, Iron) | Small Gate, Small Wall, Watch Tower |
-| P2 Lower Egypt | Egyptian | enemy / enemy | AI toolbox: town profile | mission's own (Lower Egypt) | Tool (no Bronze, Iron) | nothing |
+| P1 Upper Egypt (you) | Egyptian |  | you | you | Tool (no Bronze, Iron) | Gold Mining, Small Gate, Small Wall, Stone Mining, Watch Tower |
+| P2 Lower Egypt | Egyptian | enemy / enemy | AI toolbox: town profile | mission's own (Lower Egypt) | Tool (no Bronze, Iron) | Gold Mining, Stone Mining |
 
 RoR-RIX tech tree for you, within your ages: everything open but bronze age, light transport, small gate, small wall, town center, watch tower.
 
@@ -71,9 +71,9 @@ RoR-RIX tech tree for you, within your ages: everything open but bronze age, lig
 | Player | Civ | Stance | AI (RoR-RI) | AI (RoR-RIX) | Ages | Off |
 |---|---|---|---|---|---|---|
 | P1 Kingdom of Egypt (you) | Egyptian |  | you | you | Tool to Bronze (no Iron) | Academy, Siege Workshop, Temple |
-| P2 Minoans | Minoan | ally / ally | standard skirmish AI, a level harder | mission's own (Minoans) (enemy / enemy) | Bronze (no Iron) | nothing |
-| P3 Canaanites | Phoenician | neutral / neutral | standard skirmish AI, a level harder | mission's own (Canaanites) (enemy / enemy) | Stone to Bronze (no Iron) | nothing |
-| P4 Libyans | Hittite | enemy / enemy | AoE1 plan, told to attack (conversion.yaml) | AoE1 plan, told to attack (conversion.yaml) (neutral / neutral) | Tool to Iron | nothing |
+| P2 Minoans | Minoan | ally / ally | AI toolbox: town profile | mission's own (Minoans) (enemy / enemy) | Bronze (no Iron) | nothing |
+| P3 Canaanites | Phoenician | enemy / enemy | AI toolbox: town profile | mission's own (Canaanites) | Stone to Bronze (no Iron) | nothing |
+| P4 Libyans | Hittite | enemy / enemy | AI toolbox: army profile | AI toolbox: army profile (neutral / neutral) | Tool to Iron | nothing |
 
 RoR-RIX tech tree for you, within your ages: everything open but astrology, iron age, mysticism, polytheism, priest, temple.
 
